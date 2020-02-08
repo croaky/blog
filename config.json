@@ -1,10 +1,18 @@
 {
   "blog": {
     "name": "Status OK",
-    "source_url": "https://github.com/statusok/statusok/tree/master/blog",
     "url": "https://www.statusok.com"
   },
   "articles": [
+    {
+      "author": "Dan Croak",
+      "id": "ad-block-at-etc-hosts",
+      "published": "2020-02-08",
+      "tags": [
+        "env",
+        "unix"
+      ]
+    },
     {
       "author": "Dan Croak",
       "id": "configure-and-use-tmux",
@@ -230,12 +238,12 @@
       "canonical": "https://thoughtbot.com/blog/how-to-reduce-a-large-heroku-compiled-slug-size",
       "id": "reduce-heroku-slug-size",
       "published": "2016-06-13",
-      "tags": [
-        "infra"
-      ],
       "redirects": [
         "/keep-a-github-fork-updated",
         "/reduce-a-large-heroku-compiled-slug-size"
+      ],
+      "tags": [
+        "infra"
       ]
     },
     {
