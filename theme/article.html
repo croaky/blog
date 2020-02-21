@@ -11,31 +11,29 @@
   <style>
     body {
       color: #3c3c3c;
-      font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", "Lucida Grande", "Helvetica Neue", "Helvetica", "Fira Sans", "Roboto", "Droid Sans", "Ubuntu", sans-serif;
-      font-size: 16px;
-      line-height: 22px;
+      font-family: -apple-system, system-ui, "Helvetica", "Arial", sans-serif;
+      font-size: 18px;
+      line-height: 30px;
       -webkit-font-smoothing: antialiased;
     }
     a,
     a:visited,
     a:hover {
-      border-bottom-color: #da393f;
-      border-bottom-style: solid;
-      border-bottom-width: 1px;
       color: #3c3c3c;
-      text-decoration: none;
-      text-decoration-skip: ink;
+      text-decoration-color: #d7005f;
     }
     a:hover {
-      color: #da393f;
+      color: #d7005f;
     }
     .container {
-      margin: 1.5rem 1rem;
-      max-width: 700px;
+      margin: 1.5rem auto;
+      width: 700px;
+      max-width: 100%;
     }
     @media all and (max-width: 575px) {
       .container {
-        margin: 1rem 0;
+        margin: 1rem auto;
+        max-width: 90%;
       }
     }
     img {
@@ -45,7 +43,7 @@
       margin: 1.5rem 0;
     }
     h2 {
-      margin: 1.5rem 0 1rem;
+      margin: 2.5rem 0 1rem;
     }
     p,
     ul {
@@ -54,22 +52,34 @@
     li {
       margin: 0.5rem 0;
     }
+    nav .ok {
+      align-items: center;
+      background-color: #008787;
+      display: flex;
+      height: 100px;
+      justify-content: center;
+      width: 100px;
+    }
+    nav .ok-text {
+      margin-top: 4px;
+    }
+    nav .ok-text a {
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 800;
+      text-decoration: none;
+    }
     .lede {
-      margin: 20px 0;
+      margin: 20px 0 30px 0;
     }
     .lede__headline {
-      font-size: 32px;
-      line-height: 38px;
-      margin: 0;
-    }
-    .lede__byline {
-      line-height: 22px;
-      margin: 5px 0;
+      font-size: 40px;
+      line-height: 50px;
+      margin-bottom: 20px;
     }
     .lede__author {
       color: #3c3c3c;
       font-weight: bold;
-      margin-bottom: 0.25rem;
     }
     .lede__author a,
     .lede__author a:visited {
@@ -100,9 +110,13 @@
 <body>
   <div class="container">
     <nav>
-      <a href="/">
-        {{.Blog.Name}} &larr;
-      </a>
+      <div class="ok">
+        <div class="ok-text">
+          <a href="/">
+            OK
+          </a>
+        </div>
+      </div>
     </nav>
 
     <article>
@@ -111,15 +125,13 @@
           {{.Article.Title}}
         </h1>
 
-        <div class="lede__byline">
-          <div class="lede__author">
-            {{.Article.Author}}
-          </div>
-
-          <time datetime="{{.Article.LastUpdated}}">
-            last updated {{.Article.LastUpdatedOn}}
-          </time>
+        <div class="lede__author">
+          {{.Article.Author}}
         </div>
+
+        <time datetime="{{.Article.LastUpdated}}">
+          last updated {{.Article.LastUpdatedOn}}
+        </time>
       </header>
 
       {{.Article.Body}}

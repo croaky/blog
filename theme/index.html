@@ -8,45 +8,58 @@
   <style>
     body {
       color: #3c3c3c;
-      font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", "Lucida Grande", "Helvetica Neue", "Helvetica", "Fira Sans", "Roboto", "Droid Sans", "Ubuntu", sans-serif;
-      font-size: 16px;
-      line-height: 22px;
+      font-family: -apple-system, system-ui, "Helvetica", "Arial", sans-serif;
+      font-size: 18px;
+      line-height: 30px;
       -webkit-font-smoothing: antialiased;
     }
     a,
     a:visited,
     a:hover,
     .index-article__link:hover {
-      border-bottom-color: #da393f;
-      border-bottom-style: solid;
-      border-bottom-width: 1px;
       color: #3c3c3c;
-      text-decoration: none;
-      text-decoration-skip: ink;
+      text-decoration-color: #d7005f;
     }
     a:hover {
-      color: #da393f;
+      color: #d7005f;
     }
     .container {
-      margin: 1.5rem 1rem;
-      max-width: 700px;
+      margin: 1.5rem auto;
+      width: 700px;
+      max-width: 100%;
     }
     @media all and (max-width: 575px) {
       .container {
-        margin: 1rem 0;
+        margin: 1rem auto;
+        max-width: 90%;
       }
     }
     main {
       margin: 1.5rem 0;
     }
+    nav .ok {
+      align-items: center;
+      background-color: #008787;
+      display: flex;
+      height: 100px;
+      justify-content: center;
+      width: 100px;
+    }
+    nav .ok-text {
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 800;
+    }
     nav .tags {
       margin: 1.5rem 0 0.5rem 0;
     }
     .index-article {
-      margin: 1rem 0;
+      display: flex;
+      justify-content: space-between;
+      margin: 0.5rem 0;
     }
     .index-article__link {
-      border-bottom: none;
+      text-decoration: none;
       font-size: 18px;
       font-weight: bold;
       line-height: 22px;
@@ -55,13 +68,30 @@
     .index-article__link:hover {
       color: #3c3c3c;
     }
+    time {
+      text-align: right;
+      min-width: 150px;
+    }
+    @media all and (max-width: 575px) {
+      .index-article {
+        display: block;
+      }
+      time {
+        display: block;
+        text-align: left;
+      }
+    }
   </style>
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 <body>
   <div class="container">
     <nav>
-      {{.Blog.Name}}
+      <div class="ok">
+        <div class="ok-text">
+          OK
+        </div>
+      </div>
 
       {{- if .Tags }}
         <div class="tags">
@@ -79,11 +109,9 @@
             {{.Title}}
           </a>
 
-          <div class="index-article__byline">
-            <time datetime="{{.LastUpdated}}" class="index-article__published-on">
-              {{.LastUpdatedIn}}
-            </time>
-          </div>
+          <time datetime="{{.LastUpdated}}">
+            {{.LastUpdatedIn}}
+          </time>
         </div>
       {{- end }}
     <main>
