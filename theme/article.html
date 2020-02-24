@@ -10,10 +10,12 @@
   {{- end }}
   <style>
     body {
+      background-color: #fff0e6;
       color: #3c3c3c;
       font-family: -apple-system, system-ui, "Helvetica", "Arial", sans-serif;
       font-size: 18px;
       line-height: 30px;
+      margin: 0;
       -webkit-font-smoothing: antialiased;
     }
     a,
@@ -26,15 +28,9 @@
       color: #d7005f;
     }
     .container {
-      margin: 1.5rem auto;
-      width: 700px;
-      max-width: 100%;
-    }
-    @media all and (max-width: 575px) {
-      .container {
-        margin: 1rem auto;
-        max-width: 90%;
-      }
+      margin: 1.25rem auto;
+      max-width: 95%;
+      width: 1000px;
     }
     img {
       max-width: 100%;
@@ -48,24 +44,22 @@
     p,
     ul {
       margin: 1rem 0;
+      max-width: 100%;
+      width: 700px;
     }
     li {
       margin: 0.5rem 0;
     }
-    nav .ok {
-      align-items: center;
-      background-color: #008787;
+    nav .logotype {
       display: flex;
-      height: 100px;
-      justify-content: center;
-      width: 100px;
     }
-    nav .ok-text {
-      margin-top: 4px;
+    nav .logotype-text {
+      background-color: #008787;
+      padding: 24px 20px 20px 20px;
     }
-    nav .ok-text a {
+    nav .logotype-text a {
       color: #ffffff;
-      font-size: 28px;
+      font-size: 25px;
       font-weight: 800;
       text-decoration: none;
     }
@@ -87,7 +81,7 @@
       text-decoration: none;
     }
     pre {
-      background-color: #f7f7f7;
+      background-color: #ffffff;
       border-radius: 3px;
       line-height: 1.5;
       overflow-x: scroll;
@@ -95,8 +89,8 @@
       word-wrap: normal;
     }
     code {
-      background-color: #f7f7f7;
-      font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+      background-color: #ffffff;
+      font-family: "SFMono-Regular", Consolas, Monaco, Menlo, monospace;
       font-size: 88%;
       word-wrap: break-word;
     }
@@ -110,12 +104,11 @@
 <body>
   <div class="container">
     <nav>
-      <div class="ok">
-        <div class="ok-text">
-          <a href="/">
-            OK
-          </a>
+      <div class="logotype">
+        <div class="logotype-text">
+          <a href="/">OK</a>
         </div>
+        <div class="space" />
       </div>
     </nav>
 

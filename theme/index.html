@@ -7,6 +7,7 @@
   <link rel="alternate" href="feed.json" type="application/json" />
   <style>
     body {
+      background-color: #fff0e6;
       color: #3c3c3c;
       font-family: -apple-system, system-ui, "Helvetica", "Arial", sans-serif;
       font-size: 18px;
@@ -24,34 +25,32 @@
       color: #d7005f;
     }
     .container {
-      margin: 1.5rem auto;
-      width: 700px;
-      max-width: 100%;
-    }
-    @media all and (max-width: 575px) {
-      .container {
-        margin: 1rem auto;
-        max-width: 90%;
-      }
+      margin: 1.25rem auto;
+      max-width: 95%;
+      width: 1000px;
     }
     main {
       margin: 1.5rem 0;
     }
-    nav .ok {
-      align-items: center;
-      background-color: #008787;
+    nav .logotype {
       display: flex;
-      height: 100px;
-      justify-content: center;
-      width: 100px;
     }
-    nav .ok-text {
+    nav .logotype-text {
+      background-color: #008787;
+      padding: 24px 20px 20px 20px;
+    }
+    nav .logotype-text a {
       color: #ffffff;
-      font-size: 28px;
+      font-size: 25px;
       font-weight: 800;
+      text-decoration: none;
     }
     nav .tags {
       margin: 1.5rem 0 0.5rem 0;
+    }
+    nav .tags .showAll {
+      font-weight: bold;
+      text-decoration: none;
     }
     .index-article {
       display: flex;
@@ -59,26 +58,38 @@
       margin: 0.5rem 0;
     }
     .index-article__link {
-      text-decoration: none;
       font-size: 18px;
       font-weight: bold;
       line-height: 22px;
       margin: 0;
+      text-decoration: none;
     }
     .index-article__link:hover {
       color: #3c3c3c;
     }
     time {
-      text-align: right;
       min-width: 150px;
+      text-align: right;
     }
-    @media all and (max-width: 575px) {
+    time .year-month {
+      display: none;
+    }
+    time .month-year {
+      display: block;
+    }
+    @media all and (max-width: 700px) {
       .index-article {
         display: block;
       }
       time {
         display: block;
         text-align: left;
+      }
+      time .year-month {
+        display: block;
+      }
+      time .month-year {
+        display: none;
       }
     }
   </style>
@@ -87,16 +98,16 @@
 <body>
   <div class="container">
     <nav>
-      <div class="ok">
-        <div class="ok-text">
-          OK
+      <div class="logotype">
+        <div class="logotype-text">
+          <a href="/">OK</a>
         </div>
       </div>
 
       {{- if .Tags }}
         <div class="tags">
           {{- range $index, $tag := .Tags }}
-            <a href="/tags/{{$tag}}">{{$tag}}</a>&nbsp;
+          <a href="#{{$tag}}" id="toggle-{{$tag}}">{{$tag}}</a>&nbsp;
           {{- end }}
         </div>
       {{- end }}
@@ -104,17 +115,79 @@
 
     <main>
       {{- range .Articles }}
-        <div class="index-article">
+        <div class="index-article{{- range $i, $t := .Tags }} tag-{{$t}}{{- end }}">
           <a href="/{{.ID}}" class="index-article__link">
             {{.Title}}
           </a>
 
           <time datetime="{{.LastUpdated}}">
-            {{.LastUpdatedIn}}
+            <span class="year-month">
+              {{.LastUpdatedYearMonth}}
+            </span>
+            <span class="month-year">
+              {{.LastUpdatedMonthYear}}
+            </span>
           </time>
         </div>
       {{- end }}
     <main>
   </div>
+
+  <script>
+    function each(selector, fn) {
+      Array.prototype.forEach.call(document.querySelectorAll(selector), fn);
+    }
+
+    function ready(fn) {
+      if (document.readyState != 'loading') {
+        fn();
+      } else {
+        document.addEventListener('DOMContentLoaded', fn);
+      }
+    }
+
+    ready(function() {
+      if (window.location.hash.includes('#')) {
+        toggleTag(window.location.hash.split('#')[1])
+      }
+
+      each('nav .tags a', function(el, i) {
+        el.addEventListener('click', function() {
+          toggleTag(el.id.split('toggle-')[1])
+        });
+      });
+    });
+
+    function toggleTag(tag) {
+      var toggler = document.getElementById('toggle-' + tag);
+
+      each('.index-article', function(el, i) {
+        if (toggler.classList.contains('showAll')) {
+          el.style.display = '';
+          return;
+        }
+
+        if (el.classList.contains('tag-' + tag)) {
+          el.style.display = '';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+
+      each('nav .tags a', function(el, i) {
+        if (toggler.isEqualNode(el)) {
+          if (toggler.classList.contains('showAll')) {
+            toggler.classList.remove('showAll');
+            toggler.setAttribute('href', '#');
+          } else {
+            toggler.classList.add('showAll');
+            toggler.setAttribute('href', '#' + tag);
+          }
+        } else {
+          el.classList.remove('showAll');
+        }
+      });
+    }
+  </script>
 </body>
 </html>
