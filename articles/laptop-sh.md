@@ -1,54 +1,47 @@
 # laptop.sh
 
-From 2011-2017,
-I was the primary maintainer of [thoughtbot/laptop],
-a shell script which sets up a Mac OS X machine
-as a sofware development environment.
-
-[thoughtbot/laptop]: https://github.com/thoughtbot/laptop
-
-I now work in an open source [monorepo](monorepo),
-which contains a descedent of the thoughtbot/laptop script:
-[laptop.sh](https://github.com/statusok/statusok/blob/master/laptop.sh).
-The script is coupled to a set of
-[dotfiles](https://github.com/statusok/statusok/blob/master/dotfiles).
+I maintain a [laptop](https://github.com/croaky/laptop) repo
+which sets up a macOS machine
+as a software development environment.
 
 ## Install
 
 Set the `OK` environment variable to a directory of your choice:
 
 ```
-export OK="$HOME/src/statusok"
+export LAPTOP="$HOME/laptop"
 ```
 
 Clone onto laptop:
 
 ```
-git clone https://github.com/statusok/statusok.git $OK
-cd $OK
+git clone https://github.com/croaky/laptop.git $LAPTOP
+cd $LAPTOP
 ```
 
-Review, then run, the script:
+Review:
 
 ```
 less laptop.sh
+```
+
+Run:
+
+```
 ./laptop.sh
 ```
 
 ## What it sets up
 
-The script is tested on macOS High Sierra (10.13).
+The script is tested on macOS Mojave (10.14).
 It:
 
-* uses [Homebrew] to install or upgrade system packages
-  such as Git, Postgres, and Vim
-* creates or updates symlinks from `$OK/dotfiles` to `$HOME`
-* uses [ASDF](asdf-version-manager) to install or update programming languages
-  such as Ruby, Node, and Go
-
-[Homebrew]: https://brew.sh/
-
-The script should take about 10 minutes to install on a fresh machine.
+* installs system packages with Homebrew package manager
+* changes shell to Z shell (zsh)
+* installs SF Mono font for Kitty terminal and Vim editor
+* creates symlinks from `$LAPTOP/dotfiles` to `$HOME`
+* installs or updates Vim plugins
+* installs programming language runtimes
 
 This script can be run safely multiple times.
 I run it most working mornings.

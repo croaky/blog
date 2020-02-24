@@ -3,7 +3,7 @@
 Configure `~/.gitignore` for all projects on a machine
 and `project/.gitignore` for local overrides.
 
-[Example](https://github.com/statusok/statusok/blob/master/dotfiles/git/gitignore):
+[Example](https://github.com/croaky/laptop/blob/master/dotfiles/git/gitignore):
 
 ```
 *.lock

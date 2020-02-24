@@ -15,7 +15,7 @@ By default, it will use the system's `grep` command.
 We can overwrite it to use
 [The Silver Searcher](https://github.com/ggreer/the_silver_searcher)'s
 `ag` command by putting this in
-[our `~/.vimrc`](https://github.com/statusok/statusok/blob/master/dotfiles/editor/vimrc):
+[our `~/.vimrc`](https://github.com/croaky/laptop/tree/master/dotfiles/editor/vim):
 
 ```vim
 " The Silver Searcher
@@ -51,7 +51,7 @@ Cursor over each search result, hit `Enter`, and the file will be opened.
 ## Using `ag` arguments
 
 This defines a new command `Ag` to search for the provided text
-and open a "quickfix" window:
+and open a quickfix window:
 
 ```vim
 " bind \ (backward slash) to grep shortcut

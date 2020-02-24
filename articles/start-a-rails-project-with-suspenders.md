@@ -122,9 +122,3 @@ The default environment for deploy is staging. To deploy to staging, run:
 ```
 cap deploy
 ```
-
-## Mascot
-
-The official Suspenders mascot is Suspenders Boy.
-
-![suspenders boy](images/suspenders-boy.png)

@@ -70,7 +70,7 @@ skips [checking downloads against OpenPGP signatures][nodeuse].
 I manage my `PATH` in a my [shell profile][zshrc].
 It contains:
 
-[zshrc]: https://github.com/statusok/statusok/blob/master/dotfiles/shell/zshrc
+[zshrc]: https://github.com/croaky/laptop/blob/master/dotfiles/shell/zshrc
 
 ```zsh
 # Prepend programming language binaries via ASDF shims
@@ -116,7 +116,7 @@ I also prefer directly setting `PATH` for clarity and control.
 The laptop setup script symlinks ASDF-related [dotfiles]
 from a Git repository to `$HOME`:
 
-[dotfiles]: https://github.com/statusok/statusok/tree/master/dotfiles
+[dotfiles]: https://github.com/croaky/laptop/tree/master/dotfiles
 
 ```bash
 (
