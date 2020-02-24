@@ -1,4 +1,4 @@
-# Email with Amazon SES from Rails on EC2
+# Email from Rails with SES on EC2
 
 [Amazon Simple Email Service][ses] (SES) is a
 high availability transactional email service.
@@ -96,7 +96,7 @@ It provides an `ActionMailer` delivery method.
 [ruby-gems]: https://github.com/aws/aws-sdk-ruby
 
 Configure your chosen AWS region in
-`config/initializers/simple_email_service.rb`:
+`config/initializers/ses.rb`:
 
 ```ruby
 Aws::Rails.add_action_mailer_delivery_method(:aws_sdk, region: 'us-west-2')

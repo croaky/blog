@@ -1,4 +1,4 @@
-# Ad-block at /etc/hosts
+# Block Ads with /etc/hosts
 
 I run a small shell script
 on my laptop to block ads at the DNS host level.

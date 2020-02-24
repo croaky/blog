@@ -1,4 +1,4 @@
-# Enforce SSL with Heroku and DNSimple
+# Enforce SSL
 
 Heroku and DNSimple simplify the SSL certificate setup process.
 The following steps should take about 15 minutes.

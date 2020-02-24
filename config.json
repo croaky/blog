@@ -6,8 +6,11 @@
   "articles": [
     {
       "author": "Dan Croak",
-      "id": "ad-block-at-etc-hosts",
+      "id": "block-ads-etc-hosts",
       "published": "2020-02-08",
+      "redirects": [
+        "/ad-block-at-etc-hosts"
+      ],
       "tags": [
         "env",
         "unix"
