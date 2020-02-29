@@ -36,18 +36,8 @@
     main {
       margin: 1.5rem 0;
     }
-    nav .logotype {
-      display: flex;
-    }
-    nav .logotype-text {
-      background-color: #008787;
-      padding: 24px 20px 20px 20px;
-    }
-    nav .logotype-text a {
-      color: #ffffff;
-      font-size: 25px;
-      font-weight: 800;
-      text-decoration: none;
+    nav img {
+      display: block;
     }
     nav .tags {
       margin: 1.5rem 0 0.5rem 0;
@@ -60,50 +50,25 @@
     }
     .index-article {
       display: flex;
-      justify-content: space-between;
-      margin: 0.5rem 0;
+      font-size: 18px;
+      line-height: 22px;
+      margin: 1rem 0;
+    }
+    .index-article time {
+      min-width: 100px;
     }
     .index-article__link {
-      font-size: 18px;
       font-weight: bold;
-      line-height: 22px;
-      margin: 0;
       text-decoration: none;
-    }
-    time {
-      text-align: right;
-    }
-    time .year-month {
-      display: none;
-    }
-    time .month-year {
-      display: block;
-    }
-    @media all and (max-width: 700px) {
-      .index-article {
-        display: block;
-      }
-      time {
-        display: block;
-        text-align: left;
-      }
-      time .year-month {
-        display: block;
-      }
-      time .month-year {
-        display: none;
-      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <nav>
-      <div class="logotype">
-        <div class="logotype-text">
-          <a href="/">OK</a>
-        </div>
-      </div>
+      <a href="/">
+        <img src="logo.jpg" />
+      </a>
 
       {{- if .Tags }}
         <div class="tags">
@@ -117,18 +82,13 @@
     <main>
       {{- range .Articles }}
         <div class="index-article{{- range $i, $t := .Tags }} tag-{{$t}}{{- end }}">
+          <time datetime="{{.LastUpdated}}">
+            {{.LastUpdatedIn}}
+          </time>
+
           <a href="/{{.ID}}" class="index-article__link">
             {{.Title}}
           </a>
-
-          <time datetime="{{.LastUpdated}}">
-            <span class="year-month">
-              {{.LastUpdatedYearMonth}}
-            </span>
-            <span class="month-year">
-              {{.LastUpdatedMonthYear}}
-            </span>
-          </time>
         </div>
       {{- end }}
     <main>
