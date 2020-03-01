@@ -1,5 +1,5 @@
 /*
-  Content-Security-Policy: default-src 'none'; script-src 'sha256-B3tbmBys1zV4KZ2xa9xRmTdo8U//Go9Z/+8QxCOoGn0='; style-src 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none';
+  Content-Security-Policy: default-src 'none'; script-src 'sha256-vSNI5bs9EmsSWDskU/n0VStL20yRcGx4t7r8t0s/Raw='; style-src 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none';
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block

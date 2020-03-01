@@ -123,7 +123,7 @@
     function toggleTag(tag) {
       var toggler = document.getElementById('toggle-' + tag);
 
-      each('.index-article', function(el, i) {
+      each('.article', function(el, i) {
         if (toggler.classList.contains('showAll')) {
           el.style.display = '';
           return;
