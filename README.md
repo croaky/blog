@@ -1,3 +1,3 @@
-# Status OK blog
+# dancroak.com blog
 
-Blog posts about making software.
+Articles about making software.
