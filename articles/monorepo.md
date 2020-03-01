@@ -1,10 +1,7 @@
 # Monorepo
 
 Organizing code into a monorepo can offer a great software development workflow.
-
-The following is an example of how a monorepo could evolve,
-based on our experience at [Interstellar](https://interstellar.com)
-(formerly [Chain](https://chain.com)).
+The following is an example of how a monorepo evolved at our startup.
 
 ## Mentality
 

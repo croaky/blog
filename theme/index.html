@@ -19,14 +19,15 @@
       line-height: 30px;
       -webkit-font-smoothing: antialiased;
     }
-    a,
-    a:visited,
-    a:hover {
+    a {
       color: #3c3c3c;
+      outline: 0;
       text-decoration-color: #d7005f;
+      transition: all 0.125s ease-in;
     }
     a:hover {
-      color: #d7005f;
+      color: #ffffff;
+      background-color: #d7005f;
     }
     .container {
       margin: 1rem auto;
@@ -42,22 +43,26 @@
     nav .tags {
       margin: 1.5rem 0 0.5rem 0;
     }
-    nav .tags .showAll,
-    nav .tags .showAll:hover {
-      color: #000000;
-      font-weight: bold;
+    nav .tags .showAll {
+      color: #ffffff;
+      background-color: #d7005f;
       text-decoration: none;
     }
-    .index-article {
+    @media all and (max-width: 700px) {
+      nav .tags a:hover {
+        color: #000000;
+      }
+    }
+    .article {
       display: flex;
       font-size: 18px;
       line-height: 22px;
       margin: 1rem 0;
     }
-    .index-article time {
+    .article time {
       min-width: 100px;
     }
-    .index-article__link {
+    .headline {
       font-weight: bold;
       text-decoration: none;
     }
@@ -81,12 +86,12 @@
 
     <main>
       {{- range .Articles }}
-        <div class="index-article{{- range $i, $t := .Tags }} tag-{{$t}}{{- end }}">
+        <div class="article{{- range $i, $t := .Tags }} tag-{{$t}}{{- end }}">
           <time datetime="{{.LastUpdated}}">
             {{.LastUpdatedIn}}
           </time>
 
-          <a href="/{{.ID}}" class="index-article__link">
+          <a href="/{{.ID}}" class="headline">
             {{.Title}}
           </a>
         </div>

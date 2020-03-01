@@ -22,25 +22,31 @@
       line-height: 30px;
       -webkit-font-smoothing: antialiased;
     }
-    a,
-    a:visited,
-    a:hover {
+    a {
       color: #3c3c3c;
+      outline: 0;
       text-decoration-color: #d7005f;
+      transition: all 0.125s ease-in;
     }
     a:hover {
-      color: #d7005f;
+      color: #ffffff;
+      background-color: #d7005f;
     }
     .container {
       margin: 1rem auto;
       max-width: 92.5%;
       width: 1000px;
     }
-    img {
-      max-width: 100%;
+    nav img {
+      display: block;
     }
     article {
       margin: 1.5rem 0;
+    }
+    h1 {
+      font-size: 40px;
+      line-height: 50px;
+      margin-bottom: 20px;
     }
     h2 {
       margin: 2.5rem 0 1rem;
@@ -58,25 +64,15 @@
       max-width: 100%;
       width: 700px;
     }
-    nav img {
-      display: block;
+    img {
+      max-width: 100%;
     }
-    .lede {
+    header {
       margin: 20px 0 30px 0;
     }
-    .lede__headline {
-      font-size: 40px;
-      line-height: 50px;
-      margin-bottom: 20px;
-    }
-    .lede__author {
+    .author {
       color: #3c3c3c;
       font-weight: bold;
-    }
-    .lede__author a,
-    .lede__author a:visited {
-      font-weight: bold;
-      text-decoration: none;
     }
     pre {
       background-color: #ffffff;
@@ -107,12 +103,12 @@
     </nav>
 
     <article>
-      <header class="lede">
-        <h1 class="lede__headline">
+      <header>
+        <h1>
           {{.Article.Title}}
         </h1>
 
-        <div class="lede__author">
+        <div class="author">
           {{.Article.Author}}
         </div>
 
