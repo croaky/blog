@@ -7,27 +7,35 @@
   <title>{{.Blog.Name}}</title>
   <link rel="alternate" href="feed.json" type="application/json" />
   <style>
+    :root {
+      --dark-theme-bg-color: rgb(25, 30, 45);
+      --light-theme-bg-color: rgb(255, 240, 230);
+
+      --charcoal: #3c3c3c;
+      --pink: #d7005f;
+      --turquoise: #008787;
+    }
     html,
     body {
       margin: 0;
       padding: 0;
     }
     body {
-      background-color: #fff0e6;
-      color: #3c3c3c;
+      background-color: var(--light-theme-bg-color);
+      color: var(--charcoal);
       font-family: -apple-system, system-ui, "Helvetica", "Arial", sans-serif;
       font-size: 18px;
       line-height: 30px;
       -webkit-font-smoothing: antialiased;
     }
     a {
-      color: #3c3c3c;
+      color: var(--charcoal);
       outline: 0;
-      text-decoration-color: #d7005f;
+      text-decoration-color: var(--turquoise);
     }
     a:hover {
       color: #ffffff;
-      background-color: #d7005f;
+      background-color: var(--turquoise);
     }
     .container {
       margin: 1rem auto;
@@ -43,7 +51,7 @@
     }
     nav .tags .showAll {
       color: #ffffff;
-      background-color: #d7005f;
+      background-color: var(--turquoise);
       text-decoration: none;
     }
     main {
