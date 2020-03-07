@@ -48,13 +48,11 @@ foreman start
 
 ## Production
 
-[Heroku uses the `Procfile`][Heroku] to specify the app's dynos.
-
-[Heroku]: https://devcenter.heroku.com/articles/procfile
-
-Foreman can also [export] the `Procfile`'s process definitions
+[Heroku automatically uses the `Procfile`][Heroku] to specify the app's dynos.
+Foreman can [export] the `Procfile`'s process definitions
 to other formats such as `systemd`:
 
+[Heroku]: https://devcenter.heroku.com/articles/procfile
 [export]: https://ddollar.github.io/foreman/#EXPORTING
 
 ```

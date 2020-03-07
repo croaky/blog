@@ -13,9 +13,13 @@
       --dark-theme-bg-color: rgb(25, 30, 45);
       --light-theme-bg-color: rgb(255, 240, 230);
 
-      --charcoal: #3c3c3c;
-      --pink: #d7005f;
-      --turquoise: #008787;
+      --charcoal: rgb(60, 60, 60);
+      --purple: rgb(150, 100, 200);
+      --purple-faded: rgb(150, 100, 200, .1);
+
+      /* syntax highlighting */
+      --pink: rgb(215, 0, 95);
+      --turquoise: rgb(0, 135, 135);
     }
     html,
     body {
@@ -31,13 +35,15 @@
       -webkit-font-smoothing: antialiased;
     }
     a {
-      color: var(--charcoal);
+      border-bottom: 1px solid var(--purple);
+      color: var(--purple);
       outline: 0;
-      text-decoration-color: var(--pink);
+      text-decoration: none;
+      transition: all .1s;
     }
     a:hover {
-      color: #ffffff;
-      background-color: var(--pink);
+      background-color: var(--purple-faded);
+      color: var(--purple);
     }
     .container {
       margin: 1rem auto;
@@ -45,6 +51,7 @@
       width: 1000px;
     }
     nav img {
+      border-radius: 10px;
       display: block;
     }
     article {
@@ -105,7 +112,7 @@
   <div class="container">
     <nav>
       <a href="/">
-        <img alt="Photo of Dan" src="logo.jpg" />
+        <img alt="GitHub avatar" src="logo.jpg" />
       </a>
     </nav>
 
