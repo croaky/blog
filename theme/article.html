@@ -14,6 +14,7 @@
       --light-theme-bg-color: rgb(255, 240, 230);
 
       --charcoal: rgb(60, 60, 60);
+      --mask: rgb(0, 0, 0, .025);
       --purple: rgb(150, 100, 200);
       --purple-faded: rgb(150, 100, 200, .1);
 
@@ -46,7 +47,7 @@
       color: var(--purple);
     }
     .container {
-      margin: 1rem auto;
+      margin: 1.5rem auto;
       max-width: 92.5%;
       width: 1000px;
     }
@@ -69,6 +70,13 @@
       margin: 1rem 0;
       max-width: 100%;
       width: 700px;
+    }
+    blockquote {
+      background-color: var(--mask);
+      border-left: 4px solid var(--purple);
+      margin: 0;
+      max-width: 700px;
+      padding: 5px 25px;
     }
     ul {
       margin: 1rem 0;
@@ -93,7 +101,7 @@
       border-radius: 3px;
       line-height: 1.5;
       overflow-x: scroll;
-      padding: 10px;
+      padding: 25px;
       word-wrap: normal;
     }
     code {
@@ -105,6 +113,12 @@
     :not(pre)>code {
       margin: 0 0.05em;
       padding: 3px 5px;
+    }
+    td, th {
+      padding: 0 20px 5px 0;
+    }
+    th {
+      text-align: left;
     }
   </style>
 </head>
