@@ -13,7 +13,7 @@
       --dark-theme-bg-color: rgb(25, 30, 45);
       --light-theme-bg-color: rgb(255, 240, 230);
 
-      --charcoal: rgb(60, 60, 60);
+      --charcoal: rgb(20, 20, 20);
       --mask: rgb(0, 0, 0, .025);
       --purple: rgb(150, 100, 200);
       --purple-faded: rgb(150, 100, 200, .1);
@@ -31,8 +31,9 @@
       background-color: var(--light-theme-bg-color);
       color: var(--charcoal);
       font-family: -apple-system, system-ui, "Helvetica", "Arial", sans-serif;
-      font-size: 18px;
-      line-height: 30px;
+      font-size: 24px;
+      line-height: 36px;
+      text-rendering: optimizelegibility;
       -webkit-font-smoothing: antialiased;
     }
     a {
@@ -47,27 +48,34 @@
       color: var(--purple);
     }
     .container {
-      margin: 1.5rem auto;
+      margin: 1.5rem;
       max-width: 92.5%;
       width: 1000px;
+    }
+    img {
+      width: 100%;
     }
     nav img {
       border-radius: 10px;
       display: block;
+      width: 100px;
     }
     article {
       margin: 1.5rem 0;
     }
     h1 {
-      font-size: 40px;
-      line-height: 50px;
-      margin-bottom: 20px;
+      font-size: 50px;
+      line-height: 60px;
+      margin-bottom: 5px;
+    }
+    time {
+      color: rgb(150, 150, 150);
     }
     h2 {
       margin: 2.5rem 0 1rem;
     }
     p {
-      margin: 1rem 0;
+      margin: 1.5rem 0;
       max-width: 100%;
       width: 700px;
     }
@@ -86,9 +94,6 @@
       max-width: 100%;
       width: 700px;
     }
-    img {
-      max-width: 100%;
-    }
     header {
       margin: 20px 0 30px 0;
     }
@@ -101,13 +106,16 @@
       border-radius: 3px;
       line-height: 1.5;
       overflow-x: scroll;
-      padding: 25px;
+      margin: 0;
+      padding: 10px 15px;
       word-wrap: normal;
     }
     code {
       background-color: #ffffff;
       font-family: "SFMono-Regular", Consolas, Monaco, Menlo, monospace;
       font-size: 88%;
+      margin: 0;
+      padding: 0;
       word-wrap: break-word;
     }
     :not(pre)>code {
@@ -119,6 +127,28 @@
     }
     th {
       text-align: left;
+    }
+    /* mobile */
+    @media (max-width: 700px) {
+      body {
+        font-size: 18px;
+        line-height: 30px;
+      }
+      .container {
+        margin: 1rem;
+        max-width: 92.5%;
+        width: 1000px;
+      }
+      h1 {
+        font-size: 40px;
+        line-height: 50px;
+      }
+      blockquote {
+        padding: 5px 15px;
+      }
+      p {
+        margin: 1rem 0;
+      }
     }
   </style>
 </head>
@@ -135,10 +165,6 @@
         <h1>
           {{.Article.Title}}
         </h1>
-
-        <div class="author">
-          {{.Article.Author}}
-        </div>
 
         <time datetime="{{.Article.LastUpdated}}">
           last updated {{.Article.LastUpdatedOn}}
