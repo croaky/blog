@@ -1,7 +1,7 @@
 # Run Tests in Vim
 
-Test driven development thrives on a tight feedback loop
-but switching from the editor to the shell
+Test-driven development thrives on a tight feedback loop
+but switching from editor to shell
 to manually run specs is inefficient.
 
 Tools such as `autotest` and `guard` run specs whenever a file gets saved.
@@ -68,7 +68,7 @@ Finished in 0.17752 seconds
 ```
 
 Red, green, refactor.
-From within the application's or library's code:
+From the program:
 
 ```ruby
 def delivering_email(message)
@@ -90,6 +90,6 @@ Finished in 0.17752 seconds
 6 examples, 0 failures
 ```
 
-These tight feedback loops make Test-Driven Development easier
-by eliminating the switching cost between editor to the shell
-when running specs.
+Running specs in tight feedback loops
+reduces switching cost between editor and shell,
+making test-driven development easier.

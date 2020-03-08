@@ -8,9 +8,9 @@ This article describes why, alternatives, and trade-offs.
 
 Ad blockers such as Adblock and AdBlock Plus (different companies)
 are installed as browser extensions.
-They must be installed in each browser on each of your devices.
+They are installed in per-browser, per-device.
 Like any browser extension,
-they can read the HTML of every site you browse.
+they can read the code of every site you browse.
 
 ## DNS sinkholes
 
@@ -23,9 +23,9 @@ DNS sinkholes require technical ability, time, and cost.
 They must be run as a server on an always-on device somewhere
 such as a Raspberry Pi ($35) at home.
 
-When using a device away from home,
-ad-blocking may work (with additional setup),
-work partially (depending on caching),
+On a device away from home,
+ad-blocking may work with additional setup,
+work partially depending on caching,
 or not all.
 
 ## Modify /etc/hosts
@@ -84,7 +84,7 @@ On macOS, this setting can be controlled by going to
 clicking "+", entering "1.1.1.1", clicking "OK",
 and clicking "Apply".
 
-On iPhone, this setting can be controlled via a beautiful
+On iPhone, this setting can be controlled by a nice
 [iPhone app](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627).
 
 ## Conclusion

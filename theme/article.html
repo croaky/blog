@@ -143,6 +143,9 @@
         font-size: 40px;
         line-height: 50px;
       }
+      h2 {
+        margin: 2rem 0 0.5rem;
+      }
       blockquote {
         padding: 5px 15px;
       }
@@ -165,6 +168,12 @@
         <h1>
           {{.Article.Title}}
         </h1>
+
+        <!--
+          <div class="author">
+            {{.Article.Author}}
+          </div>
+        -->
 
         <time datetime="{{.Article.LastUpdated}}">
           last updated {{.Article.LastUpdatedOn}}
