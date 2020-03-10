@@ -8,12 +8,15 @@
   <link rel="alternate" href="feed.json" type="application/json" />
   <style>
     :root {
-      --dark-theme-bg-color: rgb(25, 30, 45);
-      --light-theme-bg-color: rgb(255, 240, 230);
-
+      /* colors */
+      --dark-bg-color: rgb(25, 30, 45);
+      --light-bg-color: rgb(255, 240, 230);
       --charcoal: rgb(60, 60, 60);
       --purple: rgb(150, 100, 200);
       --purple-faded: rgb(150, 100, 200, .1);
+
+      /* sizes */
+      --sm-max-width: 600px;
     }
     html,
     body {
@@ -21,7 +24,7 @@
       padding: 0;
     }
     body {
-      background-color: var(--light-theme-bg-color);
+      background-color: var(--light-bg-color);
       color: var(--charcoal);
       font-family: -apple-system, system-ui, "Helvetica", "Arial", sans-serif;
       font-size: 24px;
@@ -41,9 +44,7 @@
       color: var(--purple);
     }
     .container {
-      margin: 1.5rem;
-      max-width: 92.5%;
-      width: 1000px;
+      margin: 3rem;
     }
     a.logo {
       border: none;
@@ -54,12 +55,16 @@
       margin-right: 8px;
       width: 64px;
     }
+    .about {
+      margin: 1.5rem 0;
+      max-width: var(--sm-max-width);
+    }
     nav .tags {
-      line-height: 40px;
-      margin-top: 1rem;
+      line-height: 36px;
+      margin: 1rem 0;
     }
     main {
-      margin-bottom: 1.5rem;
+      margin: 1.5rem 0;
     }
     .article {
       display: flex;
@@ -72,8 +77,12 @@
       border-bottom: none;
       font-weight: bold;
     }
-    /* mobile */
-    @media (max-width: 700px) {
+    @media (max-width: 1000px) {
+      .container {
+        margin: 2rem;
+      }
+    }
+    @media (max-width: 600px) {
       body {
         font-size: 18px;
         line-height: 30px;
@@ -99,10 +108,11 @@
         <img alt="GitHub avatar" src="logo.jpg" />
       </a>
 
-      <p class="about">
-        Hi, I'm Dan.
-        I write about my experiences developing software.
-      </p>
+      <div class="about">
+        Hi, I'm Dan. I live and work in San Francisco.<br />
+        I write about the experience of making software
+        with designers, engineers, and growth marketers.
+      </div>
 
       {{- if .Tags }}
         <div class="tags">
