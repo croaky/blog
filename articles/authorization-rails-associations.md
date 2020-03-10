@@ -1,58 +1,41 @@
 # Authorization with Rails Associations
 
-Authorize Ruby on Rails requests through the domain model's associations.
-
-Routes:
+Authorize requests through the domain model's associations:
 
 ```ruby
-resources :brands, only: [] do
-  resources :offers, only: [:new]
+class User < ApplicationRecord
+  has_many :brands
 end
-```
 
-User has many brands.
-Brand has many offers.
+class Brand < ApplicationRecord
+  has_many :offers
+end
 
-## Authentication
-
-Users are authenticated using [Clearance],
-which provides an `:require_login` `before_filter`
-and `current_user` method:
-
-[Clearance]: http://github.com/thoughtbot/clearance
-
-```ruby
-class OffersController < ApplicationController
-  before_filter :require_login
-
-  def new
-    @brand = current_user.brands.find(params[:brand_id])
-    @offer = @brand.offers.build
+Rails.application.routes.draw do
+  resources :brands, only: [] do
+    resources :offers, only: [:new]
   end
 end
 ```
 
-The user is restricted to interacting with brands to which they have access.
+An example controller test using [Clearance]'s `sign_in_as`:
 
-## Test at the controller level
+[Clearance]: https://github.com/thoughtbot/clearance
 
 ```ruby
 it "does not find brands unassociated with user" do
-  brand = create(:brand)
   sign_in_as create(:user)
 
-  assert_raises(ActiveRecord::RecordNotFound) do
-    get :new, brand_id: brand.to_param
-  end
+  expect { get :new, brand_id: 1 }.to raise_error(ActiveRecord::RecordNotFound }
 end
 ```
 
 `ActiveRecord::RecordNotFound` is raised because
-there is no record of the user having an association to this brand.
+there is no record of the user with this brand,
+returning a 404.
 
-Rails returns a 404 when `ActiveRecord::RecordNotFound` is raised.
-
-Make the tests pass:
+Make the tests pass by restricting users to their brands
+using [Clearance]'s `:require_login` and `current_user`:
 
 ```ruby
 class OffersController < ApplicationController
@@ -64,11 +47,9 @@ class OffersController < ApplicationController
   end
 end
 ```
-
-## Lightweight
 
 This authorization approach requires few lines of code
 and no extra dependencies beyond Rails and Clearance.
 It removes duplication,
 is testable,
-and uses normal authentication and RESTful conventions.
+and uses conventions.

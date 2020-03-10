@@ -1,8 +1,7 @@
 # .gitignore
 
 Configure `~/.gitignore` for all projects on a machine
-and `project/.gitignore` for local overrides.
-
+and `project/.gitignore` for project-specific overrides.
 [Example](https://github.com/croaky/laptop/blob/master/dotfiles/git/gitignore):
 
 ```
@@ -19,9 +18,7 @@ vendor
 ```
 
 Directories and files matching these patterns will be ignored for
-[Git](https://git-scm.com/docs/gitignore) commits.
-
-They will also ignored for
+[Git](https://git-scm.com/docs/gitignore) commits,
 [ag](https://github.com/ggreer/the_silver_searcher/wiki/Advanced-Usage)
-or [fzf](https://github.com/junegunn/fzf#respecting-gitignore)
-searches.
+searches,
+and [fzf](https://github.com/junegunn/fzf#respecting-gitignore) searches.

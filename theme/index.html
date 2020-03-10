@@ -45,9 +45,14 @@
       max-width: 92.5%;
       width: 1000px;
     }
+    a.logo {
+      border: none;
+    }
     nav img {
-      border-radius: 10px;
+      border-radius: 32px;
       display: block;
+      margin-right: 8px;
+      width: 64px;
     }
     nav .tags {
       line-height: 40px;
@@ -78,9 +83,6 @@
         max-width: 92.5%;
         width: 1000px;
       }
-      nav img {
-        width: 50px;
-      }
       .article {
         margin: 0.5rem 0;
       }
@@ -93,9 +95,14 @@
 <body>
   <div class="container">
     <nav>
-      <a href="/">
+      <a class="logo" href="/">
         <img alt="GitHub avatar" src="logo.jpg" />
       </a>
+
+      <p class="about">
+        Hi, I'm Dan. I live and work in San Francisco.<br/>
+        I write about my experiences developing software.
+      </p>
 
       {{- if .Tags }}
         <div class="tags">

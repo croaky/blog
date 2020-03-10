@@ -33,15 +33,14 @@ Run:
 
 ## What it sets up
 
-The script is tested on macOS Mojave (10.14).
+The script is tested on macOS Catalina (10.15).
 It:
 
 * installs system packages with Homebrew package manager
 * changes shell to Z shell (zsh)
-* installs SF Mono font for Kitty terminal and Vim editor
 * creates symlinks from `$LAPTOP/dotfiles` to `$HOME`
 * installs or updates Vim plugins
 * installs programming language runtimes
 
-This script can be run safely multiple times.
-I run it most working mornings.
+It can safely be run multiple times.
+I run it most workday mornings.

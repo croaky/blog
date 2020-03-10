@@ -1,10 +1,4 @@
-# Mystery Guest
-
-[xUnit Test Patterns: Refactoring Test Code][book]
-has an astounding amount of testing knowledge.
-Here's an example:
-
-[book]: http://www.amazon.com/xUnit-Test-Patterns-Refactoring-Addison-Wesley/dp/0131495054
+# Mystery Guests in Tests
 
 > You're having trouble understanding the behavior a test is verifying.
 
@@ -28,32 +22,28 @@ The impact is:
 
 ## Identify the Mystery Guest
 
-In the test code of Rails applications,
-the Mystery Guest is often one of four smells:
+In the test suite of web applications,
+the Mystery Guest might be one of these smells:
 
-* a Rails fixture
+* a fixture function
 * a fixture file such as XML or JSON saved from an HTTP response
-* an instance variable defined at the top of a long context block,
-  or nested up multiple context blocks
+* a variable defined at the top of a long code block
+* a variable defined up multiple levels of nesting
 * a variable without an [Intention-Revealing Name]
 
 [Intention-Revealing Name]: http://c2.com/cgi/wiki?IntentionRevealingNames
 
-The last two smells have solutions:
+Some smells have direct solutions:
 
-* pause and think before creating long context blocks
-* prefer flat over nested test files
-* pause and think about the intent of your variables, then name them that
+* shorten long blocks
+* prefer flat over nested tests
+* rename variables
 
-The first two smells require more thought.
+Other smells require more thought.
 
-## Replace fixtures with factories
+## Replace shared fixtures with fresh fixtures
 
-An offensive Mystery Guest is Rails fixtures and [Factory Girl] is one defense.
-
-[Factory Girl]: http://github.com/thoughtbot/factory_girl
-
-Do you have fixture files like this?
+Are your tests using shared fixtures like this?
 
 ```yaml
 dan:
@@ -73,8 +63,6 @@ If the former is true,
 we should rename the fixtures in order to reveal the intention:
 `users(:developer)` and `users(:designer)`.
 
-Since the community has moved to factories,
-this testing behavior by Rails developers has been less common.
 What we call "creating objects with factories",
 others call creating [Fresh Fixtures]
 built using [Inline Setup].
@@ -136,11 +124,9 @@ In this case, `test/fixtures/jobs/1.xml` is called a [Prebuilt Fixture].
 To truly avoid a Mystery Guest here,
 the XML could be inline or have the recruiter's email injected somehow.
 
-## Writing "good" tests
+## Conclusion
 
-Debating "good" code is often subjective.
-Mystery Guest is memory trick to think about how test code will be
+Mystery Guest is memory trick to think about how code will be
 read and understood by humans.
-Can the intended behavior of a subset of the system be understood
-in one glance at the test?
+Can the intended behavior of a subset of the system be understood at a glance?
 Or is there a Mystery Guest clouding our understanding?

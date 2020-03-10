@@ -1,14 +1,13 @@
 # ASDF Version Manager
 
 Programming languages release new versions.
-Development, CI, or production environments may have
+Development or CI production environments may have
 multiple versions of the same language installed.
-
 A version manager program helps switch between versions
 for a machine or project.
 
 Often, these programs are language-specific.
-Some examples are RVM, rbenv, and chruby for Ruby and nvm for Node.
+Some examples are rbenv for Ruby and nvm for Node.
 They may have different installation, configuration, and commands.
 
 [ASDF](https://github.com/asdf-vm/asdf) is a version manager
@@ -44,9 +43,6 @@ asdf_plugin_update() {
 
   asdf plugin-update "$1"
 }
-
-asdf_plugin_update "go" "https://github.com/kennyp/asdf-golang"
-asdf install go 1.11.5
 
 asdf_plugin_update "nodejs" "https://github.com/asdf-vm/asdf-nodejs"
 export NODEJS_CHECK_SIGNATURES=no
@@ -87,8 +83,6 @@ in order to take precedence over any other installations
 of the languages or binaries installed via the language:
 
 ```bash
-% which go
-~/.asdf/shims/go
 % which node
 ~/.asdf/shims/node
 % which python

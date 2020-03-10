@@ -12,8 +12,7 @@
         "/ad-block-at-etc-hosts"
       ],
       "tags": [
-        "env",
-        "unix"
+        "Workflow"
       ]
     },
     {
@@ -26,7 +25,7 @@
         "/vim-spell-checking"
       ],
       "tags": [
-        "vim"
+        "Workflow"
       ],
       "updated": "2018-11-12"
     },
@@ -38,21 +37,19 @@
         "/laptop-setup-script"
       ],
       "tags": [
-        "env",
-        "unix"
+        "Workflow"
       ],
       "updated": "2018-11-12"
     },
     {
       "author": "Dan Croak",
-      "canonical": "https://thoughtbot.com/blog/bin-setup",
       "id": "setup-sh",
       "published": "2013-01-25",
       "redirects": [
         "/bin-setup"
       ],
       "tags": [
-        "env"
+        "Workflow"
       ],
       "updated": "2018-11-12"
     },
@@ -62,11 +59,7 @@
       "id": "monorepo",
       "published": "2018-11-01",
       "tags": [
-        "env",
-        "git",
-        "infra",
-        "test",
-        "unix"
+        "Workflow"
       ]
     },
     {
@@ -74,8 +67,7 @@
       "id": "process-model",
       "published": "2018-10-16",
       "tags": [
-        "infra",
-        "unix"
+        "APIs"
       ]
     },
     {
@@ -86,8 +78,7 @@
         "/global-gitignore"
       ],
       "tags": [
-        "env",
-        "git"
+        "Workflow"
       ]
     },
     {
@@ -95,8 +86,7 @@
       "id": "email-amazon-ses-rails-ec2",
       "published": "2018-05-09",
       "tags": [
-        "infra",
-        "ruby"
+        "SaaS"
       ]
     },
     {
@@ -104,10 +94,7 @@
       "id": "asdf-version-manager",
       "published": "2018-05-07",
       "tags": [
-        "env",
-        "infra",
-        "ruby",
-        "unix"
+        "Workflow"
       ]
     },
     {
@@ -115,8 +102,7 @@
       "id": "semantic-linefeeds",
       "published": "2018-05-03",
       "tags": [
-        "git",
-        "vim"
+        "Workflow"
       ]
     },
     {
@@ -124,8 +110,7 @@
       "id": "dns-cdn-origin",
       "published": "2014-08-08",
       "tags": [
-        "infra",
-        "ruby"
+        "APIs"
       ],
       "updated": "2018-03-11"
     },
@@ -138,7 +123,7 @@
         "/configuration-block-ruby"
       ],
       "tags": [
-        "ruby"
+        "Engineering"
       ],
       "updated": "2018-02-19"
     },
@@ -147,7 +132,7 @@
       "id": "cache-api-requests",
       "published": "2013-11-29",
       "tags": [
-        "ruby"
+        "APIs"
       ],
       "updated": "2018-02-18"
     },
@@ -159,7 +144,7 @@
         "/authorization-with-rails-associations"
       ],
       "tags": [
-        "ruby"
+        "APIs"
       ],
       "updated": "2018-02-16"
     },
@@ -173,7 +158,7 @@
         "/align-markdown-tables-with-vim"
       ],
       "tags": [
-        "vim"
+        "Workflow"
       ],
       "updated": "2018-01-29"
     },
@@ -186,17 +171,7 @@
         "/setup-react-native-laptop-vim"
       ],
       "tags": [
-        "env",
-        "react",
-        "vim"
-      ]
-    },
-    {
-      "author": "Dan Croak",
-      "id": "redirect-apex-domain-to-www",
-      "published": "2017-03-21",
-      "tags": [
-        "infra"
+        "Engineering"
       ]
     },
     {
@@ -205,7 +180,7 @@
       "id": "feature-branch-code-reviews",
       "published": "2011-01-19",
       "tags": [
-        "git"
+        "Workflow"
       ],
       "updated": "2017-02-01"
     },
@@ -218,7 +193,7 @@
         "/keep-a-github-fork-updated"
       ],
       "tags": [
-        "git"
+        "SaaS"
       ],
       "updated": "2017-02-01"
     },
@@ -232,7 +207,7 @@
         "/reduce-a-large-heroku-compiled-slug-size"
       ],
       "tags": [
-        "infra"
+        "SaaS"
       ]
     },
     {
@@ -244,7 +219,7 @@
         "/create-a-retention-curve-with-mixpanel-and-google-sheets"
       ],
       "tags": [
-        "growth"
+        "Growth"
       ]
     },
     {
@@ -256,8 +231,7 @@
         "/optimize-postgres-full-text-search-with-tsvector-columns-and-triggers"
       ],
       "tags": [
-        "postgres",
-        "ruby"
+        "Data"
       ]
     },
     {
@@ -268,7 +242,7 @@
         "/post/send-your-apps-heroku-routing-errors-to-slack-with-papertrail-alerts/"
       ],
       "tags": [
-        "infra"
+        "SaaS"
       ]
     },
     {
@@ -277,8 +251,7 @@
       "id": "test-spies-vs-mocks",
       "published": "2015-03-19",
       "tags": [
-        "ruby",
-        "test"
+        "Engineering"
       ]
     },
     {
@@ -287,7 +260,7 @@
       "id": "north-star-metric",
       "published": "2014-12-25",
       "tags": [
-        "growth"
+        "Growth"
       ]
     },
     {
@@ -296,7 +269,7 @@
       "id": "enforce-ssl-with-heroku-and-dnsimple",
       "published": "2014-05-21",
       "tags": [
-        "infra"
+        "SaaS"
       ]
     },
     {
@@ -308,7 +281,7 @@
         "/polymorphic-activity-feed-with-rails"
       ],
       "tags": [
-        "ruby"
+        "Engineering"
       ]
     },
     {
@@ -322,7 +295,7 @@
         "/search-faster-in-vim"
       ],
       "tags": [
-        "vim"
+        "Workflow"
       ]
     },
     {
@@ -331,8 +304,7 @@
       "id": "create-postgres-indexes-concurrently",
       "published": "2013-07-30",
       "tags": [
-        "postgres",
-        "ruby"
+        "Data"
       ]
     },
     {
@@ -344,8 +316,7 @@
         "/run-specs-with-vim"
       ],
       "tags": [
-        "test",
-        "vim"
+        "Workflow"
       ]
     },
     {
@@ -358,7 +329,7 @@
         "/wrap-text-80-characters-vim"
       ],
       "tags": [
-        "vim"
+        "Workflow"
       ]
     },
     {
@@ -371,7 +342,7 @@
         "/sort-lines-alphabetically-with-vim"
       ],
       "tags": [
-        "vim"
+        "Workflow"
       ]
     },
     {
@@ -380,8 +351,7 @@
       "id": "intercept-email-from-staging",
       "published": "2013-01-18",
       "tags": [
-        "infra",
-        "ruby"
+        "Engineering"
       ]
     },
     {
@@ -390,7 +360,7 @@
       "id": "four-phase-test",
       "published": "2012-09-28",
       "tags": [
-        "test"
+        "Engineering"
       ]
     },
     {
@@ -401,7 +371,7 @@
         "/implement-decorators-with-ruby"
       ],
       "tags": [
-        "ruby"
+        "Engineering"
       ]
     },
     {
@@ -413,8 +383,7 @@
         "/back-up-and-restore-heroku-postgres-databases"
       ],
       "tags": [
-        "infra",
-        "postgres"
+        "SaaS"
       ]
     },
     {
@@ -426,7 +395,7 @@
         "/rubys-pessimistic-operator"
       ],
       "tags": [
-        "ruby"
+        "Engineering"
       ]
     },
     {
@@ -438,40 +407,19 @@
         "/test-http-errors-with-ruby"
       ],
       "tags": [
-        "ruby",
-        "test"
+        "APIs"
       ]
     },
     {
       "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/mystery-guest",
-      "id": "mystery-guest",
+      "id": "mystery-guests-in-tests",
       "published": "2009-07-28",
-      "tags": [
-        "ruby",
-        "test"
-      ]
-    },
-    {
-      "author": "Dan Croak",
-      "canonical": "https://thoughtbot.com/blog/clearance-rails-authentication-with-email-and-password",
-      "id": "rails-authentication-with-clearance",
-      "published": "2009-02-09",
-      "tags": [
-        "ruby"
-      ]
-    },
-    {
-      "author": "Dan Croak",
-      "canonical": "https://thoughtbot.com/blog/suspenders",
-      "id": "start-a-rails-project-with-suspenders",
-      "published": "2008-10-21",
       "redirects": [
-        "/new-rails-projects-with-suspenders"
+        "/mystery-guest"
       ],
       "tags": [
-        "env",
-        "ruby"
+        "Engineering"
       ]
     }
   ]
