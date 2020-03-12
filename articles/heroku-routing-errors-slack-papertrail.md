@@ -1,4 +1,4 @@
-# Alerts for Heroku Routing Errors
+# Alert on Heroku Routing Errors with Papertrail and Slack
 
 Most errors in a web application can be sent to a third-party service
 such as [Sentry](https://sentry.io/),
@@ -67,5 +67,3 @@ in your project's Slack channel.
 Each log entry has a `request_id` that you can copy
 and paste into Papertrail to see the contextual requests
 before and after the 503.
-
-Happy bug hunting.

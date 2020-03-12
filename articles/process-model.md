@@ -3,8 +3,6 @@
 If we define Unix processes in a manifest named `Procfile`,
 we can use tools to manage those processes.
 
-## Examples
-
 Rails app:
 
 ```
@@ -33,21 +31,20 @@ client: cd client && npm start
 server: cd serverd && go install && serverd
 ```
 
-## Development
-
-In development mode,
-[Foreman] interleaves output streams,
-responds to crashed processes,
-and handles user-initiated restarts and shutdowns.
+In development,
+tools like [Foreman] or [Overmind]
+interleave output streams,
+respond to crashed processes,
+and handle user-initiated restarts and shutdowns.
 
 [Foreman]: http://ddollar.github.io/foreman/
+[Overmind]: https://github.com/DarthSim/overmind
 
 ```
 foreman start
 ```
 
-## Production
-
+In production,
 [Heroku automatically uses the `Procfile`][Heroku] to specify the app's dynos.
 Foreman can [export] the `Procfile`'s process definitions
 to other formats such as `systemd`:

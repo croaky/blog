@@ -265,15 +265,6 @@
     },
     {
       "author": "Dan Croak",
-      "canonical": "https://thoughtbot.com/blog/ssl-for-rails-with-heroku-and-dnsimple",
-      "id": "enforce-ssl-with-heroku-and-dnsimple",
-      "published": "2014-05-21",
-      "tags": [
-        "SaaS"
-      ]
-    },
-    {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/using-polymorphism-to-make-a-better-activity-feed-in-rails",
       "id": "polymorphic-activity-feed-rails",
       "published": "2013-12-02",

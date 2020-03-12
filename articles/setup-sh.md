@@ -9,17 +9,18 @@ cd monorepo/project
 ./setup.sh
 ```
 
-Regardless of the `setup.sh` file's contents,
-a developer should be able to clone the [monorepo](monorepo),
+A contributor should be able to clone the [monorepo](monorepo),
 change into the project directory,
 and run one command to start contributing.
 
 Example:
 
 ```
-#!/bin/sh
+#!/bin/bash
+
 # Set up Rails app after cloning codebase.
-set -ex
+
+set -eou
 
 # Install Ruby dependencies
 gem install bundler --conservative
