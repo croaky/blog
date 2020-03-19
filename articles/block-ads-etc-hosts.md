@@ -1,14 +1,14 @@
 # Block Ads with /etc/hosts
 
 I run a shell script on my laptop to block ads at the DNS host level.
-I also use DNS 1.1.1.1 on my laptop and phone.
+I also use 1.1.1.1 as the DNS resolver on my laptop and phone.
 This article describes why, alternatives, and trade-offs.
 
 ## Browser extensions
 
 Ad blockers such as Adblock and AdBlock Plus (different companies)
 are installed as browser extensions.
-They are installed in per-browser, per-device.
+They are installed per-browser, per-device.
 Like any browser extension,
 they can read the code of every site you browse.
 
@@ -22,16 +22,15 @@ on all devices (laptops, phones, tablets) on the network.
 DNS sinkholes require technical ability, time, and cost.
 They must be run as a server on an always-on device somewhere
 such as a Raspberry Pi ($35) at home.
-
 On a device away from home,
 ad-blocking may work with additional setup,
 work partially depending on caching,
-or not all.
+or not at all.
 
 ## Modify /etc/hosts
 
 Here's [the script](https://github.com/croaky/laptop/blob/master/bin/adblock)
-I use:
+I use (modified from a version by [@djcp](https://twitter.com/djcp)):
 
 ```bash
 #!/bin/bash
@@ -49,6 +48,7 @@ comment() {
 }
 
 # Comment-out used hosts
+comment 'api.amplitude.com'
 comment 'api.segment.io'
 
 # Restore macOS system defaults
@@ -66,14 +66,13 @@ The data source is [MVPS HOSTS](http://winhelp2002.mvps.org/hosts.txt).
 It is free to use for personal use and licensed under
 the Creative Commons Attribution-NonCommercial-ShareAlike License.
 
-It is fast to set up, run, and edit.
-It can be modified to allow specific hosts,
-which I sometimes need depending on my work.
+It is fast to set up and run.
+It can be edited to allow specific hosts,
+such as those I need for work.
 It works at home or when traveling.
+It only works on my laptop, not my mobile phone.
 
-While free, fast, and flexible, it only works on my laptop, not my mobile phone.
-
-## DNS to 1.1.1.1
+## 1.1.1.1 as DNS resolver
 
 I set my laptop's and phone's DNS resolver to [`1.1.1.1`](https://1.1.1.1),
 a [fast, privacy-focused](https://blog.cloudflare.com/announcing-1111/)
@@ -91,5 +90,5 @@ On iPhone, this setting can be controlled by a nice
 
 On my laptop, the internet is fast, private, and mostly ad-free.
 On my phone, the internet is fast and private.
-This approach is a middle ground without undue cost or technical burden.
-It doesn't cost anything and there is little to maintain.
+This approach is a middle ground without extra cost
+and little to maintain.
