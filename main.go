@@ -31,7 +31,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kr/jsonfeed"
 	"github.com/russross/blackfriday"
 )
 
@@ -196,12 +195,8 @@ func build() map[string]string {
 	blog, articles, tags, redirectMap := load()
 
 	// public directories
+	check(os.RemoveAll(wd + "/public"))
 	check(os.Mkdir(wd+"/public", os.ModePerm))
-	dir, err := ioutil.ReadDir(wd + "/public")
-	check(err)
-	for _, d := range dir {
-		os.RemoveAll(path.Join([]string{"public", d.Name()}...))
-	}
 	check(os.Mkdir(wd+"/public/images", os.ModePerm))
 
 	// index page
@@ -219,15 +214,9 @@ func build() map[string]string {
 	}
 	check(indexPage.Execute(f, indexData))
 
-	// feed and article pages
-	feed := jsonfeed.Feed{
-		Title:       blog.Name,
-		HomePageURL: blog.URL,
-		FeedURL:     blog.URL + "/feed.json",
-	}
-	feed.Items = make([]jsonfeed.Item, len(articles))
+	// article pages
 	articlePage := template.Must(template.ParseFiles(wd + "/theme/article.html"))
-	for i, a := range articles {
+	for _, a := range articles {
 		f, err := os.Create("public/" + a.ID + ".html")
 		check(err)
 		articleData := struct {
@@ -238,27 +227,7 @@ func build() map[string]string {
 			Article: a,
 		}
 		check(articlePage.Execute(f, articleData))
-		item := jsonfeed.Item{
-			ID:          blog.URL + "/" + a.ID,
-			URL:         blog.URL + "/" + a.ID,
-			Title:       a.Title,
-			ContentHTML: string(a.Body),
-			Tags:        a.Tags,
-		}
-		published, err := time.Parse("2006-01-02", a.Published)
-		if err == nil {
-			item.DatePublished = published
-		}
-		updated, err := time.Parse("2006-01-02", a.LastUpdated)
-		if err == nil {
-			item.DateModified = updated
-		}
-		item.Author = &jsonfeed.Author{Name: a.Author}
-		feed.Items[i] = item
 	}
-	f, err = os.Create("public/feed.json")
-	check(err)
-	check(json.NewEncoder(f).Encode(&feed))
 
 	// images
 	cmd := exec.Command("cp", "-a", wd+"/articles/images/.", wd+"/public/images")
