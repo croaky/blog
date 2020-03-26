@@ -2,7 +2,7 @@
 
 Articles about making software at <https://dancroak.com>.
 
-## genblog
+## blog
 
 A static blog generator featuring:
 
@@ -24,15 +24,13 @@ The theme features:
 * PageSpeed Insights performance score of 100
 * Mozilla Observatory security grade of A+
 
-The `./genblog` script requires Go.
 On macOS, install Go with:
 
 ```
 gover="1.14"
 if ! go version | grep -Fq "$gover"; then
   sudo rm -rf /usr/local/go
-  curl "https://dl.google.com/go/go$gover.darwin-amd64.tar.gz" | \
-    sudo tar xz -C /usr/local
+  curl "https://dl.google.com/go/go$gover.darwin-amd64.tar.gz" | sudo tar xz -C /usr/local
 fi
 ```
 
@@ -41,7 +39,7 @@ fi
 Add an article:
 
 ```
-./genblog add example-article
+blog add example-article
 ```
 
 Edit `articles/example-article.md` in a text editor.
@@ -58,7 +56,7 @@ It must be an `<h1>` tag:
 Preview at <http://localhost:2000> with:
 
 ```
-./genblog serve
+./blog serve
 ```
 
 See the [JSON feed](https://jsonfeed.org/) at <http://localhost:2000/feed.json>.
@@ -72,7 +70,7 @@ Refer to them in articles via relative path:
 
 In addition to
 [fenced code blocks](https://github.github.com/gfm/#fenced-code-blocks),
-`./genblog` recognizes a special `embed`
+`./blog` recognizes a special `embed`
 [info string](https://github.github.com/gfm/#info-string).
 This Markdown...
 
@@ -180,7 +178,7 @@ The `_headers` file is copied to `public/_headers` to be used as
 
 The `.html` files
 are parsed as [Go templates](https://gowebexamples.com/templates/)
-by `genblog`.
+by `blog`.
 
 The `article.html` file accepts a data structure like this:
 
@@ -239,7 +237,7 @@ Configure [Netlify](https://www.netlify.com):
 
 * Repository: `https://github.com/croaky/blog`
 * Branch: `master`
-* Build Cmd: `./genblog build`
+* Build Cmd: `./blog build`
 * Public folder: `public`
 
 To publish articles, commit and push to the GitHub repo.

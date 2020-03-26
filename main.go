@@ -1,18 +1,16 @@
 /*
 
-Command genblog generates a static blog.
-
 Add an article:
 
-  genblog add <article-url-slug>
+  blog add <article-url-slug>
 
 Serve site on localhost:
 
-  genblog serve
+  blog serve
 
 Build site (HTML, images, code, Netlify files) to `public/`:
 
-  genblog build
+  blog build
 
 */
 package main
@@ -54,13 +52,13 @@ func main() {
 		}
 		id := os.Args[2]
 		add(id)
-		fmt.Println("genblog: Added article at ./articles/" + id + ".md")
+		fmt.Println("blog: Added article at ./articles/" + id + ".md")
 	case "serve":
-		fmt.Println("genblog: Serving blog at http://localhost:2000")
+		fmt.Println("blog: Serving blog at http://localhost:2000")
 		serve(":2000")
 	case "build":
 		build()
-		fmt.Println("genblog: Built blog at ./public")
+		fmt.Println("blog: Built blog at ./public")
 	default:
 		usage()
 	}
@@ -68,9 +66,9 @@ func main() {
 
 func usage() {
 	const s = `usage:
-  genblog add <article-url-slug>
-  genblog serve
-  genblog build
+  blog add <article-url-slug>
+  blog serve
+  blog build
 `
 	fmt.Fprint(os.Stderr, s)
 	os.Exit(2)
@@ -148,7 +146,7 @@ func serve(addr string) {
 func handler(w http.ResponseWriter, r *http.Request) {
 	redirectMap := build()
 
-	fmt.Println("genblog: " + r.Method + " " + r.URL.Path)
+	fmt.Println("blog: " + r.Method + " " + r.URL.Path)
 
 	for k, v := range redirectMap {
 		if r.URL.Path == k {
