@@ -93,7 +93,7 @@ type Blog struct {
 // Article contains data loaded from config.json and parsed Markdown
 type Article struct {
 	ID          string   `json:"id"`
-	LastUpdated string   `json:"updated"`
+	LastUpdated string   `json:"last_updated"`
 	Tags        []string `json:"tags"`
 
 	Canonical string   `json:"canonical,omitempty"`
