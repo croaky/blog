@@ -5,7 +5,6 @@
   },
   "articles": [
     {
-      "author": "Dan Croak",
       "id": "install-or-upgrade-go-on-macos",
       "updated": "2020-03-25",
       "tags": [
@@ -14,7 +13,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "block-ads-etc-hosts",
       "updated": "2020-02-08",
       "redirects": [
@@ -25,7 +23,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "spell-check-in-vim",
       "redirects": [
         "/avoid-team-wide-spelling-mistakes-with-vim",
@@ -38,7 +35,6 @@
       "updated": "2018-11-12"
     },
     {
-      "author": "Dan Croak",
       "id": "laptop-sh",
       "redirects": [
         "/laptop-setup-script"
@@ -49,7 +45,6 @@
       "updated": "2018-11-12"
     },
     {
-      "author": "Dan Croak",
       "id": "setup-sh",
       "redirects": [
         "/bin-setup"
@@ -60,7 +55,6 @@
       "updated": "2018-11-12"
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://medium.com/interstellar/monorepo-e1847cbd6800",
       "id": "monorepo",
       "updated": "2018-11-01",
@@ -69,7 +63,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "process-model",
       "updated": "2018-10-16",
       "tags": [
@@ -77,7 +70,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "gitignore",
       "updated": "2018-06-21",
       "redirects": [
@@ -88,7 +80,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "email-amazon-ses-rails-ec2",
       "updated": "2018-05-09",
       "tags": [
@@ -96,7 +87,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "asdf-version-manager",
       "updated": "2018-05-07",
       "tags": [
@@ -104,7 +94,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "semantic-linefeeds",
       "updated": "2018-05-03",
       "tags": [
@@ -112,7 +101,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "dns-cdn-origin",
       "tags": [
         "APIs"
@@ -120,7 +108,6 @@
       "updated": "2018-03-11"
     },
     {
-      "author": "Dan Croak",
       "id": "start-a-react-native-project",
       "updated": "2017-06-24",
       "redirects": [
@@ -132,7 +119,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/align-github-flavored-markdown-tables-in-vim",
       "id": "align-markdown-tables-in-vim",
       "updated": "2016-06-15",
@@ -145,7 +131,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/how-to-reduce-a-large-heroku-compiled-slug-size",
       "id": "reduce-heroku-slug-size",
       "updated": "2016-06-13",
@@ -158,7 +143,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/create-a-retention-curve-with-mixpanel-and-google-sheets",
       "id": "retention-curves-mixpanel-google-sheets",
       "updated": "2015-07-01",
@@ -170,7 +154,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/optimizing-full-text-search-with-postgres-tsvector-columns-and-triggers",
       "id": "postgres-full-text-search-tsvectors-triggers",
       "updated": "2015-06-25",
@@ -182,7 +165,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "heroku-routing-errors-slack-papertrail",
       "updated": "2015-04-21",
       "redirects": [
@@ -193,7 +175,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/a-closer-look-at-test-spies",
       "id": "test-spies-vs-mocks",
       "updated": "2015-03-19",
@@ -202,7 +183,6 @@
       ]
     },
     {
-      "author": "Dan Croak and Galen Frechette",
       "canonical": "https://thoughtbot.com/blog/north-star-metric",
       "id": "north-star-metric",
       "updated": "2014-12-25",
@@ -211,7 +191,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/using-polymorphism-to-make-a-better-activity-feed-in-rails",
       "id": "polymorphic-activity-feed-rails",
       "updated": "2013-12-02",
@@ -223,7 +202,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "cache-api-requests",
       "updated": "2013-11-29",
       "tags": [
@@ -231,7 +209,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/faster-grepping-in-vim",
       "id": "search-projects-in-vim",
       "updated": "2013-11-27",
@@ -245,7 +222,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/running-specs-from-vim",
       "id": "run-tests-vim",
       "updated": "2013-08-05",
@@ -257,7 +233,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/how-to-create-postgres-indexes-concurrently-in",
       "id": "create-postgres-indexes-concurrently",
       "updated": "2013-07-30",
@@ -266,7 +241,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/wrap-existing-text-at-80-characters-in-vim",
       "id": "wrap-text-in-vim",
       "updated": "2013-04-07",
@@ -279,7 +253,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/sort-lines-alphabetically-in-vim",
       "id": "sort-lines-in-vim",
       "updated": "2013-02-01",
@@ -292,7 +265,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/delivering-all-email-from-staging-to-a-group-email",
       "id": "intercept-email-from-staging",
       "updated": "2013-01-18",
@@ -301,7 +273,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/four-phase-test",
       "id": "four-phase-test",
       "updated": "2012-09-28",
@@ -310,7 +281,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "decorators-ruby",
       "updated": "2011-12-26",
       "redirects": [
@@ -321,7 +291,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/how-to-back-up-a-heroku-production-database-to-staging",
       "id": "back-up-restore-heroku-postgres-databases",
       "updated": "2011-08-18",
@@ -333,7 +302,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/keeping-a-github-fork-updated",
       "id": "update-a-github-fork",
       "updated": "2011-05-02",
@@ -345,7 +313,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/feature-branch-code-reviews",
       "id": "feature-branch-code-reviews",
       "updated": "2011-01-19",
@@ -354,7 +321,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/rubys-pessimistic-operator",
       "id": "pessimistic-operator-ruby",
       "updated": "2010-12-29",
@@ -366,7 +332,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "config-block-ruby",
       "updated": "2010-01-20",
       "redirects": [
@@ -378,7 +343,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/testing-failure",
       "id": "test-http-errors-ruby",
       "updated": "2009-09-06",
@@ -390,7 +354,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "id": "authorization-rails-associations",
       "updated": "2009-08-12",
       "redirects": [
@@ -401,7 +364,6 @@
       ]
     },
     {
-      "author": "Dan Croak",
       "canonical": "https://thoughtbot.com/blog/mystery-guest",
       "id": "mystery-guests-in-tests",
       "updated": "2009-07-28",

@@ -92,14 +92,16 @@ type Blog struct {
 
 // Article contains data loaded from config.json and parsed Markdown
 type Article struct {
+	ID          string   `json:"id"`
+	LastUpdated string   `json:"updated"`
+	Tags        []string `json:"tags"`
+
+	Canonical string   `json:"canonical,omitempty"`
+	Redirects []string `json:"redirects,omitempty"`
+
 	Body          template.HTML `json:"-"`
-	Canonical     string        `json:"canonical,omitempty"`
-	ID            string        `json:"id"`
-	LastUpdated   string        `json:"updated,omitempty"`
 	LastUpdatedIn string        `json:"-"`
 	LastUpdatedOn string        `json:"-"`
-	Redirects     []string      `json:"redirects,omitempty"`
-	Tags          []string      `json:"tags,omitempty"`
 	Title         string        `json:"-"`
 }
 
@@ -138,8 +140,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("blog: " + r.Method + " " + r.URL.Path)
 
 	// don't rebuild for images or favicon
-	if !strings.HasPrefix(r.URL.Path, "/images/") &&
-		!strings.HasPrefix(r.URL.Path, "/favicon.ico") {
+	if !strings.HasPrefix(r.URL.Path, "/images/") && !strings.HasPrefix(r.URL.Path, "/favicon.ico") {
 		for k, v := range build() {
 			if r.URL.Path == k {
 				http.Redirect(w, r, v, 302)
