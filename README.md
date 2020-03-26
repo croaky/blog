@@ -197,10 +197,8 @@ The `article.html` file accepts a data structure like this:
     LastUpdated:   "2018-04-15",
     LastUpdatedIn: "2018 April",
     LastUpdatedOn: "April 15, 2018",
-    Published:     "2018-04-10",
     Tags:          ["go", "unix"],
     Title:         "Example Article",
-    Updated:       "2018-04-15",
   }
 }
 ```
@@ -222,10 +220,8 @@ The `index.html` file accepts a data structure like this:
       LastUpdated:   "2018-04-15",
       LastUpdatedIn: "2018 April",
       LastUpdatedOn: "April 15, 2018",
-      Published:     "2018-04-10",
       Tags:          ["go", "unix"],
       Title:         "Example Article",
-      Updated:       "2018-04-15",
     }
   ],
   Tags: ["go", "unix"],

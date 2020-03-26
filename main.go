@@ -95,14 +95,12 @@ type Article struct {
 	Body          template.HTML `json:"-"`
 	Canonical     string        `json:"canonical,omitempty"`
 	ID            string        `json:"id"`
-	LastUpdated   string        `json:"-"`
+	LastUpdated   string        `json:"updated,omitempty"`
 	LastUpdatedIn string        `json:"-"`
 	LastUpdatedOn string        `json:"-"`
-	Published     string        `json:"published"`
 	Redirects     []string      `json:"redirects,omitempty"`
 	Tags          []string      `json:"tags,omitempty"`
 	Title         string        `json:"-"`
-	Updated       string        `json:"updated,omitempty"`
 }
 
 func add(id string) {
@@ -115,8 +113,8 @@ func add(id string) {
 	check(ioutil.WriteFile(wd+"/articles/"+id+".md", content, 0644))
 
 	a := Article{
-		ID:        id,
-		Published: time.Now().Format("2006-01-02"),
+		ID:          id,
+		LastUpdated: time.Now().Format("2006-01-02"),
 	}
 
 	data := struct {
@@ -259,25 +257,19 @@ func load() (Blog, []Article, []string, map[string]string) {
 		title, body := preProcess("articles/" + a.ID + ".md")
 		markdown := blackfriday.Run([]byte(body))
 
-		lastUpdated := a.Published
-		if a.Updated != "" {
-			lastUpdated = a.Updated
-		}
-		t, err := time.Parse("2006-01-02", lastUpdated)
+		t, err := time.Parse("2006-01-02", a.LastUpdated)
 		check(err)
 
 		a := Article{
 			Body:          template.HTML(markdown),
 			Canonical:     a.Canonical,
 			ID:            a.ID,
-			LastUpdated:   lastUpdated,
+			LastUpdated:   a.LastUpdated,
 			LastUpdatedIn: t.Format("2006 Jan"),
 			LastUpdatedOn: t.Format("January 2, 2006"),
-			Published:     a.Published,
 			Redirects:     a.Redirects,
 			Tags:          a.Tags,
 			Title:         title,
-			Updated:       a.Updated,
 		}
 		articles[i] = a
 
