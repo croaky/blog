@@ -2,37 +2,38 @@
 
 Articles about making software at <https://dancroak.com>.
 
-## blog
+# Setup
 
-A static blog generator featuring:
+[Install Go](https://dancroak.com/install-or-upgrade-go-on-macos).
+Then, run:
+
+```
+go install ./...
+```
+
+This installs a `blog` command-line program:
+
+```
+usage:
+  blog add <article-url-slug>
+  blog serve
+  blog build
+```
+
+`blog` is a static personal blog generator featuring:
 
 * Markdown files with no front matter
 * Local preview server
-* JSON feed
 * Images
 * Embedded code blocks
 * Drafts
-* Anonymous, single author, or multiple authors
 * Tags
 * "Last updated" timestamp
 * Redirects
 * `rel=canonical` tags
-
-The theme features:
-
 * Responsive design
 * PageSpeed Insights performance score of 100
 * Mozilla Observatory security grade of A+
-
-On macOS, install Go with:
-
-```
-gover="1.14"
-if ! go version | grep -Fq "$gover"; then
-  sudo rm -rf /usr/local/go
-  curl "https://dl.google.com/go/go$gover.darwin-amd64.tar.gz" | sudo tar xz -C /usr/local
-fi
-```
 
 ## Write
 
@@ -237,7 +238,7 @@ Configure [Netlify](https://www.netlify.com):
 
 * Repository: `https://github.com/croaky/blog`
 * Branch: `master`
-* Build Cmd: `./blog build`
+* Build Cmd: `go run main.go build`
 * Public folder: `public`
 
 To publish articles, commit and push to the GitHub repo.
