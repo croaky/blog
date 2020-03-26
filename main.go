@@ -24,7 +24,6 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"os/user"
 	"path"
 	"regexp"
 	"sort"
@@ -51,13 +50,13 @@ func main() {
 		}
 		id := os.Args[2]
 		add(id)
-		fmt.Println("blog: Added article at ./articles/" + id + ".md")
+		fmt.Println("blog: Added ./articles/" + id + ".md")
 	case "serve":
-		fmt.Println("blog: Serving blog at http://localhost:2000")
+		fmt.Println("blog: Serving at http://localhost:2000")
 		serve(":2000")
 	case "build":
 		build()
-		fmt.Println("blog: Built blog at ./public")
+		fmt.Println("blog: Built at ./public")
 	default:
 		usage()
 	}
@@ -93,7 +92,6 @@ type Blog struct {
 
 // Article contains data loaded from config.json and parsed Markdown
 type Article struct {
-	Author        string        `json:"author"`
 	Body          template.HTML `json:"-"`
 	Canonical     string        `json:"canonical,omitempty"`
 	ID            string        `json:"id"`
@@ -116,11 +114,7 @@ func add(id string) {
 	content := []byte("# " + title + "\n\n\n")
 	check(ioutil.WriteFile(wd+"/articles/"+id+".md", content, 0644))
 
-	u, err := user.Current()
-	check(err)
-
 	a := Article{
-		Author:    u.Name,
 		ID:        id,
 		Published: time.Now().Format("2006-01-02"),
 	}
@@ -143,13 +137,15 @@ func serve(addr string) {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	redirectMap := build()
-
 	fmt.Println("blog: " + r.Method + " " + r.URL.Path)
 
-	for k, v := range redirectMap {
-		if r.URL.Path == k {
-			http.Redirect(w, r, v, 302)
+	// don't rebuild for images or favicon
+	if !strings.HasPrefix(r.URL.Path, "/images/") &&
+		!strings.HasPrefix(r.URL.Path, "/favicon.ico") {
+		for k, v := range build() {
+			if r.URL.Path == k {
+				http.Redirect(w, r, v, 302)
+			}
 		}
 	}
 
@@ -196,8 +192,7 @@ func build() map[string]string {
 
 	// public directories
 	check(os.RemoveAll(wd + "/public"))
-	check(os.Mkdir(wd+"/public", os.ModePerm))
-	check(os.Mkdir(wd+"/public/images", os.ModePerm))
+	check(os.MkdirAll(wd+"/public/images", os.ModePerm))
 
 	// index page
 	indexPage := template.Must(template.ParseFiles(wd + "/theme/index.html"))
@@ -233,7 +228,7 @@ func build() map[string]string {
 	cmd := exec.Command("cp", "-a", wd+"/articles/images/.", wd+"/public/images")
 	cmd.Run()
 
-	// headers, favicon.ico, and additional files from theme authors
+	// headers, favicon.ico, and additional files from theme
 	cmd = exec.Command("cp", "-a", wd+"/theme/public/.", wd+"/public")
 	cmd.Run()
 
@@ -272,7 +267,6 @@ func load() (Blog, []Article, []string, map[string]string) {
 		check(err)
 
 		a := Article{
-			Author:        a.Author,
 			Body:          template.HTML(markdown),
 			Canonical:     a.Canonical,
 			ID:            a.ID,
