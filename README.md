@@ -1,9 +1,6 @@
-# dancroak.com blog
+# blog
 
-Articles about making software.
-[See blog](https://dancroak.com)
-
-The implementation uses a custom static blog generator called `genblog`.
+Articles about making software at <https://dancroak.com>.
 
 ## genblog
 
