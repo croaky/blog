@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 
 go install ./...
+go env
+echo "$PATH"
+export PATH="$GOPATH/bin:$PATH"
 genblog "$@"
