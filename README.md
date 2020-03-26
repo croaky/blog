@@ -1,6 +1,8 @@
 # blog
 
 Articles about making software at <https://dancroak.com>.
+Custom static site generator written in Go.
+Designed to be deployed to [Netlify](https://www.netlify.com/).
 
 # Setup
 
@@ -185,10 +187,6 @@ The `article.html` file accepts a data structure like this:
 
 ```
 {
-  Blog: {
-    "name": "Dan Croak",
-    "url": "https://dancroak.com"
-  }
   Article: {
     Author:        "Alice",
     Body:          "<p>Hello, world.</p>",
@@ -207,10 +205,6 @@ The `index.html` file accepts a data structure like this:
 
 ```
 {
-  Blog: {
-    "name": "Dan Croak",
-    "url": "https://dancroak.com"
-  },
   Articles: [
     {
       Author:        "Alice",

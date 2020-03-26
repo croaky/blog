@@ -84,15 +84,10 @@ func exitWith(s string) {
 	os.Exit(1)
 }
 
-// Blog contains data loaded from config.json
-type Blog struct {
-	Name string `json:"name"`
-	URL  string `json:"url"`
-}
-
 // Article contains data loaded from config.json and parsed Markdown
 type Article struct {
 	ID          string   `json:"id"`
+	Description string   `json:"description"`
 	LastUpdated string   `json:"last_updated"`
 	Tags        []string `json:"tags"`
 
@@ -106,7 +101,7 @@ type Article struct {
 }
 
 func add(id string) {
-	blog, articles, _, _ := load()
+	articles, _, _ := load()
 
 	noDashes := strings.Replace(id, "-", " ", -1)
 	noUnderscores := strings.Replace(noDashes, "_", " ", -1)
@@ -120,10 +115,8 @@ func add(id string) {
 	}
 
 	data := struct {
-		Blog     Blog      `json:"blog"`
 		Articles []Article `json:"articles"`
 	}{
-		Blog:     blog,
 		Articles: append([]Article{a}, articles...),
 	}
 	config, err := json.MarshalIndent(data, "", "  ")
@@ -187,7 +180,7 @@ func headers() map[string]string {
 }
 
 func build() map[string]string {
-	blog, articles, tags, redirectMap := load()
+	articles, tags, redirectMap := load()
 
 	// public directories
 	check(os.RemoveAll(wd + "/public"))
@@ -198,11 +191,9 @@ func build() map[string]string {
 	f, err := os.Create("public/index.html")
 	check(err)
 	indexData := struct {
-		Blog     Blog
 		Articles []Article
 		Tags     []string
 	}{
-		Blog:     blog,
 		Articles: articles,
 		Tags:     tags,
 	}
@@ -214,10 +205,8 @@ func build() map[string]string {
 		f, err := os.Create("public/" + a.ID + ".html")
 		check(err)
 		articleData := struct {
-			Blog    Blog
 			Article Article
 		}{
-			Blog:    blog,
 			Article: a,
 		}
 		check(articlePage.Execute(f, articleData))
@@ -241,11 +230,10 @@ func build() map[string]string {
 	return redirectMap
 }
 
-func load() (Blog, []Article, []string, map[string]string) {
+func load() ([]Article, []string, map[string]string) {
 	config, err := ioutil.ReadFile(wd + "/config.json")
 	check(err)
 	var data struct {
-		Blog     Blog      `json:"blog"`
 		Articles []Article `json:"articles"`
 	}
 	check(json.Unmarshal(config, &data))
@@ -293,7 +281,7 @@ func load() (Blog, []Article, []string, map[string]string) {
 		prev = t
 	}
 
-	return data.Blog, articles, uniqTags, redirectMap
+	return articles, uniqTags, redirectMap
 }
 
 /*
