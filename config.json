@@ -6,6 +6,15 @@
   "articles": [
     {
       "author": "Dan Croak",
+      "id": "install-or-upgrade-go-on-macos",
+      "published": "2020-03-25",
+      "tags": [
+        "APIs",
+        "Engineering"
+      ]
+    },
+    {
+      "author": "Dan Croak",
       "id": "block-ads-etc-hosts",
       "published": "2020-02-08",
       "redirects": [
