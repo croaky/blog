@@ -81,6 +81,9 @@
     h2 {
       margin: 2.5rem 0 1rem;
     }
+    h2:hover {
+      cursor: pointer;
+    }
     p {
       margin: 1.5rem 0;
       max-width: 100%;
@@ -187,5 +190,27 @@
       {{.Article.Body}}
     </article>
   </div>
+
+  <script>
+    function each(selector, fn) {
+      Array.prototype.forEach.call(document.querySelectorAll(selector), fn);
+    }
+
+    function ready(fn) {
+      if (document.readyState != 'loading') {
+        fn();
+      } else {
+        document.addEventListener('DOMContentLoaded', fn);
+      }
+    }
+
+    ready(function() {
+      each('article h2', function(el, i) {
+        el.addEventListener('click', function() {
+          location.href = "#" + el.id;
+        });
+      });
+    });
+  </script>
 </body>
 </html>
