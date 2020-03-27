@@ -140,15 +140,12 @@ Configure blog in `config.json`:
 }
 ```
 
-Each `id` must match a Markdown file `articles/id.md`.
+Each article's `id` must match a Markdown file `articles/id.md`.
 It is also used as the URL slug.
 
 Each `description` is used as the `meta` description.
 
 ## Modify theme
-
-The `theme` directory's files can be modified
-to customize the blog's HTTP headers, HTML, CSS, and JavaScript.
 
 The `theme/public` files are copied to `public` by `blog build`.
 `theme/public/_headers` are
@@ -156,8 +153,7 @@ The `theme/public` files are copied to `public` by `blog build`.
 
 The `theme/*.html` files
 are parsed as [Go templates](https://gowebexamples.com/templates/).
-
-The `article.html` template accepts a data structure like this:
+The `theme/article.html` template accepts a data structure like this:
 
 ```
 {
@@ -173,7 +169,7 @@ The `article.html` template accepts a data structure like this:
 }
 ```
 
-The `index.html` template accepts a data structure like this:
+The `theme/index.html` template accepts a data structure like this:
 
 ```
 {
