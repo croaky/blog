@@ -1,5 +1,14 @@
 [
   {
+    "description": "Schedule blog posts to be published daily via Netlify build hooks using GitHub Actions' scheduled workflow and GitHub encrypted secrets.",
+    "id": "schedule-netlify-builds-with-github-actions",
+    "last_updated": "2020-03-28",
+    "tags": [
+      "SaaS",
+      "Workflow"
+    ]
+  },
+  {
     "description": "End-to-end workflow combining Kanban project management, GitHub feature branch code reviews, continuous integration, and continuous delivery.",
     "id": "pull-requests-and-kanban",
     "last_updated": "2020-03-26",
@@ -201,8 +210,8 @@
     ]
   },
   {
-    "id": "log-alert-heroku-routing-errors",
     "description": "On Heroku, routing errors never reach the error-tracking code in your app's processes. Send them to your logging service and set up alerts.",
+    "id": "log-alert-heroku-routing-errors",
     "last_updated": "2015-04-21",
     "redirects": [
       "/post/send-your-apps-heroku-routing-errors-to-slack-with-papertrail-alerts/",
@@ -356,7 +365,7 @@
   },
   {
     "canonical": "https://thoughtbot.com/blog/rubys-pessimistic-operator",
-    "description": "Using Ruby's ~> operator with Semantic Versioning can achieve better stability in our dependencies.",
+    "description": "Using Ruby's pessimistic operator with Semantic Versioning can achieve better stability in our dependencies.",
     "id": "pessimistic-operator-ruby",
     "last_updated": "2010-12-29",
     "redirects": [
@@ -367,8 +376,8 @@
     ]
   },
   {
-    "id": "config-block-ruby",
     "description": "How to implement a common interface for configuring a third-party library in Ruby.",
+    "id": "config-block-ruby",
     "last_updated": "2010-01-20",
     "redirects": [
       "/configuration-block-pattern-with-ruby",
@@ -379,8 +388,8 @@
     ]
   },
   {
-    "id": "authorization-rails-associations",
     "description": "Leverage Rails associations with a User model to enforce authorization concerns without additional code.",
+    "id": "authorization-rails-associations",
     "last_updated": "2009-08-12",
     "redirects": [
       "/authorization-with-rails-associations"

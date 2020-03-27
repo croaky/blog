@@ -89,13 +89,12 @@ func exitWith(s string) {
 
 // Article contains data loaded from config.json and parsed Markdown
 type Article struct {
-	ID          string   `json:"id"`
+	Canonical   string   `json:"canonical,omitempty"`
 	Description string   `json:"description"`
+	ID          string   `json:"id"`
 	LastUpdated string   `json:"last_updated"`
+	Redirects   []string `json:"redirects,omitempty"`
 	Tags        []string `json:"tags"`
-
-	Canonical string   `json:"canonical,omitempty"`
-	Redirects []string `json:"redirects,omitempty"`
 
 	Body          template.HTML `json:"-"`
 	LastUpdatedIn string        `json:"-"`
