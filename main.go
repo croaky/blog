@@ -35,6 +35,7 @@ import (
 )
 
 var wd string
+var showScheduled = true
 
 func main() {
 	if len(os.Args) < 2 {
@@ -56,6 +57,7 @@ func main() {
 		fmt.Println("Serving at http://localhost:2000")
 		serve(":2000")
 	case "build":
+		showScheduled = false
 		build()
 		fmt.Println("Built at ./public")
 	default:
@@ -240,12 +242,17 @@ func load() ([]Article, []string, map[string]string) {
 	redirectMap := make(map[string]string)
 
 	for i, a := range articles {
+		t, err := time.Parse("2006-01-02", a.LastUpdated)
+		check(err)
+
+		now := time.Now()
+		if showScheduled == false && t.After(now) {
+			continue
+		}
+
 		title, body := preProcess("articles/" + a.ID + ".md")
 		ext := parser.CommonExtensions | parser.AutoHeadingIDs
 		html := markdown.ToHTML([]byte(body), parser.NewWithExtensions(ext), nil)
-
-		t, err := time.Parse("2006-01-02", a.LastUpdated)
-		check(err)
 
 		a := Article{
 			Body:          template.HTML(html),
