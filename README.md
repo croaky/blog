@@ -147,7 +147,7 @@ The `description` is used for the article page's `meta` description.
 
 ## Modify theme
 
-The `theme/public` files are copied to `public` by `blog build`.
+All `theme/public` files are copied to `public`.
 `theme/public/_headers` are
 [Netlify Headers](https://www.netlify.com/docs/headers-and-basic-auth/).
 
