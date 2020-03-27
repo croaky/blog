@@ -62,8 +62,8 @@ Preview at <http://localhost:2000> with:
 blog serve
 ```
 
-Add images to the `articles/images` directory.
-Refer to them in articles via relative path:
+Add images to the `images` directory.
+Refer to them in articles:
 
 ```md
 ![alt text](images/example.png)
@@ -113,7 +113,7 @@ Configure blog in `config.json`:
       "last_updated": "2050-01-01",
       "tags": [
         "go",
-        "unix"
+        "react"
       ]
     },
     {

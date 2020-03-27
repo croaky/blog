@@ -216,7 +216,7 @@ func build() map[string]string {
 	}
 
 	// images
-	cmd := exec.Command("cp", "-a", wd+"/articles/images/.", wd+"/public/images")
+	cmd := exec.Command("cp", "-a", wd+"/images/.", wd+"/public/images")
 	cmd.Run()
 
 	// headers, favicon.ico, and additional files from theme
