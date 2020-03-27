@@ -30,7 +30,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/russross/blackfriday"
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/parser"
 )
 
 var wd string
@@ -240,13 +241,14 @@ func load() ([]Article, []string, map[string]string) {
 
 	for i, a := range articles {
 		title, body := preProcess("articles/" + a.ID + ".md")
-		markdown := blackfriday.Run([]byte(body))
+		ext := parser.CommonExtensions | parser.AutoHeadingIDs
+		html := markdown.ToHTML([]byte(body), parser.NewWithExtensions(ext), nil)
 
 		t, err := time.Parse("2006-01-02", a.LastUpdated)
 		check(err)
 
 		a := Article{
-			Body:          template.HTML(markdown),
+			Body:          template.HTML(html),
 			Canonical:     a.Canonical,
 			Description:   a.Description,
 			ID:            a.ID,
