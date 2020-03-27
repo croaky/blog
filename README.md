@@ -65,13 +65,6 @@ Preview at <http://localhost:2000> with:
 blog serve
 ```
 
-Add images to the `images` directory.
-Refer to them in articles:
-
-```md
-![alt text](images/example.png)
-```
-
 Embed code blocks from external files into Markdown like this:
 
     Instantiate a client:
@@ -81,7 +74,8 @@ Embed code blocks from external files into Markdown like this:
     ```
 
 This embeds code from `code/example.rb`
-between `begindoc` and `enddoc` magic comments:
+between `begindoc` and `enddoc` magic comments
+with an id `instantiate`:
 
 ```ruby
 # begindoc: instantiate
@@ -94,14 +88,15 @@ client = Example::Client.new(
 # enddoc: instantiate
 ```
 
-The magic comments demarcate code blocks by id.
-In this example, the id is `instantiate`.
+This way, external files whose code is embedded in the Markdown prose
+can be run, linted, or tested in CI.
 
-This allows you to run, lint, and test embedded code
-separate from Markdown prose.
+Add images to the `images` directory.
+Refer to them in articles:
 
-Normal [fenced code blocks](https://github.github.com/gfm/#fenced-code-blocks)
-also work.
+```md
+![alt text](images/example.png)
+```
 
 ## Configure
 
@@ -111,7 +106,8 @@ Configure blog in `config.json`:
 {
   "articles": [
     {
-      "id": "article-is-draft-if-future-date",
+      "description": "Draft scheduled for future date.",
+      "id": "article-draft-scheduled",
       "last_updated": "2050-01-01",
       "tags": [
         "go",
@@ -119,6 +115,7 @@ Configure blog in `config.json`:
       ]
     },
     {
+      "description": "Redirect old URL slugs.",
       "id": "article-with-redirects",
       "last_updated": "2018-02-01",
       "tags": [
@@ -131,6 +128,7 @@ Configure blog in `config.json`:
       ]
     },
     {
+      "description": "Canonical article is on a separate site.",
       "canonical": "https://seo.example.com/avoid-duplicate-content-penalty",
       "id": "article-with-rel-canonical",
       "last_updated": "2018-01-15",
@@ -142,19 +140,20 @@ Configure blog in `config.json`:
 }
 ```
 
+The `id` must match a Markdown file `articles/id.md`.
+It is also used for the article's URL slug.
+
+The `description` is used for the article page's `meta` description.
+
 ## Modify theme
 
-The `theme` directory's files can be modified
-to customize the blog's HTTP headers, HTML, CSS, and JavaScript.
-
-The `theme/public` files are copied to `public` by `blog build`.
+All `theme/public` files are copied to `public`.
 `theme/public/_headers` are
 [Netlify Headers](https://www.netlify.com/docs/headers-and-basic-auth/).
 
 The `theme/*.html` files
 are parsed as [Go templates](https://gowebexamples.com/templates/).
-
-The `article.html` template accepts a data structure like this:
+The `theme/article.html` template accepts a data structure like this:
 
 ```
 {
@@ -170,7 +169,7 @@ The `article.html` template accepts a data structure like this:
 }
 ```
 
-The `index.html` template accepts a data structure like this:
+The `theme/index.html` template accepts a data structure like this:
 
 ```
 {
