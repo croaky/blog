@@ -1,4 +1,4 @@
-name: publish scheduled posts daily
+name: daily publish
 
 on: pull_request
 
@@ -10,5 +10,5 @@ jobs:
       - name: Trigger Netlify build
         shell: bash
         env:
-          SUPER_SECRET: ${{ secrets.NETLIFY_BUILD_HOOK }}
+          NETLIFY_BUILD_HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
         run: echo "$NETLIFY_BUILD_HOOK" && curl -X POST -d {} "$NETLIFY_BUILD_HOOK"
