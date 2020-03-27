@@ -125,8 +125,8 @@ Configure articles in `config.json`:
     ]
   },
   {
-    "description": "Canonical article is on a separate site.",
     "canonical": "https://seo.example.com/avoid-duplicate-content-penalty",
+    "description": "Canonical article is on a separate site.",
     "id": "article-with-rel-canonical",
     "last_updated": "2018-01-15",
     "tags": [
@@ -136,10 +136,17 @@ Configure articles in `config.json`:
 ]
 ```
 
+The `description` is used for the article page's `meta` description.
+
 The `id` must match a Markdown file `articles/id.md`.
 It is also used for the article's URL slug.
 
-The `description` is used for the article page's `meta` description.
+The `last_updated` date can be in the future.
+A [GitHub Action is scheduled daily](.github/workflows/daily)
+to auto-publish to Netlify.
+
+The `redirects` array is converted into a
+[Netlify _redirects file](https://docs.netlify.com/routing/redirects/).
 
 ## Modify theme
 

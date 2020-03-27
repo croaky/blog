@@ -1,0 +1,16 @@
+name: daily publish
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # every day at midnight UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Netlify build
+        shell: bash
+        env:
+          NETLIFY_BUILD_HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: curl -X POST -d {} "$NETLIFY_BUILD_HOOK"
