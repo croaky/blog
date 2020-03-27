@@ -1,6 +1,8 @@
 name: daily publish
 
-on: pull_request
+on:
+  schedule:
+    - cron: "0 0 * * *" # every day at midnight UTC
 
 jobs:
   build:
@@ -11,4 +13,4 @@ jobs:
         shell: bash
         env:
           NETLIFY_BUILD_HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
-        run: echo "$NETLIFY_BUILD_HOOK" && curl -X POST -d {} "$NETLIFY_BUILD_HOOK"
+        run: curl -X POST -d {} "$NETLIFY_BUILD_HOOK"
