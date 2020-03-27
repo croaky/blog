@@ -1,15 +1,15 @@
-# Config Block
+# Config Block with Ruby
 
 A common interface for configuring a third-party library in Ruby:
 
 ```embed
-config-block.rb block
+code/config-block.rb block
 ```
 
 It can be implemented like this:
 
 ```embed
-config-block.rb module
+code/config-block.rb module
 ```
 
 The `config` class method
@@ -19,5 +19,5 @@ in the `Service` module.
 Each config setting can be accessed like this:
 
 ```embed
-config-block.rb access
+code/config-block.rb access
 ```

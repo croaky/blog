@@ -62,8 +62,6 @@ Preview at <http://localhost:2000> with:
 blog serve
 ```
 
-See the [JSON feed](https://jsonfeed.org/) at <http://localhost:2000/feed.json>.
-
 Add images to the `articles/images` directory.
 Refer to them in articles via relative path:
 
@@ -80,10 +78,10 @@ This Markdown...
     Instantiate a client:
 
     ```embed
-    example.rb instantiate
+    code/example.rb instantiate
     ```
 
-...embeds code from `articles/code/example.rb`
+...embeds code from `code/example.rb`
 between `begindoc` and `enddoc` magic comments:
 
 ```ruby
@@ -107,7 +105,7 @@ separate from Markdown prose.
 
 Configure blog in `config.json`:
 
-```json
+```
 {
   "articles": [
     {

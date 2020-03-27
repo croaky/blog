@@ -296,11 +296,10 @@ which can then be passed to a Markdown compiler at the call site.
 When the scanner encounters an "embed" code fence like this...
 
 ```embed
-example.rb id
+code/example.rb id
 ```
 
-...it loads the source code file at articles/code/example.rb
-and finds "magic comments" in the source like this...
+...it loads the file and finds "magic comments" in the source like this...
 
 # begindoc: id
 puts "here"
@@ -344,12 +343,12 @@ func preProcess(filepath string) (title, body string) {
 		if isEmbed {
 			parts := strings.Split(line, " ")
 			if len(parts) != 2 {
-				exitWith("error: embed line must be filename<space>id like: test.rb id")
+				exitWith("error: embed line must be filepath id like: code/test.rb id")
 			}
 			filename := parts[0]
 			id := parts[1]
 
-			srcCode, err := ioutil.ReadFile(wd + "/articles/code/" + filename)
+			srcCode, err := ioutil.ReadFile(wd + "/" + filename)
 			check(err)
 
 			sep := "begindoc: " + id + "\n"
