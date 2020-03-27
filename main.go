@@ -114,12 +114,8 @@ func add(id string) {
 		LastUpdated: time.Now().Format("2006-01-02"),
 	}
 
-	data := struct {
-		Articles []Article `json:"articles"`
-	}{
-		Articles: append([]Article{a}, articles...),
-	}
-	config, err := json.MarshalIndent(data, "", "  ")
+	articles = append([]Article{a}, articles...)
+	config, err := json.MarshalIndent(articles, "", "  ")
 	check(err)
 	check(ioutil.WriteFile(wd+"/config.json", config, 0644))
 }
@@ -236,16 +232,13 @@ func build() map[string]string {
 func load() ([]Article, []string, map[string]string) {
 	config, err := ioutil.ReadFile(wd + "/config.json")
 	check(err)
-	var data struct {
-		Articles []Article `json:"articles"`
-	}
-	check(json.Unmarshal(config, &data))
+	var articles []Article
+	check(json.Unmarshal(config, &articles))
 
-	articles := make([]Article, len(data.Articles))
 	tags := make([]string, 0)
 	redirectMap := make(map[string]string)
 
-	for i, a := range data.Articles {
+	for i, a := range articles {
 		title, body := preProcess("articles/" + a.ID + ".md")
 		markdown := blackfriday.Run([]byte(body))
 

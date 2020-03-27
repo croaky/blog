@@ -4,7 +4,7 @@ Articles about making software at <https://dancroak.com>.
 Bespoke static site generator
 designed to be deployed to [Netlify](https://www.netlify.com/).
 
-# Setup
+## Setup
 
 [Install Go](https://dancroak.com/install-or-upgrade-go-on-macos).
 Then, run:
@@ -98,46 +98,42 @@ Refer to them in articles:
 ![alt text](images/example.png)
 ```
 
-## Configure
-
-Configure blog in `config.json`:
+Configure articles in `config.json`:
 
 ```
-{
-  "articles": [
-    {
-      "description": "Draft scheduled for future date.",
-      "id": "article-draft-scheduled",
-      "last_updated": "2050-01-01",
-      "tags": [
-        "go",
-        "react"
-      ]
-    },
-    {
-      "description": "Redirect old URL slugs.",
-      "id": "article-with-redirects",
-      "last_updated": "2018-02-01",
-      "tags": [
-        "go"
-      ]
-      "redirects": [
-        "/article-original-name",
-        "/article-renamed-again",
-        "/this-feature-works-only-on-netlify",
-      ]
-    },
-    {
-      "description": "Canonical article is on a separate site.",
-      "canonical": "https://seo.example.com/avoid-duplicate-content-penalty",
-      "id": "article-with-rel-canonical",
-      "last_updated": "2018-01-15",
-      "tags": [
-        "go"
-      ]
-    }
-  ]
-}
+[
+  {
+    "description": "Draft scheduled for future date.",
+    "id": "article-draft-scheduled",
+    "last_updated": "2050-01-01",
+    "tags": [
+      "go",
+      "react"
+    ]
+  },
+  {
+    "description": "Redirect old URL slugs.",
+    "id": "article-with-redirects",
+    "last_updated": "2018-02-01",
+    "tags": [
+      "go"
+    ]
+    "redirects": [
+      "/article-original-name",
+      "/article-renamed-again",
+      "/this-feature-works-only-on-netlify",
+    ]
+  },
+  {
+    "description": "Canonical article is on a separate site.",
+    "canonical": "https://seo.example.com/avoid-duplicate-content-penalty",
+    "id": "article-with-rel-canonical",
+    "last_updated": "2018-01-15",
+    "tags": [
+      "go"
+    ]
+  }
+]
 ```
 
 The `id` must match a Markdown file `articles/id.md`.
