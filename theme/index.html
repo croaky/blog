@@ -228,12 +228,12 @@
 
     ready(function() {
       if (window.location.hash.includes('#')) {
-        toggleTag(window.location.hash.split('#')[1])
+        toggleTag(window.location.hash.split('#')[1]);
       }
 
       each('nav .tags a', function(el, i) {
         el.addEventListener('click', function() {
-          toggleTag(el.id.split('toggle-')[1])
+          toggleTag(el.id.split('toggle-')[1]);
         });
       });
     });
