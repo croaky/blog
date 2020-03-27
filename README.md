@@ -106,7 +106,8 @@ Configure blog in `config.json`:
 {
   "articles": [
     {
-      "id": "article-is-draft-if-future-date",
+      "description": "Draft scheduled for future date.",
+      "id": "article-draft-scheduled",
       "last_updated": "2050-01-01",
       "tags": [
         "go",
@@ -114,6 +115,7 @@ Configure blog in `config.json`:
       ]
     },
     {
+      "description": "Redirect old URL slugs.",
       "id": "article-with-redirects",
       "last_updated": "2018-02-01",
       "tags": [
@@ -126,6 +128,7 @@ Configure blog in `config.json`:
       ]
     },
     {
+      "description": "Canonical article is on a separate site.",
       "canonical": "https://seo.example.com/avoid-duplicate-content-penalty",
       "id": "article-with-rel-canonical",
       "last_updated": "2018-01-15",
@@ -136,6 +139,11 @@ Configure blog in `config.json`:
   ]
 }
 ```
+
+Each `id` must match a Markdown file `articles/id.md`.
+It is also used as the URL slug.
+
+Each `description` is used as the `meta` description.
 
 ## Modify theme
 
