@@ -65,13 +65,6 @@ Preview at <http://localhost:2000> with:
 blog serve
 ```
 
-Add images to the `images` directory.
-Refer to them in articles:
-
-```md
-![alt text](images/example.png)
-```
-
 Embed code blocks from external files into Markdown like this:
 
     Instantiate a client:
@@ -81,7 +74,8 @@ Embed code blocks from external files into Markdown like this:
     ```
 
 This embeds code from `code/example.rb`
-between `begindoc` and `enddoc` magic comments:
+between `begindoc` and `enddoc` magic comments
+with the same id (in this example, the id is `instantiate`):
 
 ```ruby
 # begindoc: instantiate
@@ -94,14 +88,15 @@ client = Example::Client.new(
 # enddoc: instantiate
 ```
 
-The magic comments demarcate code blocks by id.
-In this example, the id is `instantiate`.
+This allows you to run, lint, and test external files
+whose code is embedded in the Markdown prose.
 
-This allows you to run, lint, and test embedded code
-separate from Markdown prose.
+Add images to the `images` directory.
+Refer to them in articles:
 
-Normal [fenced code blocks](https://github.github.com/gfm/#fenced-code-blocks)
-also work.
+```md
+![alt text](images/example.png)
+```
 
 ## Configure
 
