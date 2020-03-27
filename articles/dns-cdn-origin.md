@@ -134,7 +134,14 @@ To use CloudFront:
 
 To use Fastly, there's no additional "Origin Pull" configuration.
 
-This is a handy task for the app's `Rakefile`:
+The deployment process can be adjusted to:
+
+```bash
+git push heroku master --app example
+heroku run rake purge --app example
+```
+
+The `purge` rake task:
 
 ```ruby
 task :purge do
@@ -145,17 +152,8 @@ task :purge do
 end
 ```
 
-Then, the deployment process can be adjusted to:
-
-```bash
-git push heroku master --app example
-heroku run rake purge --app example
-```
-
 For more advanced caching and cache invalidation at an object level,
-see the [fastly-rails] gem.
-
-[fastly-rails]: https://github.com/fastly/fastly-rails
+see the [fastly-rails](https://github.com/fastly/fastly-rails) gem.
 
 ## Caching entire HTML pages
 

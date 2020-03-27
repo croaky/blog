@@ -50,13 +50,13 @@ func main() {
 		}
 		id := os.Args[2]
 		add(id)
-		fmt.Println("blog: Added ./articles/" + id + ".md")
+		fmt.Println("Added ./articles/" + id + ".md")
 	case "serve":
-		fmt.Println("blog: Serving at http://localhost:2000")
+		fmt.Println("Serving at http://localhost:2000")
 		serve(":2000")
 	case "build":
 		build()
-		fmt.Println("blog: Built at ./public")
+		fmt.Println("Built at ./public")
 	default:
 		usage()
 	}
@@ -130,7 +130,10 @@ func serve(addr string) {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("blog: " + r.Method + " " + r.URL.Path)
+	// log every request except favicon.ico noise
+	if r.URL.Path != "/favicon.ico" {
+		fmt.Println(r.Method + " " + r.URL.Path)
+	}
 
 	// don't rebuild for images or favicon
 	if !strings.HasPrefix(r.URL.Path, "/images/") && !strings.HasPrefix(r.URL.Path, "/favicon.ico") {
@@ -252,6 +255,7 @@ func load() ([]Article, []string, map[string]string) {
 		a := Article{
 			Body:          template.HTML(markdown),
 			Canonical:     a.Canonical,
+			Description:   a.Description,
 			ID:            a.ID,
 			LastUpdated:   a.LastUpdated,
 			LastUpdatedIn: t.Format("2006 Jan"),

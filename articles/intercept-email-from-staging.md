@@ -1,22 +1,17 @@
 # Intercept Email from Staging
 
-Intercept email from the staging environment of a Rails app
-and deliver it to a group email address
-using [`croaky/recipient_interceptor`][recipient_interceptor].
-This lets the product team preview emails
+Intercept email from a Rails app
+and deliver it to a whitelist of email addresses
+so the team can preview emails
 without accidentally delivering staging email to production customers.
 
-[recipient_interceptor]: https://github.com/croaky/recipient_interceptor
-
-In Gemfile:
+Integrate <https://github.com/croaky/recipient_interceptor>:
 
 ```ruby
+# Gemfile
 gem "recipient_interceptor"
-```
 
-In config/environments/production.rb:
-
-```ruby
+# config/environments/production.rb
 My::Application.configure do
   config.action_mailer.default_url_options = { host: ENV.fetch("HOST") }
   config.action_mailer.delivery_method = :smtp
@@ -30,16 +25,16 @@ My::Application.configure do
   }
 end
 
-if ENV.has_key?("EMAIL_RECIPIENTS")
-  Mail.register_interceptor(
-    RecipientInterceptor.new(ENV.fetch("EMAIL_RECIPIENTS"))
-  )
-end
+# config/environments/staging.rb
+require_relative "production"
+Mail.register_interceptor(
+  RecipientInterceptor.new(ENV.fetch("EMAIL_RECIPIENTS"))
+)
 ```
 
 Use the `EMAIL_RECIPIENTS` environment variable
-to update the list of email addresses that should receive staging emails.
-
+to update the comma-separated list of email addresses
+that should receive staging emails.
 For example:
 
 ```

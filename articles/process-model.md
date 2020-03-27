@@ -1,7 +1,7 @@
 # Process Model
 
-If we define Unix processes in a manifest named `Procfile`,
-we can use tools to manage those processes.
+Define Unix processes in a manifest named `Procfile`
+and use tools to manage those processes.
 
 Rails app:
 

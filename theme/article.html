@@ -3,10 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Dan Croak">
   <title>{{.Article.Title}}</title>
+  <meta name="author" content="Dan Croak">
   {{- if .Article.Canonical }}
   <link rel="canonical" href="{{.Article.Canonical}}">
+  {{- end }}
+  {{- if .Article.Description }}
+  <meta name="description" content="{{.Article.Description}}">
   {{- end }}
   <style>
     :root {
@@ -49,7 +52,7 @@
     }
     .container {
       margin: 3rem;
-      max-width: 1080px;
+      max-width: 1400px;
     }
     img {
       width: 100%;
@@ -70,6 +73,7 @@
       font-size: 50px;
       line-height: 60px;
       margin-bottom: 5px;
+      width: 1050px;
     }
     time {
       color: rgb(150, 150, 150);
@@ -173,9 +177,7 @@
 
     <article>
       <header>
-        <h1>
-          {{.Article.Title}}
-        </h1>
+        <h1>{{.Article.Title}}</h1>
 
         <time datetime="{{.Article.LastUpdated}}">
           last updated {{.Article.LastUpdatedOn}}

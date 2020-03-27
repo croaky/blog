@@ -8,37 +8,22 @@ Fix a bug?
 Design a user interface?
 Remove a step in the activation funnel?
 Write a blog post?
-Offer an e-book for a lead nurturing campaign?
 Change pricing?
-Hire a customer support person?
+Hire a customer support rep?
 
-The [North Star] has been used for navigation
-since Late Antiquity.
-Applying it as a metaphor
-to [startups],
-we can define a North Star metric by
-answering the question:
-
-[North Star]: https://en.wikipedia.org/wiki/Pole_star#Northern_pole_star_.28North_Star.29
-[startups]: http://www.paulgraham.com/growth.html
+The "North Star" metaphor means following one thing as our guide.
+A North Star metric for startups answers the question:
 
 > How many people are getting authentic value from our product?
 
-We say "authentic" value
-to avoid vanity metrics
+"Authentic value" means avoiding vanity metrics
 such as pageviews and sessions.
 
-We don't use the terms
-Daily Active Users (DAU) or
-Monthly Active Users (MAU).
-The North Star metaphor
-reminds us to
-use the metric
-as our guide.
-The moment when a user gets authentic value
-may not always be when the user acts.
+Daily Active Users (DAU) or Monthly Active Users (MAU) may not apply
+if the moment when a user gets authentic value
+is not necessarily when the user acts.
 
-## Example North Star metric
+## Example metric
 
 An organization exists to serve [a mission][lec01].
 A product exists to serve [a job to be done][jtbd].
@@ -46,40 +31,28 @@ A product exists to serve [a job to be done][jtbd].
 [lec01]: http://startupclass.samaltman.com/courses/lec01/
 [jtbd]: https://www.youtube.com/watch?v=f84LymEs67Y
 
-For example,
-thoughtbot's mission is to create better software.
-We believe a job to be done
-to create better software is
+[Hound](https://houndci.com)'s mission is to enable better software.
+A job to be done to enable better software is
 to keep a project's code in a consistent style.
-
-[Hound] serves that job to be done
-by reviewing GitHub pull requests
+Hound serves that job to be done
+by automatically reviewing GitHub pull requests
 for style violations.
-
-[Hound]: https://houndci.com
 
 The moment Hound reviews
 is called a "build."
 It is the moment
 the team gets authentic value
-because the product helps them
-keep their code
-in a consistent style.
-It is the moment
-the product's job is done.
+and the product's job is done.
 
 Hound's North Star metric is therefore:
 
 > Teams with builds per week
 
-## How to calculate it with SQL
+## Calculate
 
-We've often calculated the North Star metric using our application's SQL
-database, hosted by [Heroku Postgres]. We run a SQL query on
-our production database's "follower" (read-only slave) using [Dataclips]:
-
-[Heroku Postgres]: https://www.heroku.com/postgres
-[Dataclips]: https://devcenter.heroku.com/articles/dataclips
+We calculate the North Star metric with a SQL query on
+our read-only "follower" database using
+[Heroku Dataclips](https://devcenter.heroku.com/articles/dataclips).
 
 ```sql
 SELECT
@@ -96,18 +69,17 @@ FROM (
   FROM
     repos
     INNER JOIN builds ON builds.repo_id = repos.id
-  WHERE repos.full_github_name NOT LIKE 'thoughtbot%'
+  WHERE repos.full_github_name NOT LIKE 'houndci%'
     AND builds.created_at >= current_date - interval '14 weeks'
   GROUP BY week
 ) AS _;
 ```
 
-The subquery aggregates our `builds` data into `week`s
+The subquery aggregates `builds` data into `week`s
 using the `date_trunc` function and `GROUP BY` statement.
 Within those `weeks`,
-we `count` the `DISTINCT` GitHub repositories
+we `count` the `DISTINCT` GitHub repos
 and alias them as `teams`.
-
 The `WHERE` clause filters the results
 in any appropriate ways for the particular product.
 We usually remove employees of
@@ -115,13 +87,6 @@ the product's company
 and restrict the time window
 to the previous quarter,
 including this week in progress.
-
-We have to be careful in the `WHERE` clause,
-understanding the domain and code
-enough to know whether the state of the data
-we are querying now
-represents a good state of the data
-for the time period.
 
 The outer query `lag`s each week's `teams` `OVER` its previous `week`
 to calculate `growth`.
@@ -161,9 +126,8 @@ and is growing at "9% per week"
 (the average of the trailing quarter,
 excluding the current week).
 
-[Paul Graham has written][startups] that
-Y Combinator startups should grow
-by 7% per week:
+Y Combinator startups are expected to
+[grow by 7% per week](http://www.paulgraham.com/growth.html):
 
 > When I first meet founders and ask what their growth rate is, sometimes they
 > tell me "we get about a hundred new customers a month." That's not a rate.
@@ -173,7 +137,7 @@ by 7% per week:
 > rate is decreasing.
 
 He also identifies
-our most-common follow-up question
+the most-common follow-up question
 after learning
 the current North Star value
 and growth rate:
@@ -210,14 +174,14 @@ prior to the current week.
 
 We can use
 Heroku Dataclips' CSV export
-and Google Spreadsheets' [`IMPORTDATA`] function
+and Google Sheets' [`IMPORTDATA`] function
 to get a live import
-in Google Spreadsheets:
+in Google Sheets:
 
 [`IMPORTDATA`]: https://support.google.com/docs/answer/3093335?hl=en
 
 ```
-= IMPORTDATA("https://dataclips.heroku.com/abc123.csv")
+=IMPORTDATA("https://dataclips.heroku.com/abc123.csv")
 ```
 
 Which lets us chart the data
@@ -231,7 +195,7 @@ such as averaging the growth rate:
 The new versus retained teams bottom chart
 is generated
 by importing the second Dataclip
-into a second Google Spreadsheet tab.
+into a second Google Sheet tab.
 On that tab,
 we calculate new teams
 by subtracting the retained teams
@@ -253,7 +217,7 @@ retained teams,
 and new teams
 by their corresponding goals.
 
-## Data generates the necessary questions
+## Data leads to the next question
 
 The bottom chart
 and our current progress
@@ -285,7 +249,7 @@ making something people want,
 not yet ready for
 marketing something people want.
 
-## Prioritizing work by answering the questions
+## Prioritize work by answering questions
 
 The questions lead us to look deeper into our data
 in places such as

@@ -1,12 +1,7 @@
 # Polymorphic Activity Feed
 
-You won't find "polymorphic partials" in Rails' API documentation but the
-general programming technique of [polymorphism][poly] can be applied to Rails
-partials.
-
-[poly]: http://en.wikipedia.org/wiki/Polymorphism_in_object-oriented_programming
-
-## Activity feed example
+The general programming technique of polymorphism
+can be applied to Rails partials.
 
 Imagine you are signed into an application similar to eBay. You can buy or sell
 items on the marketplace. In order to buy an item, you need to bid on it. You

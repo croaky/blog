@@ -1,17 +1,14 @@
 # setup.sh
 
-Regardless of programming language or project type,
-a nice pattern for working on a project is:
+A contributor should be able to clone a [monorepo](monorepo),
+change into the project directory,
+and run one command to start contributing:
 
 ```
 git clone git@github.com:org/monorepo.git
 cd monorepo/project
 ./setup.sh
 ```
-
-A contributor should be able to clone the [monorepo](monorepo),
-change into the project directory,
-and run one command to start contributing.
 
 Example:
 

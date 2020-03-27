@@ -1,9 +1,31 @@
 {
-  "blog": {
-    "name": "Dan Croak"
-  },
   "articles": [
     {
+      "description": "End-to-end workflow combining Kanban project management, GitHub feature branch code reviews, continuous integration, and continuous delivery.",
+      "id": "pull-requests-and-kanban",
+      "last_updated": "2020-03-26",
+      "redirects": [
+        "/feature-branch-code-reviews"
+      ],
+      "tags": [
+        "SaaS",
+        "Workflow"
+      ]
+    },
+    {
+      "description": "Update a fork of a GitHub repo to keep it synced with the upstream repository.",
+      "id": "update-a-github-fork",
+      "last_updated": "2020-03-26",
+      "redirects": [
+        "/keep-a-github-fork-updated"
+      ],
+      "tags": [
+        "SaaS",
+        "Workflow"
+      ]
+    },
+    {
+      "description": "Install the Go programming language on a macOS machine. Or, upgrade to a new version.",
       "id": "install-or-upgrade-go-on-macos",
       "last_updated": "2020-03-25",
       "tags": [
@@ -12,16 +34,19 @@
       ]
     },
     {
-      "id": "block-ads-etc-hosts",
+      "description": "Block ads, trackers, and malicious websites with the /etc/hosts file.",
+      "id": "block-etc-hosts",
       "last_updated": "2020-02-08",
       "redirects": [
-        "/ad-block-at-etc-hosts"
+        "/ad-block-at-etc-hosts",
+        "/block-ads-etc-hosts"
       ],
       "tags": [
         "Workflow"
       ]
     },
     {
+      "description": "Avoid spelling mistakes when editing prose in Markdown files and Git commit messages.",
       "id": "spell-check-in-vim",
       "last_updated": "2018-11-12",
       "redirects": [
@@ -34,6 +59,7 @@
       ]
     },
     {
+      "description": "I maintain a laptop repo which sets up a macOS machine as a software development environment.",
       "id": "laptop-sh",
       "last_updated": "2018-11-12",
       "redirects": [
@@ -44,6 +70,7 @@
       ]
     },
     {
+      "description": "A contributor should be able to clone a monorepo, change into the project directory, and run one command to start contributing.",
       "id": "setup-sh",
       "last_updated": "2018-11-12",
       "redirects": [
@@ -55,6 +82,7 @@
     },
     {
       "canonical": "https://medium.com/interstellar/monorepo-e1847cbd6800",
+      "description": "Organizing code into a monorepo can offer a great software development workflow. This is an example of how a monorepo evolved at our startup.",
       "id": "monorepo",
       "last_updated": "2018-11-01",
       "tags": [
@@ -62,6 +90,7 @@
       ]
     },
     {
+      "description": "Define Unix processes in a manifest named Procfile and use tools to manage those processes.",
       "id": "process-model",
       "last_updated": "2018-10-16",
       "tags": [
@@ -69,6 +98,7 @@
       ]
     },
     {
+      "description": "Directories and files matching patterns defined in this file will be ignored for git commits, ag searches, and fzf searches.",
       "id": "gitignore",
       "last_updated": "2018-06-21",
       "redirects": [
@@ -79,6 +109,7 @@
       ]
     },
     {
+      "description": "Deliver email from a Ruby on Rails app using Amazon's Simple Email Service (SES) hosted on EC2.",
       "id": "email-amazon-ses-rails-ec2",
       "last_updated": "2018-05-09",
       "tags": [
@@ -86,6 +117,7 @@
       ]
     },
     {
+      "description": "Set up and configure ASDF as a version manager for multiple programming languages.",
       "id": "asdf-version-manager",
       "last_updated": "2018-05-07",
       "tags": [
@@ -93,6 +125,7 @@
       ]
     },
     {
+      "description": "A formatting style for prose that breaks lines at the end of a sentence or clause.",
       "id": "semantic-linefeeds",
       "last_updated": "2018-05-03",
       "tags": [
@@ -100,6 +133,7 @@
       ]
     },
     {
+      "description": "Rather than pointing DNS directly to an origin server, point it to a CDN that pulls content from the origin.",
       "id": "dns-cdn-origin",
       "last_updated": "2018-03-11",
       "tags": [
@@ -107,6 +141,7 @@
       ]
     },
     {
+      "description": "A macOS setup and Vim configuration for React Native with Expo and Prettier.",
       "id": "start-a-react-native-project",
       "last_updated": "2017-06-24",
       "redirects": [
@@ -119,6 +154,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/align-github-flavored-markdown-tables-in-vim",
+      "description": "Align GitHub-Flavored Markdown tables in Vim in a few quick keystrokes.",
       "id": "align-markdown-tables-in-vim",
       "last_updated": "2016-06-15",
       "redirects": [
@@ -131,6 +167,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/how-to-reduce-a-large-heroku-compiled-slug-size",
+      "description": "Steps to resolve the 'Compiled slug size: 300.1M is too large (max is 300M)' error.",
       "id": "reduce-heroku-slug-size",
       "last_updated": "2016-06-13",
       "redirects": [
@@ -142,6 +179,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/create-a-retention-curve-with-mixpanel-and-google-sheets",
+      "description": "How to build a retention curve chart in Google Sheets from a Mixpanel tabular cohort report.",
       "id": "retention-curves-mixpanel-google-sheets",
       "last_updated": "2015-07-01",
       "redirects": [
@@ -153,6 +191,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/optimizing-full-text-search-with-postgres-tsvector-columns-and-triggers",
+      "description": "Improve the speed of Postgres full-text searches by introducing a tsvector column as a cache and using a trigger to keep the cache up-to-date.",
       "id": "postgres-full-text-search-tsvectors-triggers",
       "last_updated": "2015-06-25",
       "redirects": [
@@ -163,25 +202,31 @@
       ]
     },
     {
-      "id": "heroku-routing-errors-slack-papertrail",
+      "id": "log-alert-heroku-routing-errors",
+      "description": "On Heroku, routing errors never reach the error-tracking code in your app's processes. Send them to your logging service and set up alerts.",
       "last_updated": "2015-04-21",
       "redirects": [
-        "/post/send-your-apps-heroku-routing-errors-to-slack-with-papertrail-alerts/"
+        "/post/send-your-apps-heroku-routing-errors-to-slack-with-papertrail-alerts/",
+        "/heroku-routing-errors-slack-papertrail"
       ],
       "tags": [
         "SaaS"
       ]
     },
     {
-      "canonical": "https://thoughtbot.com/blog/a-closer-look-at-test-spies",
-      "id": "test-spies-vs-mocks",
+      "description": "Tradeoffs of unit tests that use test mocks compared to test stubs or test spies.",
+      "id": "test-mock-vs-stub-vs-spy",
       "last_updated": "2015-03-19",
+      "redirects": [
+        "/test-spies-vs-mocks"
+      ],
       "tags": [
         "Engineering"
       ]
     },
     {
       "canonical": "https://thoughtbot.com/blog/north-star-metric",
+      "description": "",
       "id": "north-star-metric",
       "last_updated": "2014-12-25",
       "tags": [
@@ -190,6 +235,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/using-polymorphism-to-make-a-better-activity-feed-in-rails",
+      "description": "The general programming technique of polymorphism can be applied to Rails partials.",
       "id": "polymorphic-activity-feed-rails",
       "last_updated": "2013-12-02",
       "redirects": [
@@ -200,6 +246,7 @@
       ]
     },
     {
+      "description": "Caching HTTP GET requests can improve performance and help avoid hitting rate limits.",
       "id": "cache-api-requests",
       "last_updated": "2013-11-29",
       "tags": [
@@ -208,6 +255,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/faster-grepping-in-vim",
+      "description": "Search across a project for files, text fragments, or word under cursor.",
       "id": "search-projects-in-vim",
       "last_updated": "2013-11-27",
       "redirects": [
@@ -221,6 +269,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/running-specs-from-vim",
+      "description": "Runs focused tests directly from within Vim with a keystroke.",
       "id": "run-tests-vim",
       "last_updated": "2013-08-05",
       "redirects": [
@@ -232,6 +281,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/how-to-create-postgres-indexes-concurrently-in",
+      "description": "Use Postgres' CONCURRENTLY option for CREATE INDEX to avoid locking writes to a table.",
       "id": "create-postgres-indexes-concurrently",
       "last_updated": "2013-07-30",
       "tags": [
@@ -240,6 +290,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/wrap-existing-text-at-80-characters-in-vim",
+      "description": "Wrap text to the set textwidth with visual select and gq.",
       "id": "wrap-text-in-vim",
       "last_updated": "2013-04-07",
       "redirects": [
@@ -252,6 +303,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/sort-lines-alphabetically-in-vim",
+      "description": "Sort lines alphabetically with visual select and :sort.",
       "id": "sort-lines-in-vim",
       "last_updated": "2013-02-01",
       "redirects": [
@@ -264,6 +316,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/delivering-all-email-from-staging-to-a-group-email",
+      "description": "Intercept email from a Rails app and deliver it to a whitelist of email addresses so the team can preview emails without accidentally delivering staging email to production customers.",
       "id": "intercept-email-from-staging",
       "last_updated": "2013-01-18",
       "tags": [
@@ -272,6 +325,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/four-phase-test",
+      "description": "A testing pattern, applicable to all programming languages and unit tests (but not integration tests).",
       "id": "four-phase-test",
       "last_updated": "2012-09-28",
       "tags": [
@@ -279,6 +333,7 @@
       ]
     },
     {
+      "description": "Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.",
       "id": "decorators-ruby",
       "last_updated": "2011-12-26",
       "redirects": [
@@ -290,6 +345,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/how-to-back-up-a-heroku-production-database-to-staging",
+      "description": "Back up and restore a production database backup into staging or local environment.",
       "id": "back-up-restore-heroku-postgres-databases",
       "last_updated": "2011-08-18",
       "redirects": [
@@ -300,26 +356,8 @@
       ]
     },
     {
-      "canonical": "https://thoughtbot.com/blog/keeping-a-github-fork-updated",
-      "id": "update-a-github-fork",
-      "last_updated": "2011-05-02",
-      "redirects": [
-        "/keep-a-github-fork-updated"
-      ],
-      "tags": [
-        "SaaS"
-      ]
-    },
-    {
-      "canonical": "https://thoughtbot.com/blog/feature-branch-code-reviews",
-      "id": "feature-branch-code-reviews",
-      "last_updated": "2011-01-19",
-      "tags": [
-        "Workflow"
-      ]
-    },
-    {
       "canonical": "https://thoughtbot.com/blog/rubys-pessimistic-operator",
+      "description": "Using Ruby's ~> operator with Semantic Versioning can achieve better stability in our dependencies.",
       "id": "pessimistic-operator-ruby",
       "last_updated": "2010-12-29",
       "redirects": [
@@ -331,6 +369,7 @@
     },
     {
       "id": "config-block-ruby",
+      "description": "How to implement a common interface for configuring a third-party library in Ruby.",
       "last_updated": "2010-01-20",
       "redirects": [
         "/configuration-block-pattern-with-ruby",
@@ -341,18 +380,8 @@
       ]
     },
     {
-      "canonical": "https://thoughtbot.com/blog/testing-failure",
-      "id": "test-http-errors-ruby",
-      "last_updated": "2009-09-06",
-      "redirects": [
-        "/test-http-errors-with-ruby"
-      ],
-      "tags": [
-        "APIs"
-      ]
-    },
-    {
       "id": "authorization-rails-associations",
+      "description": "Leverage Rails associations with a User model to enforce authorization concerns without additional code.",
       "last_updated": "2009-08-12",
       "redirects": [
         "/authorization-with-rails-associations"
@@ -363,6 +392,7 @@
     },
     {
       "canonical": "https://thoughtbot.com/blog/mystery-guest",
+      "description": "An anti-pattern that causes a developer not to see the cause and effect between setup and verification logic because part of it is done outside the test method.",
       "id": "mystery-guests-in-tests",
       "last_updated": "2009-07-28",
       "redirects": [

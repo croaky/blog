@@ -1,7 +1,7 @@
 # Full Text Search with Postgres
 
-Postgres full-text search is awesome
-but without tuning, searching large columns can be slow.
+Without tuning Postgres full-text search,
+searching large columns can be slow.
 Introducing a `tsvector` column to cache [lexemes]
 and using a trigger to keep the lexemes up-to-date
 can improve the speed of full-text searches.

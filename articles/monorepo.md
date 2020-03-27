@@ -1,7 +1,7 @@
 # Monorepo
 
 Organizing code into a monorepo can offer a great software development workflow.
-The following is an example of how a monorepo evolved at our startup.
+This is an example of how a monorepo evolved at our startup.
 
 ## Mentality
 

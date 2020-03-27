@@ -1,8 +1,8 @@
 # blog
 
 Articles about making software at <https://dancroak.com>.
-Custom static site generator written in Go.
-Designed to be deployed to [Netlify](https://www.netlify.com/).
+Bespoke static site generator
+designed to be deployed to [Netlify](https://www.netlify.com/).
 
 # Setup
 
@@ -22,7 +22,7 @@ usage:
   blog build
 ```
 
-`blog` is a static personal blog generator featuring:
+`blog` is a static site generator featuring:
 
 * Markdown files with no front matter
 * Local preview server
@@ -59,7 +59,7 @@ It must be an `<h1>` tag:
 Preview at <http://localhost:2000> with:
 
 ```
-./blog serve
+blog serve
 ```
 
 See the [JSON feed](https://jsonfeed.org/) at <http://localhost:2000/feed.json>.
@@ -73,7 +73,7 @@ Refer to them in articles via relative path:
 
 In addition to
 [fenced code blocks](https://github.github.com/gfm/#fenced-code-blocks),
-`./blog` recognizes a special `embed`
+`blog` recognizes a special `embed`
 [info string](https://github.github.com/gfm/#info-string).
 This Markdown...
 
@@ -109,45 +109,21 @@ Configure blog in `config.json`:
 
 ```json
 {
-  "blog": {
-    "name": "Dan Croak",
-    "url": "https://dancroak.com"
-  },
   "articles": [
     {
-      "id": "article-is-draft-if-published-is-future-date",
-      "published": "2050-01-01"
-    },
-    {
-      "id": "article-with-anonymous-author",
-      "published": "2018-04-15"
-    },
-    {
-      "author": "Alice",
-      "id": "article-with-single-author",
-      "published": "2018-04-01"
-    },
-    {
-      "author": "Alice and Bob",
-      "id": "article-with-multiple-authors",
-      "published": "2018-03-15"
-    },
-    {
-      "id": "article-with-tags",
-      "published": "2018-03-01",
+      "id": "article-is-draft-if-future-date",
+      "last_updated": "2050-01-01",
       "tags": [
         "go",
         "unix"
       ]
     },
     {
-      "id": "article-with-updated-date",
-      "published": "2018-02-15",
-      "updated": "2018-02-20"
-    },
-    {
       "id": "article-with-redirects",
-      "published": "2018-02-01",
+      "last_updated": "2018-02-01",
+      "tags": [
+        "go"
+      ]
       "redirects": [
         "/article-original-name",
         "/article-renamed-again",
@@ -157,7 +133,10 @@ Configure blog in `config.json`:
     {
       "canonical": "https://seo.example.com/avoid-duplicate-content-penalty",
       "id": "article-with-rel-canonical",
-      "published": "2018-01-15"
+      "last_updated": "2018-01-15",
+      "tags": [
+        "go"
+      ]
     }
   ]
 }
@@ -183,17 +162,15 @@ The `.html` files
 are parsed as [Go templates](https://gowebexamples.com/templates/)
 by `blog`.
 
-The `article.html` file accepts a data structure like this:
+The `article.html` template accepts a data structure like this:
 
 ```
 {
   Article: {
-    Author:        "Alice",
     Body:          "<p>Hello, world.</p>",
     Canonical:     "https://seo.example.com/avoid-duplicate-content-penalty"
+    Description:   "Hello, world.",
     ID:            "example-article",
-    LastUpdated:   "2018-04-15",
-    LastUpdatedIn: "2018 April",
     LastUpdatedOn: "April 15, 2018",
     Tags:          ["go", "unix"],
     Title:         "Example Article",
@@ -201,19 +178,18 @@ The `article.html` file accepts a data structure like this:
 }
 ```
 
-The `index.html` file accepts a data structure like this:
+The `index.html` template accepts a data structure like this:
 
 ```
 {
   Articles: [
     {
-      Author:        "Alice",
       Body:          "<p>Hello, world.</p>",
       Canonical:     "https://seo.example.com/avoid-duplicate-content-penalty"
+      Description:   "Hello, world.",
       ID:            "example-article",
       LastUpdated:   "2018-04-15",
       LastUpdatedIn: "2018 April",
-      LastUpdatedOn: "April 15, 2018",
       Tags:          ["go", "unix"],
       Title:         "Example Article",
     }

@@ -1,13 +1,12 @@
 # Config Block
 
-Imagine using a third-party library in your Ruby program
-and configuring it like this:
+A common interface for configuring a third-party library in Ruby:
 
 ```embed
 config-block.rb block
 ```
 
-How might it be implemented?
+It can be implemented like this:
 
 ```embed
 config-block.rb module

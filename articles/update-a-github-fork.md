@@ -1,25 +1,65 @@
 # Update a GitHub Fork
 
-A typical flow when contributing to open source software on GitHub is:
+After forking a GitHub repo to my personal account,
+I want to update the fork with changes in the "upstream" repo.
 
-* Fork project to personal account
-* Work on fork
-* Keep fork updated with "upstream" changes in main project
+## Fork
 
-For example, one time:
-
-```
-git clone git@github.com:croaky/dotfiles.git
-cd dotfiles
-git remote add upstream git@github.com:thoughtbot/dotfiles.git
-```
-
-On each update, from the local forked `master` branch:
+Get the [GitHub CLI](https://cli.github.com/) tool:
 
 ```
+brew install github/gh/gh
+brew update
+brew upgrade gh
+```
+
+Fork the upstream repo:
+
+```
+gh repo fork org/project
+cd project
+```
+
+Add the upstream repository as a remote:
+
+```
+git remote add upstream git@github.com:org/project.git
+```
+
+I also have these relevant settings in my
+[`~/.gitconfig`](https://github.com/croaky/laptop/blob/master/dotfiles/git/gitconfig):
+
+```
+[merge]
+  ff = only
+[push]
+  default = current
+```
+
+## Update
+
+Update the fork with changes in the upstream repo:
+
+```
+git checkout master
+git fetch upstream
+git merge upstream/master
+git push
+```
+
+If there are no conflicts,
+the merge will apply cleanly and
+the fork's `master` branch will be sync'ed
+with the `upstream` repository.
+
+If there are conflicts, I'll have to rebase and force push:
+
+```
+git checkout master
 git fetch upstream
 git rebase upstream/master
+[fix conflicts]
+git add .
+git rebase --continue
+git push -f
 ```
-
-The goal of the rebase is to have a cleaner history
-if there are local commits in the forked repo.

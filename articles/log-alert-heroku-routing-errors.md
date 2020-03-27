@@ -1,16 +1,15 @@
-# Alert on Heroku Routing Errors with Papertrail and Slack
+# Log and Alert on Heroku Routing Errors
 
-Most errors in a web application can be sent to a third-party service
-such as [Sentry](https://sentry.io/),
-with its errors grouped by type and by deploy.
+Most application errors can be sent to a third-party error service
+such as [Sentry](https://sentry.io/).
 
-On Heroku,
-an important class of errors
-never reach these services
-because they don't occur in the application's processes,
-they occur in the routing layer.
+On Heroku, routing errors never reach these services
+because they don't occur in the application's processes, they occur in
+[Heroku's routing layer](https://devcenter.heroku.com/articles/http-routing).
 
-This article details a technique for surfacing these errors.
+To observe and alert on these errors,
+send them to a logging service such as
+[Papertrail](https://devcenter.heroku.com/articles/papertrail).
 
 ## Heroku Routing Errors
 
@@ -36,10 +35,7 @@ reliably includes the text `status=503` in the logs for these errors.
 
 ## Papertrail
 
-[Papertrail] is a logger with a Heroku add-on.
-
-[Papertrail]: https://devcenter.heroku.com/articles/papertrail
-
+Papertrail is a logger with a Heroku add-on.
 Add and open it:
 
 ```bash

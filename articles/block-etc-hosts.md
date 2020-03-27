@@ -1,6 +1,7 @@
-# Block Ads with /etc/hosts
+# Block with /etc/hosts
 
-I run a shell script on my laptop to block ads at the DNS host level.
+I run a shell script on my laptop to block ads, trackers,
+and malicious websites at the DNS host level.
 I also use 1.1.1.1 as the DNS resolver on my laptop and phone.
 This article describes why, alternatives, and trade-offs.
 
@@ -26,6 +27,10 @@ On a device away from home,
 ad-blocking may work with additional setup,
 work partially depending on caching,
 or not at all.
+
+[NextDNS](https://nextdns.io/) is a hosted version that works
+anywhere, including on a mobile phone.
+It requires sending all your traffic through them.
 
 ## Modify /etc/hosts
 

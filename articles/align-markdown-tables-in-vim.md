@@ -22,10 +22,9 @@ Over time, as you edit this data in Vim,
 keeping the Markdown table aligned could be painful,
 but doesn't have to be.
 
-Install [vim-easy-align] with a plugin manager such as [vim-plug].
-
-[vim-easy-align]: https://github.com/junegunn/vim-easy-align
-[vim-plug]: https://github.com/junegunn/vim-plug
+Install [vim-easy-align](https://github.com/junegunn/vim-easy-align)
+with a plugin manager such as
+[vim-plug](https://github.com/junegunn/vim-plug).
 
 ```vim
 Plug 'junegunn/vim-easy-align'
