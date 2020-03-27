@@ -75,7 +75,7 @@ Embed code blocks from external files into Markdown like this:
 
 This embeds code from `code/example.rb`
 between `begindoc` and `enddoc` magic comments
-with the same id (in this example, the id is `instantiate`):
+with an id `instantiate`:
 
 ```ruby
 # begindoc: instantiate
@@ -88,8 +88,8 @@ client = Example::Client.new(
 # enddoc: instantiate
 ```
 
-This allows you to run, lint, and test external files
-whose code is embedded in the Markdown prose.
+This way, external files whose code is embedded in the Markdown prose
+can be run, linted, or tested in CI.
 
 Add images to the `images` directory.
 Refer to them in articles:
