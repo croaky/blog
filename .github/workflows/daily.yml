@@ -1,8 +1,6 @@
 name: publish scheduled posts daily
 
-on:
-  schedule:
-    - cron: "0 0 * * *" # every day at midnight UTC
+on: pull_request
 
 jobs:
   build:
