@@ -145,7 +145,7 @@ The `last_updated` date can be in the future.
 A [GitHub Action is scheduled daily](.github/workflows/daily)
 to auto-publish to Netlify.
 
-The `redirects` array is converted into a
+The `redirects` are converted into a
 [Netlify _redirects file](https://docs.netlify.com/routing/redirects/).
 
 ## Modify theme
