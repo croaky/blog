@@ -140,10 +140,10 @@ Configure blog in `config.json`:
 }
 ```
 
-Each article's `id` must match a Markdown file `articles/id.md`.
-It is also used as the URL slug.
+The `id` must match a Markdown file `articles/id.md`.
+It is also used for the article's URL slug.
 
-Each `description` is used as the `meta` description.
+The `description` is used for the article page's `meta` description.
 
 ## Modify theme
 
