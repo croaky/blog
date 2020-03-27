@@ -13,7 +13,7 @@ Then, run:
 go install ./...
 ```
 
-This installs a `blog` command-line program:
+This installs a `blog` command-line program from [main.go](main.go):
 
 ```
 usage:
@@ -22,20 +22,23 @@ usage:
   blog build
 ```
 
-`blog` is a static site generator featuring:
+It expects a file layout like this:
 
-* Markdown files with no front matter
-* Local preview server
-* Images
-* Embedded code blocks
-* Drafts
-* Tags
-* "Last updated" timestamp
-* Redirects
-* `rel=canonical` tags
-* Responsive design
-* PageSpeed Insights performance score of 100
-* Mozilla Observatory security grade of A+
+```
+.
+├── articles
+│   └── example.md
+├── code
+│   └── example.rb
+├── images
+│   └── example.png
+├── theme
+│   ├── public
+│   │   └── _headers
+│   ├── article.html
+│   └── index.html
+└── config.json
+```
 
 ## Write
 
@@ -69,11 +72,7 @@ Refer to them in articles:
 ![alt text](images/example.png)
 ```
 
-In addition to
-[fenced code blocks](https://github.github.com/gfm/#fenced-code-blocks),
-`blog` recognizes a special `embed`
-[info string](https://github.github.com/gfm/#info-string).
-This Markdown...
+Embed code blocks from external files into Markdown like this:
 
     Instantiate a client:
 
@@ -81,7 +80,7 @@ This Markdown...
     code/example.rb instantiate
     ```
 
-...embeds code from `code/example.rb`
+This embeds code from `code/example.rb`
 between `begindoc` and `enddoc` magic comments:
 
 ```ruby
@@ -100,6 +99,9 @@ In this example, the id is `instantiate`.
 
 This allows you to run, lint, and test embedded code
 separate from Markdown prose.
+
+Normal [fenced code blocks](https://github.github.com/gfm/#fenced-code-blocks)
+also work.
 
 ## Configure
 
@@ -145,20 +147,12 @@ Configure blog in `config.json`:
 The `theme` directory's files can be modified
 to customize the blog's HTTP headers, HTML, CSS, and JavaScript.
 
-```
-.
-├── index.html
-└── public
-    ├── _headers
-    └── favicon.ico
-```
-
-The `_headers` file is copied to `public/_headers` to be used as
+The `theme/public` files are copied to `public` by `blog build`.
+`theme/public/_headers` are
 [Netlify Headers](https://www.netlify.com/docs/headers-and-basic-auth/).
 
-The `.html` files
-are parsed as [Go templates](https://gowebexamples.com/templates/)
-by `blog`.
+The `theme/*.html` files
+are parsed as [Go templates](https://gowebexamples.com/templates/).
 
 The `article.html` template accepts a data structure like this:
 
@@ -183,10 +177,8 @@ The `index.html` template accepts a data structure like this:
   Articles: [
     {
       Body:          "<p>Hello, world.</p>",
-      Canonical:     "https://seo.example.com/avoid-duplicate-content-penalty"
       Description:   "Hello, world.",
       ID:            "example-article",
-      LastUpdated:   "2018-04-15",
       LastUpdatedIn: "2018 April",
       Tags:          ["go", "unix"],
       Title:         "Example Article",

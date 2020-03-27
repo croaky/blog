@@ -290,7 +290,7 @@ func load() ([]Article, []string, map[string]string) {
 
 /*
 preProcess scans the Markdown document at filepath line-by-line,
-extracting article title and "pre-processing" article body
+extracting article title and "pre-processing" the article body
 which can then be passed to a Markdown compiler at the call site.
 
 When the scanner encounters an "embed" code fence like this...
