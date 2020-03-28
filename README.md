@@ -6,7 +6,7 @@ designed to be deployed to [Netlify](https://www.netlify.com/).
 
 ## Setup
 
-[Install Go](https://dancroak.com/install-or-upgrade-go-on-macos).
+[Install Go](https://dancroak.com/install-or-upgrade-go-on-macos) (10s).
 Then, run:
 
 ```
@@ -142,7 +142,7 @@ The `id` must match a Markdown file `articles/id.md`.
 It is also used for the article's URL slug.
 
 The `last_updated` date can be in the future.
-A [GitHub Action is scheduled daily](.github/workflows/daily)
+A [GitHub Action is scheduled daily](https://dancroak.com/schedule-netlify-builds-with-github-actions)
 to auto-publish to Netlify.
 
 The `redirects` are converted into a
