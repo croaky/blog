@@ -1,6 +1,6 @@
 [
   {
-    "description": "Schedule blog posts to be published daily via Netlify build hooks using GitHub Actions' scheduled workflow and GitHub encrypted secrets.",
+    "description": "Daily blog publishing with Netlify build hooks, GitHub Actions' scheduled workflow, and GitHub encrypted secrets",
     "id": "schedule-netlify-builds-with-github-actions",
     "last_updated": "2020-03-28",
     "tags": [
@@ -9,7 +9,7 @@
     ]
   },
   {
-    "description": "End-to-end workflow combining Kanban project management, GitHub feature branch code reviews, continuous integration, and continuous delivery.",
+    "description": "End-to-end workflow with kanban project management, GitHub code reviews, continuous integration, and continuous delivery",
     "id": "pull-requests-and-kanban",
     "last_updated": "2020-03-26",
     "redirects": [
@@ -21,7 +21,7 @@
     ]
   },
   {
-    "description": "Update a fork of a GitHub repo to keep it synced with the upstream repository.",
+    "description": "Keep it synced with the upstream repository",
     "id": "update-a-github-fork",
     "last_updated": "2020-03-26",
     "redirects": [
@@ -33,7 +33,7 @@
     ]
   },
   {
-    "description": "Install the Go programming language on a macOS machine. Or, upgrade to a new version.",
+    "description": "10 second install or upgrade of the Go programming language on a macOS machine",
     "id": "install-or-upgrade-go-on-macos",
     "last_updated": "2020-03-25",
     "tags": [
@@ -42,7 +42,7 @@
     ]
   },
   {
-    "description": "Block ads, trackers, and malicious websites with the /etc/hosts file.",
+    "description": "Block ads, trackers, and malicious websites with the /etc/hosts file",
     "id": "block-etc-hosts",
     "last_updated": "2020-02-08",
     "redirects": [
@@ -388,7 +388,7 @@
     ]
   },
   {
-    "description": "Leverage Rails associations with a User model to enforce authorization concerns without additional code.",
+    "description": "Associations through a User model enforce authorization concerns without additional code.",
     "id": "authorization-rails-associations",
     "last_updated": "2009-08-12",
     "redirects": [
@@ -400,7 +400,7 @@
   },
   {
     "canonical": "https://thoughtbot.com/blog/mystery-guest",
-    "description": "An anti-pattern that causes a developer not to see the cause and effect between setup and verification logic because part of it is done outside the test method.",
+    "description": "An anti-pattern that hides the cause and effect between setup and verification because part of it is done outside the test method.",
     "id": "mystery-guests-in-tests",
     "last_updated": "2009-07-28",
     "redirects": [
