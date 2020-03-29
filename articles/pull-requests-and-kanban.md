@@ -47,12 +47,11 @@ This opens a new pull request form in a web browser,
 I make adjustments to the pull request title and description
 and open it.
 
-A GitHub webhook starts a [CI] build.
-Another GitHub webhook posts the pull request to a team [Slack] channel.
+A GitHub webhook starts a
+[CI](https://www.martinfowler.com/articles/continuousIntegration.html) build.
+Another GitHub webhook posts the pull request to a team
+[Slack](https://slack.com) channel.
 I move the card to the "Pull Requests" column.
-
-[CI]: https://www.martinfowler.com/articles/continuousIntegration.html
-[Slack]: https://slack.com
 
 A teammate clicks the link in the Slack channel.
 The teammate comments in-line on the code,
@@ -62,11 +61,11 @@ The teammate comments in-line on the code,
 
 Code review before code lands in `master` offers these benefits:
 
-* The whole team learns about new code as it is written.
-* Mistakes are caught earlier.
-* Coding standards are likely to be established and followed.
-* Feedback is likely to be applied.
-* Context ("Why did we write this?") is less likely to be forgotten.
+- The whole team learns about new code as it is written.
+- Mistakes are caught earlier.
+- Coding standards are likely to be established and followed.
+- Feedback is likely to be applied.
+- Context ("Why did we write this?") is less likely to be forgotten.
 
 I make the suggested changes and commit them:
 
@@ -85,11 +84,15 @@ So, I might need to push again:
 git push
 ```
 
-We've usually had this merge button setting enabled:
-"Allow squash merging".
-So, when CI passes again,
-I merge changes into one commit on `master`
-using the "Squash and merge" button.
+Once the pull request has been approved and feedback addressed,
+I add an "autosquash" label to the pull request. This tells the
+[Autosquash GitHub Action](https://github.com/marketplace/actions/autosquash)
+to squash and merge the pull request (once CI passes)
+into a single commit.
+
+The squashed commit's message is the pull request description.
+Its author is the creator of the pull request.
+Its co-authors are any other people who authored commits on the pull request.
 
 After the pull request merges cleanly,
 back on the command line in `my-branch`, I run
