@@ -1,4 +1,4 @@
-name: autosquash
+name: land
 on:
   check_run:
     types:
@@ -23,8 +23,8 @@ on:
   status: {}
 
 jobs:
-  autosquash:
-    name: Autosquash
+  land:
+    name: land
     runs-on: ubuntu-18.04
     steps:
       - uses: tibdex/autosquash@v2
