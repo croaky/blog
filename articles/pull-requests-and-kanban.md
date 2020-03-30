@@ -84,15 +84,10 @@ So, I might need to push again:
 git push
 ```
 
-Once the pull request has been approved and feedback addressed,
-I add an "autosquash" label to the pull request. This tells the
-[Autosquash GitHub Action](https://github.com/marketplace/actions/autosquash)
-to squash and merge the pull request (once CI passes)
-into a single commit.
-
-The squashed commit's message is the pull request description.
-Its author is the creator of the pull request.
-Its co-authors are any other people who authored commits on the pull request.
+Once the pull request has been approved, feedback addressed, and CI has passed,
+I press the "Squash and merge" button.
+[This Chrome extension](https://github.com/croaky/laptop/blob/master/chrome/github-pr.js)
+copies the pull request title and body to the commit's title and message.
 
 After the pull request merges cleanly,
 back on the command line in `my-branch`, I run
