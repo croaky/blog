@@ -17,14 +17,9 @@ Fork the upstream repo:
 
 ```
 gh repo fork org/project
-cd project
 ```
 
-Add the upstream repository as a remote:
-
-```
-git remote add upstream git@github.com:org/project.git
-```
+The `upstream` remote is automatically set to the upstream repository.
 
 I also have these relevant settings in my
 [`~/.gitconfig`](https://github.com/croaky/laptop/blob/master/dotfiles/git/gitconfig):
