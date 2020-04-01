@@ -179,7 +179,7 @@
   },
   {
     "canonical": "https://thoughtbot.com/blog/north-star-metric",
-    "description": "",
+    "description": "How many people are getting authentic value from our product?",
     "id": "north-star-metric",
     "last_updated": "2014-12-25",
     "tags": ["Growth"]
