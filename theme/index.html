@@ -18,7 +18,7 @@
       --purple-faded: rgb(150, 100, 200, .1);
 
       /* sizes */
-      --sm-max-width: 600px;
+      --sm-max-width: 700px;
       --social-width: 24px;
     }
     html,
@@ -71,13 +71,21 @@
     .article {
       display: flex;
       margin: 1rem 0;
+      max-width: var(--sm-max-width);
     }
     .article time {
-      min-width: 125px;
+      min-width: 80px;
     }
-    .headline {
+    .first-only-for-tag {
+      visibility: hidden;
+    }
+    .title {
       border-bottom: none;
       font-weight: bold;
+    }
+    .description {
+      margin-block-start: 0;
+      margin-block-end: 0;
     }
     @media (max-width: 1000px) {
       .container {
@@ -132,7 +140,7 @@
       <img alt="GitHub avatar" src="logo.jpg" />
 
       <div class="about">
-        👋 I'm Dan. I write short articles about internet software.
+        👋 I'm Dan. I write short articles about software.
         I like pretty UIs, simple APIs, fast response times,
         and open source code.
       </div>
@@ -147,18 +155,27 @@
     </nav>
 
     <main>
-      {{- range .Articles }}
-        <div class="article{{- range $i, $t := .Tags }} tag-{{$t}}{{- end }}">
-          <time datetime="{{.LastUpdated}}">
-            {{.LastUpdatedIn}}
-          </time>
+      {{ $year := "" }}
+      {{ $stamp := "" }}
 
-          <a href="/{{.ID}}" class="headline">
-            {{.Title}}
-          </a>
+      {{- range .Articles }}
+        {{ if ne $year .LastUpdatedIn }}
+          {{ $year = .LastUpdatedIn }}
+          {{ $stamp = "first-in-year" }}
+        {{ else }}
+          {{ $stamp = "first-only-for-tag" }}
+        {{ end }}
+
+        <div class="article{{- range $i, $t := .Tags }} tag-{{$t}}{{- end }} year-{{$year}}">
+          <time datetime="{{$year}}" class="{{$stamp}}">{{$year}}</time>
+
+          <div>
+            <a href="/{{.ID}}" class="title">{{.Title}}</a>
+            <p class="description">{{.Description}}</p>
+          </div>
         </div>
       {{- end }}
-    <main>
+    </main>
 
     <footer>
       <ul class="social">
@@ -219,6 +236,10 @@
       Array.prototype.forEach.call(document.querySelectorAll(selector), fn);
     }
 
+    function eachChild(el, selector, fn) {
+      Array.prototype.forEach.call(el.querySelectorAll(selector), fn);
+    }
+
     function ready(fn) {
       if (document.readyState != 'loading') {
         fn();
@@ -245,6 +266,9 @@
       each('.article', function(el, i) {
         if (toggler.classList.contains('showAll')) {
           el.style.display = '';
+          eachChild(el, 'time.first-only-for-tag', function(time) {
+            time.style.visibility = 'hidden';
+          })
           return;
         }
 
@@ -268,6 +292,24 @@
           el.classList.remove('showAll');
         }
       });
+
+      if (toggler.classList.contains('showAll')) {
+        ['2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013', '2012',
+          '2011', '2010', '2009'].forEach(function(year) {
+            var el = document.querySelectorAll(
+              '.year-' + year + ':not([style*="display: none"])'
+            )[0];
+            if (!el) {
+              return;
+            }
+
+            var time = el.querySelectorAll('time.first-only-for-tag')[0];
+            if (!time) {
+              return;
+            }
+            time.style.visibility = 'visible';
+        });
+      }
     }
   </script>
 </body>
