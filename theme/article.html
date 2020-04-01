@@ -13,13 +13,16 @@
   {{- end }}
   <style>
     :root {
+      /* colors */
       --dark-theme-bg-color: rgb(25, 30, 45);
       --light-theme-bg-color: rgb(255, 240, 230);
-
       --charcoal: rgb(20, 20, 20);
       --mask: rgb(0, 0, 0, .025);
       --purple: rgb(150, 100, 200);
       --purple-faded: rgb(150, 100, 200, .1);
+
+      /* sizes */
+      --sm-max-width: 700px;
 
       /* syntax highlighting */
       --pink: rgb(215, 0, 95);
@@ -87,13 +90,13 @@
     p {
       margin: 1.5rem 0;
       max-width: 100%;
-      width: 700px;
+      width: var(--sm-max-width);
     }
     blockquote {
       background-color: var(--mask);
       border-left: 4px solid var(--purple);
       margin: 0;
-      max-width: 700px;
+      max-width: var(--sm-max-width);
       padding: 5px 25px;
     }
     ul {
@@ -102,7 +105,7 @@
     li {
       margin: 0.5rem 0;
       max-width: 100%;
-      width: 700px;
+      width: var(--sm-max-width);
     }
     header {
       margin: 20px 0 30px 0;
