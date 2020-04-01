@@ -2,7 +2,7 @@
   {
     "description": "Make ~/.ssh/authorized_keys look nicer.",
     "id": "ssh-ed25519",
-    "last_updated": "2020-03-31",
+    "last_updated": "2020-04-01",
     "tags": ["Engineering"]
   },
   {
