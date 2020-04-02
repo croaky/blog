@@ -44,10 +44,6 @@
     a:hover {
       color: var(--purple);
     }
-    nav a:hover,
-    nav .tags .showAll {
-      background-color: var(--purple-faded);
-    }
     .container {
       margin: 3rem;
     }
@@ -61,12 +57,12 @@
       margin: 1.5rem 0;
       max-width: var(--sm-max-width);
     }
-    nav .tags {
-      line-height: 36px;
-      margin: 1rem 0;
-    }
     main {
-      margin: 1.5rem 0;
+      margin: 2rem 0;
+    }
+    .tags a:hover,
+    .tags .showAll {
+      background-color: var(--purple-faded);
     }
     .article {
       display: flex;
@@ -145,15 +141,15 @@
         I like pretty UIs, simple APIs, fast response times,
         and open source code.
       </div>
-
-      {{- if .Tags }}
-        <div class="tags">
-          {{- range $index, $tag := .Tags }}
-          <a href="#{{$tag}}" id="toggle-{{$tag}}">{{$tag}}</a>&nbsp;
-          {{- end }}
-        </div>
-      {{- end }}
     </nav>
+
+    {{- if .Tags }}
+      <div class="tags">
+        {{- range $index, $tag := .Tags }}
+        <a href="#{{$tag}}" id="toggle-{{$tag}}">{{$tag}}</a>&nbsp;
+        {{- end }}
+      </div>
+    {{- end }}
 
     <main>
       {{ $year := "" }}
