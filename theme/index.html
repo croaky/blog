@@ -256,7 +256,7 @@
         toggleTag(window.location.hash.split('#')[1]);
       }
 
-      each('nav .tags a', function(el, i) {
+      each('.tags a', function(el, i) {
         el.addEventListener('click', function() {
           toggleTag(el.id.split('toggle-')[1]);
         });
@@ -282,7 +282,7 @@
         }
       });
 
-      each('nav .tags a', function(el, i) {
+      each('.tags a', function(el, i) {
         if (toggler.isEqualNode(el)) {
           if (toggler.classList.contains('showAll')) {
             toggler.classList.remove('showAll');
