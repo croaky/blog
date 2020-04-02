@@ -70,9 +70,6 @@
       margin: 3rem;
       max-width: 1400px;
     }
-    img {
-      width: 100%;
-    }
     a.logo {
       border: none;
     }
@@ -106,6 +103,18 @@
       margin: 1.5rem 0;
       max-width: 100%;
       width: var(--sm-max-width);
+    }
+    article img {
+      width: 100%;
+    }
+    @media (prefers-color-scheme: dark) {
+      article img {
+        opacity: 0.8;
+        transition: opacity .5s ease-in-out;
+      }
+      article img:hover {
+        opacity: 1;
+      }
     }
     blockquote {
       background-color: var(--mask);
