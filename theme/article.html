@@ -14,12 +14,17 @@
   <style>
     :root {
       /* colors */
-      --dark-theme-bg-color: rgb(25, 30, 45);
-      --light-theme-bg-color: rgb(255, 240, 230);
       --charcoal: rgb(20, 20, 20);
-      --mask: rgb(0, 0, 0, .025);
       --purple: rgb(150, 100, 200);
       --purple-faded: rgb(150, 100, 200, .1);
+      --yellow: rgb(255, 208, 128);
+
+      /* theme */
+      --body-bg: rgb(255, 240, 230);
+      --body-fg: var(--charcoal);
+      --code-bg-color: rgb(255, 255, 255);
+      --code-fg-color: var(--charcoal);
+      --mask: rgb(0, 0, 0, .025);
 
       /* sizes */
       --sm-max-width: 700px;
@@ -28,14 +33,22 @@
       --pink: rgb(215, 0, 95);
       --turquoise: rgb(0, 135, 135);
     }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --body-bg: rgb(25, 30, 45);
+        --body-fg: rgb(255, 255, 255);
+        --code-bg-color: rgba(123, 148, 206, 0.1);
+        --code-fg-color: var(--yellow);
+      }
+    }
     html,
     body {
       margin: 0;
       padding: 0;
     }
     body {
-      background-color: var(--light-theme-bg-color);
-      color: var(--charcoal);
+      background-color: var(--body-bg);
+      color: var(--body-fg);
       font-family: -apple-system, system-ui, "Helvetica", "Arial", sans-serif;
       font-size: 24px;
       line-height: 36px;
@@ -82,7 +95,9 @@
       color: rgb(150, 150, 150);
     }
     h2 {
-      margin: 2.5rem 0 1rem;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      padding: 1rem 0 0;
     }
     h2:hover {
       cursor: pointer;
@@ -111,11 +126,11 @@
       margin: 20px 0 30px 0;
     }
     .author {
-      color: var(--charcoal);
+      color: var(--body-fg);
       font-weight: bold;
     }
     pre {
-      background-color: #ffffff;
+      background-color: var(--code-bg-color);
       border-radius: 3px;
       line-height: 1.5;
       overflow-x: scroll;
@@ -124,7 +139,7 @@
       word-wrap: normal;
     }
     code {
-      background-color: #ffffff;
+      color: var(--code-fg-color);
       font-family: "SFMono-Regular", Consolas, Monaco, Menlo, monospace;
       font-size: 88%;
       margin: 0;
@@ -194,7 +209,7 @@
     </article>
 
     <footer>
-      <a href="/">&larr; Back</a>
+      <a href="/">&larr; All articles</a>
     </footer>
   </div>
 
