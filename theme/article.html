@@ -43,8 +43,8 @@
       :root {
         --body-bg: rgb(25, 30, 45);
         --body-fg: rgb(255, 255, 255);
-        --code-bg-color: rgba(123, 148, 206, 0.1);
-        --code-fg-color: var(--yellow);
+        --code-bg: rgba(123, 148, 206, 0.1);
+        --code-fg: var(--yellow);
       }
     }
     html,
@@ -145,7 +145,7 @@
       font-weight: bold;
     }
     pre {
-      background-color: var(--code-bg-color);
+      background-color: var(--code-bg);
       border-radius: 3px;
       line-height: 1.5;
       overflow-x: scroll;
@@ -154,7 +154,7 @@
       word-wrap: normal;
     }
     code {
-      color: var(--code-fg-color);
+      color: var(--code-fg);
       font-family: "SFMono-Regular", Consolas, Monaco, Menlo, monospace;
       font-size: 88%;
       margin: 0;
@@ -162,6 +162,7 @@
       word-wrap: break-word;
     }
     :not(pre)>code {
+      background-color: var(--code-bg);
       margin: 0 0.05em;
       padding: 3px 5px;
     }

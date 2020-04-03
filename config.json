@@ -1,5 +1,11 @@
 [
   {
+    "description": "Command-line script that accepts a GitHub username and generates a circular favicon and Apple Touch icon",
+    "id": "favicon-apple-touch-icon-github-avatar",
+    "last_updated": "2020-04-03",
+    "tags": ["Engineering"]
+  },
+  {
     "description": "Beautiful high-definition videos",
     "id": "aerial-screensaver",
     "last_updated": "2020-04-01",
