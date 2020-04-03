@@ -13,9 +13,11 @@
   {{- end }}
   <style>
     :root {
+      /* sizes */
       --code-max-width: 1400px;
       --content-max-width: 700px;
 
+      /* colors */
       --charcoal: rgb(20, 20, 20);
       --pink: rgb(215, 0, 95);
       --purple: rgb(150, 100, 200);
@@ -24,6 +26,7 @@
       --white: rgb(255, 255, 255);
       --yellow: rgb(255, 208, 128);
 
+      /* light theme */
       --body-bg: var(--tan);
       --body-fg: var(--charcoal);
       --code-bg: var(--white);
@@ -35,6 +38,7 @@
       --mask: rgb(0, 0, 0, .025);
       --theme-highlight: var(--purple);
     }
+    /* dark theme */
     @media (prefers-color-scheme: dark) {
       :root {
         --body-bg: rgb(25, 30, 45);

@@ -10,17 +10,21 @@
   <title>Dan Croak</title>
   <style>
     :root {
+      /* sizes */
       --content-max-width: 700px;
       --social-icons-width: 24px;
 
+      /* colors */
       --charcoal: rgb(20, 20, 20);
       --purple: rgb(150, 100, 200);
       --purple-faded: rgb(150, 100, 200, .1);
       --tan: rgb(255, 240, 230);
 
+      /* light theme */
       --body-bg: var(--tan);
       --body-fg: var(--charcoal);
     }
+    /* dark theme */
     @media (prefers-color-scheme: dark) {
       :root {
         --body-bg: rgb(25, 30, 45);
