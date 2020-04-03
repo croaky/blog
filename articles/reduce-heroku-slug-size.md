@@ -4,7 +4,8 @@ Have you ever seen this error when you tried to deploy to your Heroku app?
 
 > Compiled slug size: 300.6M is too large (max is 300M)
 
-You can't deploy but don't fret. Here's a few ways to reduce the slug size.
+You can't deploy but it can be fixed.
+Here are ways to reduce the slug size.
 
 ## Clean up the Git repository
 
@@ -45,35 +46,18 @@ ignore files such as unit tests with `.slugignore`.
 
 ## Remove unused dependencies
 
-Hopefully each Ruby gem in your [Bundler groups] is being used by the app,
-but do a quick audit and remove any that aren't used.
+Hopefully each Ruby gem in [Bundler groups] is being used by the app.
+Do an audit and remove any that aren't used.
 
 [Bundler groups]: http://bundler.io/v1.5/groups.html
 
 ## Bundle only what you need for the environment
 
 Heroku accepts an [environment variable][env]
-to limit the Ruby gems you bundle and cache.
+to limit the Ruby gems that it bundles and caches.
 
 [env]: https://devcenter.heroku.com/articles/config-vars
 
 ```
 heroku config:set BUNDLE_WITHOUT="development:test" --app your-app-name
 ```
-
-## Avoid Asset Sync
-
-Rails' asset pipeline is a tempting area to try to optimize for slug size.
-App stylesheets, scripts, and images add up.
-
-[Asset Sync] is a cool tool to push assets to S3 during pre-compilation but
-[Heroku does not recommend it][anti].
-So far, I've been able to avoid Asset Sync.
-
-[Asset Sync]: https://github.com/AssetSync/asset_sync
-[anti]: https://devcenter.heroku.com/articles/please-do-not-use-asset-sync
-
-## Good luck
-
-Hopefully these tips get you deploying again within a few minutes.
-Good luck!

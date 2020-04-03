@@ -11,7 +11,7 @@ and for that software to take the shape of multiple programs.
 
 We plan to work incrementally,
 to choose technologies suited to their tasks that we also enjoy,
-and to be unafraid to write bespoke software
+and to be unafraid to write custom software
 that improves our happiness and productivity.
 
 ## New repo
