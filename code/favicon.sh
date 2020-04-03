@@ -25,17 +25,7 @@ convert input.jpg \
   \) -compose CopyOpacity -composite \
   -trim favicon.ico
 
-curl -L "https://github.com/$1.png?size=150" -o input.jpg
-
-convert input.jpg \
-  -gravity Center \
-  \( -size 150x150 \
-    xc:Black \
-    -fill White \
-    -draw 'circle 75 75 75 1' \
-    -alpha Copy \
-  \) -compose CopyOpacity -composite \
-  -trim apple-touch-icon.png
-
 rm input.jpg
+
+curl -L "https://github.com/$1.png?size=180" -o apple-touch-icon.png
 # enddoc: all
