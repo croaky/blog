@@ -13,10 +13,9 @@
   {{- end }}
   <style>
     :root {
-      /* sizes */
-      --sm-max-width: 700px;
+      --code-max-width: 1400px;
+      --content-max-width: 700px;
 
-      /* colors */
       --charcoal: rgb(20, 20, 20);
       --pink: rgb(215, 0, 95);
       --purple: rgb(150, 100, 200);
@@ -25,7 +24,6 @@
       --white: rgb(255, 255, 255);
       --yellow: rgb(255, 208, 128);
 
-      /* light theme */
       --body-bg: var(--tan);
       --body-fg: var(--charcoal);
       --code-bg: var(--white);
@@ -37,7 +35,6 @@
       --mask: rgb(0, 0, 0, .025);
       --theme-highlight: var(--purple);
     }
-    /* dark theme */
     @media (prefers-color-scheme: dark) {
       :root {
         --body-bg: rgb(25, 30, 45);
@@ -73,7 +70,7 @@
     }
     .container {
       margin: 3rem;
-      max-width: 1400px;
+      max-width: var(--code-max-width);
     }
     a.logo {
       border: none;
@@ -91,7 +88,7 @@
       font-size: 50px;
       line-height: 60px;
       margin-bottom: 5px;
-      max-width: 1050px;
+      max-width: var(--content-max-width);
     }
     time {
       color: rgb(150, 150, 150);
@@ -107,7 +104,7 @@
     p {
       margin: 1.5rem 0;
       max-width: 100%;
-      width: var(--sm-max-width);
+      width: var(--content-max-width);
     }
     article img {
       width: 100%;
@@ -125,7 +122,7 @@
       background-color: var(--mask);
       border-left: 4px solid var(--theme-highlight);
       margin: 0;
-      max-width: var(--sm-max-width);
+      max-width: var(--content-max-width);
       padding: 5px 25px;
     }
     ul {
@@ -134,7 +131,7 @@
     li {
       margin: 0.5rem 0;
       max-width: 100%;
-      width: var(--sm-max-width);
+      width: var(--content-max-width);
     }
     header {
       margin: 20px 0 30px 0;
