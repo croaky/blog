@@ -10,16 +10,21 @@
   <title>Dan Croak</title>
   <style>
     :root {
-      /* colors */
-      --body-bg: rgb(255, 240, 230);
-      --body-fg: rgb(60, 60, 60);
-      --purple: rgb(150, 100, 200);
-      --purple-faded: rgb(150, 100, 200, .1);
-
       /* sizes */
       --sm-max-width: 700px;
       --social-width: 24px;
+
+      /* colors */
+      --charcoal: rgb(20, 20, 20);
+      --purple: rgb(150, 100, 200);
+      --purple-faded: rgb(150, 100, 200, .1);
+      --tan: rgb(255, 240, 230);
+
+      /* light theme */
+      --body-bg: var(--tan);
+      --body-fg: var(--charcoal);
     }
+    /* dark theme */
     @media (prefers-color-scheme: dark) {
       :root {
         --body-bg: rgb(25, 30, 45);
@@ -41,12 +46,13 @@
       -webkit-font-smoothing: antialiased;
     }
     a {
-      border-bottom: 2px solid var(--purple);
+      border-bottom: 1px solid var(--purple);
       color: var(--body-fg);
       text-decoration: none;
       transition: all .1s;
     }
     a:hover {
+      border-bottom: 2px solid var(--purple);
       color: var(--purple);
     }
     .container {
@@ -86,6 +92,7 @@
     .title {
       border-bottom: none;
       font-weight: bold;
+      transition: none;
     }
     .description {
       margin-block-start: 0;
@@ -148,7 +155,7 @@
 
       <div class="about">
         👋 I'm Dan. I write short articles about software.
-        I like pretty UIs, simple APIs, fast response times,
+        I like clean UIs, simple APIs, fast response times,
         and open source code.
       </div>
     </nav>
