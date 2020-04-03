@@ -1,7 +1,7 @@
 # blog
 
 Articles about making software at <https://dancroak.com>.
-Bespoke static site generator
+Custom static site generator
 designed to be deployed to [Netlify](https://www.netlify.com/).
 
 ## Setup

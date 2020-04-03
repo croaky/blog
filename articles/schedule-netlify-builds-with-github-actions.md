@@ -1,6 +1,6 @@
 # Schedule Netlify Builds with GitHub Actions
 
-I use a [bespoke static site generator](https://github.com/croaky/blog)
+I use a [custom static site generator](https://github.com/croaky/blog)
 to publish this blog.
 It automatically deploys to Netlify
 when I merge new articles into my Git repository's `master` branch.
