@@ -13,26 +13,31 @@
   {{- end }}
   <style>
     :root {
-      /* colors */
-      --charcoal: rgb(20, 20, 20);
-      --purple: rgb(150, 100, 200);
-      --purple-faded: rgb(150, 100, 200, .1);
-      --yellow: rgb(255, 208, 128);
-
-      /* theme */
-      --body-bg: rgb(255, 240, 230);
-      --body-fg: var(--charcoal);
-      --code-bg-color: rgb(255, 255, 255);
-      --code-fg-color: var(--charcoal);
-      --mask: rgb(0, 0, 0, .025);
-
       /* sizes */
       --sm-max-width: 700px;
 
-      /* syntax highlighting */
+      /* colors */
+      --charcoal: rgb(20, 20, 20);
       --pink: rgb(215, 0, 95);
+      --purple: rgb(150, 100, 200);
+      --tan: rgb(255, 240, 230);
       --turquoise: rgb(0, 135, 135);
+      --white: rgb(255, 255, 255);
+      --yellow: rgb(255, 208, 128);
+
+      /* light theme */
+      --body-bg: var(--tan);
+      --body-fg: var(--charcoal);
+      --code-bg: var(--white);
+      --code-fg: var(--charcoal);
+      --link-bg-hover: rgb(150, 100, 200, .2);
+      --link-color: var(--purple);
+      --link-underline: rgb(150, 100, 200, .5);
+      --link-underline-hover: var(--purple);
+      --mask: rgb(0, 0, 0, .025);
+      --theme-highlight: var(--purple);
     }
+    /* dark theme */
     @media (prefers-color-scheme: dark) {
       :root {
         --body-bg: rgb(25, 30, 45);
@@ -56,15 +61,15 @@
       -webkit-font-smoothing: antialiased;
     }
     a {
-      border-bottom: 2px solid var(--purple);
-      color: var(--purple);
+      border-bottom: 2px solid var(--link-underline);
+      color: var(--link-color);
       outline: 0;
       text-decoration: none;
-      transition: all .1s;
+      transition: all .2s ease;
     }
     a:hover {
-      background-color: var(--purple-faded);
-      color: var(--purple);
+      background-color: var(--link-bg-hover);
+      border-bottom: 2px solid var(--link-underline-hover);
     }
     .container {
       margin: 3rem;
@@ -118,7 +123,7 @@
     }
     blockquote {
       background-color: var(--mask);
-      border-left: 4px solid var(--purple);
+      border-left: 4px solid var(--theme-highlight);
       margin: 0;
       max-width: var(--sm-max-width);
       padding: 5px 25px;
@@ -143,7 +148,7 @@
       border-radius: 3px;
       line-height: 1.5;
       overflow-x: scroll;
-      margin: 0;
+      margin: 0 0 1.5rem 0;
       padding: 10px 15px;
       word-wrap: normal;
     }
