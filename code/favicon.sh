@@ -13,9 +13,9 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
-curl -L "https://github.com/$1.png?size=32" -o input.jpg
+curl -L "https://github.com/$1.png?size=32" -o input.png
 
-convert input.jpg \
+convert input.png \
   -gravity Center \
   \( -size 32x32 \
     xc:Black \
@@ -24,8 +24,6 @@ convert input.jpg \
     -alpha Copy \
   \) -compose CopyOpacity -composite \
   -trim favicon.ico
-
-rm input.jpg
 
 curl -L "https://github.com/$1.png?size=180" -o apple-touch-icon.png
 # enddoc: all
