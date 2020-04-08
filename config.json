@@ -1,6 +1,6 @@
 [
   {
-    "description": "When to access a third-party API with an open source library vs. writing a custom, thin client",
+    "description": "When to access a third-party API with an open source library, when to write a custom, thin client",
     "id": "thin-api-clients",
     "last_updated": "2020-04-07",
     "tags": ["APIs"]
