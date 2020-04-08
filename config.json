@@ -2,7 +2,7 @@
   {
     "description": "When to access a third-party API with an open source library, when to write a custom, thin client",
     "id": "thin-api-clients",
-    "last_updated": "2020-04-07",
+    "last_updated": "2020-04-08",
     "tags": ["APIs"]
   },
   {
