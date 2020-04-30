@@ -46,13 +46,13 @@ asdf_plugin_update() {
 
 asdf_plugin_update "nodejs" "https://github.com/asdf-vm/asdf-nodejs"
 export NODEJS_CHECK_SIGNATURES=no
-asdf install nodejs 11.10.0
+asdf install nodejs 13.7.0
 
 asdf_plugin_update "python" "https://github.com/tuvistavie/asdf-python.git"
-asdf install python 3.6.5
+asdf install python 3.8.2
 
 asdf_plugin_update "ruby" "https://github.com/asdf-vm/asdf-ruby"
-asdf install ruby 2.6.1
+asdf install ruby 2.7.0
 ```
 
 Node has a special case:
@@ -123,10 +123,9 @@ from a Git repository to `$HOME`:
 The contents of `~/.tool-versions` look like:
 
 ```bash
-go 1.10
-nodejs 8.9.0
-python 3.6.5
-ruby 2.5.1
+nodejs 13.7.0
+python 3.8.2
+ruby 2.7.0
 ```
 
 ASDF uses these values as the "global" default language versions
@@ -169,7 +168,7 @@ For example:
 ```bash
 % webpack
 zsh: command not found: webpack
-% asdf reshim nodejs 8.9.0
+% asdf reshim nodejs
 % which webpack
 $HOME/.asdf/shims/webpack
 ```
