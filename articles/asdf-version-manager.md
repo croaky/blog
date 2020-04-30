@@ -48,9 +48,6 @@ asdf_plugin_update "nodejs" "https://github.com/asdf-vm/asdf-nodejs"
 export NODEJS_CHECK_SIGNATURES=no
 asdf install nodejs 13.7.0
 
-asdf_plugin_update "python" "https://github.com/tuvistavie/asdf-python.git"
-asdf install python 3.8.2
-
 asdf_plugin_update "ruby" "https://github.com/asdf-vm/asdf-ruby"
 asdf install ruby 2.7.0
 ```
@@ -85,8 +82,6 @@ of the languages or binaries installed via the language:
 ```bash
 % which node
 ~/.asdf/shims/node
-% which python
-~/.asdf/shims/python
 % which ruby
 ~/.asdf/shims/ruby
 ```
@@ -124,7 +119,6 @@ The contents of `~/.tool-versions` look like:
 
 ```bash
 nodejs 13.7.0
-python 3.8.2
 ruby 2.7.0
 ```
 
