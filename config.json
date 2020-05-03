@@ -1,5 +1,11 @@
 [
   {
+    "description": "If you don't really care when someone does something, little hooks of synchronicity distributed across a timeline can be the forcing function for a lot of productivity.",
+    "id": "when-and-why-to-sync",
+    "last_updated": "2020-05-03",
+    "tags": ["Workflow"]
+  },
+  {
     "description": "When to access a third-party API with an open source library, when to write a custom, thin client",
     "id": "thin-api-clients",
     "last_updated": "2020-04-08",
