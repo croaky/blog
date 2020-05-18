@@ -1,6 +1,6 @@
 [
   {
-    "description": "",
+    "description": "A secure runtime for JavaScript and TypeScript",
     "id": "deno",
     "last_updated": "2020-05-10",
     "tags": null
