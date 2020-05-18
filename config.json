@@ -1,6 +1,6 @@
 [
   {
-    "description": "",
+    "description": "Attributes of maintainable routing systems in server-side APIs and front-end web and mobile apps.",
     "id": "routes",
     "last_updated": "2020-05-17",
     "tags": null
@@ -9,87 +9,58 @@
     "description": "When to access a third-party API with an open source library, when to write a custom, thin client",
     "id": "thin-api-clients",
     "last_updated": "2020-04-08",
-    "tags": [
-      "APIs"
-    ]
+    "tags": ["APIs"]
   },
   {
     "description": "Command-line script that accepts a GitHub username and generates a circular favicon and Apple Touch icon",
     "id": "favicon-apple-touch-icon-github-avatar",
     "last_updated": "2020-04-03",
-    "tags": [
-      "Web"
-    ]
+    "tags": ["Web"]
   },
   {
     "description": "Beautiful high-definition videos",
     "id": "aerial-screensaver",
     "last_updated": "2020-04-01",
-    "tags": [
-      "Workflow"
-    ]
+    "tags": ["Workflow"]
   },
   {
     "description": "Make ~/.ssh/authorized_keys look nicer",
     "id": "ssh-ed25519",
     "last_updated": "2020-04-01",
-    "tags": [
-      "Infra"
-    ]
+    "tags": ["Infra"]
   },
   {
     "description": "Daily deploys with Netlify build hooks, GitHub Actions' scheduled workflows, and GitHub encrypted secrets",
     "id": "schedule-netlify-builds-with-github-actions",
     "last_updated": "2020-03-28",
-    "tags": [
-      "Infra",
-      "SaaS",
-      "Workflow"
-    ]
+    "tags": ["Infra", "SaaS", "Workflow"]
   },
   {
     "description": "End-to-end workflow with a kanban board, GitHub code reviews, continuous integration, and continuous delivery",
     "id": "pull-requests-and-kanban",
     "last_updated": "2020-03-26",
-    "redirects": [
-      "/feature-branch-code-reviews"
-    ],
-    "tags": [
-      "SaaS",
-      "Workflow"
-    ]
+    "redirects": ["/feature-branch-code-reviews"],
+    "tags": ["SaaS", "Workflow"]
   },
   {
     "description": "Keep it synced with the upstream repository",
     "id": "update-a-github-fork",
     "last_updated": "2020-03-26",
-    "redirects": [
-      "/keep-a-github-fork-updated"
-    ],
-    "tags": [
-      "SaaS",
-      "Workflow"
-    ]
+    "redirects": ["/keep-a-github-fork-updated"],
+    "tags": ["SaaS", "Workflow"]
   },
   {
     "description": "10s install or upgrade of the Go language on macOS",
     "id": "install-or-upgrade-go-on-macos",
     "last_updated": "2020-03-25",
-    "tags": [
-      "Backend"
-    ]
+    "tags": ["Backend"]
   },
   {
     "description": "Block ads, trackers, and malicious websites with /etc/hosts",
     "id": "block-etc-hosts",
     "last_updated": "2020-02-08",
-    "redirects": [
-      "/ad-block-at-etc-hosts",
-      "/block-ads-etc-hosts"
-    ],
-    "tags": [
-      "Workflow"
-    ]
+    "redirects": ["/ad-block-at-etc-hosts", "/block-ads-etc-hosts"],
+    "tags": ["Workflow"]
   },
   {
     "description": "Avoid mistakes when editing prose in Markdown files and Git commit messages",
@@ -100,100 +71,65 @@
       "/project-specific-spell-checking-vim",
       "/vim-spell-checking"
     ],
-    "tags": [
-      "Workflow"
-    ]
+    "tags": ["Workflow"]
   },
   {
     "description": "My laptop repo sets up a macOS machine as a software development environment",
     "id": "laptop-sh",
     "last_updated": "2018-11-12",
-    "redirects": [
-      "/laptop-setup-script"
-    ],
-    "tags": [
-      "Workflow"
-    ]
+    "redirects": ["/laptop-setup-script"],
+    "tags": ["Workflow"]
   },
   {
     "description": "Clone a monorepo, change into the project directory, and run one command to start contributing",
     "id": "setup-sh",
     "last_updated": "2018-11-12",
-    "redirects": [
-      "/bin-setup"
-    ],
-    "tags": [
-      "Patterns",
-      "Workflow"
-    ]
+    "redirects": ["/bin-setup"],
+    "tags": ["Patterns", "Workflow"]
   },
   {
     "canonical": "https://medium.com/interstellar/monorepo-e1847cbd6800",
     "description": "How we organized our code into a monorepo at our startup and how it evolved over time",
     "id": "monorepo",
     "last_updated": "2018-11-01",
-    "tags": [
-      "Patterns",
-      "Workflow"
-    ]
+    "tags": ["Patterns", "Workflow"]
   },
   {
     "description": "Define Unix processes in a manifest named Procfile and use tools to manage those processes",
     "id": "process-model",
     "last_updated": "2018-10-16",
-    "tags": [
-      "APIs",
-      "Backend"
-    ]
+    "tags": ["APIs", "Backend"]
   },
   {
     "description": "Dirs and files matching the patterns defined in this file are ignored for git commits, ag searches, and fzf searches",
     "id": "gitignore",
     "last_updated": "2018-06-21",
-    "redirects": [
-      "/global-gitignore"
-    ],
-    "tags": [
-      "Workflow"
-    ]
+    "redirects": ["/global-gitignore"],
+    "tags": ["Workflow"]
   },
   {
     "description": "Deliver email from a Ruby on Rails app using Amazon's Simple Email Service (SES) hosted on EC2",
     "id": "email-amazon-ses-rails-ec2",
     "last_updated": "2018-05-09",
-    "tags": [
-      "Backend",
-      "Infra",
-      "SaaS"
-    ]
+    "tags": ["Backend", "Infra", "SaaS"]
   },
   {
     "description": "Set up and configure ASDF as a version manager for multiple programming languages",
     "id": "asdf-version-manager",
     "last_updated": "2018-05-07",
-    "tags": [
-      "Infra",
-      "Workflow"
-    ]
+    "tags": ["Infra", "Workflow"]
   },
   {
     "description": "A formatting style for prose that breaks lines at the end of a sentence or clause",
     "id": "semantic-linefeeds",
     "last_updated": "2018-05-03",
-    "tags": [
-      "Workflow"
-    ]
+    "tags": ["Workflow"]
   },
   {
     "description": "Rather than pointing DNS directly to an origin server, point it to a CDN that pulls content from the origin",
     "id": "dns-cdn-origin",
     "last_updated": "2018-03-11",
-    "tags": [
-      "APIs",
-      "Frontend",
-      "Infra",
-      "Web"
-    ]
+    "tags": ["APIs", "Frontend", "Infra", "Web"]
   },
   {
     "description": "A macOS setup and Vim configuration for React Native with Expo and Prettier",
@@ -203,10 +139,7 @@
       "/laptop-setup-and-vim-configuration-for-react-native",
       "/setup-react-native-laptop-vim"
     ],
-    "tags": [
-      "Frontend",
-      "Mobile"
-    ]
+    "tags": ["Frontend", "Mobile"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/align-github-flavored-markdown-tables-in-vim",
@@ -217,35 +150,23 @@
       "/align-markdown-tables-vim",
       "/align-markdown-tables-with-vim"
     ],
-    "tags": [
-      "Workflow"
-    ]
+    "tags": ["Workflow"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/how-to-reduce-a-large-heroku-compiled-slug-size",
     "description": "Steps to resolve the 'Compiled slug size: 300.1M is too large (max is 300M)' error",
     "id": "reduce-heroku-slug-size",
     "last_updated": "2016-06-13",
-    "redirects": [
-      "/reduce-a-large-heroku-compiled-slug-size"
-    ],
-    "tags": [
-      "Infra",
-      "SaaS"
-    ]
+    "redirects": ["/reduce-a-large-heroku-compiled-slug-size"],
+    "tags": ["Infra", "SaaS"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/create-a-retention-curve-with-mixpanel-and-google-sheets",
     "description": "How to build a retention curve chart in Google Sheets from a Mixpanel tabular cohort report",
     "id": "retention-curves-mixpanel-google-sheets",
     "last_updated": "2015-07-01",
-    "redirects": [
-      "/create-a-retention-curve-with-mixpanel-and-google-sheets"
-    ],
-    "tags": [
-      "Growth",
-      "Workflow"
-    ]
+    "redirects": ["/create-a-retention-curve-with-mixpanel-and-google-sheets"],
+    "tags": ["Growth", "Workflow"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/optimizing-full-text-search-with-postgres-tsvector-columns-and-triggers",
@@ -255,10 +176,7 @@
     "redirects": [
       "/optimize-postgres-full-text-search-with-tsvector-columns-and-triggers"
     ],
-    "tags": [
-      "Backend",
-      "Data"
-    ]
+    "tags": ["Backend", "Data"]
   },
   {
     "description": "Heroku routing errors don't reach error-tracking code in app processes, have to track with a logging service",
@@ -268,53 +186,35 @@
       "/post/send-your-apps-heroku-routing-errors-to-slack-with-papertrail-alerts/",
       "/heroku-routing-errors-slack-papertrail"
     ],
-    "tags": [
-      "Infra",
-      "SaaS"
-    ]
+    "tags": ["Infra", "SaaS"]
   },
   {
     "description": "Tradeoffs for unit tests that use mocks, stubs, or spies",
     "id": "test-mock-vs-stub-vs-spy",
     "last_updated": "2015-03-19",
-    "redirects": [
-      "/test-spies-vs-mocks"
-    ],
-    "tags": [
-      "Patterns"
-    ]
+    "redirects": ["/test-spies-vs-mocks"],
+    "tags": ["Patterns"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/north-star-metric",
     "description": "How many people get authentic value from our product?",
     "id": "north-star-metric",
     "last_updated": "2014-12-25",
-    "tags": [
-      "Growth"
-    ]
+    "tags": ["Growth"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/using-polymorphism-to-make-a-better-activity-feed-in-rails",
     "description": "The general programming technique of polymorphism can be applied to Rails partials",
     "id": "polymorphic-activity-feed-rails",
     "last_updated": "2013-12-02",
-    "redirects": [
-      "/polymorphic-activity-feed-with-rails"
-    ],
-    "tags": [
-      "Backend",
-      "Frontend",
-      "Web"
-    ]
+    "redirects": ["/polymorphic-activity-feed-with-rails"],
+    "tags": ["Backend", "Frontend", "Web"]
   },
   {
     "description": "Caching HTTP GET requests can improve performance and help avoid hitting rate limits",
     "id": "cache-api-requests",
     "last_updated": "2013-11-29",
-    "tags": [
-      "APIs",
-      "Backend"
-    ]
+    "tags": ["APIs", "Backend"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/faster-grepping-in-vim",
@@ -326,31 +226,22 @@
       "/fast-search-with-vim",
       "/search-faster-in-vim"
     ],
-    "tags": [
-      "Workflow"
-    ]
+    "tags": ["Workflow"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/running-specs-from-vim",
     "description": "Runs focused tests from Vim with a keystroke",
     "id": "run-tests-vim",
     "last_updated": "2013-08-05",
-    "redirects": [
-      "/run-specs-with-vim"
-    ],
-    "tags": [
-      "Workflow"
-    ]
+    "redirects": ["/run-specs-with-vim"],
+    "tags": ["Workflow"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/how-to-create-postgres-indexes-concurrently-in",
     "description": "Use Postgres' CONCURRENTLY option for CREATE INDEX to avoid locking writes to a table",
     "id": "create-postgres-indexes-concurrently",
     "last_updated": "2013-07-30",
-    "tags": [
-      "Backend",
-      "Data"
-    ]
+    "tags": ["Backend", "Data"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/wrap-existing-text-at-80-characters-in-vim",
@@ -361,9 +252,7 @@
       "/wrap-existing-text-at-80-characters-with-vim",
       "/wrap-text-80-characters-vim"
     ],
-    "tags": [
-      "Workflow"
-    ]
+    "tags": ["Workflow"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/sort-lines-alphabetically-in-vim",
@@ -374,68 +263,44 @@
       "/sort-lines-alphabetically-vim",
       "/sort-lines-alphabetically-with-vim"
     ],
-    "tags": [
-      "Workflow"
-    ]
+    "tags": ["Workflow"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/delivering-all-email-from-staging-to-a-group-email",
     "description": "Configure an email whitelist for a staging Rails to avoid accidentally delivering content outside the team",
     "id": "intercept-email-from-staging",
     "last_updated": "2013-01-18",
-    "tags": [
-      "Backend",
-      "Infra"
-    ]
+    "tags": ["Backend", "Infra"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/four-phase-test",
     "description": "A pattern for unit tests (but not integration tests)",
     "id": "four-phase-test",
     "last_updated": "2012-09-28",
-    "tags": [
-      "Patterns"
-    ]
+    "tags": ["Patterns"]
   },
   {
     "description": "Extend an object's responsibilities without subclassing",
     "id": "decorators-ruby",
     "last_updated": "2011-12-26",
-    "redirects": [
-      "/implement-decorators-with-ruby"
-    ],
-    "tags": [
-      "Patterns"
-    ]
+    "redirects": ["/implement-decorators-with-ruby"],
+    "tags": ["Patterns"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/how-to-back-up-a-heroku-production-database-to-staging",
     "description": "Back up and restore a production database backup into staging or local environment.",
     "id": "back-up-restore-heroku-postgres-databases",
     "last_updated": "2011-08-18",
-    "redirects": [
-      "/back-up-and-restore-heroku-postgres-databases"
-    ],
-    "tags": [
-      "Backend",
-      "Data",
-      "Infra",
-      "SaaS",
-      "Workflow"
-    ]
+    "redirects": ["/back-up-and-restore-heroku-postgres-databases"],
+    "tags": ["Backend", "Data", "Infra", "SaaS", "Workflow"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/rubys-pessimistic-operator",
     "description": "Ruby's pessimistic operator with Semantic Versioning can help stabilize dependencies",
     "id": "pessimistic-operator-ruby",
     "last_updated": "2010-12-29",
-    "redirects": [
-      "/rubys-pessimistic-operator"
-    ],
-    "tags": [
-      "Backend",
-      "Patterns"
-    ]
+    "redirects": ["/rubys-pessimistic-operator"],
+    "tags": ["Backend", "Patterns"]
   },
   {
     "description": "How to implement a common interface for configuring a third-party library in Ruby",
@@ -445,32 +310,21 @@
       "/configuration-block-pattern-with-ruby",
       "/configuration-block-ruby"
     ],
-    "tags": [
-      "Backend",
-      "Patterns"
-    ]
+    "tags": ["Backend", "Patterns"]
   },
   {
     "description": "Associations through a User model enforce authorization concerns without additional code",
     "id": "authorization-rails-associations",
     "last_updated": "2009-08-12",
-    "redirects": [
-      "/authorization-with-rails-associations"
-    ],
-    "tags": [
-      "Backend"
-    ]
+    "redirects": ["/authorization-with-rails-associations"],
+    "tags": ["Backend"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/mystery-guest",
     "description": "An anti-pattern that hides cause and effect because part of it is done outside the test method",
     "id": "mystery-guests-in-tests",
     "last_updated": "2009-07-28",
-    "redirects": [
-      "/mystery-guest"
-    ],
-    "tags": [
-      "Patterns"
-    ]
+    "redirects": ["/mystery-guest"],
+    "tags": ["Patterns"]
   }
 ]
