@@ -28,3 +28,26 @@ The user has to opt in to those behaviors with flags:
 --allow-net=google.com
 --allow-env
 ```
+
+Modules are imported using URLs:
+
+```
+import { serve } from "https://deno.land/std/http/server.ts"
+```
+
+There is no `package.json`.
+
+Be explicit about which server which you get a module from.
+This is not dependent on a centralized server.
+
+The TypeScript compiler is compiled into Deno.
+V8 Snapshots starts the TS compiler quickly.
+Users can import URLs to TypeScript code directly.
+Deno ships type definitions for the runtime.
+
+Deno treats modules and files as the same concept.
+This is how browser users think about ES modules.
+In Node, this is not the case.
+In Deno, this is explicit.
+
+Deno was originally prototyped in Go but now is solidly Rust.
