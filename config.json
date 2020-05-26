@@ -1,5 +1,11 @@
 [
   {
+    "description": "A secure runtime for JavaScript and TypeScript",
+    "id": "deno",
+    "last_updated": "2020-05-26",
+    "tags": ["APIs", "Backend"]
+  },
+  {
     "description": "When to access a third-party API with an open source library, when to write a custom, thin client",
     "id": "thin-api-clients",
     "last_updated": "2020-04-08",
