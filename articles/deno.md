@@ -1,6 +1,7 @@
 # Deno
 
 [Deno](https://deno.land/) is a secure runtime for JavaScript and TypeScript.
+v1 is out.
 
 `deno` is shipped as an executable. Install on macOS:
 
