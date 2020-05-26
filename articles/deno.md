@@ -14,9 +14,6 @@ Deno's main innovations are:
 1. Secure by default
 2. No package manager
 
-Number 2 is also security-related: the core team feels
-that centralized package managers have caused more harm than good.
-
 ## Install
 
 `deno` is shipped as a single executable. Install on macOS:
@@ -53,8 +50,10 @@ The user has to opt in to those behaviors with flags:
 
 ## Modules
 
-There is no `package.json` or a centralized package management server.
-Modules are imported explicitly from a server using URLs:
+There is no `package.json` or centralized package management server.
+The core team feels that style of package manager has caused more harm than good.
+
+Instead, modules are imported explicitly from a server using URLs:
 
 ```ts
 import { serve } from "https://deno.land/std/http/server.ts"
@@ -66,32 +65,24 @@ This is how browsers think about
 In Node, this is not the case but
 in Deno, this is explicit.
 
-Deno can be thought of as "a browser for ES modules".
-[Pika CDN](https://www.pika.dev/cdn)
-is one server that is particularly useful now for Deno.
-Pika CDN only manages NPM packages that are bundled as ES modules
+[Pika CDN](https://www.pika.dev/cdn) is one of the best module servers for Deno.
+It manages NPM packages that are bundled as ES modules
 and respects Semantic Versioning:
 
 ```ts
 import { Component, render } from "https://cdn.pika.dev/preact@^10.0.0"
 ```
 
-There are many TypeScript types out in the world,
-available on npm through `@types/` and
-[DefinitelyTyped](https://definitelytyped.org/).
-How can developers access those types but not have the overhead
-of doing
-[transpilation](https://scotch.io/tutorials/javascript-transpilers-what-they-are-why-we-need-them)
-and take advantage of the fact that the code has already been bundled?
-
-If the remote server sends an HTTP header
-[`X-TypeScript-Types`](https://dev.to/pika/introducing-pika-cdn-deno-p8b)
-and it has the content of a URL,
-Deno will use those types to type-check the package.
 To handle private modules, set up a web server.
 
-If we have these solutions (including Semantic Versioning),
-why do we need a package manager?
+See your program's module dependencies:
+
+```
+% deno info https://deno.land/std/testing/asserts.ts
+https://deno.land/std/testing/asserts.ts
+  ├── https://deno.land/std/fmt/colors.ts
+  └── https://deno.land/std/testing/diff.ts
+```
 
 ## Standard Library
 
@@ -104,27 +95,32 @@ from the Go programming language's Standard Library.
 
 ## Types
 
-Users can import URLs to TypeScript code directly.
-Deno ships type definitions for the runtime, which can be seen here:
-
-```
-% deno types
-```
-
 The TypeScript compiler is compiled into Deno. The team is
 [rewriting type checking in Rust](https://github.com/denoland/deno/issues/5432)
 for better performance.
 Deno was originally prototyped in Go but is now written in Rust.
 
-Analyze its dependency tree (also works on any ES module):
+There are many TypeScript available on npm through `@types/` and
+[DefinitelyTyped](https://definitelytyped.org/).
+If the remote module server sends an HTTP header
+[`X-TypeScript-Types`](https://dev.to/pika/introducing-pika-cdn-deno-p8b)
+and it has the content of a URL,
+Deno will use those types for type checking.
+
+Even better, because the code has already been bundled,
+Deno accesses those types without the overhead of
+[transpilation](https://scotch.io/tutorials/javascript-transpilers-what-they-are-why-we-need-them).
+
+Deno ships type definitions for the runtime.
+Print them:
 
 ```
-% deno info https://bit.ly/deno-bronto
+% deno types
 ```
 
 ## CLIs
 
-Install command line programs like this:
+Install command line programs:
 
 ```
 % deno install --allow-read https://deno.land/std/examples/catj.ts
@@ -137,6 +133,5 @@ Add /Users/croaky/.deno/bin to PATH
   export PATH="/Users/croaky/.deno/bin:$PATH"
 ```
 
-`deno` is supposed to be a Swiss Army knife of tooling
-without much beyond one executable installed on any machine:
-yours, CI, etc.
+`deno` is a Swiss Army knife of tools installed as an executable
+on your machine, a CI machine, or any machine.
