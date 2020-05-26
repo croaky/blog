@@ -6,9 +6,8 @@ Its core team includes Ryan Dahl, the creator of Node.
 
 ## Why
 
-With apologies to Node,
-Deno is the first runtime that has me interested in running JS/TS on a server
-(or in serverless functions).
+Deno is the first runtime that has me interested in running
+JavaScript/TypeScript on a server (or in serverless functions).
 
 Deno's main innovations are:
 
@@ -17,15 +16,16 @@ Deno's main innovations are:
 
 Number 2 is also security-related: the core team feels
 that centralized package managers have caused more harm than good.
-We could say "If it's on NPM, I can trust it." but that's wrong.
 
-## How
+## Install
 
 `deno` is shipped as a single executable. Install on macOS:
 
 ```
 % brew install deno
 ```
+
+## Run
 
 Run untrusted, third-party programs safely
 from the command line by referencing the source URL:
@@ -38,7 +38,7 @@ Welcome to Deno 🦕
 ```
 
 By default, the program does not have access to
-disk, network, subprocesses, or environment vars.
+disk, network, subprocesses, or environment variables.
 Like browsers, it runs in a secure sandbox.
 You can't open files or sockets.
 
@@ -51,7 +51,9 @@ The user has to opt in to those behaviors with flags:
 --allow-env
 ```
 
-There is no `package.json` or a centralized server.
+## Modules
+
+There is no `package.json` or a centralized package management server.
 Modules are imported explicitly from a server using URLs:
 
 ```ts
@@ -65,30 +67,42 @@ In Node, this is not the case but
 in Deno, this is explicit.
 
 Deno can be thought of as "a browser for ES modules".
-One server right now that is particularly useful for Deno:
-[Pika CDN](https://www.pika.dev/cdn).
-Pika CDN only deals with NPM packages that are bundled as ES modules
+[Pika CDN](https://www.pika.dev/cdn)
+is one server that is particularly useful now for Deno.
+Pika CDN only manages NPM packages that are bundled as ES modules
 and respects Semantic Versioning:
 
 ```ts
 import { Component, render } from "https://cdn.pika.dev/preact@^10.0.0"
 ```
 
-There's lots of TypeScript types out in the world,
+There are many TypeScript types out in the world,
 available on npm through `@types/` and
 [DefinitelyTyped](https://definitelytyped.org/).
 How can developers access those types but not have the overhead
-of doing the
-[transpilation](https://scotch.io/tutorials/javascript-transpilers-what-they-are-why-we-need-them),
-take advantage of the fact that the code has already been bundled?
+of doing
+[transpilation](https://scotch.io/tutorials/javascript-transpilers-what-they-are-why-we-need-them)
+and take advantage of the fact that the code has already been bundled?
 
 If the remote server sends an HTTP header
-[`X-TypeScript-Types`](https://dev.to/pika/introducing-pika-cdn-deno-p8b),
+[`X-TypeScript-Types`](https://dev.to/pika/introducing-pika-cdn-deno-p8b)
 and it has the content of a URL,
 Deno will use those types to type-check the package.
+To handle private modules, set up a web server.
 
 If we have these solutions (including Semantic Versioning),
 why do we need a package manager?
+
+## Standard Library
+
+The [`https://deno.land/std/`](https://deno.land/std)
+modules are the Standard Library that
+the JavaScript community has wanted to exist for a long time.
+
+The Deno team has taken most of their direction on the Standard Library
+from the Go programming language's Standard Library.
+
+## Types
 
 Users can import URLs to TypeScript code directly.
 Deno ships type definitions for the runtime, which can be seen here:
@@ -107,6 +121,8 @@ Analyze its dependency tree (also works on any ES module):
 ```
 % deno info https://bit.ly/deno-bronto
 ```
+
+## CLIs
 
 Install command line programs like this:
 
