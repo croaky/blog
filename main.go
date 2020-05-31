@@ -282,10 +282,12 @@ func load() ([]Article, []string, map[string]string) {
 		}
 
 		title, body := preProcess("articles/" + a.ID + ".md")
-		opts := parser.CommonExtensions | parser.AutoHeadingIDs
-		p := parser.NewWithExtensions(opts)
-		r := html.NewRenderer(html.RendererOptions{AbsolutePrefix: blogURL})
-		html := markdown.ToHTML([]byte(body), p, r)
+		ext := parser.CommonExtensions | parser.AutoHeadingIDs
+		html := markdown.ToHTML(
+			[]byte(body),
+			parser.NewWithExtensions(ext),
+			html.NewRenderer(html.RendererOptions{AbsolutePrefix: blogURL}),
+		)
 
 		a := Article{
 			Body:          template.HTML(html),
