@@ -96,6 +96,7 @@ type Article struct {
 	Description string   `json:"description"`
 	ID          string   `json:"id"`
 	LastUpdated string   `json:"last_updated"`
+	Published   string   `json:"published"`
 	Redirects   []string `json:"redirects,omitempty"`
 	Tags        []string `json:"tags"`
 
@@ -116,7 +117,9 @@ func add(id string) {
 
 	a := Article{
 		ID:          id,
+		Published:   time.Now().Format("2006-01-02"),
 		LastUpdated: time.Now().Format("2006-01-02"),
+		Tags:        []string{},
 	}
 
 	articles = append([]Article{a}, articles...)
@@ -230,7 +233,7 @@ func build() map[string]string {
 			ContentHTML: string(a.Body),
 			Tags:        a.Tags,
 		}
-		published, err := time.Parse("2006-01-02", a.LastUpdated)
+		published, err := time.Parse("2006-01-02", a.Published)
 		if err == nil {
 			item.DatePublished = published
 		}
