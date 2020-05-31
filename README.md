@@ -106,6 +106,7 @@ Configure articles in `config.json`:
     "description": "Draft scheduled for future date.",
     "id": "article-draft-scheduled",
     "last_updated": "2050-01-01",
+    "published": "2050-01-01",
     "tags": [
       "go",
       "react"
@@ -115,6 +116,7 @@ Configure articles in `config.json`:
     "description": "Redirect old URL slugs.",
     "id": "article-with-redirects",
     "last_updated": "2018-02-01",
+    "published": "2018-02-01",
     "tags": [
       "go"
     ]
@@ -129,6 +131,7 @@ Configure articles in `config.json`:
     "description": "Canonical article is on a separate site.",
     "id": "article-with-rel-canonical",
     "last_updated": "2018-01-15",
+    "published": "2018-01-15",
     "tags": [
       "go"
     ]
@@ -144,6 +147,8 @@ It is also used for the article's URL slug.
 The `last_updated` date can be in the future.
 A [GitHub Action is scheduled daily](https://dancroak.com/schedule-netlify-builds-with-github-actions)
 to auto-publish to Netlify.
+
+The `published` date is used for the [JSON feed](https://jsonfeed.org/).
 
 The `redirects` are converted into a
 [Netlify _redirects file](https://docs.netlify.com/routing/redirects/).
