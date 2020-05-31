@@ -257,7 +257,7 @@ func build() map[string]string {
 	cmd.Run()
 
 	// redirects
-	redirects := ""
+	redirects := "/archive/* /\n"
 	for k, v := range redirectMap {
 		redirects = redirects + k + " " + v + "\n"
 	}
