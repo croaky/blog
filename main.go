@@ -208,6 +208,7 @@ func build() map[string]string {
 		Title:       "Dan Croak",
 		HomePageURL: blogURL,
 		FeedURL:     blogURL + "/feed.json",
+		Icon:        blogURL + "logo.png",
 	}
 	feed.Items = make([]jsonfeed.Item, len(articles))
 
@@ -281,9 +282,10 @@ func load() ([]Article, []string, map[string]string) {
 		}
 
 		title, body := preProcess("articles/" + a.ID + ".md")
-		ext := parser.CommonExtensions | parser.AutoHeadingIDs
-		rend := html.NewRenderer(html.RendererOptions{AbsolutePrefix: blogURL})
-		html := markdown.ToHTML([]byte(body), parser.NewWithExtensions(ext), rend)
+		opts := parser.CommonExtensions | parser.AutoHeadingIDs
+		p := parser.NewWithExtensions(opts)
+		r := html.NewRenderer(html.RendererOptions{AbsolutePrefix: blogURL})
+		html := markdown.ToHTML([]byte(body), p, r)
 
 		a := Article{
 			Body:          template.HTML(html),
