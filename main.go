@@ -32,8 +32,10 @@ import (
 
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/parser"
+	"github.com/kr/jsonfeed"
 )
 
+var blogURL = "https://dancroak.com"
 var wd string
 var showScheduled = true
 
@@ -200,9 +202,16 @@ func build() map[string]string {
 	}
 	check(indexPage.Execute(f, indexData))
 
+	// feed and article pages
+	feed := jsonfeed.Feed{
+		Title:       "Dan Croak",
+		HomePageURL: blogURL,
+		FeedURL:     blogURL + "/feed.json",
+	}
+	feed.Items = make([]jsonfeed.Item, len(articles))
 	// article pages
 	articlePage := template.Must(template.ParseFiles(wd + "/theme/article.html"))
-	for _, a := range articles {
+	for i, a := range articles {
 		f, err := os.Create("public/" + a.ID + ".html")
 		check(err)
 		articleData := struct {
@@ -211,7 +220,27 @@ func build() map[string]string {
 			Article: a,
 		}
 		check(articlePage.Execute(f, articleData))
+		item := jsonfeed.Item{
+			ID:          blogURL + "/" + a.ID,
+			URL:         blogURL + "/" + a.ID,
+			Title:       a.Title,
+			ContentHTML: string(a.Body),
+			Tags:        a.Tags,
+		}
+		published, err := time.Parse("2006-01-02", a.LastUpdated)
+		if err == nil {
+			item.DatePublished = published
+		}
+		updated, err := time.Parse("2006-01-02", a.LastUpdated)
+		if err == nil {
+			item.DateModified = updated
+		}
+		item.Author = &jsonfeed.Author{Name: "Dan Croak"}
+		feed.Items[i] = item
 	}
+	f, err = os.Create("public/feed.json")
+	check(err)
+	check(json.NewEncoder(f).Encode(&feed))
 
 	// images
 	cmd := exec.Command("cp", "-a", wd+"/images/.", wd+"/public/images")
