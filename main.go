@@ -300,6 +300,7 @@ func load() ([]Article, []string, map[string]string) {
 			LastUpdated:   a.LastUpdated,
 			LastUpdatedIn: t.Format("2006"),
 			LastUpdatedOn: t.Format("January 2, 2006"),
+			Published:     a.Published,
 			Redirects:     a.Redirects,
 			Tags:          a.Tags,
 			Title:         title,
