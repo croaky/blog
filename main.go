@@ -31,6 +31,7 @@ import (
 	"time"
 
 	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
 	"github.com/kr/jsonfeed"
 )
@@ -209,6 +210,7 @@ func build() map[string]string {
 		FeedURL:     blogURL + "/feed.json",
 	}
 	feed.Items = make([]jsonfeed.Item, len(articles))
+
 	// article pages
 	articlePage := template.Must(template.ParseFiles(wd + "/theme/article.html"))
 	for i, a := range articles {
@@ -280,7 +282,8 @@ func load() ([]Article, []string, map[string]string) {
 
 		title, body := preProcess("articles/" + a.ID + ".md")
 		ext := parser.CommonExtensions | parser.AutoHeadingIDs
-		html := markdown.ToHTML([]byte(body), parser.NewWithExtensions(ext), nil)
+		rend := html.NewRenderer(html.RendererOptions{AbsolutePrefix: blogURL})
+		html := markdown.ToHTML([]byte(body), parser.NewWithExtensions(ext), rend)
 
 		a := Article{
 			Body:          template.HTML(html),
