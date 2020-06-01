@@ -211,7 +211,7 @@ func build() map[string]string {
 		Title:       "Dan Croak",
 		HomePageURL: blogURL,
 		FeedURL:     blogURL + "/feed.json",
-		Icon:        blogURL + "logo.png",
+		Icon:        blogURL + "/logo.png",
 	}
 	feed.Items = make([]jsonfeed.Item, len(articles))
 
