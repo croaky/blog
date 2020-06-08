@@ -86,12 +86,15 @@ https://deno.land/std/testing/asserts.ts
 
 ## Standard Library
 
-The [`https://deno.land/std/`](https://deno.land/std)
-modules are the Standard Library that
-the JavaScript community has wanted to exist for a long time.
+The [`https://deno.land/std/`](https://deno.land/std) modules
+are the standard lib that the JavaScript community has wanted for a long time.
 
-The Deno team has taken most of their direction on the Standard Library
-from the Go programming language's Standard Library.
+> [The Deno Standard Library] is a loose port of Go's standard library.
+> When in doubt, simply port Go's source code, documentation, and tests.
+> There are many times when the nature of JavaScript, TypeScript, or Deno itself
+> justifies diverging from Go,
+> but if possible we want to leverage the energy that went into building Go.
+> We generally welcome direct ports of Go's code.
 
 ## Types
 
