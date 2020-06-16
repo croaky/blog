@@ -1,6 +1,6 @@
 [
   {
-    "description": "When my production app processes change on Heroku, I want to be notified in Slack",
+    "description": "When my production app processes change state on Heroku, I want to be notified in Slack",
     "id": "heroku-slack-aws-lambda",
     "last_updated": "2020-06-16",
     "published": "2020-06-16",
