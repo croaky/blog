@@ -1,6 +1,6 @@
 # Heroku to Slack with AWS Lambda
 
-When my production Heroku app processes change,
+When my production app processes change state on Heroku,
 I want to be notified in Slack:
 
 ![Screenshot of Slack notification](images/heroku-to-slack.png)
