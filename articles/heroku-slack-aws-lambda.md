@@ -3,7 +3,7 @@
 When my production Heroku app processes change,
 I want to be notified in Slack:
 
-![](images/heroku-to-slack.png)
+![Screenshot of Slack notification](images/heroku-to-slack.png)
 
 Other examples:
 
