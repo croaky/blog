@@ -1,8 +1,7 @@
 # blog
 
-Articles about making software at <https://dancroak.com>.
-Custom static site generator
-designed to be deployed to [Netlify](https://www.netlify.com/).
+Short articles about software at <https://dancroak.com>.
+Static site generator designed to be deployed to [Netlify](https://netlify.com).
 
 ## Setup
 
@@ -197,11 +196,11 @@ The `theme/index.html` template accepts a data structure like this:
 
 ## Publish
 
-Configure [Netlify](https://www.netlify.com):
+Configure [Netlify](https://netlify.com):
 
 * Repository: `https://github.com/croaky/blog`
-* Branch: `master`
-* Build Cmd: `go run main.go build`
+* Production branch: `main`
+* Build command: `go run main.go build`
 * Public folder: `public`
 
 To publish articles, commit and push to the GitHub repo.
