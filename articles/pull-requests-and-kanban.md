@@ -37,15 +37,14 @@ git push
 ```
 
 I open a pull request from the command line
-with the [GitHub CLI](https://cli.github.com/):
+via [GitHub CLI](https://cli.github.com/):
 
 ```
 gh pr create --web
 ```
 
-This opens a new pull request form in a web browser,
-I make adjustments to the pull request title and description
-and open it.
+This opens a new pull request form in a web browser.
+I edit the pull request title and description and open it.
 
 A GitHub webhook starts a
 [CI](https://www.martinfowler.com/articles/continuousIntegration.html) build.
