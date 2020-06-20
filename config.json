@@ -4,7 +4,7 @@
     "id": "heroku-slack-aws-lambda",
     "last_updated": "2020-06-16",
     "published": "2020-06-16",
-    "tags": ["APIs", "Backend", "Infra", "Workflow"]
+    "tags": ["APIs", "Backend", "Workflow"]
   },
   {
     "description": "A secure runtime for JavaScript and TypeScript",
@@ -14,7 +14,7 @@
     "tags": ["APIs", "Backend"]
   },
   {
-    "description": "When to access a third-party API with an open source library, when to write a custom, thin client",
+    "description": "When to access an API with a specialized library and when to write a custom thin client",
     "id": "thin-api-clients",
     "last_updated": "2020-04-08",
     "published": "2020-04-08",
@@ -25,36 +25,29 @@
     "id": "favicon-apple-touch-icon-github-avatar",
     "last_updated": "2020-04-03",
     "published": "2020-04-03",
-    "tags": ["Web"]
-  },
-  {
-    "description": "Beautiful high-definition videos",
-    "id": "aerial-screensaver",
-    "last_updated": "2020-04-01",
-    "published": "2020-04-01",
-    "tags": ["Workflow"]
+    "tags": ["Frontend"]
   },
   {
     "description": "Make ~/.ssh/authorized_keys look nicer",
     "id": "ssh-ed25519",
     "last_updated": "2020-04-01",
     "published": "2020-04-01",
-    "tags": ["Infra"]
+    "tags": ["Workflow"]
   },
   {
     "description": "Daily deploys with Netlify build hooks, GitHub Actions' scheduled workflows, and GitHub encrypted secrets",
     "id": "schedule-netlify-builds-with-github-actions",
     "last_updated": "2020-03-28",
     "published": "2020-03-28",
-    "tags": ["Infra", "SaaS", "Workflow"]
+    "tags": ["Workflow"]
   },
   {
-    "description": "End-to-end workflow with a kanban board, GitHub code reviews, continuous integration, and continuous delivery",
+    "description": "End-to-end with a kanban board, GitHub code review, continuous integration, and continuous delivery",
     "id": "pull-requests-and-kanban",
     "last_updated": "2020-03-26",
     "published": "2020-03-26",
     "redirects": ["/feature-branch-code-reviews"],
-    "tags": ["SaaS", "Workflow"]
+    "tags": ["Workflow"]
   },
   {
     "description": "Keep it synced with the upstream repository",
@@ -62,7 +55,7 @@
     "last_updated": "2020-03-26",
     "published": "2020-03-26",
     "redirects": ["/keep-a-github-fork-updated"],
-    "tags": ["SaaS", "Workflow"]
+    "tags": ["Workflow"]
   },
   {
     "description": "10s install or upgrade of the Go language on macOS",
@@ -135,14 +128,14 @@
     "id": "email-amazon-ses-rails-ec2",
     "last_updated": "2018-05-09",
     "published": "2018-05-09",
-    "tags": ["Backend", "Infra", "SaaS"]
+    "tags": ["Backend"]
   },
   {
     "description": "Set up and configure ASDF as a version manager for multiple programming languages",
     "id": "asdf-version-manager",
     "last_updated": "2018-05-07",
     "published": "2018-05-07",
-    "tags": ["Infra", "Workflow"]
+    "tags": ["Workflow"]
   },
   {
     "description": "A formatting style for prose that breaks lines at the end of a sentence or clause",
@@ -156,7 +149,7 @@
     "id": "dns-cdn-origin",
     "last_updated": "2018-03-11",
     "published": "2018-03-11",
-    "tags": ["APIs", "Frontend", "Infra", "Web"]
+    "tags": ["APIs", "Frontend"]
   },
   {
     "description": "A macOS setup and Vim configuration for React Native with Expo and Prettier",
@@ -167,7 +160,7 @@
       "/laptop-setup-and-vim-configuration-for-react-native",
       "/setup-react-native-laptop-vim"
     ],
-    "tags": ["Frontend", "Mobile"]
+    "tags": ["Frontend"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/align-github-flavored-markdown-tables-in-vim",
@@ -188,7 +181,7 @@
     "last_updated": "2016-06-13",
     "published": "2016-06-13",
     "redirects": ["/reduce-a-large-heroku-compiled-slug-size"],
-    "tags": ["Infra", "SaaS"]
+    "tags": ["Backend"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/create-a-retention-curve-with-mixpanel-and-google-sheets",
@@ -219,7 +212,7 @@
       "/post/send-your-apps-heroku-routing-errors-to-slack-with-papertrail-alerts/",
       "/heroku-routing-errors-slack-papertrail"
     ],
-    "tags": ["Infra", "SaaS"]
+    "tags": ["Backend"]
   },
   {
     "description": "Tradeoffs for unit tests that use mocks, stubs, or spies",
@@ -244,7 +237,7 @@
     "last_updated": "2013-12-02",
     "published": "2013-12-02",
     "redirects": ["/polymorphic-activity-feed-with-rails"],
-    "tags": ["Backend", "Frontend", "Web"]
+    "tags": ["Backend", "Frontend"]
   },
   {
     "description": "Caching HTTP GET requests can improve performance and help avoid hitting rate limits",
@@ -285,7 +278,7 @@
   },
   {
     "canonical": "https://thoughtbot.com/blog/wrap-existing-text-at-80-characters-in-vim",
-    "description": "Wrap text to the set textwidth with visual select and gq",
+    "description": "Wrap text to set textwidth with visual select and gq",
     "id": "wrap-text-in-vim",
     "last_updated": "2013-04-07",
     "published": "2013-04-07",
@@ -313,7 +306,7 @@
     "id": "intercept-email-from-staging",
     "last_updated": "2013-01-18",
     "published": "2013-01-18",
-    "tags": ["Backend", "Infra"]
+    "tags": ["Backend"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/four-phase-test",
@@ -338,7 +331,7 @@
     "last_updated": "2011-08-18",
     "published": "2011-08-18",
     "redirects": ["/back-up-and-restore-heroku-postgres-databases"],
-    "tags": ["Backend", "Data", "Infra", "SaaS", "Workflow"]
+    "tags": ["Backend", "Data", "Workflow"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/rubys-pessimistic-operator",
