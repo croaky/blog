@@ -137,7 +137,7 @@ To use Fastly, there's no additional "Origin Pull" configuration.
 The deployment process can be adjusted to:
 
 ```bash
-git push heroku master --app example
+git push heroku HEAD:master --app example
 heroku run rake purge --app example
 ```
 

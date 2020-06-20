@@ -3,7 +3,7 @@
 I use a [custom static site generator](https://github.com/croaky/blog)
 to publish this blog.
 It automatically deploys to Netlify
-when I merge new articles into my Git repository's `master` branch.
+when I merge new articles into my Git repository's `main` branch.
 To support a "scheduled article" feature,
 I have configured a
 [GitHub Actions scheduled workflow](https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#onschedule):

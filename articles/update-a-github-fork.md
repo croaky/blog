@@ -22,7 +22,7 @@ gh repo fork org/project
 The `upstream` remote is automatically set to the upstream repository.
 
 I also have these relevant settings in my
-[`~/.gitconfig`](https://github.com/croaky/laptop/blob/master/dotfiles/git/gitconfig):
+[`~/.gitconfig`](https://github.com/croaky/laptop/blob/main/dotfiles/git/gitconfig):
 
 ```
 [merge]
@@ -36,23 +36,23 @@ I also have these relevant settings in my
 Update the fork with changes in the upstream repo:
 
 ```
-git checkout master
+git checkout main
 git fetch upstream
-git merge upstream/master
+git merge upstream/main
 git push
 ```
 
 If there are no conflicts,
 the merge will apply cleanly and
-the fork's `master` branch will be sync'ed
+the fork's `main` branch will be sync'ed
 with the `upstream` repository.
 
 If there are conflicts, I'll have to rebase and force push:
 
 ```
-git checkout master
+git checkout main
 git fetch upstream
-git rebase upstream/master
+git rebase upstream/main
 [fix conflicts]
 git add .
 git rebase --continue

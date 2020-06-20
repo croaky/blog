@@ -260,7 +260,6 @@
     "tags": ["Workflow"]
   },
   {
-    "canonical": "https://thoughtbot.com/blog/running-specs-from-vim",
     "description": "Runs focused tests from Vim with a keystroke",
     "id": "run-tests-vim",
     "last_updated": "2013-08-05",

@@ -15,7 +15,7 @@ By default, it will use the system's `grep` command.
 We can overwrite it to use
 [The Silver Searcher](https://github.com/ggreer/the_silver_searcher)'s
 `ag` command by putting this in
-[our `~/.vimrc`](https://github.com/croaky/laptop/tree/master/dotfiles/editor/vim):
+[our `~/.vimrc`](https://github.com/croaky/laptop/tree/main/dotfiles/editor/vim):
 
 ```vim
 " The Silver Searcher
