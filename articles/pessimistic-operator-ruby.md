@@ -19,7 +19,3 @@ Using the pessimistic operator with [Semantic Versioning] by gem authors,
 we can achieve better stability in our dependencies.
 
 [Semantic Versioning]: http://semver.org/
-
-Read more [Ruby dependency management guidelines][guidelines].
-
-[guidelines]: https://github.com/thoughtbot/guides/tree/master/best-practices#bundler

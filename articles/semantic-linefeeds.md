@@ -24,4 +24,4 @@ as ideas are isolated and re-worked.
 
 See this blog's [articles directory][dir] for examples.
 
-[dir]: https://github.com/croaky/blog/tree/master/articles
+[dir]: https://github.com/croaky/blog/tree/main/articles

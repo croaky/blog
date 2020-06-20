@@ -34,7 +34,7 @@ It requires sending all your traffic through them.
 
 ## Modify /etc/hosts
 
-Here's [the script](https://github.com/croaky/laptop/blob/master/bin/adblock)
+Here's [the script](https://github.com/croaky/laptop/blob/main/bin/adblock)
 I use (modified from a version by [@djcp](https://twitter.com/djcp)):
 
 ```bash

@@ -19,10 +19,9 @@ It exposes methods such as `RunNearestSpec()`,
 `RunCurrentSpecFile()`, and
 `RunLastSpec()`,
 which can be bound to a key mapping of your choice.
-In [thoughtbot/dotfiles][dotfiles],
-we bind those methods to `<Leader>s`, `<Leader>t`, and `<Leader>l`.
 
-[dotfiles]: https://github.com/thoughtbot/dotfiles/blob/master/vimrc
+In [croaky/laptop](https://github.com/croaky/laptop/blob/main/dotfiles/editor/vimrc),
+I bind those methods to `<Leader>s`, `<Leader>t`, and `<Leader>l`.
 
 Cursor over any line within an RSpec spec like this:
 
@@ -51,9 +50,6 @@ Finished in 0.03059 seconds
 ```
 
 The screen is overtaken by a shell that runs only the focused spec.
-Developers using tmux with vim-rspec and tslime
-sometimes send the output to a nearby shell
-so the code and spec output display on the screen at the same time.
 
 Feeling good that this new spec passes,
 run the whole file's specs with `<Leader>t`

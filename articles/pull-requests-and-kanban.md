@@ -58,7 +58,7 @@ The teammate comments in-line on the code,
 
 [pr]: https://help.github.com/articles/about-pull-request-reviews/
 
-Code review before code lands in `master` offers these benefits:
+Code review before code lands in `main` offers these benefits:
 
 - The whole team learns about new code as it is written.
 - Mistakes are caught earlier.
@@ -85,23 +85,23 @@ git push
 
 Once the pull request has been approved, feedback addressed, and CI has passed,
 I press the "Squash and merge" button.
-[This Chrome extension](https://github.com/croaky/laptop/blob/master/chrome/github-pr.js)
+[This Chrome extension](https://github.com/croaky/laptop/blob/main/chrome/github-pr.js)
 copies the pull request title and body to the commit's title and message.
 
 After the pull request merges cleanly,
 back on the command line in `my-branch`, I run
-[this script](https://github.com/croaky/laptop/blob/master/bin/git-post-land):
+[this script](https://github.com/croaky/laptop/blob/main/bin/git-post-land):
 
 ```
 git post-land
 ```
 
-It runs some cleanup and moves me back to `master`:
+It runs some cleanup and moves me back to `main`:
 
 ```
-git checkout master
+git checkout main
 git fetch origin
-git merge --ff-only origin/master
+git merge --ff-only origin/main
 git branch -D "$branch"
 git remote prune origin
 ```

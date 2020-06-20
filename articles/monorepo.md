@@ -388,12 +388,12 @@ For example:
 ```yml
 github.com/org/org-sdk-node:
   - branch:
-    - master: master
+    - main: main
   - mirror:
     - sdk/node: /
 github.com/org/org-sdk-ruby:
   - branch:
-    - master: master
+    - main: main
   - mirror:
     - sdk/ruby: /
 ```
