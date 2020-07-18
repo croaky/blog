@@ -26,6 +26,7 @@ import (
 	"os/exec"
 	"path"
 	"regexp"
+	"runtime"
 	"sort"
 	"strings"
 	"time"
@@ -81,6 +82,10 @@ func usage() {
 func check(err error) {
 	if err != nil {
 		fmt.Println(err)
+		_, file, no, ok := runtime.Caller(1)
+		if ok {
+			fmt.Printf("%s#%d\n", file, no)
+		}
 		os.Exit(1)
 	}
 }
@@ -190,7 +195,10 @@ func build() map[string]string {
 	articles, tags, redirectMap := load()
 
 	// public directories
-	check(os.RemoveAll(wd + "/public"))
+	dir, err := ioutil.ReadDir(wd + "/public")
+	for _, d := range dir {
+		os.RemoveAll(path.Join([]string{"public", d.Name()}...))
+	}
 	check(os.MkdirAll(wd+"/public/images", os.ModePerm))
 
 	// index page
