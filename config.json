@@ -1,5 +1,12 @@
 [
   {
+    "description": "Caching HTTP GET requests can improve performance and help avoid hitting rate limits",
+    "id": "cache-api-requests",
+    "last_updated": "2020-07-22",
+    "published": "2013-11-29",
+    "tags": ["APIs", "Backend"]
+  },
+  {
     "description": "When my production app processes change state on Heroku, I want to be notified in Slack",
     "id": "heroku-slack-aws-lambda",
     "last_updated": "2020-06-16",
@@ -238,13 +245,6 @@
     "published": "2013-12-02",
     "redirects": ["/polymorphic-activity-feed-with-rails"],
     "tags": ["Backend", "Frontend"]
-  },
-  {
-    "description": "Caching HTTP GET requests can improve performance and help avoid hitting rate limits",
-    "id": "cache-api-requests",
-    "last_updated": "2013-11-29",
-    "published": "2013-11-29",
-    "tags": ["APIs", "Backend"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/faster-grepping-in-vim",

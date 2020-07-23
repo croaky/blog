@@ -1,95 +1,39 @@
 # Cache API Requests
 
-Caching HTTP GET requests can improve performance
-and help avoid hitting rate limits.
+This article covers a case where
+I ingested data from Foursquare's Places API, whose
+[terms of use](https://developer.foursquare.com/docs/usage-guidelines/) include:
 
-```ruby
-service = RemoteService.new
-data = service.get("https://example.com/endpoint")
+* the data can not be cached longer than 24 hours
+* an hourly rate limit and a daily call quota, whichever comes first
+
+Database schema:
+
+```embed
+code/cache-api-requests/schema.sql all
 ```
 
-The first time this code runs,
-an HTTP request will be made.
-The request URL and response body
-will be saved to a database.
-
-When it runs again within the external service's cache policy,
-the HTTP request will not be made.
-The cached response body will be served by the database.
+I created a database table to store API requests and responses
+and wrote a client interface for the API endpoints I needed like:
 
 ```ruby
-require "json"
-require "net/http"
-require "openssl"
-require "uri"
-
-class RemoteService
-  CACHE_POLICY = lambda { 30.days.ago }
-
-  def get(url)
-    req = ApiRequest.find(url)
-
-    unless req.cached?(CACHE_POLICY.call)
-      body = get_and_parse(url)
-
-      if body
-        req.update(response_body: body)
-      end
-    end
-
-    req.response_body
-  end
-
-  private
-
-  def get_and_parse(url)
-    uri = URI(url)
-    connection = Net::HTTP.new(uri.host, uri.port)
-    connection.use_ssl = true
-    connection.verify_mode = OpenSSL::SSL::VERIFY_PEER
-    request = Net::HTTP::Get.new(uri)
-    response = connection.request(request)
-
-    if response.is_a?(Net::HTTPSuccess)
-      JSON.parse(response.body)
-    end
-  end
-end
-
-class ApiRequest < ApplicationRecord
-  validates :hashed_url, presence: true, uniqueness: true
-
-  def self.find(url)
-    hashed_url = Digest::MD5.hexdigest(url)
-    find_or_initialize_by(hashed_url: hashed_url)
-  end
-
-  def cached?(expired_at)
-    return false if new_record?
-    expired_at < updated_at
-  end
-end
-
-class CreateApiRequests < ActiveRecord::Migration
-  def change
-    create_table :api_requests do |t|
-      t.timestamps null: false
-      t.string :hashed_url, null: false
-      t.jsonb :response_body, default: {}, null: false
-    end
-
-    add_index :api_requests, :hashed_url, unique: true
-    add_index :api_requests, :response_body, using: :gin
-  end
-end
+Foursquare.explore("tacos", near: "San Francisco, CA")
 ```
 
-The `response_body` field contains the response JSON
-using [Postgres' JSONB column][jsonb].
+The first time this code runs, an HTTP request will be made.
+The request URL will be saved to a Postgres database.
+When it runs within Foursquare's cache policy,
+no HTTP request will be made.
 
-[jsonb]: https://www.postgresql.org/docs/9.6/static/functions-json.html
+```embed
+code/cache-api-requests/main.rb all
+```
 
-The index improves performance of future lookups
-and enforces uniqueness of the URL.
+Data older than 30 days needs to additionally be deleted.
+It can be swept via a clock process or
+[pg_cron](https://github.com/citusdata/pg_cron):
 
-The URL is hashed in case sensitive data is included in query params.
+```sql
+DELETE FROM cache_foursquare
+WHERE fetched_at < now() - interval '24 hours';
+```
