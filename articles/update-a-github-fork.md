@@ -47,14 +47,14 @@ the merge will apply cleanly and
 the fork's `main` branch will be sync'ed
 with the `upstream` repository.
 
-If there are conflicts, I'll have to rebase and force push:
+If there are conflicts, fix and force push:
 
 ```
 git checkout main
 git fetch upstream
-git rebase upstream/main
+git merge upstream/main
 [fix conflicts]
 git add .
-git rebase --continue
+git commit -m "Fix conflicts"
 git push -f
 ```
