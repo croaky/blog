@@ -41,20 +41,3 @@ git fetch upstream
 git merge upstream/main
 git push
 ```
-
-If there are no conflicts,
-the merge will apply cleanly and
-the fork's `main` branch will be sync'ed
-with the `upstream` repository.
-
-If there are conflicts, fix and force push:
-
-```
-git checkout main
-git fetch upstream
-git merge upstream/main
-[fix conflicts]
-git add .
-git commit -m "Fix conflicts"
-git push -f
-```
