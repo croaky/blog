@@ -16,10 +16,17 @@ Deno's main innovations are:
 
 ## Install
 
-`deno` is shipped as a single executable. Install on macOS:
+`deno` is shipped as a single executable. Install:
 
 ```
-% brew install deno
+curl -fsSL https://deno.land/x/install/install.sh | sh
+```
+
+Add to `~/.zshrc`:
+
+```
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
 ```
 
 ## Run
