@@ -108,7 +108,6 @@
     "tags": ["Patterns", "Workflow"]
   },
   {
-    "canonical": "https://medium.com/interstellar/monorepo-e1847cbd6800",
     "description": "How we organized our code into a monorepo at our startup and how it evolved over time",
     "id": "monorepo",
     "last_updated": "2018-11-01",
