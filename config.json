@@ -1,5 +1,12 @@
 [
   {
+    "description": "Protobufs improve workflows, increase type adherence, increase runtime performance, and can be used without gRPC.",
+    "id": "protobufs",
+    "last_updated": "2020-10-10",
+    "published": "2020-10-10",
+    "tags": ["APIs", "Workflow"]
+  },
+  {
     "description": "Caching HTTP GET requests can improve performance and help avoid hitting rate limits",
     "id": "cache-api-requests",
     "last_updated": "2020-07-22",
