@@ -35,3 +35,6 @@ The build hook is a URL which I've stored as a
 
 When there are articles whose scheduled date matches the new UTC date,
 they are automatically published by this workflow.
+
+Scheduled workflows are disabled automatically
+after 60 days of repository inactivity.
