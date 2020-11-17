@@ -1,18 +1,9 @@
-/*
-
-Add an article:
-
-  blog add <article-url-slug>
-
-Serve site on localhost:
-
-  blog serve
-
-Build site (HTML, images, code, Netlify files) to `public/`:
-
-  blog build
-
-*/
+// Add an article:
+//   blog add <article-url-slug>
+// Serve site on localhost:
+//   blog serve
+// Build site (HTML, images, code, Netlify files) to `public/`:
+//   blog build
 package main
 
 import (
@@ -31,6 +22,7 @@ import (
 	"strings"
 	"time"
 
+	// TODO: replace with https://github.com/yuin/goldmark
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
