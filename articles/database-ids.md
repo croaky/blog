@@ -186,3 +186,8 @@ BEGIN
 END;
 $$ IMMUTABLE;
 ```
+
+## Alternatives
+
+UUIDs now in Postgres 13 or
+[ULIDs](https://www.trek10.com/blog/leveraging-ulids-to-create-order-in-unordered-datastores)
