@@ -1,4 +1,4 @@
-# Postgres \set variable
+# Postgres \set Variable
 
 Within `psql`,
 you can `\set` variables and reference them with `:'var-name'`.
