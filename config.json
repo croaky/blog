@@ -1,5 +1,26 @@
 [
   {
+    "description": "In psql, \\set variables and reference them with :'var-name'.",
+    "id": "postgres-set-variable",
+    "last_updated": "2020-12-05",
+    "published": "2020-12-05",
+    "tags": []
+  },
+  {
+    "description": "Run SQL against configured Postgres database from Vim.",
+    "id": "run-sql-from-vim",
+    "last_updated": "2020-09-21",
+    "published": "2020-09-21",
+    "tags": ["Data", "Workflow"]
+  },
+  {
+    "description": "Format SQL on save in Vim.",
+    "id": "format-sql-in-vim",
+    "last_updated": "2020-08-03",
+    "published": "2020-08-03",
+    "tags": ["Data", "Workflow"]
+  },
+  {
     "description": "Caching HTTP GET requests can improve performance and help avoid hitting rate limits",
     "id": "cache-api-requests",
     "last_updated": "2020-07-22",
