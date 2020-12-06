@@ -1,20 +1,20 @@
 [
   {
-    "description": "Use concat_ws() instead of concat() to avoid ugly output like AB / / CD or AB, , CD.",
+    "description": "Use concat_ws() instead of concat() to avoid ugly output.",
     "id": "postgres-concat-ws-function",
     "last_updated": "2020-12-05",
     "published": "2020-12-05",
     "tags": ["Data"]
   },
   {
-    "description": "In psql, \\set variables and reference them with :'var-name'.",
+    "description": "In psql, set variables and reference them.",
     "id": "postgres-set-variable",
     "last_updated": "2020-10-10",
     "published": "2020-10-10",
     "tags": ["Data"]
   },
   {
-    "description": "Run SQL against configured Postgres database from Vim.",
+    "description": "Run SQL against a Postgres database from Vim.",
     "id": "run-sql-from-vim",
     "last_updated": "2020-09-21",
     "published": "2020-09-21",
