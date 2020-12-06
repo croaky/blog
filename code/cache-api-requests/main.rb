@@ -63,5 +63,7 @@ class Foursquare
   end
 end
 
-Foursquare.explore("tacos", near: "San Francisco, CA")
+if $0 == __FILE__
+  Foursquare.explore("tacos", near: "San Francisco, CA")
+end
 # enddoc: all
