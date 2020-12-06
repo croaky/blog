@@ -1,27 +1,27 @@
 [
   {
-    "description": "Use concat_ws() instead of concat() to avoid ugly output.",
+    "description": "Use concat_ws() instead of concat() to avoid ugly output",
     "id": "postgres-concat-ws-function",
     "last_updated": "2020-12-05",
     "published": "2020-12-05",
     "tags": ["Data"]
   },
   {
-    "description": "In psql, set variables and reference them.",
+    "description": "In psql, set variables and reference them",
     "id": "postgres-set-variable",
     "last_updated": "2020-10-10",
     "published": "2020-10-10",
     "tags": ["Data"]
   },
   {
-    "description": "Run SQL against a Postgres database from Vim.",
+    "description": "Run SQL against a Postgres database from Vim",
     "id": "run-sql-from-vim",
     "last_updated": "2020-09-21",
     "published": "2020-09-21",
     "tags": ["Data", "Workflow"]
   },
   {
-    "description": "Format SQL on save in Vim.",
+    "description": "Format SQL on save in Vim",
     "id": "format-sql-in-vim",
     "last_updated": "2020-08-03",
     "published": "2020-08-03",
@@ -352,7 +352,7 @@
   },
   {
     "canonical": "https://thoughtbot.com/blog/how-to-back-up-a-heroku-production-database-to-staging",
-    "description": "Back up and restore a production database backup into staging or local environment.",
+    "description": "Back up and restore a production database backup into staging or local environment",
     "id": "back-up-restore-heroku-postgres-databases",
     "last_updated": "2011-08-18",
     "published": "2011-08-18",
