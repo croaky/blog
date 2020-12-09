@@ -53,6 +53,13 @@
     "tags": ["Infra", "Postgres", "Ruby"]
   },
   {
+    "description": "SSO should be free, not a premium feature",
+    "id": "sso-wall-of-fame",
+    "last_updated": "2020-12-09",
+    "published": "2020-12-09",
+    "tags": ["SaaS"]
+  },
+  {
     "description": "Use concat_ws() instead of concat() to avoid ugly output",
     "id": "postgres-concat-ws-function",
     "last_updated": "2020-12-05",
