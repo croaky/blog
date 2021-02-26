@@ -5,8 +5,7 @@ Static site generator designed to be deployed to [Netlify](https://netlify.com).
 
 ## Setup
 
-[Install Go](https://dancroak.com/install-or-upgrade-go-on-macos) (10s).
-Then, run:
+[Install Go](https://golang.org/doc/install). Then, run:
 
 ```
 go install ./...

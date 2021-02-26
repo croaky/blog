@@ -93,13 +93,6 @@
     "tags": ["Workflow"]
   },
   {
-    "description": "10s install or upgrade of the Go language on macOS",
-    "id": "install-or-upgrade-go-on-macos",
-    "last_updated": "2020-03-25",
-    "published": "2020-03-25",
-    "tags": ["Backend"]
-  },
-  {
     "description": "Block ads, trackers, and malicious websites with /etc/hosts",
     "id": "block-etc-hosts",
     "last_updated": "2020-02-08",
