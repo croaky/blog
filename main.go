@@ -95,6 +95,11 @@ func exitWith(s string) {
 	os.Exit(1)
 }
 
+// Blog is a container loaded from config.json
+type Blog struct {
+	Articles []Article
+}
+
 // Article contains data loaded from config.json and parsed Markdown
 type Article struct {
 	Canonical   string   `json:"canonical,omitempty"`
@@ -277,13 +282,13 @@ func build() map[string]string {
 func load() ([]Article, []string, map[string]string) {
 	config, err := ioutil.ReadFile(wd + "/config.json")
 	check(err)
-	var articles []Article
-	check(json.Unmarshal(config, &articles))
+	var blog Blog
+	check(json.Unmarshal(config, &blog))
 
 	tags := make([]string, 0)
 	redirectMap := make(map[string]string)
 
-	for i, a := range articles {
+	for i, a := range blog.Articles {
 		t, err := time.Parse("2006-01-02", a.LastUpdated)
 		check(err)
 
@@ -313,7 +318,7 @@ func load() ([]Article, []string, map[string]string) {
 			Tags:          a.Tags,
 			Title:         title,
 		}
-		articles[i] = a
+		blog.Articles[i] = a
 
 		for _, t := range a.Tags {
 			tags = append(tags, t)
@@ -334,7 +339,7 @@ func load() ([]Article, []string, map[string]string) {
 		prev = t
 	}
 
-	return articles, uniqTags, redirectMap
+	return blog.Articles, uniqTags, redirectMap
 }
 
 /*
