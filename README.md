@@ -99,44 +99,42 @@ Refer to them in articles:
 Configure articles in `config.json`:
 
 ```
-{
-  "articles": [
-    {
-      "description": "Draft scheduled for future date.",
-      "id": "article-draft-scheduled",
-      "last_updated": "2050-01-01",
-      "published": "2050-01-01",
-      "tags": [
-        "go",
-        "react"
-      ]
-    },
-    {
-      "description": "Redirect old URL slugs.",
-      "id": "article-with-redirects",
-      "last_updated": "2018-02-01",
-      "published": "2018-02-01",
-      "tags": [
-        "go"
-      ]
-      "redirects": [
-        "/article-original-name",
-        "/article-renamed-again",
-        "/this-feature-works-only-on-netlify",
-      ]
-    },
-    {
-      "canonical": "https://seo.example.com/avoid-duplicate-content-penalty",
-      "description": "Canonical article is on a separate site.",
-      "id": "article-with-rel-canonical",
-      "last_updated": "2018-01-15",
-      "published": "2018-01-15",
-      "tags": [
-        "go"
-      ]
-    }
-  ]
-}
+[
+  {
+    "description": "Draft scheduled for future date.",
+    "id": "article-draft-scheduled",
+    "last_updated": "2050-01-01",
+    "published": "2050-01-01",
+    "tags": [
+      "go",
+      "react"
+    ]
+  },
+  {
+    "description": "Redirect old URL slugs.",
+    "id": "article-with-redirects",
+    "last_updated": "2018-02-01",
+    "published": "2018-02-01",
+    "tags": [
+      "go"
+    ]
+    "redirects": [
+      "/article-original-name",
+      "/article-renamed-again",
+      "/this-feature-works-only-on-netlify",
+    ]
+  },
+  {
+    "canonical": "https://seo.example.com/avoid-duplicate-content-penalty",
+    "description": "Canonical article is on a separate site.",
+    "id": "article-with-rel-canonical",
+    "last_updated": "2018-01-15",
+    "published": "2018-01-15",
+    "tags": [
+      "go"
+    ]
+  }
+]
 ```
 
 The `description` is used for the article page's `meta` description.
