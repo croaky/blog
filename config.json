@@ -1,5 +1,12 @@
 [
   {
+    "description": "Read and write to a Heroku Postgres database as primary and read from a follower in targeted call sites",
+    "id": "heroku-postgres-read-replica-with-rails",
+    "last_updated": "2021-02-26",
+    "published": "2021-02-26",
+    "tags": ["Backend", "Data"]
+  },
+  {
     "description": "Use concat_ws() instead of concat() to avoid ugly output",
     "id": "postgres-concat-ws-function",
     "last_updated": "2020-12-05",
