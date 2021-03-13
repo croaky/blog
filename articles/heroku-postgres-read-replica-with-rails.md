@@ -162,6 +162,21 @@ on the number of dynos for
 (19 web dynos * 5 Puma workers * 5 Puma threads)
 ```
 
+Test the number of connections by opening a Postgres prompt
+using `heroku pg:psql` and running:
+
+```
+select count(*) from pg_stat_activity where pid <> pg_backend_pid() and usename = current_user;
+```
+
+In another shell, send traffic to the app with a tool like Apache Bench:
+
+```
+ab -n 100 -c 8 https://tranquil-brushlands-56319.herokuapp.com/
+```
+
+As the traffic increases, you'll see the connections max out.
+
 A final consideration is if you have a
 [High Availability (HA) Heroku Postgres follower](https://devcenter.heroku.com/articles/heroku-postgres-ha),
 whether to use it as a read-only replica.
