@@ -177,6 +177,30 @@
     th {
       text-align: left;
     }
+    form {
+      display: flex;
+      margin-top: 2rem;
+    }
+    input, button {
+      font-size: 20px;
+      padding: 1rem;
+    }
+    input {
+      border: none;
+      max-width: 25rem;
+      width: 100%;
+    }
+    input:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+    button {
+      background-color: var(--purple);
+      border: none;
+      color: var(--white);
+      cursor: pointer;
+      width: 220px;
+    }
     @media (max-width: 1000px) {
       .container {
         margin: 2rem;
@@ -206,6 +230,13 @@
       p {
         margin: 1rem 0;
       }
+      input, button {
+        font-size: 16px;
+        padding: 0.75rem;
+      }
+      button {
+        width: 180px;
+      }
     }
   </style>
 </head>
@@ -213,7 +244,7 @@
   <div class="container">
     <nav>
       <a class="logo" href="/">
-        <img alt="GitHub avatar" src="logo.png" width="64px" height="64px" />
+        <img alt="Dan's profile photo" src="logo.png" width="64px" height="64px" />
       </a>
     </nav>
 
@@ -231,6 +262,13 @@
 
     <footer>
       <a href="/">&larr; All articles</a>
+
+      <form method="post" action="https://tinyletter.com/dancroak">
+        <input id="email" name="email" type="email" autocomplete="off" placeholder="Enter your email">
+        <button type="submit">
+          Get updates
+        </button>
+      </form>
     </footer>
   </div>
 
