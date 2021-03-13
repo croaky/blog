@@ -34,7 +34,6 @@ import (
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
-	"github.com/kr/jsonfeed"
 )
 
 var blogURL = "https://dancroak.com"
@@ -101,7 +100,6 @@ type Article struct {
 	Description string   `json:"description"`
 	ID          string   `json:"id"`
 	LastUpdated string   `json:"last_updated"`
-	Published   string   `json:"published"`
 	Redirects   []string `json:"redirects,omitempty"`
 	Tags        []string `json:"tags"`
 
@@ -122,7 +120,6 @@ func add(id string) {
 
 	a := Article{
 		ID:          id,
-		Published:   time.Now().Format("2006-01-02"),
 		LastUpdated: time.Now().Format("2006-01-02"),
 		Tags:        []string{},
 	}
@@ -214,18 +211,9 @@ func build() map[string]string {
 	}
 	check(indexPage.Execute(f, indexData))
 
-	// feed and article pages
-	feed := jsonfeed.Feed{
-		Title:       "Dan Croak",
-		HomePageURL: blogURL,
-		FeedURL:     blogURL + "/feed.json",
-		Icon:        blogURL + "/logo.png",
-	}
-	feed.Items = make([]jsonfeed.Item, len(articles))
-
 	// article pages
 	articlePage := template.Must(template.ParseFiles(wd + "/theme/article.html"))
-	for i, a := range articles {
+	for _, a := range articles {
 		f, err := os.Create("public/" + a.ID + ".html")
 		check(err)
 		articleData := struct {
@@ -234,27 +222,7 @@ func build() map[string]string {
 			Article: a,
 		}
 		check(articlePage.Execute(f, articleData))
-		item := jsonfeed.Item{
-			ID:          blogURL + "/" + a.ID,
-			URL:         blogURL + "/" + a.ID,
-			Title:       a.Title,
-			ContentHTML: string(a.Body),
-			Tags:        a.Tags,
-		}
-		published, err := time.Parse("2006-01-02", a.Published)
-		if err == nil {
-			item.DatePublished = published
-		}
-		updated, err := time.Parse("2006-01-02", a.LastUpdated)
-		if err == nil {
-			item.DateModified = updated
-		}
-		item.Author = &jsonfeed.Author{Name: "Dan Croak"}
-		feed.Items[i] = item
 	}
-	f, err = os.Create("public/feed.json")
-	check(err)
-	check(json.NewEncoder(f).Encode(&feed))
 
 	// images
 	cmd := exec.Command("cp", "-a", wd+"/images/.", wd+"/public/images")
@@ -308,7 +276,6 @@ func load() ([]Article, []string, map[string]string) {
 			LastUpdated:   a.LastUpdated,
 			LastUpdatedIn: t.Format("2006"),
 			LastUpdatedOn: t.Format("January 2, 2006"),
-			Published:     a.Published,
 			Redirects:     a.Redirects,
 			Tags:          a.Tags,
 			Title:         title,

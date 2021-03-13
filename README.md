@@ -146,8 +146,6 @@ The `last_updated` date can be in the future.
 A [GitHub Action is scheduled daily](https://dancroak.com/schedule-netlify-builds-with-github-actions)
 to auto-publish to Netlify.
 
-The `published` date is used for the [JSON feed](https://jsonfeed.org/).
-
 The `redirects` are converted into a
 [Netlify _redirects file](https://docs.netlify.com/routing/redirects/).
 
