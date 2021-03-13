@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euo pipefail
+
+# begindoc: content
+heroku pg:backups:capture HEROKU_POSTGRESQL_ROSE_URL --app app-staging
+# enddoc: content

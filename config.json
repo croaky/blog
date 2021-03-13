@@ -1,5 +1,16 @@
 [
   {
+    "description": "Restore a production database into staging and development environments",
+    "id": "heroku-postgres-restore-staging-development",
+    "last_updated": "2021-03-13",
+    "published": "2011-08-18",
+    "redirects": [
+      "/back-up-and-restore-heroku-postgres-databases",
+      "/back-up-restore-heroku-postgres-databases"
+    ],
+    "tags": ["Backend", "Data", "Workflow"]
+  },
+  {
     "description": "Read and write to a Heroku Postgres database as primary and read from a follower in targeted call sites",
     "id": "heroku-postgres-read-replica-with-rails",
     "last_updated": "2021-02-26",
@@ -307,14 +318,6 @@
     "last_updated": "2011-12-26",
     "redirects": ["/implement-decorators-with-ruby"],
     "tags": ["Patterns"]
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/how-to-back-up-a-heroku-production-database-to-staging",
-    "description": "Back up and restore a production database backup into staging or local environment",
-    "id": "back-up-restore-heroku-postgres-databases",
-    "last_updated": "2011-08-18",
-    "redirects": ["/back-up-and-restore-heroku-postgres-databases"],
-    "tags": ["Backend", "Data", "Workflow"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/rubys-pessimistic-operator",
