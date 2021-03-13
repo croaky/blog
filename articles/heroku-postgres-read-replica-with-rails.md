@@ -148,14 +148,18 @@ If your app is considering a read replica, you may also be using
 [Heroku's Performance dynos](https://devcenter.heroku.com/articles/optimizing-dyno-usage).
 With `PUMA_WORKERS=5`, at 400MB of memory for each Rails `web` process,
 you'd be at 80% capacity using Performance-M dynos (2.5GB memory each).
-If the dyno formation is `heroku ps:scale web=2`,
-you'd be at 250 database connections, requiring
-at least a [`standard-2` Heroku Postgres database](https://devcenter.heroku.com/articles/heroku-postgres-plans)
-(400 connections each).
+
+The cheapest plan with 500 connections is a
+[`standard-3` Heroku Postgres database](https://devcenter.heroku.com/articles/heroku-postgres-plans),
+offering 15GB RAM and 512GB storage.
+A calculation like the following can help set an upper limit
+on the number of dynos for
+[Heroku Autoscaling](https://devcenter.heroku.com/articles/scaling#autoscaling).
 
 ```
-2 web dynos * 5 Puma workers * 5 Puma threads * 5 database connection pools =
-250 maximum database connections
+500 maximum database connections =
+(up to 25 connections for Heroku internal use) +
+(19 web dynos * 5 Puma workers * 5 Puma threads)
 ```
 
 A final consideration is if you have a
