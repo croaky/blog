@@ -166,7 +166,9 @@ Test the number of connections by opening a Postgres prompt
 using `heroku pg:psql` and running:
 
 ```
-select count(*) from pg_stat_activity where pid <> pg_backend_pid() and usename = current_user;
+SELECT count(*)
+FROM pg_stat_activity
+WHERE pid <> pg_backend_pid() AND usename = current_user;
 ```
 
 In another shell, send traffic to the app with a tool like Apache Bench:
