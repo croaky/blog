@@ -1,6 +1,6 @@
 # Heroku Postgres Restore to Staging and Development
 
-I use these scripts when it is okay
+I use [these scripts](https://github.com/croaky/blog/tree/main/code/heroku)
 to copy Heroku Postgres data between production, staging,
 and development environments:
 
@@ -53,8 +53,8 @@ I switched to these scripts because:
 
 * some projects shouldn't have a Ruby dependency
 * shell scripts can be customized easily for post-processing
-* additional security and bug avoidance by hard-coding app names instead of
-  going through the indirection of named `staging` and `production` Git remotes
+* improve security and avoid bugs by hard-coding Heroku app names
+  instead of indirectly using `staging` and `production` Git remotes
 
 For the same reasons,
 I switched from Parity's `production` and `staging` commands
