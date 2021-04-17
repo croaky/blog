@@ -3,7 +3,7 @@
 Product retention is often measured using cohort reports with tools such as
 Amplitude, Google Analytics, iTunes Connect Analytics, or Mixpanel.
 
-Most of the time, these cohort reports come in tabular form.
+Many times, these cohort reports come in tabular form.
 My experience is those reports can be confusing.
 An alternative visualization is a retention curve.
 
@@ -70,8 +70,10 @@ and lighter is older ("faded").
 
 ## Analyzing FormKeep's curves
 
-[In every product's activation funnel][chen],
-the curves will flatten out.
+[In most product's activation funnel][chen],
+the curves will flatten out. In exceptional products,
+[its retention curve will rise](https://www.sequoiacap.com/article/retention)
+as product development and network effects propel users to return.
 
 [chen]: http://andrewchen.co/new-data-shows-why-losing-80-of-your-mobile-users-is-normal-and-that-the-best-apps-do-much-better/
 

@@ -32,13 +32,10 @@ server: cd serverd && go install && serverd
 ```
 
 In development,
-tools like [Foreman] or [Overmind]
+tools like [Foreman](http://ddollar.github.io/foreman/)
 interleave output streams,
 respond to crashed processes,
 and handle user-initiated restarts and shutdowns.
-
-[Foreman]: http://ddollar.github.io/foreman/
-[Overmind]: https://github.com/DarthSim/overmind
 
 ```
 foreman start

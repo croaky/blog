@@ -1,4 +1,4 @@
-# Start a React Native Project
+# Configure Vim for React Native
 
 Why build iOS and Android apps with React Native?
 
@@ -19,7 +19,7 @@ Install dependencies using
 [Homebrew](http://brew.sh/) and [NPM](https://www.npmjs.org/):
 
 ```
-brew update
+brew update-reset
 brew install node
 brew install watchman
 brew upgrade
@@ -31,19 +31,56 @@ npm install prettier --global
 For Vim, install these [plugins](https://github.com/junegunn/vim-plug):
 
 ```
-Plug 'mxw/vim-jsx'
-Plug 'pangloss/vim-javascript'
-Plug 'sbdchd/neoformat'
+call plug#begin('~/.vim/plugged')
+  " :help ale
+  Plug 'dense-analysis/ale'
+
+  " Language Server Protocol
+  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+
+  " Frontend
+  Plug 'leafgarland/typescript-vim'
+  Plug 'mxw/vim-jsx'
+  Plug 'pangloss/vim-javascript'
+call plug#end()
 ```
 
-Configure [Neoformat](https://github.com/sbdchd/neoformat)
-and [Prettier](https://github.com/prettier/prettier):
+Configure [ALE](https://github.com/sbdchd/neoformat) and
+[COC](https://github.com/neoclide/coc.nvim):
 
 ```vim
-" Auto-format on save
-augroup fmt
+" https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
+let g:coc_global_extensions = [
+  \ 'coc-prettier',
+  \ 'coc-tsserver'
+  \ ]
+
+" Jump to definition
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Tab complete
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Auto-fix
+let b:ale_fixers = ['prettier']
+let g:ale_fix_on_save = 1
+
+" Lint
+let b:ale_linters = ['prettier']
+
+augroup ale
   autocmd!
-  autocmd BufWritePre *.js,*.jsx Neoformat prettier
+
+  autocmd VimEnter *
+    \ let g:ale_lint_on_enter = 1 |
+    \ let g:ale_lint_on_text_changed = 0
 augroup END
 ```
 
