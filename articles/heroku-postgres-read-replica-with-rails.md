@@ -178,18 +178,3 @@ ab -n 100 -c 8 https://tranquil-brushlands-56319.herokuapp.com/
 ```
 
 As the traffic increases, you'll see the connections max out.
-
-A final consideration is if you have a
-[High Availability (HA) Heroku Postgres follower](https://devcenter.heroku.com/articles/heroku-postgres-ha),
-whether to use it as a read-only replica.
-This is possible and would save money compared to
-adding another replica strictly for reads.
-
-If the HA fails over to primary,
-the app will temporarily be configured
-to point both `primary` and `follower` to the new `primary`,
-doubling the database connections as noted earlier.
-If you have headroom to double the connections temporarily
-and feel you can update the `DATABASE_FOLLOWER_COLOR` environment variable
-quickly after failover,
-it may be worth the cost savings.
