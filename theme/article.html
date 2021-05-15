@@ -121,6 +121,11 @@
       width: 100%;
     }
     @media (prefers-color-scheme: dark) {
+      h1 {
+        background: -webkit-linear-gradient(145deg, var(--pink), var(--purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
       article img {
         opacity: 0.8;
         transition: opacity .5s ease-in-out;
@@ -229,7 +234,6 @@
       .newsletter a {
         padding: 0.75rem;
       }
-    }
   </style>
 </head>
 <body>
