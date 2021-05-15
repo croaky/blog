@@ -14,18 +14,21 @@
 
       /* colors */
       --charcoal: rgb(20, 20, 20);
+      --pink: rgb(215, 0, 95);
       --purple: rgb(150, 100, 200);
       --purple-faded: rgb(150, 100, 200, .1);
       --tan: rgb(255, 240, 230);
       --white: rgb(255, 255, 255);
 
       /* light theme */
+      --title: var(--charcoal);
       --body-bg: var(--tan);
       --body-fg: var(--charcoal);
     }
     /* dark theme */
     @media (prefers-color-scheme: dark) {
       :root {
+        --title: var(--purple);
         --body-bg: rgb(25, 30, 45);
         --body-fg: rgb(255, 255, 255);
       }
@@ -114,6 +117,7 @@
       border-bottom: none;
       font-weight: bold;
       transition: none;
+      color: var(--title);
     }
     .description {
       margin-block-start: 0;
