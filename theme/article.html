@@ -52,11 +52,6 @@
       margin: 0;
       padding: 0;
     }
-    @supports (font-variation-settings: normal) {
-      html, body {
-        font-family: system-ui, -apple-system, Roboto, "Helvetica", "Arial", sans-serif;
-      }
-    }
     body {
       background-color: var(--body-bg);
       color: var(--body-fg);
@@ -119,20 +114,6 @@
     }
     article img {
       width: 100%;
-    }
-    @media (prefers-color-scheme: dark) {
-      h1 {
-        background: -webkit-linear-gradient(145deg, var(--pink), var(--purple));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      article img {
-        opacity: 0.8;
-        transition: opacity .5s ease-in-out;
-      }
-      article img:hover {
-        opacity: 1;
-      }
     }
     blockquote {
       background-color: var(--mask);
@@ -234,6 +215,22 @@
       .newsletter a {
         padding: 0.75rem;
       }
+    }
+    @media (prefers-color-scheme: dark) {
+      h1 {
+        color: var(--purple);
+        background: -webkit-linear-gradient(145deg, var(--pink), var(--purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      article img {
+        opacity: 0.8;
+        transition: opacity .5s ease-in-out;
+      }
+      article img:hover {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
