@@ -6,7 +6,7 @@ as a software development environment.
 
 ## Install
 
-Set the `OK` environment variable to a directory of your choice:
+Set the `LAPTOP` environment variable to a directory of your choice:
 
 ```
 export LAPTOP="$HOME/laptop"
@@ -33,14 +33,15 @@ Run:
 
 ## What it sets up
 
-The script is tested on macOS Catalina (10.15).
+The script is tested on macOS Big Sur (11.3)
+on arm64 (Apple Silicon) and x86_64 (Intel) chips.
 It:
 
 * installs system packages with Homebrew package manager
 * changes shell to Z shell (zsh)
-* creates symlinks from `$LAPTOP/dotfiles` to `$HOME`
-* installs or updates Vim plugins
+* creates symlinks for dotfiles to `$HOME`
 * installs programming language runtimes
+* installs or updates Vim plugins
 
 It can safely be run multiple times.
 I run it most workday mornings.
