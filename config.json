@@ -1,5 +1,17 @@
 [
   {
+    "description": "Syntax highlight, tab complete, auto-fix, lint, and jump to definition, implementation, and references",
+    "id": "vim-react-typescript",
+    "last_updated": "2021-06-14",
+    "redirects": [
+      "/configure-vim-for-react-native",
+      "/laptop-setup-and-vim-configuration-for-react-native",
+      "/setup-react-native-laptop-vim",
+      "/start-a-react-native-project"
+    ],
+    "tags": ["TypeScript", "Vim"]
+  },
+  {
     "description": "Restore a production database into staging and development environments",
     "id": "heroku-postgres-restore-staging-development",
     "last_updated": "2021-03-13",
@@ -163,17 +175,6 @@
     "id": "dns-cdn-origin",
     "last_updated": "2018-03-11",
     "tags": ["API", "Ruby"]
-  },
-  {
-    "description": "A macOS setup and Vim configuration for React Native with Expo and Prettier",
-    "id": "configure-vim-for-react-native",
-    "last_updated": "2017-06-24",
-    "redirects": [
-      "/laptop-setup-and-vim-configuration-for-react-native",
-      "/setup-react-native-laptop-vim",
-      "/start-a-react-native-project"
-    ],
-    "tags": ["Vim"]
   },
   {
     "canonical": "https://thoughtbot.com/blog/align-github-flavored-markdown-tables-in-vim",
