@@ -1,4 +1,4 @@
-# Config Block with Ruby
+# Config Block
 
 A common interface for configuring a third-party library in Ruby:
 
