@@ -1,4 +1,4 @@
-# Mystery Guests in Tests
+# Mystery Guest
 
 > You're having trouble understanding the behavior a test is verifying.
 

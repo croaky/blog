@@ -275,7 +275,7 @@
   },
   {
     "canonical": "https://thoughtbot.com/blog/four-phase-test",
-    "description": "A pattern for unit tests (but not integration tests)",
+    "description": "A pattern for Ruby unit tests (but not integration tests)",
     "id": "four-phase-test",
     "last_updated": "2012-09-28",
     "tags": ["Ruby"]
@@ -289,14 +289,14 @@
   },
   {
     "canonical": "https://thoughtbot.com/blog/rubys-pessimistic-operator",
-    "description": "Ruby's pessimistic operator with Semantic Versioning can help stabilize dependencies",
+    "description": "Stabilize Ruby dependencies with the pessimistic operator and Semantic Versioning",
     "id": "pessimistic-operator-ruby",
     "last_updated": "2010-12-29",
     "redirects": ["/rubys-pessimistic-operator"],
     "tags": ["Ruby"]
   },
   {
-    "description": "Configure a third-party library in Ruby",
+    "description": "Configure a Ruby library",
     "id": "config-block-ruby",
     "last_updated": "2010-01-20",
     "redirects": [
@@ -307,7 +307,7 @@
   },
   {
     "canonical": "https://thoughtbot.com/blog/mystery-guest",
-    "description": "An anti-pattern that hides cause and effect because part of it is done outside the test method",
+    "description": "An anti-pattern in Ruby tests that hides cause and effect",
     "id": "mystery-guests-in-tests",
     "last_updated": "2009-07-28",
     "redirects": ["/mystery-guest"],
