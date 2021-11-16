@@ -43,7 +43,7 @@ I use (modified from a version by [@djcp](https://twitter.com/djcp)):
 set -eo pipefail
 
 # Create file to block ads at the networking level
-curl -s http://winhelp2002.mvps.org/hosts.txt > /tmp/adblock
+curl -s https://winhelp2002.mvps.org/hosts.txt > /tmp/adblock
 
 # Re-write Windows to Unix line endings
 tr -d '\r' < /tmp/adblock > /tmp/etchosts
