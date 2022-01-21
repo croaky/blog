@@ -1,5 +1,11 @@
 [
   {
+    "description": "A fast feedback loop for writing SQL in Vim and visualizing Postgres EXPLAIN output",
+    "id": "postgres-visualize-slow-queries",
+    "last_updated": "2022-01-21",
+    "tags": ["Postgres", "Vim"]
+  },
+  {
     "description": "Syntax highlight, tab complete, auto-fix, lint, and jump to definition, implementation, and references",
     "id": "vim-react-typescript",
     "last_updated": "2021-06-14",
@@ -15,7 +21,6 @@
     "description": "Restore a production database into staging and development environments",
     "id": "heroku-postgres-restore-staging-development",
     "last_updated": "2021-03-13",
-    "published": "2011-08-18",
     "redirects": [
       "/back-up-and-restore-heroku-postgres-databases",
       "/back-up-restore-heroku-postgres-databases"
