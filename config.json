@@ -1,5 +1,11 @@
 [
   {
+    "description": "Make ~/.ssh/authorized_keys look nicer",
+    "id": "ssh-ed25519",
+    "last_updated": "2022-01-24",
+    "tags": ["Infra"]
+  },
+  {
     "description": "A fast feedback loop for writing SQL in Vim and visualizing Postgres EXPLAIN output",
     "id": "postgres-visualize-slow-queries",
     "last_updated": "2022-01-21",
@@ -80,12 +86,6 @@
     "id": "thin-api-clients",
     "last_updated": "2020-04-08",
     "tags": ["Go", "Ruby"]
-  },
-  {
-    "description": "Make ~/.ssh/authorized_keys look nicer",
-    "id": "ssh-ed25519",
-    "last_updated": "2022-01-24",
-    "tags": ["Infra"]
   },
   {
     "description": "Daily deploys with Netlify build hooks, GitHub Actions' scheduled workflows, and GitHub encrypted secrets",
