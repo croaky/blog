@@ -84,7 +84,7 @@
   {
     "description": "Make ~/.ssh/authorized_keys look nicer",
     "id": "ssh-ed25519",
-    "last_updated": "2020-04-01",
+    "last_updated": "2022-01-24",
     "tags": ["Infra"]
   },
   {
