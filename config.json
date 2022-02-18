@@ -1,5 +1,12 @@
 [
   {
+    "description": "Caching the response bodies of HTTP GET requests can improve performance and help avoid hitting rate limits",
+    "id": "cache-api",
+    "last_updated": "2022-02-17",
+    "redirects": ["/cache-api-requests"],
+    "tags": ["Postgres", "Ruby"]
+  },
+  {
     "description": "Make ~/.ssh/authorized_keys look nicer",
     "id": "ssh-ed25519",
     "last_updated": "2022-01-24",
@@ -62,12 +69,6 @@
     "id": "format-sql-in-vim",
     "last_updated": "2020-08-03",
     "tags": ["Postgres", "Vim"]
-  },
-  {
-    "description": "Caching HTTP GET requests can improve performance and help avoid hitting rate limits",
-    "id": "cache-api-requests",
-    "last_updated": "2020-07-22",
-    "tags": ["Postgres", "Ruby"]
   },
   {
     "description": "When my production app processes change state on Heroku, I want to be notified in Slack",
