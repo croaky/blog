@@ -23,7 +23,10 @@ the request URL (hashed), response body, and timestamp
 are saved to a Postgres database.
 
 When it runs again within Foursquare's cache policy,
-no HTTP request is made.
+the data is retrieved from Postgres and no HTTP is made.
+
+The HTTP request URL is hashed as an extra security measure to obfuscate
+sensitive data (client ID and secret) in the query params.
 
 ```embed
 code/cache-api/main.rb all
