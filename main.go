@@ -150,9 +150,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// convert URLs like /intro to /intro.html for http.FileServer
+	// convert URLs like /intro to /intro/index.html for http.FileServer
 	if r.URL.Path != "/" && path.Ext(r.URL.Path) == "" {
-		r.URL.Path = r.URL.Path + ".html"
+		r.URL.Path = r.URL.Path + "/index.html"
 	}
 
 	// use same headers as production, if present
@@ -214,7 +214,8 @@ func build() map[string]string {
 	// article pages
 	articlePage := template.Must(template.ParseFiles(wd + "/theme/article.html"))
 	for _, a := range articles {
-		f, err := os.Create("public/" + a.ID + ".html")
+		check(os.Mkdir(wd+"/public/"+a.ID, os.ModePerm))
+		f, err := os.Create("public/" + a.ID + "/index.html")
 		check(err)
 		articleData := struct {
 			Article Article
