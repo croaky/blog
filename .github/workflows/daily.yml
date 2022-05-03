@@ -5,12 +5,24 @@ on:
     - cron: "0 0 * * *" # every day at midnight UTC
 
 jobs:
-  build:
+  deploy:
+    name: deploy
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Needed for auth with Deno Deploy
+      contents: read # Needed to clone the repository
 
     steps:
-      - name: Trigger Netlify build
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Build site
         shell: bash
-        env:
-          NETLIFY_BUILD_HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
-        run: curl -X POST -d {} "$NETLIFY_BUILD_HOOK"
+        run: go run main.go build
+
+      - name: Upload to Deno Deploy
+        uses: denoland/deployctl@v1
+        with:
+          project: "croaky-blog"
+          entrypoint: https://deno.land/std@0.131.0/http/file_server.ts
+          root: public
