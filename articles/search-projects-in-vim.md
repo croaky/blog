@@ -44,7 +44,7 @@ nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 It looks like this when `<Leader>k`
 is typed with the cursor over `SubscriptionMailer`:
 
-![''](images/quickfix-under-cursor.png)
+![''](/images/quickfix-under-cursor.png)
 
 Cursor over each search result, hit `Enter`, and the file will be opened.
 
@@ -78,4 +78,4 @@ Standard `ag` arguments may be passed in at this point:
 
 Hitting `Enter` results in:
 
-![''](images/quickfix-custom-command.png)
+![''](/images/quickfix-custom-command.png)

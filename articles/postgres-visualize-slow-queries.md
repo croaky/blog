@@ -26,4 +26,4 @@ The output is an interactive visualization that makes it
 easy to identify which parts of the query are
 slowest, largest, and costliest.
 
-![EXPLAIN visualizer](images/postgres-explain-visualizer.png)
+![EXPLAIN visualizer](/images/postgres-explain-visualizer.png)

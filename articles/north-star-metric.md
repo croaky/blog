@@ -261,7 +261,7 @@ people are getting blocked.
 
 Here's Hound's activation funnel in Mixpanel:
 
-![Hound's Mixpanel funnel](images/hound-funnel.png)
+![Hound's Mixpanel funnel](/images/hound-funnel.png)
 
 While both steps could be improved,
 it seems more likely that

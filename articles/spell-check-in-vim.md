@@ -31,7 +31,7 @@ Vim will highlight misspelled words.
 Move to the next misspelled word with `]s`
 or move backwards with `[s`:
 
-![](images/project-specific-spelling.gif)
+![](/images/project-specific-spelling.gif)
 
 ## Add words to the dictionary
 
@@ -49,10 +49,10 @@ the spell file is located at
 When the cursor is over a misspelled word,
 get suggestions for the word with `z=`:
 
-![](images/word-suggestions.gif)
+![](/images/word-suggestions.gif)
 
 ## Tab completion
 
 The words in the spell file will show up in tab completion:
 
-![](images/tab-completion.gif)
+![](/images/tab-completion.gif)

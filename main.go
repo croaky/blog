@@ -100,7 +100,6 @@ type Article struct {
 	Description string   `json:"description"`
 	ID          string   `json:"id"`
 	LastUpdated string   `json:"last_updated"`
-	Redirects   []string `json:"redirects,omitempty"`
 	Tags        []string `json:"tags"`
 
 	Body          template.HTML `json:"-"`
@@ -110,7 +109,7 @@ type Article struct {
 }
 
 func add(id string) {
-	articles, _, _ := load()
+	articles, _ := load()
 
 	noDashes := strings.Replace(id, "-", " ", -1)
 	noUnderscores := strings.Replace(noDashes, "_", " ", -1)
@@ -131,65 +130,25 @@ func add(id string) {
 }
 
 func serve(addr string) {
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		// log every request except favicon.ico noise
+		if r.URL.Path != "/favicon.ico" {
+			fmt.Println(r.Method + " " + r.URL.Path)
+		}
+
+		// don't rebuild for images or favicon
+		if !strings.HasPrefix(r.URL.Path, "/images/") && !strings.HasPrefix(r.URL.Path, "/favicon.ico") {
+			build()
+		}
+
+		fs := http.FileServer(http.Dir(wd + "/public"))
+		fs.ServeHTTP(w, r)
+	})
 	check(http.ListenAndServe(addr, nil))
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	// log every request except favicon.ico noise
-	if r.URL.Path != "/favicon.ico" {
-		fmt.Println(r.Method + " " + r.URL.Path)
-	}
-
-	// don't rebuild for images or favicon
-	if !strings.HasPrefix(r.URL.Path, "/images/") && !strings.HasPrefix(r.URL.Path, "/favicon.ico") {
-		for k, v := range build() {
-			if r.URL.Path == k {
-				http.Redirect(w, r, v, 302)
-			}
-		}
-	}
-
-	// convert URLs like /intro to /intro/index.html for http.FileServer
-	if r.URL.Path != "/" && path.Ext(r.URL.Path) == "" {
-		r.URL.Path = r.URL.Path + "/index.html"
-	}
-
-	// use same headers as production, if present
-	for k, v := range headers() {
-		w.Header().Set(k, v)
-	}
-
-	fs := http.FileServer(http.Dir(wd + "/public"))
-	fs.ServeHTTP(w, r)
-}
-
-func headers() map[string]string {
-	result := make(map[string]string)
-
-	dat, err := ioutil.ReadFile(wd + "/theme/public/_headers")
-	if err != nil {
-		return result
-	}
-
-	for i, line := range strings.Split(string(dat), "\n") {
-		if i == 0 { // ignore first line ("/*\n")
-			continue
-		}
-		parts := strings.SplitN(line, ": ", 2)
-		if len(parts) != 2 {
-			continue
-		}
-		k := strings.TrimSpace(parts[0])
-		v := strings.TrimSpace(parts[1])
-		result[k] = v
-	}
-
-	return result
-}
-
-func build() map[string]string {
-	articles, tags, redirectMap := load()
+func build() {
+	articles, tags := load()
 
 	// public directories
 	dir, err := ioutil.ReadDir(wd + "/public")
@@ -215,7 +174,7 @@ func build() map[string]string {
 	articlePage := template.Must(template.ParseFiles(wd + "/theme/article.html"))
 	for _, a := range articles {
 		check(os.Mkdir(wd+"/public/"+a.ID, os.ModePerm))
-		f, err := os.Create("public/" + a.ID + "/index.html")
+		f, err := os.Create(wd + "/public/" + a.ID + "/index.html")
 		check(err)
 		articleData := struct {
 			Article Article
@@ -229,28 +188,18 @@ func build() map[string]string {
 	cmd := exec.Command("cp", "-a", wd+"/images/.", wd+"/public/images")
 	cmd.Run()
 
-	// headers, favicon.ico, and additional files from theme
+	// favicon.ico, and additional files from theme
 	cmd = exec.Command("cp", "-a", wd+"/theme/public/.", wd+"/public")
 	cmd.Run()
-
-	// redirects
-	redirects := "/archive/* /\n"
-	for k, v := range redirectMap {
-		redirects = redirects + k + " " + v + "\n"
-	}
-	check(ioutil.WriteFile(wd+"/public/_redirects", []byte(redirects), 0644))
-
-	return redirectMap
 }
 
-func load() ([]Article, []string, map[string]string) {
+func load() ([]Article, []string) {
 	config, err := ioutil.ReadFile(wd + "/config.json")
 	check(err)
 	var articles []Article
 	check(json.Unmarshal(config, &articles))
 
 	tags := make([]string, 0)
-	redirectMap := make(map[string]string)
 
 	for i, a := range articles {
 		t, err := time.Parse("2006-01-02", a.LastUpdated)
@@ -277,7 +226,6 @@ func load() ([]Article, []string, map[string]string) {
 			LastUpdated:   a.LastUpdated,
 			LastUpdatedIn: t.Format("2006"),
 			LastUpdatedOn: t.Format("January 2, 2006"),
-			Redirects:     a.Redirects,
 			Tags:          a.Tags,
 			Title:         title,
 		}
@@ -285,10 +233,6 @@ func load() ([]Article, []string, map[string]string) {
 
 		for _, t := range a.Tags {
 			tags = append(tags, t)
-		}
-
-		for _, r := range a.Redirects {
-			redirectMap[r] = "/" + a.ID
 		}
 	}
 
@@ -302,7 +246,7 @@ func load() ([]Article, []string, map[string]string) {
 		prev = t
 	}
 
-	return articles, uniqTags, redirectMap
+	return articles, uniqTags
 }
 
 /*
