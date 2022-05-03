@@ -1,9 +1,9 @@
-name: Deno Deploy
+name: deno
 on: [push]
 
 jobs:
-  deno_deploy:
-    name: Deno Deploy
+  deploy:
+    name: deploy
     runs-on: ubuntu-latest
     permissions:
       id-token: write # Needed for auth with Deno Deploy
@@ -21,4 +21,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "croaky-blog"
-          entrypoint: "./main.ts" # TODO: update entrypoint
+          entrypoint: https://deno.land/std@0.131.0/http/file_server.ts
+          root: public
