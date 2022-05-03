@@ -211,10 +211,7 @@
     "description": "Heroku routing errors don't reach error-tracking code in app processes, have to track with a logging service",
     "id": "log-alert-heroku-routing-errors",
     "last_updated": "2015-04-21",
-    "redirects": [
-      "/post/send-your-apps-heroku-routing-errors-to-slack-with-papertrail-alerts/",
-      "/heroku-routing-errors-slack-papertrail"
-    ],
+    "redirects": ["/heroku-routing-errors-slack-papertrail"],
     "tags": ["Infra"]
   },
   {

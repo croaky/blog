@@ -36,7 +36,7 @@ Choose "Day", "Week", or "Month" based on the expected frequency of that event.
 
 [ns]: north-star-metric
 
-![](images/retention-report.png)
+![](/images/retention-report.png)
 
 Click the "CSV" download button in the bottom right.
 Go to Google Sheets.
@@ -45,7 +45,7 @@ Click "File > Import > Upload".
 Select the file.
 Select "Replace spreadsheet".
 
-![](images/retention-curve-table.png)
+![](/images/retention-curve-table.png)
 
 Select all the data.
 Click "Insert > Chart".
@@ -54,19 +54,19 @@ Click "Chart types",
 and the curvy "Line" chart type (for style).
 Click "Customization" to edit the title.
 
-![](images/retention-curve-ready.png)
+![](/images/retention-curve-ready.png)
 
 Select each time series,
 and pick a shade of color in the same column,
 making the oldest time series the lightest shade.
 
-![](images/retention-curve-series.png)
+![](/images/retention-curve-series.png)
 
 The goal of this shading to create a relationship between the series.
 Darker is more recent ("fresh paint")
 and lighter is older ("faded").
 
-![](images/retention-curve-final.png)
+![](/images/retention-curve-final.png)
 
 ## Analyzing FormKeep's curves
 
@@ -99,7 +99,7 @@ Let's compare the retention curves of another real product,
 [Upcase](https://thoughtbot.com/upcase/join),
 an online training community for programmers.
 
-![](images/upcase-retention-curve.png)
+![](/images/upcase-retention-curve.png)
 
 The initial drop-off in usage is shallower than FormKeep's.
 Where FormKeep's cohorts are closer to 10% active in weeks one and two,
@@ -130,7 +130,7 @@ Click "+ Segment" in Mixpanel
 and choose an important property to segment by,
 such as user acquisition channel:
 
-![](images/mixpanel-segment.png)
-![](images/mixpanel-utm-source-segment.png)
+![](/images/mixpanel-segment.png)
+![](/images/mixpanel-utm-source-segment.png)
 
 Each segment can have its own retention curve.

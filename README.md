@@ -1,7 +1,7 @@
 # blog
 
 Short articles about software at <https://dancroak.com>.
-Static site generator designed to be deployed to [Netlify](https://netlify.com).
+Static site generator deployed to [Deno Deploy](https://deno.com/deploy).
 
 ## Setup
 
@@ -32,7 +32,7 @@ It expects a file layout like this:
 │   └── example.png
 ├── theme
 │   ├── public
-│   │   └── _headers
+│   │   └── favicon.ico
 │   ├── article.html
 │   └── index.html
 └── config.json
@@ -93,7 +93,7 @@ Add images to the `images` directory.
 Refer to them in articles:
 
 ```md
-![alt text](images/example.png)
+![alt text](/images/example.png)
 ```
 
 Configure articles in `config.json`:
@@ -108,20 +108,6 @@ Configure articles in `config.json`:
     "tags": [
       "go",
       "react"
-    ]
-  },
-  {
-    "description": "Redirect old URL slugs.",
-    "id": "article-with-redirects",
-    "last_updated": "2018-02-01",
-    "published": "2018-02-01",
-    "tags": [
-      "go"
-    ]
-    "redirects": [
-      "/article-original-name",
-      "/article-renamed-again",
-      "/this-feature-works-only-on-netlify",
     ]
   },
   {
@@ -146,14 +132,9 @@ The `last_updated` date can be in the future.
 A [GitHub Action is scheduled daily](https://dancroak.com/schedule-netlify-builds-with-github-actions)
 to auto-publish to Netlify.
 
-The `redirects` are converted into a
-[Netlify _redirects file](https://docs.netlify.com/routing/redirects/).
-
 ## Modify theme
 
 All `theme/public` files are copied to `public`.
-`theme/public/_headers` are
-[Netlify Headers](https://www.netlify.com/docs/headers-and-basic-auth/).
 
 The `theme/*.html` files
 are parsed as [Go templates](https://gowebexamples.com/templates/).
@@ -193,7 +174,7 @@ The `theme/index.html` template accepts a data structure like this:
 
 ## Publish
 
-Configure [Netlify](https://netlify.com):
+Configure [Deno Deploy](https://deno.com/deploy):
 
 * Repository: `https://github.com/croaky/blog`
 * Production branch: `main`
@@ -202,4 +183,4 @@ Configure [Netlify](https://netlify.com):
 
 To publish articles, commit and push to the GitHub repo.
 
-View deploy logs in the Netlify web interface.
+View deploy logs in the Deno Deploy web interface.

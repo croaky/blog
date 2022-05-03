@@ -38,4 +38,4 @@ The `<Bslash>` key is the `|` key,
 a mnemonic for the table's `|`s.
 Here's how it looks:
 
-![Visual select, leader, backslash](images/align-markdown-table-in-vim.gif)
+![Visual select, leader, backslash](/images/align-markdown-table-in-vim.gif)

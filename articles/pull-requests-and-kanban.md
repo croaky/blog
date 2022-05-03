@@ -9,7 +9,7 @@ I've mostly used [Trello](https://trello.com)
 but lately have been falling in love with [Notion](https://notion.so).
 Here's an example board:
 
-![Kanban board](images/kanban-board.png)
+![Kanban board](/images/kanban-board.png)
 
 We add new work to the board as a card in the "Next Up" column.
 It might represent a feature, bug, or chore.
