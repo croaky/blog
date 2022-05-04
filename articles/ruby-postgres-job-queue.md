@@ -25,8 +25,8 @@ Or:
 heroku ps:scale queue_listen=1
 ```
 
-Create as many job queue tables + independent workers as desired
-to avoid backup in one queue affecting another.
+To avoid backup in one queue affecting another,
+create independent sets of (1 job queue table + 1 worker).
 
 ## Poll
 
