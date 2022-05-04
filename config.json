@@ -1,5 +1,11 @@
 [
   {
+    "description": "Persist jobs in a Postgres queue and work them with the Ruby Postgres driver",
+    "id": "ruby-postgres-job-queue",
+    "last_updated": "2022-05-04",
+    "tags": ["Postgres", "Ruby"]
+  },
+  {
     "description": "Caching the response bodies of HTTP GET requests can improve performance and help avoid hitting rate limits",
     "id": "cache-api",
     "last_updated": "2022-02-17",
