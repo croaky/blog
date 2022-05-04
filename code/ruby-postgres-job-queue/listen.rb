@@ -1,5 +1,6 @@
 # begindoc: all
 require "pg"
+require "json"
 
 require_relative "job_one"
 require_relative "job_two"
@@ -30,9 +31,9 @@ begin
 
       status = case job["name"]
       when "JobOne"
-        JobOne.call(job["data"])
+        JobOne.call(JSON.parse(job["data"]))
       when "JobTwo"
-        JobTwo.call(job["data"])
+        JobTwo.call(JSON.parse(job["data"]))
       else
         "err: invalid job #{job["name"]}"
       end

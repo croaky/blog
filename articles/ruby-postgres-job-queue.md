@@ -85,11 +85,9 @@ code/ruby-postgres-job-queue/listen.rb all
 
 ## Enqueue
 
-In either case, enqueue a job  by `INSERT`ing into the job queue table.
-The `data` column will need to be parsed as JSON:
+In either case, enqueue a job by `INSERT`ing into the queue table.
 
 ```ruby
-require "rubygems"
 require "pg"
 require "json"
 
