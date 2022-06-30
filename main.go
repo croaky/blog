@@ -291,7 +291,7 @@ func preProcess(filepath string) (title, body string) {
 				exitWith("error: first line must be an h1 like: # Intro")
 			}
 
-			title = line[2:len(line)]
+			title = line[2:]
 			isFirst = false
 			continue
 		}
