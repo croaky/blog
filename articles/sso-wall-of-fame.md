@@ -13,7 +13,7 @@ My instinct is "yes"
 but I'm hesitating because many products I admire
 operate under a principle of "SSO is a premium feature":
 Airtable, Cloudflare, Figma, FullStory, GitHub, HashiCorp, Heroku, Intercom,
-Netlify, Notion, Sentry, Slack, Tailscale, Trello, Tuple, Twilio, Zapier.
+Netlify, Notion, Sentry, Slack, Tailscale, Trello, Twilio, Zapier.
 
 I also hold stock in pretty much all of those public companies either directly
 or via NASDAQ or S&P 500 index funds. I would love to hold stock in many of
