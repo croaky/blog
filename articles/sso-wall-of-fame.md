@@ -1,6 +1,7 @@
 # SSO Wall Of Fame
 
 In December 2020, I added SSO to an app using [WorkOS](https://workos.com/).
+It was painless and I continue to use and enjoy WorkOS ~2y later.
 
 It had me thinking again about the [SSO Wall of Shame](https://sso.tax/)
 and whether SSO as a premium feature in SaaS pricing plans
