@@ -2,5 +2,6 @@
 set -eo pipefail
 
 # begindoc: content
+# stag
 heroku "$@" --app="app-staging"
 # enddoc: content

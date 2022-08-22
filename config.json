@@ -2,7 +2,7 @@
   {
     "description": "Restore a production database into staging and development environments",
     "id": "heroku-postgres-restore-staging-development",
-    "last_updated": "2022-08-08",
+    "last_updated": "2022-08-22",
     "redirects": [
       "/back-up-and-restore-heroku-postgres-databases",
       "/back-up-restore-heroku-postgres-databases"

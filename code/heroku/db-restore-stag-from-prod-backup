@@ -2,10 +2,11 @@
 set -euo pipefail
 
 # begindoc: content
+# db-restore-stag-from-prod-backup
 heroku maintenance:on --app app-staging
-prod_follower_db=HEROKU_POSTGRESQL_BROWN_URL
-staging_db=HEROKU_POSTGRESQL_ROSE_URL
-heroku pg:copy app-production::$prod_follower_db $staging_db --app app-staging --confirm app-staging
+prod_db=HEROKU_POSTGRESQL_BROWN_URL # follower
+stag_db=HEROKU_POSTGRESQL_ROSE_URL
+heroku pg:copy app-production::$prod_db $stag_db --app app-staging --confirm app-staging
 heroku pg:psql --app app-staging -c "
   UPDATE ar_internal_metadata
   SET value = 'staging'
