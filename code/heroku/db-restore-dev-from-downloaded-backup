@@ -2,6 +2,7 @@
 set -euo pipefail
 
 # begindoc: content
+# db-restore-dev-from-downloaded-backup
 db="app_development"
 dropdb --if-exists "$db"
 createdb "$db"
