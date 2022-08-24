@@ -2,6 +2,5 @@
 set -eo pipefail
 
 # begindoc: content
-# prod
 heroku "$@" --app="app-production"
 # enddoc: content

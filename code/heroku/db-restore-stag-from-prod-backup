@@ -2,7 +2,6 @@
 set -euo pipefail
 
 # begindoc: content
-# db-restore-stag-from-prod-backup
 heroku maintenance:on --app app-staging
 prod_db=HEROKU_POSTGRESQL_BROWN_URL # follower
 stag_db=HEROKU_POSTGRESQL_ROSE_URL
@@ -10,12 +9,11 @@ heroku pg:copy app-production::$prod_db $stag_db --app app-staging --confirm app
 heroku pg:psql --app app-staging -c "
   UPDATE ar_internal_metadata
   SET value = 'staging'
-  WHERE key = 'environment'
-"
-heroku pg:psql --app app-staging -c "
+  WHERE key = 'environment';
+
   UPDATE users
   SET active = false
-  WHERE email NOT = 'me@example.com'
+  WHERE email NOT = 'me@example.com';
 "
 heroku run --app app-staging rake db:migrate
 heroku maintenance:off --app app-staging
