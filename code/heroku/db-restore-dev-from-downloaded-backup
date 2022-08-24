@@ -2,14 +2,11 @@
 set -euo pipefail
 
 # begindoc: content
-# db-restore-dev-from-downloaded-backup
 db="app_development"
 dropdb --if-exists "$db"
 createdb "$db"
 psql "$db" -c "
   CREATE EXTENSION pg_stat_statements;
-"
-psql "$db" -c "
   CREATE SCHEMA heroku_ext;
 "
 pg_restore tmp/latest.backup --verbose --no-acl --no-owner --dbname "$db"

@@ -2,7 +2,6 @@
 set -euo pipefail
 
 # begindoc: content
-# db-download-prod-backup
 mkdir -p tmp
 curl -o tmp/latest.backup "$(heroku pg:backups:url --app app-production)"
 # enddoc: content
