@@ -6,8 +6,8 @@ and from production to development environments.
 
 ## Restore to staging
 
-Specific to each project, the `db-restore-stag-from-prod-backup` script
-can sanitize data or flip feature flags to help prevent accidents:
+The `db-restore-stag-from-prod-backup` script
+can post-process data to prevent accidents:
 
 ```embed
 code/heroku/db-restore-stag-from-prod-backup content
@@ -37,15 +37,14 @@ I authored [Parity](https://github.com/thoughtbot/parity)
 but switched to these scripts because:
 
 * some projects shouldn't have a Ruby dependency
-* shell scripts can be customized easily for post-processing
+* shell scripts can be customized per-project for post-processing
 * separating the "download" and "restore" steps saves time
   when I only need to do one or the other
-* improve security and avoid bugs by hard-coding Heroku app names
-  instead of indirectly using `staging` and `production` Git remotes
+* hard-coding Heroku app names instead of indirectly using `staging` and
+  `production` Git remotes improves security and avoids bugs
 
-For similar reasons,
-I switched from Parity's `staging` and `production` commands
-to the `stag` script:
+For similar reasons, I switched from Parity's `staging` and `production`
+commands to the `stag` script:
 
 ```embed
 code/heroku/stag content
