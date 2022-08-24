@@ -7,7 +7,7 @@ and from production to development environments.
 ## Restore to staging
 
 The `db-restore-stag-from-prod-backup` script
-can post-process data to prevent accidents:
+pre- and post-processes data to prevent accidents:
 
 ```embed
 code/heroku/db-restore-stag-from-prod-backup content
@@ -22,10 +22,8 @@ downloads to the `tmp/latest.backup` file on my filesystem:
 code/heroku/db-download-prod-backup content
 ```
 
-I can restore `tmp/latest.backup` at any time using
-the `db-restore-dev-from-downloaded-backup` script,
-which is another opportunity to flip feature flags,
-make my user an admin user, etc.
+I restore `tmp/latest.backup`, pre- and post-process in
+the `db-restore-dev-from-downloaded-backup` script:
 
 ```embed
 code/heroku/db-restore-dev-from-downloaded-backup content
@@ -37,7 +35,7 @@ I authored [Parity](https://github.com/thoughtbot/parity)
 but switched to these scripts because:
 
 * some projects shouldn't have a Ruby dependency
-* shell scripts can be customized per-project for post-processing
+* shell scripts can be customized per-project for pre- and post-processing
 * separating the "download" and "restore" steps saves time
   when I only need to do one or the other
 * hard-coding Heroku app names instead of indirectly using `staging` and
