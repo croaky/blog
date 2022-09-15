@@ -13,7 +13,7 @@ heroku pg:psql --app app-staging -c "
 
   UPDATE users
   SET active = false
-  WHERE email NOT = 'me@example.com';
+  WHERE email != 'me@example.com';
 "
 heroku run --app app-staging rake db:migrate
 heroku maintenance:off --app app-staging
