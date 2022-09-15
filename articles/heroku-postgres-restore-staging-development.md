@@ -4,7 +4,7 @@ I use [these bash scripts](https://github.com/croaky/blog/tree/main/code/heroku)
 to restore Heroku Postgres data from production to staging
 and from production to development environments.
 
-They depend only on standard Unix tools, Postgres CLIs, and the Heroku CLI.
+They depend only on standard Unix tools and Postgres and Heroku CLIs.
 They can be customized per-project for pre- and post-processing.
 
 ## Restore to staging
