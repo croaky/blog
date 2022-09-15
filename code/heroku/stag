@@ -1,6 +1,0 @@
-#!/bin/bash
-set -eo pipefail
-
-# begindoc: content
-heroku "$@" --app="app-staging"
-# enddoc: content

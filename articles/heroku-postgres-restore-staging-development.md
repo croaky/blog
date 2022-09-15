@@ -1,8 +1,11 @@
 # Heroku Postgres Restore to Staging and Development
 
-I use [these scripts](https://github.com/croaky/blog/tree/main/code/heroku)
+I use [these bash scripts](https://github.com/croaky/blog/tree/main/code/heroku)
 to restore Heroku Postgres data from production to staging
 and from production to development environments.
+
+They depend only on standard Unix tools, Postgres CLIs, and the Heroku CLI.
+They can be customized per-project for pre- and post-processing.
 
 ## Restore to staging
 
@@ -27,29 +30,4 @@ the `db-restore-dev-from-downloaded-backup` script:
 
 ```embed
 code/heroku/db-restore-dev-from-downloaded-backup content
-```
-
-## Why not Parity?
-
-I authored [Parity](https://github.com/thoughtbot/parity)
-but switched to these scripts because:
-
-* some projects shouldn't have a Ruby dependency
-* shell scripts can be customized per-project for pre- and post-processing
-* separating the "download" and "restore" steps saves time
-  when I only need to do one or the other
-* hard-coding Heroku app names instead of indirectly using `staging` and
-  `production` Git remotes improves security and avoids bugs
-
-For similar reasons, I switched from Parity's `staging` and `production`
-commands to the `stag` script:
-
-```embed
-code/heroku/stag content
-```
-
-And `prod` script:
-
-```embed
-code/heroku/prod content
 ```
