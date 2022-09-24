@@ -1,7 +1,7 @@
 # Fly.io Multi-Region Ruby with Postgres Read Replicas
 
-For latency (or, less relevant to this article, data residency),
-you might want to deploy your web app to a specific region.
+For latency (or, less relevant to this article, data residency) reasons,
+you might want to deploy your app to a specific region.
 [Fly.io has 20+ regions](https://fly.io/docs/reference/regions/)
 on their own Points of Presence
 (not on public clouds like AWS).
@@ -13,7 +13,7 @@ The big caveat is
 
 ## Ruby app
 
-In this example, we'll build a web app using a few popular Ruby gems:
+In this example, we'll write and deploy a Ruby app to Fly.io using popular gems:
 
 * [Connection Pool](https://rubygems.org/gems/connection_pool)
 * [PG](https://rubygems.org/gems/pg)
