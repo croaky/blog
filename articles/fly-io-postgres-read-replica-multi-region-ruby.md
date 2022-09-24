@@ -14,10 +14,11 @@ Postgres](https://fly.io/docs/rails/getting-started/migrate-from-heroku/#databas
 
 ## Ruby app
 
-In this example, we'll build a Ruby web app using three Ruby gems:
+In this example, we'll build a web app using a few popular Ruby gems:
 
 * [Connection Pool](https://rubygems.org/gems/connection_pool)
 * [PG](https://rubygems.org/gems/pg)
+* [Puma](https://rubygems.org/gems/puma)
 * [Sinatra](https://rubygems.org/gems/sinatra)
 
 The `Gemfile` looks like this:
