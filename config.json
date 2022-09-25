@@ -1,5 +1,11 @@
 [
   {
+    "description": "Add Single Sign-On (SSO) for Identity Providers (IDPs) with one WorkOS integration.",
+    "id": "sso-workos-ruby",
+    "last_updated": "2022-09-25",
+    "tags": ["Infra", "Ruby"]
+  },
+  {
     "description": "Serve a Ruby web app from multiple Fly.io regions and route read requests to Postgres read replicas when possible",
     "id": "fly-io-postgres-read-replica-multi-region-ruby",
     "last_updated": "2022-09-21",
