@@ -86,19 +86,9 @@
     main {
       margin: 1.25rem 0;
     }
-    .tags a:hover,
-    .tags .showAll {
-      background-color: var(--purple-faded);
-    }
     .article {
       display: flex;
       margin: 1rem 0;
-    }
-    .article time {
-      min-width: 80px;
-    }
-    .first-only-for-tag {
-      visibility: hidden;
     }
     .title {
       border-bottom: none;
@@ -129,9 +119,6 @@
       .article {
         margin: 0 0 1.25rem 0;
       }
-      .article time {
-        display: none;
-      }
     }
   </style>
 </head>
@@ -156,29 +143,9 @@
       </li>
     </ul>
 
-    {{- if .Tags }}
-      <div class="tags">
-        {{- range $index, $tag := .Tags }}
-        <a href="#{{$tag}}" id="toggle-{{$tag}}">{{$tag}}</a>&nbsp;
-        {{- end }}
-      </div>
-    {{- end }}
-
     <main>
-      {{ $year := "" }}
-      {{ $stamp := "" }}
-
       {{- range .Articles }}
-        {{ if ne $year .LastUpdatedIn }}
-          {{ $year = .LastUpdatedIn }}
-          {{ $stamp = "first-in-year" }}
-        {{ else }}
-          {{ $stamp = "first-only-for-tag" }}
-        {{ end }}
-
-        <div class="article{{- range $i, $t := .Tags }} tag-{{$t}}{{- end }} year-{{$year}}">
-          <time datetime="{{$year}}" class="{{$stamp}}">{{$year}}</time>
-
+        <div class="article">
           <div>
             <a href="/{{.ID}}" class="title">{{.Title}}</a>
             <p class="description">{{.Description}}</p>
@@ -187,88 +154,5 @@
       {{- end }}
     </main>
   </div>
-
-  <!-- protected by Content Security Policy script-src SHA -->
-  <script>
-    function each(selector, fn) {
-      Array.prototype.forEach.call(document.querySelectorAll(selector), fn);
-    }
-
-    function eachChild(el, selector, fn) {
-      Array.prototype.forEach.call(el.querySelectorAll(selector), fn);
-    }
-
-    function ready(fn) {
-      if (document.readyState != 'loading') {
-        fn();
-      } else {
-        document.addEventListener('DOMContentLoaded', fn);
-      }
-    }
-
-    ready(function() {
-      if (window.location.hash.includes('#')) {
-        toggleTag(window.location.hash.split('#')[1]);
-      }
-
-      each('.tags a', function(el, i) {
-        el.addEventListener('click', function() {
-          toggleTag(el.id.split('toggle-')[1]);
-        });
-      });
-    });
-
-    function toggleTag(tag) {
-      var toggler = document.getElementById('toggle-' + tag);
-
-      each('.article', function(el, i) {
-        if (toggler.classList.contains('showAll')) {
-          el.style.display = '';
-          eachChild(el, 'time.first-only-for-tag', function(time) {
-            time.style.visibility = 'hidden';
-          })
-          return;
-        }
-
-        if (el.classList.contains('tag-' + tag)) {
-          el.style.display = '';
-        } else {
-          el.style.display = 'none';
-        }
-      });
-
-      each('.tags a', function(el, i) {
-        if (toggler.isEqualNode(el)) {
-          if (toggler.classList.contains('showAll')) {
-            toggler.classList.remove('showAll');
-            toggler.setAttribute('href', '#');
-          } else {
-            toggler.classList.add('showAll');
-            toggler.setAttribute('href', '#' + tag);
-          }
-        } else {
-          el.classList.remove('showAll');
-        }
-      });
-
-      if (toggler.classList.contains('showAll')) {
-        ['2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013', '2012',
-          '2011', '2010', '2009'].forEach(function(year) {
-            var el = document.querySelectorAll(
-              '.year-' + year + ':not([style*="display: none"])'
-            )[0];
-            if (!el) {
-              return;
-            }
-
-            var time = el.querySelectorAll('time.first-only-for-tag')[0];
-            if (!time) {
-              return;
-            }
-            time.style.visibility = 'visible';
-        });
-      }
-    }
-  </script>
 </body>
 </html>
