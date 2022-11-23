@@ -1,17 +1,15 @@
 /*
-
 Add an article:
 
-  blog add <article-url-slug>
+	blog add <article-url-slug>
 
 Serve site on localhost:
 
-  blog serve
+	blog serve
 
 Build site (HTML, images, code, Netlify files) to `public/`:
 
-  blog build
-
+	blog build
 */
 package main
 
@@ -99,13 +97,12 @@ type Article struct {
 	Canonical   string   `json:"canonical,omitempty"`
 	Description string   `json:"description"`
 	ID          string   `json:"id"`
-	LastUpdated string   `json:"last_updated"`
 	Tags        []string `json:"tags"`
+	Updated     string   `json:"updated"`
 
-	Body          template.HTML `json:"-"`
-	LastUpdatedIn string        `json:"-"`
-	LastUpdatedOn string        `json:"-"`
-	Title         string        `json:"-"`
+	Body      template.HTML `json:"-"`
+	Title     string        `json:"-"`
+	UpdatedOn string        `json:"-"`
 }
 
 func add(id string) {
@@ -118,9 +115,9 @@ func add(id string) {
 	check(ioutil.WriteFile(wd+"/articles/"+id+".md", content, 0644))
 
 	a := Article{
-		ID:          id,
-		LastUpdated: time.Now().Format("2006-01-02"),
-		Tags:        []string{},
+		ID:      id,
+		Updated: time.Now().Format("2006-01-02"),
+		Tags:    []string{},
 	}
 
 	articles = append([]Article{a}, articles...)
@@ -202,7 +199,7 @@ func load() ([]Article, []string) {
 	tags := make([]string, 0)
 
 	for i, a := range articles {
-		t, err := time.Parse("2006-01-02", a.LastUpdated)
+		t, err := time.Parse("2006-01-02", a.Updated)
 		check(err)
 
 		now := time.Now()
@@ -219,15 +216,14 @@ func load() ([]Article, []string) {
 		)
 
 		a := Article{
-			Body:          template.HTML(html),
-			Canonical:     a.Canonical,
-			Description:   a.Description,
-			ID:            a.ID,
-			LastUpdated:   a.LastUpdated,
-			LastUpdatedIn: t.Format("2006"),
-			LastUpdatedOn: t.Format("January 2, 2006"),
-			Tags:          a.Tags,
-			Title:         title,
+			Body:        template.HTML(html),
+			Canonical:   a.Canonical,
+			Description: a.Description,
+			ID:          a.ID,
+			Updated:     a.Updated,
+			UpdatedOn:   t.Format("January 2, 2006"),
+			Tags:        a.Tags,
+			Title:       title,
 		}
 		articles[i] = a
 
