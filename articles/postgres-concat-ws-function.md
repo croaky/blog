@@ -8,7 +8,7 @@ string function with this signature:
 concat_ws(sep text, str "any" [, str "any" [, ...] ])
 ```
 
-Consider a schema where the `projects.second_user_id`
+Consider a schema where `projects.second_user_id`
 and `project.third_user_id` columns can be `NULL`:
 
 ```
@@ -28,7 +28,7 @@ and `project.third_user_id` columns can be `NULL`:
  initials       | character varying(255) | not null |
 ```
 
-Consider a query to get the "team" for a project by each user's initials:
+A query to get the team for a project by each user's initials:
 
 ```sql
 SELECT
@@ -59,4 +59,4 @@ Treasury Ops  | KL
 Time: 1 ms
 ```
 
-Using `concat_ws()` instead of `concat()` avoids ugly output like `AB / / CD`.
+Using `concat_ws()` instead of `concat()` avoids output like `AB / / CD`.

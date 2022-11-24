@@ -1,5 +1,10 @@
 [
   {
+    "description": "Daily deploys with Deno and GitHub Actions' scheduled workflows",
+    "id": "schedule-deno-builds-with-github-actions",
+    "updated": "2022-11-23"
+  },
+  {
     "description": "Serve a web app from multiple Fly.io regions and route read requests to Postgres read replicas when possible",
     "id": "fly-io-postgres-read-replica-multi-region-ruby",
     "updated": "2022-09-21"
@@ -15,7 +20,7 @@
     "updated": "2022-05-04"
   },
   {
-    "description": "Caching the response bodies of HTTP GET requests can improve performance and help avoid hitting rate limits",
+    "description": "Cache HTTP GET response bodies to improve performance and avoid hitting rate limits",
     "id": "cache-api",
     "updated": "2022-02-17"
   },
@@ -75,11 +80,6 @@
     "updated": "2020-04-08"
   },
   {
-    "description": "Daily deploys with Netlify build hooks, GitHub Actions' scheduled workflows, and GitHub encrypted secrets",
-    "id": "schedule-netlify-builds-with-github-actions",
-    "updated": "2020-03-28"
-  },
-  {
     "description": "End-to-end with a kanban board, GitHub code review, continuous integration, and continuous delivery",
     "id": "pull-requests-and-kanban",
     "updated": "2020-03-26"
@@ -120,11 +120,6 @@
     "updated": "2018-06-21"
   },
   {
-    "description": "Deliver email from a Ruby on Rails app using Amazon's Simple Email Service (SES) hosted on EC2",
-    "id": "email-amazon-ses-rails-ec2",
-    "updated": "2018-05-09"
-  },
-  {
     "description": "Set up and configure ASDF as a version manager for multiple programming languages",
     "id": "asdf-version-manager",
     "updated": "2018-05-07"
@@ -157,11 +152,6 @@
     "description": "Speed up Postgres full-text searches with a tsvector column as cache and trigger to keep the cache updated",
     "id": "postgres-full-text-search-tsvectors-triggers",
     "updated": "2015-06-25"
-  },
-  {
-    "description": "Heroku routing errors don't reach error-tracking code in app processes, have to track with a logging service",
-    "id": "log-alert-heroku-routing-errors",
-    "updated": "2015-04-21"
   },
   {
     "description": "Tradeoffs for unit tests that use mocks, stubs, or spies",
