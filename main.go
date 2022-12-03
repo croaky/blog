@@ -25,7 +25,6 @@ import (
 	"path"
 	"regexp"
 	"runtime"
-	"sort"
 	"strings"
 	"time"
 
@@ -94,11 +93,10 @@ func exitWith(s string) {
 
 // Article contains data loaded from config.json and parsed Markdown
 type Article struct {
-	Canonical   string   `json:"canonical,omitempty"`
-	Description string   `json:"description"`
-	ID          string   `json:"id"`
-	Tags        []string `json:"tags"`
-	Updated     string   `json:"updated"`
+	Canonical   string `json:"canonical,omitempty"`
+	Description string `json:"description"`
+	ID          string `json:"id"`
+	Updated     string `json:"updated"`
 
 	Body      template.HTML `json:"-"`
 	Title     string        `json:"-"`
@@ -106,7 +104,7 @@ type Article struct {
 }
 
 func add(id string) {
-	articles, _ := load()
+	articles := load()
 
 	noDashes := strings.Replace(id, "-", " ", -1)
 	noUnderscores := strings.Replace(noDashes, "_", " ", -1)
@@ -117,7 +115,6 @@ func add(id string) {
 	a := Article{
 		ID:      id,
 		Updated: time.Now().Format("2006-01-02"),
-		Tags:    []string{},
 	}
 
 	articles = append([]Article{a}, articles...)
@@ -145,7 +142,7 @@ func serve(addr string) {
 }
 
 func build() {
-	articles, tags := load()
+	articles := load()
 
 	// public directories
 	dir, err := ioutil.ReadDir(wd + "/public")
@@ -160,10 +157,8 @@ func build() {
 	check(err)
 	indexData := struct {
 		Articles []Article
-		Tags     []string
 	}{
 		Articles: articles,
-		Tags:     tags,
 	}
 	check(indexPage.Execute(f, indexData))
 
@@ -190,13 +185,11 @@ func build() {
 	cmd.Run()
 }
 
-func load() ([]Article, []string) {
+func load() []Article {
 	config, err := ioutil.ReadFile(wd + "/config.json")
 	check(err)
 	var articles []Article
 	check(json.Unmarshal(config, &articles))
-
-	tags := make([]string, 0)
 
 	for i, a := range articles {
 		t, err := time.Parse("2006-01-02", a.Updated)
@@ -222,27 +215,12 @@ func load() ([]Article, []string) {
 			ID:          a.ID,
 			Updated:     a.Updated,
 			UpdatedOn:   t.Format("January 2, 2006"),
-			Tags:        a.Tags,
 			Title:       title,
 		}
 		articles[i] = a
-
-		for _, t := range a.Tags {
-			tags = append(tags, t)
-		}
 	}
 
-	sort.Strings(tags)
-	uniqTags := make([]string, 0)
-	prev := ""
-	for _, t := range tags {
-		if prev != t {
-			uniqTags = append(uniqTags, t)
-		}
-		prev = t
-	}
-
-	return articles, uniqTags
+	return articles
 }
 
 /*
