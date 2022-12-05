@@ -1,13 +1,8 @@
-# Heroku Dataclips Clone In Sinatra
-
-I pair programmed this with [OpenAI's ChatGPT](https://chat.openai.com/chat).
-
-```ruby
 #!/usr/bin/env ruby
 
 # createdb db
-# chmod +x dataclips.rb
-# DATABASE_URL=postgres:///db ./dataclips.rb
+# chmod +x main.rb
+# DATABASE_URL=postgres:///db ./main.rb
 
 require "bundler/inline"
 require "csv"
@@ -70,4 +65,3 @@ __END__
         %tr
           - row.each do |key, value|
             %td= value
-```

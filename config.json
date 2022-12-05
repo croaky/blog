@@ -1,12 +1,12 @@
 [
   {
-    "description": "Serve a web app from multiple Fly.io regions and route read requests to Postgres read replicas when possible",
-    "id": "fly-io-postgres-read-replica-multi-region-ruby",
+    "description": "Serve a web app from multiple Fly.io regions and route read-only queries to Postgres replicas",
+    "id": "fly-io-multi-region-postgres-read-replicas",
     "updated": "2022-12-05"
   },
   {
     "description": "Pair programmed with OpenAI's ChatGPT",
-    "id": "heroku-dataclips-clone-in-sinatra",
+    "id": "heroku-dataclips-clone",
     "updated": "2022-12-03"
   },
   {
