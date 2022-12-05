@@ -103,22 +103,13 @@ Configure articles in `config.json`:
   {
     "description": "Draft scheduled for future date.",
     "id": "article-draft-scheduled",
-    "last_updated": "2050-01-01",
-    "published": "2050-01-01",
-    "tags": [
-      "go",
-      "react"
-    ]
+    "updated": "2050-01-01"
   },
   {
     "canonical": "https://seo.example.com/avoid-duplicate-content-penalty",
     "description": "Canonical article is on a separate site.",
     "id": "article-with-rel-canonical",
-    "last_updated": "2018-01-15",
-    "published": "2018-01-15",
-    "tags": [
-      "go"
-    ]
+    "updated": "2018-01-15"
   }
 ]
 ```
@@ -128,9 +119,9 @@ The `description` is used for the article page's `meta` description.
 The `id` must match a Markdown file `articles/id.md`.
 It is also used for the article's URL slug.
 
-The `last_updated` date can be in the future.
-A [GitHub Action is scheduled daily](https://dancroak.com/schedule-netlify-builds-with-github-actions)
-to auto-publish to Netlify.
+The `updated` date can be in the future.
+A [GitHub Action is scheduled daily](https://dancroak.com/schedule-deno-builds-with-github-actions)
+to auto-publish.
 
 ## Modify theme
 
@@ -148,7 +139,6 @@ The `theme/article.html` template accepts a data structure like this:
     Description:   "Hello, world.",
     ID:            "example-article",
     LastUpdatedOn: "April 15, 2018",
-    Tags:          ["go", "unix"],
     Title:         "Example Article",
   }
 }
@@ -164,11 +154,9 @@ The `theme/index.html` template accepts a data structure like this:
       Description:   "Hello, world.",
       ID:            "example-article",
       LastUpdatedIn: "2018 April",
-      Tags:          ["go", "unix"],
       Title:         "Example Article",
     }
   ],
-  Tags: ["go", "unix"],
 }
 ```
 
@@ -176,10 +164,10 @@ The `theme/index.html` template accepts a data structure like this:
 
 Configure [Deno Deploy](https://deno.com/deploy):
 
-* Repository: `https://github.com/croaky/blog`
-* Production branch: `main`
-* Build command: `go run main.go build`
-* Public folder: `public`
+- Repository: `https://github.com/croaky/blog`
+- Production branch: `main`
+- Build command: `go run main.go build`
+- Public folder: `public`
 
 To publish articles, commit and push to the GitHub repo.
 
