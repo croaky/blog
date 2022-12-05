@@ -1,5 +1,10 @@
 [
   {
+    "description": "Serve a web app from multiple Fly.io regions and route read requests to Postgres read replicas when possible",
+    "id": "fly-io-postgres-read-replica-multi-region-ruby",
+    "updated": "2022-12-05"
+  },
+  {
     "description": "Pair programmed with OpenAI's ChatGPT",
     "id": "heroku-dataclips-clone-in-sinatra",
     "updated": "2022-12-03"
@@ -8,11 +13,6 @@
     "description": "Daily deploys with Deno and GitHub Actions' scheduled workflows",
     "id": "schedule-deno-builds-with-github-actions",
     "updated": "2022-11-23"
-  },
-  {
-    "description": "Serve a web app from multiple Fly.io regions and route read requests to Postgres read replicas when possible",
-    "id": "fly-io-postgres-read-replica-multi-region-ruby",
-    "updated": "2022-09-21"
   },
   {
     "description": "Restore a production database into staging and development environments",

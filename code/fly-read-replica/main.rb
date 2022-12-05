@@ -1,7 +1,23 @@
-# begindoc: all
-require "connection_pool"
-require "pg"
-require "sinatra"
+#!/usr/bin/env ruby
+
+# createdb db
+# chmod +x main.rb
+# DATABASE_URL=postgres:///db ./main.rb
+
+require "bundler/inline"
+
+gemfile do
+  source "https://rubygems.org"
+
+  gem "connection_pool"
+  gem "pg"
+  gem "puma"
+  gem "sinatra"
+
+  group :development do
+    gem "standard"
+  end
+end
 
 class DB
   def initialize
@@ -51,4 +67,5 @@ get "/" do
   content_type :json
   {status: "ok"}.to_json
 end
-# enddoc: all
+
+Sinatra::Application.run!

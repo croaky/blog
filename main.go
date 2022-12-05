@@ -243,6 +243,12 @@ puts "here"
 The lines between magic comments
 are embedded back in the original code fence.
 
+To embed the entire file, don't include an ID or magic comments...
+
+```embed
+code/example.rb
+```
+
 Bad input in the Markdown document or source code file
 will stop the program with a non-zero exit code and error text.
 */
@@ -277,35 +283,42 @@ func preProcess(filepath string) (title, body string) {
 
 		if isEmbed {
 			parts := strings.Split(line, " ")
-			if len(parts) != 2 {
-				exitWith("error: embed line must be filepath id like: code/test.rb id")
+			if len(parts) != 1 && len(parts) != 2 {
+				exitWith("error: embed line must be filepath id (code/test.rb id) or filepath (code/test.rb)")
 			}
-			filename := parts[0]
-			id := parts[1]
 
+			filename := parts[0]
 			srcCode, err := ioutil.ReadFile(wd + "/" + filename)
 			check(err)
 
-			sep := "begindoc: " + id + "\n"
-			begindoc := strings.Index(string(srcCode), sep)
-			if begindoc == -1 {
-				exitWith("error: embed separator not found " + sep + " in " + filename)
-			}
-			// end of comment line
-			begindoc += len(sep)
+			begindoc := 0
+			enddoc := len(srcCode) - 1
 
-			sep = "enddoc: " + id
-			enddoc := strings.Index(string(srcCode), sep)
-			if enddoc == -1 {
-				exitWith("error: embed separator not found " + sep + " in " + filename)
+			if len(parts) == 2 {
+				id := parts[1]
+				sep := "begindoc: " + id + "\n"
+				begindoc := strings.Index(string(srcCode), sep)
+				if begindoc == -1 {
+					exitWith("error: embed separator not found " + sep + " in " + filename)
+				}
+				// end of comment line
+				begindoc += len(sep)
+
+				sep = "enddoc: " + id
+				enddoc := strings.Index(string(srcCode), sep)
+				if enddoc == -1 {
+					exitWith("error: embed separator not found " + sep + " in " + filename)
+				}
+				// backtrack to last newline to cut out comment character(s)
+				enddoc = strings.LastIndex(string(srcCode[0:enddoc]), "\n")
 			}
-			// backtrack to last newline to cut out comment character(s)
-			enddoc = strings.LastIndex(string(srcCode[0:enddoc]), "\n")
 
 			rawLines := strings.Split(string(srcCode[begindoc:enddoc]), "\n")
+
 			leadingWhitespace := regexp.MustCompile("(?m)(^[ \t]*)(?:[^ \t])")
 			var margin string
 			var lines []string
+
 			for i, l := range rawLines {
 				if i == 0 {
 					margin = leadingWhitespace.FindAllStringSubmatch(l, -1)[0][1]
