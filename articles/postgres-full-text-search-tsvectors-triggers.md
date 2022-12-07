@@ -6,7 +6,7 @@ Introducing a `tsvector` column to cache [lexemes]
 and using a trigger to keep the lexemes up-to-date
 can improve the speed of full-text searches.
 
-[lexemes]: http://www.postgresql.org/docs/9.4/static/textsearch-intro.html
+[lexemes]: https://www.postgresql.org/docs/current/textsearch-intro.html
 
 This article shows how to accomplish that in Rails.
 
@@ -65,8 +65,8 @@ in order to use the `english` [dictionary] instead of the default
 `simple` dictionary.
 
 [tsearch]: https://github.com/Casecommons/pg_search#tsearch-full-text-search
-[default]: http://www.postgresql.org/docs/current/static/textsearch-intro.html
-[dictionary]: http://www.postgresql.org/docs/current/static/textsearch-dictionaries.html
+[default]: https://www.postgresql.org/docs/current/textsearch-intro.html
+[dictionary]: https://www.postgresql.org/docs/current/textsearch-dictionaries.html
 
 ## What we get for a SQL query
 
@@ -119,7 +119,7 @@ which are "a sorted list of distinct lexemes."
 Lexemes, in turn, are "words that have been normalized
 to make different variants of the same word look alike".
 
-[tsvector]: http://www.postgresql.org/docs/9.4/static/datatype-textsearch.html
+[tsvector]: https://www.postgresql.org/docs/current/datatype-textsearch.html
 
 For example, given the following product:
 
@@ -142,11 +142,6 @@ lowercasing, removing suffixes, etc.
 The lexemes were sorted into a list and the numbers represent
 the position of the lexeme in the original strings.
 
-For tons of awesome examples and details on these three functions, see
-[Postgres full-text search is Good Enough!][good]
-
-[good]: http://blog.lostpropertyhq.com/postgres-full-text-search-is-good-enough/
-
 ## Caching `tsvector` lexemes
 
 On a large `products` table,
@@ -154,11 +149,6 @@ our searches may be slow.
 If so, we have some tuning options.
 
 One option would be to cache the `tsvector`s using a materialized view.
-Read [Caching with Postgres materialized views][view] or
-[Postgres full-text search is Good Enough!][good] (again)
-for more information materialized views with Postgres and Ruby.
-
-[view]: http://www.matchingnotes.com/caching-with-postgres-materialized-views.html
 
 Materialized views may be a good option for your data.
 One downside is that the entire view must be refreshed with:
@@ -173,7 +163,7 @@ In our case,
 we want a cache to be updated
 when a `Product` is created or updated.
 
-[Heroku Scheduler]: https://devcenter.heroku.com/articles/scheduler
+[heroku scheduler]: https://devcenter.heroku.com/articles/scheduler
 
 Let's edit our `pg_search_scope`:
 
@@ -240,12 +230,12 @@ to keep the data in sync.
 Postgres has a built-in [`tsvector_update_trigger` function][trigger]
 to make this easier.
 
-[trigger]: http://www.postgresql.org/docs/9.3/static/textsearch-features.html#TEXTSEARCH-UPDATE-TRIGGERS
+[trigger]: https://www.postgresql.org/docs/current/textsearch-features.html#TEXTSEARCH-UPDATE-TRIGGERS
 
 The GIN index could alternatively be a GiST index.
 See the [GIN vs. GiST tradeoffs][tradeoff].
 
-[tradeoff]: http://www.postgresql.org/docs/9.4/static/textsearch-indexes.html
+[tradeoff]: https://www.postgresql.org/docs/current/textsearch-indexes.html
 
 Here's the resulting query with the new `tsvector`-type column:
 

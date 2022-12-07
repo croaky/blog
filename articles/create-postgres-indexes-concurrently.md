@@ -9,7 +9,7 @@ Postgres has a [`CONCURRENTLY` option for `CREATE INDEX`][con]
 that creates the index without preventing concurrent
 `INSERT`s, `UPDATE`s, or `DELETE`s on the table.
 
-[con]: http://www.postgresql.org/docs/9.2/static/sql-createindex.html
+[con]: https://www.postgresql.org/docs/current/sql-createindex.html
 
 ## ActiveRecord migrations
 
@@ -34,7 +34,7 @@ The caveat is that
 [concurrent indexes must be created outside a transaction][transact].
 By default, ActiveRecord migrations are run inside a transaction.
 
-[transact]: http://www.postgresql.org/docs/9.2/static/sql-createindex.html#SQL-CREATEINDEX-CONCURRENTLY
+[transact]: https://www.postgresql.org/docs/current/sql-createindex.html#SQL-CREATEINDEX-CONCURRENTLY
 
 So, ActiveRecord 4's [`disable_ddl_transaction!`][disable] method
 must be used in combination with

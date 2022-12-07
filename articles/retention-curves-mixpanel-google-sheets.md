@@ -75,7 +75,7 @@ the curves will flatten out. In exceptional products,
 [its retention curve will rise](https://www.sequoiacap.com/article/retention)
 as product development and network effects propel users to return.
 
-[chen]: http://andrewchen.co/new-data-shows-why-losing-80-of-your-mobile-users-is-normal-and-that-the-best-apps-do-much-better/
+[chen]: https://andrewchen.com/new-data-shows-why-losing-80-of-your-mobile-users-is-normal-and-that-the-best-apps-do-much-better/
 
 A product with improving retention will have
 darker-colored lines (more recent cohorts)

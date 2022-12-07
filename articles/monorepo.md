@@ -28,30 +28,31 @@ We write a `README.md`:
 ```md
 Add to your shell profile:
 
-  # Set environment variable to monorepo path
-  export ORG="$HOME/org"
+# Set environment variable to monorepo path
 
-  # Prepend monorepo scripts
-  export PATH="$ORG/bin:$PATH"
+export ORG="$HOME/org"
+
+# Prepend monorepo scripts
+
+export PATH="$ORG/bin:$PATH"
 
 Clone:
 
-  git clone https://github.com/org/repo.git $ORG
-  cd $ORG
+git clone https://github.com/org/repo.git $ORG
+cd $ORG
 ```
 
 The `$ORG` environment variable will be used throughout the codebase.
-
 
 ## Initial design
 
 We design an initial architecture like this:
 
-* a "Dashboard" web interface for customers, written in React (TypeScript)
-* mobile apps for customers, written in React Native (TypeScript)
-* SDKs for customers, written for Go, Node (TypeScript), and Ruby
-* an internal HTTP API used by the web interface and SDKs, written in Go
-* a Postgres database backing the HTTP API
+- a "Dashboard" web interface for customers, written in React (TypeScript)
+- mobile apps for customers, written in React Native (TypeScript)
+- SDKs for customers, written for Go, Node (TypeScript), and Ruby
+- an internal HTTP API used by the web interface and SDKs, written in Go
+- a Postgres database backing the HTTP API
 
 We add new files and directories (old files omitted with `...` for brevity):
 
@@ -152,8 +153,8 @@ We add config files for [Prettier] and [Rubocop]
 at the top of the file hierarchy:
 
 [gofmt]: https://golang.org/cmd/gofmt/
-[Prettier]: https://prettier.io/
-[Rubocop]: https://rubocop.readthedocs.io/en/latest/
+[prettier]: https://prettier.io/
+[rubocop]: https://rubocop.readthedocs.io/en/latest/
 
 ```
 .
@@ -170,7 +171,7 @@ such as EC2 for the HTTP API.
 
 We add an `infra` directory for [Terraform], `systemd`, `bash` files, etc.:
 
-[Terraform]: https://www.terraform.io/
+[terraform]: https://www.terraform.io/
 
 ```
 .
@@ -187,9 +188,9 @@ when we integrate our changes into the codebase.
 
 We also want our Continuous Integration (CI) service to:
 
-* begin running the tests in < 5s after opening or editing a pull request
-* run the tests in an environment with [parity] to the production environment
-* run only the tests relevant to the change
+- begin running the tests in < 5s after opening or editing a pull request
+- run the tests in an environment with [parity] to the production environment
+- run only the tests relevant to the change
 
 [parity]: https://12factor.net/dev-prod-parity
 
@@ -243,9 +244,9 @@ sdk/ruby/spec/account_spec.rb | 10 +++++-----
 A `testbot farmer` process on a server
 responds to the GitHub webhook by:
 
-* identifying the directories containing files that have changed
-* walking up the file hierarchy to find `Testfile`s for changed directories
-* saving test jobs to its backing Postgres database
+- identifying the directories containing files that have changed
+- walking up the file hierarchy to find `Testfile`s for changed directories
+- saving test jobs to its backing Postgres database
 
 Each `Testfile` defines test jobs for its directory. Ours might be:
 
@@ -286,10 +287,10 @@ because no files in their directories were changed.
 To make it convenient to test across service boundaries,
 we write a `with-serverd` script that:
 
-* installs the `serverd` binary
-* migrates the database
-* creates a team and credential
-* runs `serverd serve` without blocking programs
+- installs the `serverd` binary
+- migrates the database
+- creates a team and credential
+- runs `serverd serve` without blocking programs
   passed as arguments to `with-serverd`
 
 We place this script in `$ORG/bin` to make it available on our `$PATH`.
@@ -343,7 +344,7 @@ might be better suited to live as
 standalone open source repos outside the monorepo.
 
 To meet our design goals, we write a `mirrorbot` program
-(design credit [Bob Glickstein](http://www.geebobg.com/)):
+(design credit [Bob Glickstein](https://www.geebobg.com/)):
 
 ```
 .
@@ -388,14 +389,14 @@ For example:
 ```yml
 github.com/org/org-sdk-node:
   - branch:
-    - main: main
+      - main: main
   - mirror:
-    - sdk/node: /
+      - sdk/node: /
 github.com/org/org-sdk-ruby:
   - branch:
-    - main: main
+      - main: main
   - mirror:
-    - sdk/ruby: /
+      - sdk/ruby: /
 ```
 
 ## Backwards compatibility

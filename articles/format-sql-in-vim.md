@@ -32,7 +32,12 @@ and [pgFormatter](https://github.com/darold/pgFormatter):
 brew install pgformatter
 
 # Vim plugins
-curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
-  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-vim -u "$HOME/.vimrc" +PlugUpdate +PlugClean! +qa
+if [ -e "$HOME/.vim/autoload/plug.vim" ]; then
+  nvim --headless +PlugUpgrade +qa
+else
+  curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+nvim --headless +PlugUpdate +PlugClean! +qa
+nvim --headless +TSUpdate +qa
 ```

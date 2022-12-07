@@ -24,7 +24,7 @@ heroku repo:gc --app your-app-name
 heroku repo:purge_cache --app your-app-name
 ```
 
-These commands will execute `git gc --agressive` ([git-clean]) and
+These commands will execute `git gc --aggressive` ([git-clean]) and
 delete the contents of the Heroku build cache stored in
 your application's Git repository.
 
@@ -49,7 +49,7 @@ ignore files such as unit tests with `.slugignore`.
 Hopefully each Ruby gem in [Bundler groups] is being used by the app.
 Do an audit and remove any that aren't used.
 
-[Bundler groups]: http://bundler.io/v1.5/groups.html
+[bundler groups]: https://bundler.io/guides/groups.html
 
 ## Bundle only what you need for the environment
 

@@ -42,7 +42,7 @@ By default,
 the spell file is located at
 `~/.vim/spell/en.utf-8.add`.
 
-[spell file]: http://vimdoc.sourceforge.net/htmldoc/spell.html#spell-mkspell
+[spell file]: https://vimdoc.sourceforge.net/htmldoc/spell.html#spell-mkspell
 
 ## Word suggestions
 

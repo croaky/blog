@@ -67,7 +67,7 @@ sudo mv /tmp/etchosts /etc/hosts
 sudo killall -HUP mDNSResponder
 ```
 
-The data source is [MVPS HOSTS](http://winhelp2002.mvps.org/hosts.txt).
+The data source is [MVPS HOSTS](https://winhelp2002.mvps.org/hosts.txt).
 It is free to use for personal use and licensed under
 the Creative Commons Attribution-NonCommercial-ShareAlike License.
 

@@ -32,7 +32,7 @@ server: cd serverd && go install && serverd
 ```
 
 In development,
-tools like [Foreman](http://ddollar.github.io/foreman/)
+tools like [Foreman](https://ddollar.github.io/foreman/)
 interleave output streams,
 respond to crashed processes,
 and handle user-initiated restarts and shutdowns.
@@ -42,11 +42,11 @@ foreman start
 ```
 
 In production,
-[Heroku automatically uses the `Procfile`][Heroku] to specify the app's dynos.
+[Heroku automatically uses the `Procfile`][heroku] to specify the app's dynos.
 Foreman can [export] the `Procfile`'s process definitions
 to other formats such as `systemd`:
 
-[Heroku]: https://devcenter.heroku.com/articles/procfile
+[heroku]: https://devcenter.heroku.com/articles/procfile
 [export]: https://ddollar.github.io/foreman/#EXPORTING
 
 ```

@@ -18,4 +18,4 @@ between the range `>= 1.1` and `< 2.0`.
 Using the pessimistic operator with [Semantic Versioning] by gem authors,
 we can achieve better stability in our dependencies.
 
-[Semantic Versioning]: http://semver.org/
+[semantic versioning]: https://semver.org/

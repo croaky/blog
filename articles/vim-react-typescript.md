@@ -4,7 +4,7 @@ This article describes a macOS setup and Vim 8 configuration
 for React and TypeScript with syntax highlighting,
 tab completion, auto-formatting, linting, and jump to definition.
 
-Refresh dependencies using [Homebrew](http://brew.sh/):
+Refresh dependencies using [Homebrew](https://brew.sh/):
 
 ```
 brew update-reset

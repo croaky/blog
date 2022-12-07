@@ -6,7 +6,7 @@ my teams' workflows for more than 10 years.
 An outer, lighter layer of those workflows
 has been a kanban board to manage tasks.
 I've mostly used [Trello](https://trello.com)
-but lately have been falling in love with [Notion](https://notion.so).
+but lately have been using [Notion](https://notion.so).
 Here's an example board:
 
 ![Kanban board](/images/kanban-board.png)

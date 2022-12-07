@@ -4,9 +4,9 @@ Content Distribution Networks (CDNs) such as
 [Amazon CloudFront][cloudfront] and [Fastly][fastly]
 pull content from their [origin server] during HTTP requests to cache them:
 
-[cloudfront]: http://aws.amazon.com/cloudfront/
-[fastly]: http://www.fastly.com/
-[origin server]: http://www.w3.org/Protocols/rfc2616/rfc2616-sec1.html#sec1.3
+[cloudfront]: https://aws.amazon.com/cloudfront/
+[fastly]: https://www.fastly.com/
+[origin server]: https://www.rfc-editor.org/rfc/rfc9110.html#name-origin-server
 
 ```
 DNS -> CDN -> Origin
@@ -32,10 +32,10 @@ www.example.com -> example.herokuapp.com
 
 Each HTTP request for a static asset:
 
-* is received by the [Heroku routing mesh][mesh] (platform load balancer)
-* picked up by a web dyno (host)
-* passed to one of the [Puma workers][puma] (web server process) on the dyno
-* routed by Rails to the asset (CSS, JS, img, font file)
+- is received by the [Heroku routing mesh][mesh] (platform load balancer)
+- picked up by a web dyno (host)
+- passed to one of the [Puma workers][puma] (web server process) on the dyno
+- routed by Rails to the asset (CSS, JS, img, font file)
 
 [mesh]: https://devcenter.heroku.com/articles/http-routing
 [puma]: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
@@ -60,7 +60,7 @@ to the asset's name.
 When the file changes,
 the browser requests the latest version.
 
-[asset pipeline]: http://guides.rubyonrails.org/asset_pipeline.html
+[asset pipeline]: https://guides.rubyonrails.org/asset_pipeline.html
 
 The first time a user requests an asset, it will look like this:
 
@@ -83,11 +83,7 @@ GET 123abc.cloudfront.net/application-ql4h2308y.css
 ```
 
 All HTTP requests using verbs other than `GET` and `HEAD`
-proxy through to the origin, which follows
-the [Write-Through Mandatory][write-through] portion of
-the HTTP specification.
-
-[write-through]: http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.11
+proxy through to the origin.
 
 ## Rails configuration
 
@@ -123,12 +119,12 @@ The [`immutable` directive][immutable] eliminates revalidation requests.
 
 To use CloudFront:
 
-* "Download" CloudFront distribution
-* "Origin Domain Name" as `www.example.com`
-* "Origin Protocol Policy" to "Match Viewer"
-* "Object Caching" to "Use Origin Cache Headers"
-* "Forward Query Strings" to "No (Improves Caching)"
-* "Distribution State" to "Enabled"
+- "Download" CloudFront distribution
+- "Origin Domain Name" as `www.example.com`
+- "Origin Protocol Policy" to "Match Viewer"
+- "Object Caching" to "Use Origin Cache Headers"
+- "Forward Query Strings" to "No (Improves Caching)"
+- "Distribution State" to "Enabled"
 
 ## Fastly setup
 
@@ -137,7 +133,7 @@ To use Fastly, there's no additional "Origin Pull" configuration.
 The deployment process can be adjusted to:
 
 ```bash
-git push heroku HEAD:master --app example
+git push heroku HEAD:main --app example
 heroku run rake purge --app example
 ```
 
@@ -179,7 +175,7 @@ end
 To cache entire HTML pages in the CDN,
 use the [`Surrogate-Control` response header][surrogate].
 
-[surrogate]: http://www.w3.org/TR/edge-arch
+[surrogate]: https://www.w3.org/TR/edge-arch/
 
 The CDN will cache the page for the duration specified,
 protecting the origin from unnecessary requests
