@@ -1,9 +1,5 @@
 #!/usr/bin/env ruby
 
-# createdb db
-# chmod +x main.rb
-# DATABASE_URL=postgres:///db ./main.rb
-
 require "bundler/inline"
 require "csv"
 
@@ -17,7 +13,7 @@ end
 
 enable :inline_templates
 
-db = PG.connect(ENV.fetch("FOLLOWER_DATABASE_URL"))
+db = PG.connect(ENV.fetch("DATABASE_URL"))
 
 get "/" do
   haml :index
