@@ -59,4 +59,4 @@ Treasury Ops  | KL
 Time: 1 ms
 ```
 
-Using `concat_ws()` instead of `concat()` avoids output like `AB / / CD`.
+Using `concat_ws()` instead of `concat()` prevents `AB / / CD`.

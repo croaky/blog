@@ -3,7 +3,7 @@
 You are working in Vim.
 You come across this code:
 
-```
+```ruby
 gem "clearance", "1.0.0.rc4"
 gem "neat"
 gem "stripe"
@@ -30,7 +30,7 @@ You invoke the `sort` function:
 
 You rejoice:
 
-```
+```ruby
 gem "bourbon"
 gem "clearance", "1.0.0.rc4"
 gem "neat"

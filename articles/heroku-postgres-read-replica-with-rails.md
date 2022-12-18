@@ -80,7 +80,7 @@ The `primary` and `follower` databases are therefore
 only defined in `config/database.yml` based on the same logic,
 depending on the presence of the follower database URL:
 
-```yml
+```yaml
 <% pool = ENV.fetch("PUMA_THREADS", 5) %>
 <% follower_color = ENV["DATABASE_FOLLOWER_COLOR"].to_s.upcase %>
 <% follower_url = ENV["HEROKU_POSTGRESQL_#{follower_color}_URL"] %>
@@ -165,15 +165,19 @@ on the number of dynos for
 Test the number of connections by opening a Postgres prompt
 using `heroku pg:psql` and running:
 
-```
-SELECT count(*)
-FROM pg_stat_activity
-WHERE pid <> pg_backend_pid() AND usename = current_user;
+```sql
+SELECT
+  count(*)
+FROM
+  pg_stat_activity
+WHERE
+  pid <> pg_backend_pid()
+  AND usename = current_user;
 ```
 
 In another shell, send traffic to the app with a tool like Apache Bench:
 
-```
+```bash
 ab -n 100 -c 8 https://tranquil-brushlands-56319.herokuapp.com/
 ```
 

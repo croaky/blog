@@ -35,7 +35,7 @@
         --body-bg: rgb(25, 30, 45);
         --body-fg: rgb(255, 255, 255);
         --code-bg: rgba(123, 148, 206, 0.1);
-        --code-fg: var(--yellow);
+        --code-fg: var(--white);
       }
       html,
       body {
@@ -197,6 +197,7 @@
       /* syntax highlighting */
       .chroma .err,
       .chroma .kn,
+      .chroma .kp,
       .chroma .m,
       .chroma .mi,
       .chroma .no,
@@ -207,6 +208,7 @@
       .chroma .kc,
       .chroma .kd,
       .chroma .n,
+      .chroma .nt,
       .chroma .nx {
         color: var(--white);
       }
@@ -216,9 +218,11 @@
         color: var(--purple);
       }
       .chroma .no,
-      .chroma .s {
+      .chroma .s,
+      .chroma .s2 {
         color: var(--yellow);
       }
+      .chroma .c,
       .chroma .c1,
       .chroma .ch,
       .chroma .cp,

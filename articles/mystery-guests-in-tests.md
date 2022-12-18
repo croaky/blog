@@ -5,39 +5,39 @@
 This testing anti-pattern is called [Obscure Test].
 A common cause of Obscure Test is [Mystery Guest]:
 
-[Obscure Test]: http://xunitpatterns.com/Obscure%20Test.html
-[Mystery Guest]: http://xunitpatterns.com/Obscure%20Test.html#Mystery%20Guest
+[obscure test]: http://xunitpatterns.com/Obscure%20Test.html
+[mystery guest]: http://xunitpatterns.com/Obscure%20Test.html#Mystery%20Guest
 
 > The test reader is not able to see the cause and effect between fixture and
 > verification logic because part of it is done outside the Test Method.
 
 The impact is:
 
-* Tests don't fulfill the role of [Tests as Documentation].
-* You may have [Erratic Tests] which result don't pass during every test run or
+- Tests don't fulfill the role of [Tests as Documentation].
+- You may have [Erratic Tests] which result don't pass during every test run or
   pass in the test environment but not in production.
 
-[Tests as Documentation]: http://xunitpatterns.com/Goals%20of%20Test%20Automation.html#Tests%20as%20Documentation
-[Erratic Tests]: http://xunitpatterns.com/Erratic%20Test.html
+[tests as documentation]: http://xunitpatterns.com/Goals%20of%20Test%20Automation.html#Tests%20as%20Documentation
+[erratic tests]: http://xunitpatterns.com/Erratic%20Test.html
 
 ## Identify the Mystery Guest
 
 In the test suite of web applications,
 the Mystery Guest might be one of these smells:
 
-* a fixture function
-* a fixture file such as XML or JSON saved from an HTTP response
-* a variable defined at the top of a long code block
-* a variable defined up multiple levels of nesting
-* a variable without an [Intention-Revealing Name]
+- a fixture function
+- a fixture file such as XML or JSON saved from an HTTP response
+- a variable defined at the top of a long code block
+- a variable defined up multiple levels of nesting
+- a variable without an [Intention-Revealing Name]
 
-[Intention-Revealing Name]: http://c2.com/cgi/wiki?IntentionRevealingNames
+[intention-revealing name]: http://c2.com/cgi/wiki?IntentionRevealingNames
 
 Some smells have direct solutions:
 
-* shorten long blocks
-* prefer flat over nested tests
-* rename variables
+- shorten long blocks
+- prefer flat over nested tests
+- rename variables
 
 Other smells require more thought.
 
@@ -67,8 +67,8 @@ What we call "creating objects with factories",
 others call creating [Fresh Fixtures]
 built using [Inline Setup].
 
-[Fresh Fixtures]: http://xunitpatterns.com/Fresh%20Fixture.html
-[Inline Setup]: http://xunitpatterns.com/Inline%20Setup.html
+[fresh fixtures]: http://xunitpatterns.com/Fresh%20Fixture.html
+[inline setup]: http://xunitpatterns.com/Inline%20Setup.html
 
 > Each test method creates a test fixture for its own private use.
 
@@ -81,7 +81,7 @@ between fixture and verification logic.
 Again, Factory Girl is helpful.
 Consider this setup:
 
-[Irrelevant Information]: http://xunitpatterns.com/Obscure%20Test.html#Irrelevant%20Information
+[irrelevant information]: http://xunitpatterns.com/Obscure%20Test.html#Irrelevant%20Information
 
 ```ruby
 context "user account exists with a matching Facebook uid" do
@@ -98,7 +98,7 @@ We use Factory Girl to create only a user with valid data,
 and we name a `@uid` variable to express intent for the otherwise
 [Magic Number] `1234567`.
 
-[Magic Number]: http://en.wikipedia.org/wiki/Magic_number_(programming
+[magic number]: http://en.wikipedia.org/wiki/Magic_number_(programming
 
 ## External resources
 
@@ -108,9 +108,8 @@ which we'll then stub out during test runs, using the file as a proxy.
 
 ```ruby
 context "the job XML from the web service" do
-  setup { @xml_job = IO.read("test/fixtures/jobs/1.xml") }
-
-  should "include the recruiter"s email" do
+  should "include the recruiter email" do
+    @xml_job = IO.read("test/fixtures/jobs/1.xml")
     recruiter_xml = "<recruiter>recruiter@example.com</recruiter>"
     assert_contains @xml_job, recruiter_xml
   end
@@ -119,10 +118,9 @@ end
 
 In this case, `test/fixtures/jobs/1.xml` is called a [Prebuilt Fixture].
 
-[Prebuilt Fixture]: http://xunitpatterns.com/Prebuilt%20Fixture.html
+[prebuilt fixture]: http://xunitpatterns.com/Prebuilt%20Fixture.html
 
-To truly avoid a Mystery Guest here,
-the XML could be inline or have the recruiter's email injected somehow.
+To truly avoid a Mystery Guest here, the XML could be inline.
 
 ## Conclusion
 

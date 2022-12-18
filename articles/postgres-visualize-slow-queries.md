@@ -11,7 +11,7 @@ EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON)
 
 Then, run:
 
-```
+```bash
 :!psql -qAt -d db_name -f % | pbcopy
 ```
 
