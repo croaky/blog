@@ -25,7 +25,7 @@ We initialize a monorepo on GitHub: `org/repo`:
 
 We write a `README.md`:
 
-```md
+```markdown
 Add to your shell profile:
 
 # Set environment variable to monorepo path
@@ -386,7 +386,7 @@ It maps monorepo branches to target repo branches
 and monorepo directories and files to target repo directories and files.
 For example:
 
-```yml
+```yaml
 github.com/org/org-sdk-node:
   - branch:
       - main: main
@@ -443,7 +443,7 @@ or a special value `monorepo` to use the current `$ORG` source code.
 
 For example:
 
-```
+```bash
 with-ruby-sdk 1.0 ruby -e "require 'org-sdk'; puts OrgSDK::VERSION"
 ```
 
@@ -477,7 +477,7 @@ with the repo.
 
 Usually, integrating with third-party tools involves providing a manifest like:
 
-```
+```bash
 cd subdir && command
 ```
 

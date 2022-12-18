@@ -19,27 +19,27 @@ I put my face on the top unassigned card in "Next Up",
 move it to "In Progress",
 and make a branch:
 
-```
+```bash
 git checkout -b my-branch
 ```
 
 I make my changes and then commit them to version control:
 
-```
+```bash
 git add --all
 git commit --verbose
 ```
 
 I push the feature to a remote branch:
 
-```
+```bash
 git push
 ```
 
 I open a pull request from the command line
 via [GitHub CLI](https://cli.github.com/):
 
-```
+```bash
 gh pr create --web
 ```
 
@@ -68,7 +68,7 @@ Code review before code lands in `main` offers these benefits:
 
 I make the suggested changes and commit them:
 
-```
+```bash
 git add --all
 git commit -v
 ```
@@ -79,7 +79,7 @@ We've usually had these branch protection rules enabled:
 and "Require branches to be up to date before merging".
 So, I might need to push again:
 
-```
+```bash
 git push
 ```
 
@@ -92,13 +92,13 @@ After the pull request merges cleanly,
 back on the command line in `my-branch`, I run
 [this script](https://github.com/croaky/laptop/blob/main/bin/git-post-land):
 
-```
+```bash
 git post-land
 ```
 
 It runs some cleanup and moves me back to `main`:
 
-```
+```bash
 git checkout main
 git fetch origin
 git merge --ff-only origin/main

@@ -7,7 +7,7 @@ I want to update the fork with changes in the "upstream" repo.
 
 Get the [GitHub CLI](https://cli.github.com/) tool:
 
-```
+```bash
 brew install github/gh/gh
 brew update
 brew upgrade gh
@@ -15,7 +15,7 @@ brew upgrade gh
 
 Fork the upstream repo:
 
-```
+```bash
 gh repo fork org/project
 ```
 
@@ -35,7 +35,7 @@ I also have these relevant settings in my
 
 Update the fork with changes in the upstream repo:
 
-```
+```bash
 git checkout main
 git fetch upstream
 git merge upstream/main
