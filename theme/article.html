@@ -17,13 +17,12 @@
         --content-max-width: 700px;
 
         /* colors */
-        --charcoal: rgb(20, 20, 20);
-        --pink: rgb(215, 0, 95);
+        --green: #64c88e;
+        --pink: #d7005f;
         --purple: rgb(150, 100, 200);
-        --tan: rgb(255, 240, 230);
-        --turquoise: rgb(0, 135, 135);
-        --white: rgb(255, 255, 255);
         --yellow: rgb(255, 208, 128);
+        --white: #ffffff;
+        --light-gray: #999999;
 
         --link-bg-hover: rgb(150, 100, 200, 0.2);
         --link-color: var(--purple);
@@ -194,6 +193,38 @@
         p {
           margin: 1rem 0;
         }
+      }
+      /* syntax highlighting */
+      .chroma .err,
+      .chroma .kn,
+      .chroma .m,
+      .chroma .mi,
+      .chroma .no,
+      .chroma .vi,
+      .chroma .ss {
+        color: var(--pink);
+      }
+      .chroma .kc,
+      .chroma .kd,
+      .chroma .n,
+      .chroma .nx {
+        color: var(--white);
+      }
+      .chroma .k,
+      .chroma .nb,
+      .chroma .nf {
+        color: var(--purple);
+      }
+      .chroma .no,
+      .chroma .s {
+        color: var(--yellow);
+      }
+      .chroma .c1,
+      .chroma .ch,
+      .chroma .cp,
+      .chroma .o,
+      .chroma .p {
+        color: var(--light-gray);
       }
     </style>
   </head>

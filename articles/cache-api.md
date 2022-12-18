@@ -3,13 +3,13 @@
 To ingest data from Foursquare's Places API,
 [terms of use](https://developer.foursquare.com/docs/usage-guidelines/) include:
 
-* the data can not be cached longer than 24 hours
-* an hourly rate limit and a daily call quota, whichever comes first
+- the data can not be cached longer than 24 hours
+- an hourly rate limit and a daily call quota, whichever comes first
 
 A database table stores API calls:
 
 ```embed
-code/cache-api/main.sql schema
+code/cache-api/schema.sql
 ```
 
 A Ruby client makes API calls:
@@ -29,12 +29,12 @@ The HTTP request URL is hashed as an extra security measure to obfuscate
 sensitive data (client ID and secret) in the query params.
 
 ```embed
-code/cache-api/main.rb all
+code/cache-api/main.rb
 ```
 
 Old data can be deleted via a clock process or
 [pg_cron](https://github.com/citusdata/pg_cron):
 
 ```embed
-code/cache-api/main.sql sweep
+code/cache-api/sweep.sql
 ```

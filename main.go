@@ -18,6 +18,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -28,7 +29,12 @@ import (
 	"strings"
 	"time"
 
+	"github.com/alecthomas/chroma/v2"
+	htmlfmt "github.com/alecthomas/chroma/v2/formatters/html"
+	"github.com/alecthomas/chroma/v2/lexers"
+	"github.com/alecthomas/chroma/v2/styles"
 	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/ast"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
 )
@@ -205,7 +211,18 @@ func load() []Article {
 		html := markdown.ToHTML(
 			[]byte(body),
 			parser.NewWithExtensions(ext),
-			html.NewRenderer(html.RendererOptions{AbsolutePrefix: blogURL}),
+			html.NewRenderer(html.RendererOptions{
+				AbsolutePrefix: blogURL,
+				RenderNodeHook: func(w io.Writer, node ast.Node, entering bool) (ast.WalkStatus, bool) {
+					codeBlock, ok := node.(*ast.CodeBlock)
+					if !ok {
+						return ast.GoToNext, false
+					}
+					lang := string(codeBlock.Info)
+					syntaxHighlight(w, string(codeBlock.Literal), lang)
+					return ast.GoToNext, true
+				},
+			}), // RenderNodeHook
 		)
 
 		a := Article{
@@ -297,7 +314,7 @@ func preProcess(filepath string) (title, body string) {
 			if len(parts) == 2 {
 				id := parts[1]
 				sep := "begindoc: " + id + "\n"
-				begindoc := strings.Index(string(srcCode), sep)
+				begindoc = strings.Index(string(srcCode), sep)
 				if begindoc == -1 {
 					exitWith("error: embed separator not found " + sep + " in " + filename)
 				}
@@ -305,7 +322,7 @@ func preProcess(filepath string) (title, body string) {
 				begindoc += len(sep)
 
 				sep = "enddoc: " + id
-				enddoc := strings.Index(string(srcCode), sep)
+				enddoc = strings.Index(string(srcCode), sep)
 				if enddoc == -1 {
 					exitWith("error: embed separator not found " + sep + " in " + filename)
 				}
@@ -338,4 +355,28 @@ func preProcess(filepath string) (title, body string) {
 	}
 
 	return title, body
+}
+
+func syntaxHighlight(w io.Writer, source, lang string) error {
+	// lexer
+	l := lexers.Get(lang)
+	if l == nil {
+		l = lexers.Analyse(source)
+	}
+	if l == nil {
+		l = lexers.Fallback
+	}
+	l = chroma.Coalesce(l)
+
+	// formatter
+	f := htmlfmt.New(htmlfmt.Standalone(false), htmlfmt.WithClasses(true))
+
+	// style
+	s := styles.Fallback
+
+	it, err := l.Tokenise(nil, source)
+	if err != nil {
+		return err
+	}
+	return f.Format(w, s, it)
 }

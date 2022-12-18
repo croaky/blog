@@ -18,13 +18,13 @@ Deno's main innovations are:
 
 `deno` is shipped as a single executable. Install:
 
-```
+```bash
 curl -fsSL https://deno.land/x/install/install.sh | sh
 ```
 
 Add to `~/.zshrc`:
 
-```
+```bash
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 ```
@@ -63,7 +63,7 @@ The core team feels that style of package manager has caused more harm than good
 Instead, modules are imported explicitly from a server using URLs:
 
 ```ts
-import { serve } from "https://deno.land/std/http/server.ts"
+import { serve } from "https://deno.land/std/http/server.ts";
 ```
 
 Deno treats modules and files as the same concept.
@@ -77,7 +77,7 @@ It manages NPM packages that are bundled as ES modules
 and respects Semantic Versioning:
 
 ```ts
-import { Component, render } from "https://cdn.pika.dev/preact@^10.0.0"
+import { Component, render } from "https://cdn.pika.dev/preact@^10.0.0";
 ```
 
 To handle private modules, set up a web server.

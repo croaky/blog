@@ -15,13 +15,13 @@ queue_listen: bundle exec ruby queue_listen.rb
 
 To run one worker on Heroku:
 
-```
+```bash
 heroku ps:scale queue_poll=1
 ```
 
 Or:
 
-```
+```bash
 heroku ps:scale queue_listen=1
 ```
 

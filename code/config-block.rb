@@ -20,25 +20,25 @@ module Service
     attr_accessor :api_key, :from
 
     def initialize
-      @api_key = ''
-      @from = 'default@example.com'
+      @api_key = ""
+      @from = "default@example.com"
     end
   end
 end
 # enddoc: module
 
-expect { Service.config.api_key == '' }
-expect { Service.config.from == 'default@example.com' }
+expect { Service.config.api_key == "" }
+expect { Service.config.from == "default@example.com" }
 
 # begindoc: block
 Service.configure do |config|
-  config.api_key = 'your_key_here'
-  config.from = 'team@example.com'
+  config.api_key = "your_key_here"
+  config.from = "team@example.com"
 end
 # enddoc: block
 
-expect { Service.config.api_key == 'your_key_here' }
-expect { Service.config.from == 'team@example.com' }
+expect { Service.config.api_key == "your_key_here" }
+expect { Service.config.from == "team@example.com" }
 
 # begindoc: access
 Service.config.api_key
