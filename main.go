@@ -314,7 +314,7 @@ func preProcess(filepath string) (title, body string) {
 			if len(parts) == 2 {
 				id := parts[1]
 				sep := "begindoc: " + id + "\n"
-				begindoc := strings.Index(string(srcCode), sep)
+				begindoc = strings.Index(string(srcCode), sep)
 				if begindoc == -1 {
 					exitWith("error: embed separator not found " + sep + " in " + filename)
 				}
@@ -322,7 +322,7 @@ func preProcess(filepath string) (title, body string) {
 				begindoc += len(sep)
 
 				sep = "enddoc: " + id
-				enddoc := strings.Index(string(srcCode), sep)
+				enddoc = strings.Index(string(srcCode), sep)
 				if enddoc == -1 {
 					exitWith("error: embed separator not found " + sep + " in " + filename)
 				}

@@ -1,4 +1,3 @@
-# begindoc: all
 require "bundler/inline"
 require "digest"
 require "json"
@@ -67,4 +66,3 @@ end
 if $0 == __FILE__
   Foursquare.explore("tacos", near: "San Francisco, CA")
 end
-# enddoc: all
