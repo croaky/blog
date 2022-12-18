@@ -28,7 +28,7 @@ brew install flyctl
 
 Connect to your account:
 
-```
+```bash
 fly auth login
 ```
 
@@ -41,7 +41,7 @@ fly launch --remote-only
 Tell the app which region will be primary,
 such as Sunnyvale, California:
 
-```bash
+```
 fly secrets set PRIMARY_REGION=sjc
 ```
 
