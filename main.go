@@ -15,7 +15,6 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
@@ -28,7 +27,6 @@ import (
 	"regexp"
 	"runtime"
 	"strings"
-	"time"
 
 	"github.com/alecthomas/chroma/v2"
 	htmlfmt "github.com/alecthomas/chroma/v2/formatters/html"
@@ -96,7 +94,7 @@ func exitWith(s string) {
 	os.Exit(1)
 }
 
-// Article contains data loaded from config.json and parsed Markdown
+// Article contains data loaded from articles/*.md
 type Article struct {
 	Canonical   string `json:"canonical,omitempty"`
 	Description string `json:"description"`
@@ -109,23 +107,11 @@ type Article struct {
 }
 
 func add(id string) {
-	articles := load()
-
 	noDashes := strings.Replace(id, "-", " ", -1)
 	noUnderscores := strings.Replace(noDashes, "_", " ", -1)
 	title := strings.Title(noUnderscores)
 	content := []byte("# " + title + "\n\n\n")
 	check(ioutil.WriteFile(wd+"/articles/"+id+".md", content, 0644))
-
-	a := Article{
-		ID:      id,
-		Updated: time.Now().Format("2006-01-02"),
-	}
-
-	articles = append([]Article{a}, articles...)
-	config, err := json.MarshalIndent(articles, "", "  ")
-	check(err)
-	check(ioutil.WriteFile(wd+"/config.json", config, 0644))
 }
 
 func serve(addr string) {
@@ -147,12 +133,19 @@ func serve(addr string) {
 }
 
 func build() {
-	// article pages
+	// clean public dir
+	dir, err := ioutil.ReadDir(wd + "/public")
+	check(err)
+	for _, d := range dir {
+		os.RemoveAll(path.Join([]string{"public", d.Name()}...))
+	}
+
+	// build article pages
 	page := template.Must(template.ParseFiles(wd + "/theme/article.html"))
 	articles := load()
 
 	for _, a := range articles {
-		check(os.Mkdir(wd+"/public/"+a.ID, os.ModePerm))
+		check(os.MkdirAll(wd+"/public/"+a.ID, os.ModePerm))
 		f, err := os.Create(wd + "/public/" + a.ID + "/index.html")
 		check(err)
 		data := struct {
@@ -163,19 +156,10 @@ func build() {
 		check(page.Execute(f, data))
 	}
 
-	// public directories
-	dir, err := ioutil.ReadDir(wd + "/public")
-	check(err)
-	for _, d := range dir {
-		os.RemoveAll(path.Join([]string{"public", d.Name()}...))
-	}
+	// copy static assets
 	check(os.MkdirAll(wd+"/public/images", os.ModePerm))
-
-	// images
 	cmd := exec.Command("cp", "-a", wd+"/images/.", wd+"/public/images")
 	cmd.Run()
-
-	// favicon.ico, and additional files from theme
 	cmd = exec.Command("cp", "-a", wd+"/theme/public/.", wd+"/public")
 	cmd.Run()
 }
@@ -185,7 +169,7 @@ func load() []Article {
 	dir, err := ioutil.ReadDir(wd + "/articles")
 	check(err)
 
-	for i, f := range dir {
+	for _, f := range dir {
 		title, body := preProcess("articles/" + f.Name())
 		ext := parser.CommonExtensions | parser.AutoHeadingIDs
 		html := markdown.ToHTML(
@@ -193,7 +177,7 @@ func load() []Article {
 			parser.NewWithExtensions(ext),
 			html.NewRenderer(html.RendererOptions{
 				AbsolutePrefix: blogURL,
-				RenderNodeHook: func(w io.Writer, node ast.Node, entering bool) (ast.WalkStatus, bool) {
+				RenderNodeHook: func(w io.Writer, node ast.Node, _entering bool) (ast.WalkStatus, bool) {
 					codeBlock, ok := node.(*ast.CodeBlock)
 					if !ok {
 						return ast.GoToNext, false
@@ -202,7 +186,7 @@ func load() []Article {
 					syntaxHighlight(w, string(codeBlock.Literal), lang)
 					return ast.GoToNext, true
 				},
-			}), // RenderNodeHook
+			}),
 		)
 
 		info, err := os.Stat("articles/" + f.Name())
@@ -214,7 +198,7 @@ func load() []Article {
 			UpdatedOn: info.ModTime().Format("January 2, 2006"),
 			Title:     title,
 		}
-		articles[i] = a
+		articles = append(articles, a)
 	}
 
 	return articles
