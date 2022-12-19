@@ -189,14 +189,415 @@
       </ul>
 
       <main>
-        {{- range .Articles }}
+        <h2>Laptop</h2>
+        <p>
+          How I configure my macOS laptop for software development with Vim,
+          Kitty, zsh, Postgres, Go, Ruby, and more.
+        </p>
         <div class="article">
           <div>
-            <a href="/{{.ID}}" class="title">{{.Title}}</a>
-            <p class="description">{{.Description}}</p>
+            <a href="/fly-io-multi-region-postgres-read-replicas" class="title"
+              >Fly.io Multi-Region Postgres Read Replicas</a
+            >
+            <p class="description">
+              Serve a web app from multiple Fly.io regions and route read-only
+              queries to Postgres replicas
+            </p>
           </div>
         </div>
-        {{- end }}
+        <div class="article">
+          <div>
+            <a href="/heroku-dataclips-clone" class="title"
+              >Heroku Dataclips Clone</a
+            >
+            <p class="description">Pair programmed with OpenAI&#39;s ChatGPT</p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/schedule-deno-builds-with-github-actions" class="title"
+              >Schedule Deno Builds with GitHub Actions</a
+            >
+            <p class="description">
+              Daily deploys with Deno and GitHub Actions&#39; scheduled
+              workflows
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/heroku-postgres-restore-staging-development" class="title"
+              >Heroku Postgres Restore to Staging and Development</a
+            >
+            <p class="description">
+              Restore a production database into staging and development
+              environments
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/ruby-postgres-job-queue" class="title"
+              >Postgres-Backed Job Queue in Ruby</a
+            >
+            <p class="description">
+              Persist jobs in a Postgres queue and work them with the Ruby
+              Postgres driver
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/cache-api" class="title">Cache API Calls</a>
+            <p class="description">
+              Cache HTTP GET response bodies to improve performance and avoid
+              hitting rate limits
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/ssh-ed25519" class="title">SSH Key with Ed25519</a>
+            <p class="description">Make ~/.ssh/authorized_keys look nicer</p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/postgres-visualize-slow-queries" class="title"
+              >Postgres Visualize Slow Queries</a
+            >
+            <p class="description">
+              A fast feedback loop for writing SQL in Vim and visualizing
+              Postgres EXPLAIN output
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/vim-react-typescript" class="title"
+              >Configure Vim for React and TypeScript</a
+            >
+            <p class="description">
+              Syntax highlight, tab complete, auto-fix, lint, and jump to
+              definition, implementation, and references
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/heroku-postgres-read-replica-with-rails" class="title"
+              >Heroku Postgres Read Replica with Rails</a
+            >
+            <p class="description">
+              Read and write to a Heroku Postgres database as primary and read
+              from a follower in targeted call sites
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/postgres-concat-ws-function" class="title"
+              >Postgres concat_ws() Function</a
+            >
+            <p class="description">
+              Use concat_ws() instead of concat() to avoid ugly output
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/postgres-set-variable" class="title"
+              >Postgres \set Variable</a
+            >
+            <p class="description">In psql, set variables and reference them</p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/run-sql-from-vim" class="title">Run SQL from Vim</a>
+            <p class="description">
+              Run SQL against a Postgres database from Vim
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/format-sql-in-vim" class="title">Format SQL in Vim</a>
+            <p class="description">Format SQL on save in Vim</p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/heroku-slack-aws-lambda" class="title"
+              >Heroku to Slack with AWS Lambda</a
+            >
+            <p class="description">
+              When my production app processes change state on Heroku, I want to
+              be notified in Slack
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/deno" class="title">Deno</a>
+            <p class="description">
+              A secure runtime for JavaScript and TypeScript
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/thin-api-clients" class="title">Thin API Clients</a>
+            <p class="description">
+              When to access an API with a specialized library and when to write
+              a custom thin client
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/pull-requests-and-kanban" class="title"
+              >Pull Requests and Kanban</a
+            >
+            <p class="description">
+              End-to-end with a kanban board, GitHub code review, continuous
+              integration, and continuous delivery
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/update-a-github-fork" class="title"
+              >Update a GitHub Fork</a
+            >
+            <p class="description">
+              Keep it synced with the upstream repository
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/block-etc-hosts" class="title">Block with /etc/hosts</a>
+            <p class="description">
+              Block ads, trackers, and malicious websites with /etc/hosts
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/spell-check-in-vim" class="title">Spell Check in Vim</a>
+            <p class="description">
+              Avoid mistakes when editing prose in Markdown files and Git commit
+              messages
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/laptop-sh" class="title">laptop.sh</a>
+            <p class="description">
+              My laptop repo sets up a macOS machine as a software development
+              environment
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/monorepo" class="title">Monorepo</a>
+            <p class="description">
+              How we organized our code into a monorepo at our startup and how
+              it evolved over time
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/process-model" class="title">Process Model</a>
+            <p class="description">
+              Define Unix processes in a manifest named Procfile and use tools
+              to manage those processes
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/gitignore" class="title">.gitignore</a>
+            <p class="description">
+              Dirs and files matching the patterns defined in this file are
+              ignored for git commits, ag searches, and fzf searches
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/asdf-version-manager" class="title"
+              >ASDF Version Manager</a
+            >
+            <p class="description">
+              Set up and configure ASDF as a version manager for multiple
+              programming languages
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/dns-cdn-origin" class="title">DNS to CDN to Origin</a>
+            <p class="description">
+              Rather than pointing DNS directly to an origin server, point it to
+              a CDN that pulls content from the origin
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/align-markdown-tables-in-vim" class="title"
+              >Align Markdown Tables in Vim</a
+            >
+            <p class="description">
+              Align GitHub-Flavored Markdown tables in Vim in a few quick
+              keystrokes
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/reduce-heroku-slug-size" class="title"
+              >Reduce Heroku Slug Size</a
+            >
+            <p class="description">
+              Steps to resolve the &#39;Compiled slug size: 300.1M is too large
+              (max is 300M)&#39; error
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/retention-curves-mixpanel-google-sheets" class="title"
+              >Retention Curves</a
+            >
+            <p class="description">
+              How to build a retention curve chart in Google Sheets from a
+              Mixpanel tabular cohort report
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a
+              href="/postgres-full-text-search-tsvectors-triggers"
+              class="title"
+              >Full Text Search with Postgres</a
+            >
+            <p class="description">
+              Speed up Postgres full-text searches with a tsvector column as
+              cache and trigger to keep the cache updated
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/test-mock-vs-stub-vs-spy" class="title"
+              >Test Mock vs. Stub vs. Spy</a
+            >
+            <p class="description">
+              Tradeoffs for unit tests that use mocks, stubs, or spies
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/north-star-metric" class="title">North Star Metric</a>
+            <p class="description">
+              How many people get authentic value from our product?
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/search-projects-in-vim" class="title"
+              >Search Projects in Vim</a
+            >
+            <p class="description">
+              Search a project for files, text, or word under cursor
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/run-tests-vim" class="title">Run Tests in Vim</a>
+            <p class="description">
+              Runs focused tests from Vim with a keystroke
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/create-postgres-indexes-concurrently" class="title"
+              >Create Indexes Concurrently</a
+            >
+            <p class="description">
+              Use Postgres&#39; CONCURRENTLY option for CREATE INDEX to avoid
+              locking writes to a table
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/wrap-text-in-vim" class="title">Wrap Text in Vim</a>
+            <p class="description">
+              Wrap text to set textwidth with visual select and gq
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/sort-lines-in-vim" class="title">Sort Lines in Vim</a>
+            <p class="description">
+              Sort lines alphabetically with visual select and :sort
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/four-phase-test" class="title">Four-Phase Test</a>
+            <p class="description">
+              A pattern for Ruby unit tests (but not integration tests)
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/decorators-ruby" class="title">Decorators</a>
+            <p class="description">
+              Extend a Ruby object&#39;s responsibilities without subclassing
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/pessimistic-operator-ruby" class="title"
+              >Pessimistic Operator</a
+            >
+            <p class="description">
+              Stabilize Ruby dependencies with the pessimistic operator and
+              Semantic Versioning
+            </p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/config-block-ruby" class="title">Config Block</a>
+            <p class="description">Configure a Ruby library</p>
+          </div>
+        </div>
+        <div class="article">
+          <div>
+            <a href="/mystery-guests-in-tests" class="title">Mystery Guest</a>
+            <p class="description">
+              An anti-pattern in Ruby tests that hides cause and effect
+            </p>
+          </div>
+        </div>
       </main>
     </div>
   </body>

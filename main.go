@@ -24,6 +24,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"path/filepath"
 	"regexp"
 	"runtime"
 	"strings"
@@ -41,7 +42,6 @@ import (
 
 var blogURL = "https://dancroak.com"
 var wd string
-var showScheduled = true
 
 func main() {
 	if len(os.Args) < 2 {
@@ -63,7 +63,6 @@ func main() {
 		fmt.Println("Serving at http://localhost:2000")
 		serve(":2000")
 	case "build":
-		showScheduled = false
 		build()
 		fmt.Println("Built at ./public")
 	default:
@@ -148,39 +147,29 @@ func serve(addr string) {
 }
 
 func build() {
+	// article pages
+	page := template.Must(template.ParseFiles(wd + "/theme/article.html"))
 	articles := load()
 
-	// public directories
-	dir, err := ioutil.ReadDir(wd + "/public")
-	for _, d := range dir {
-		os.RemoveAll(path.Join([]string{"public", d.Name()}...))
-	}
-	check(os.MkdirAll(wd+"/public/images", os.ModePerm))
-
-	// index page
-	indexPage := template.Must(template.ParseFiles(wd + "/theme/index.html"))
-	f, err := os.Create("public/index.html")
-	check(err)
-	indexData := struct {
-		Articles []Article
-	}{
-		Articles: articles,
-	}
-	check(indexPage.Execute(f, indexData))
-
-	// article pages
-	articlePage := template.Must(template.ParseFiles(wd + "/theme/article.html"))
 	for _, a := range articles {
 		check(os.Mkdir(wd+"/public/"+a.ID, os.ModePerm))
 		f, err := os.Create(wd + "/public/" + a.ID + "/index.html")
 		check(err)
-		articleData := struct {
+		data := struct {
 			Article Article
 		}{
 			Article: a,
 		}
-		check(articlePage.Execute(f, articleData))
+		check(page.Execute(f, data))
 	}
+
+	// public directories
+	dir, err := ioutil.ReadDir(wd + "/public")
+	check(err)
+	for _, d := range dir {
+		os.RemoveAll(path.Join([]string{"public", d.Name()}...))
+	}
+	check(os.MkdirAll(wd+"/public/images", os.ModePerm))
 
 	// images
 	cmd := exec.Command("cp", "-a", wd+"/images/.", wd+"/public/images")
@@ -192,21 +181,12 @@ func build() {
 }
 
 func load() []Article {
-	config, err := ioutil.ReadFile(wd + "/config.json")
-	check(err)
 	var articles []Article
-	check(json.Unmarshal(config, &articles))
+	dir, err := ioutil.ReadDir(wd + "/articles")
+	check(err)
 
-	for i, a := range articles {
-		t, err := time.Parse("2006-01-02", a.Updated)
-		check(err)
-
-		now := time.Now()
-		if showScheduled == false && t.After(now) {
-			continue
-		}
-
-		title, body := preProcess("articles/" + a.ID + ".md")
+	for i, f := range dir {
+		title, body := preProcess("articles/" + f.Name())
 		ext := parser.CommonExtensions | parser.AutoHeadingIDs
 		html := markdown.ToHTML(
 			[]byte(body),
@@ -225,14 +205,14 @@ func load() []Article {
 			}), // RenderNodeHook
 		)
 
+		info, err := os.Stat("articles/" + f.Name())
+		check(err)
+
 		a := Article{
-			Body:        template.HTML(html),
-			Canonical:   a.Canonical,
-			Description: a.Description,
-			ID:          a.ID,
-			Updated:     a.Updated,
-			UpdatedOn:   t.Format("January 2, 2006"),
-			Title:       title,
+			Body:      template.HTML(html),
+			ID:        strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())),
+			UpdatedOn: info.ModTime().Format("January 2, 2006"),
+			Title:     title,
 		}
 		articles[i] = a
 	}
