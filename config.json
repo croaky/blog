@@ -1,11 +1,8 @@
 [
   {
     "theme": "Laptop",
-    "description": "How I configure my macOS laptop for software development with Vim, Kitty, zsh, Postgres, Go, Ruby, and more.",
     "articles": [
-      "postgres-visualize-slow-queries",
       "update-a-github-fork",
-      "block-etc-hosts",
       "gitignore",
       "asdf-version-manager"
     ]
