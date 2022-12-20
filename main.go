@@ -134,6 +134,7 @@ func serve(addr string) {
 
 func build() {
 	// clean public dir
+	check(os.MkdirAll(wd+"/public/", os.ModePerm))
 	dir, err := ioutil.ReadDir(wd + "/public")
 	check(err)
 	for _, d := range dir {
