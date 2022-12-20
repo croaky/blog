@@ -1,11 +1,8 @@
 # DNS to CDN to Origin
 
-Content Distribution Networks (CDNs) such as
-[Amazon CloudFront][cloudfront] and [Fastly][fastly]
+Content Distribution Networks (CDNs)
 pull content from their [origin server] during HTTP requests to cache them:
 
-[cloudfront]: https://aws.amazon.com/cloudfront/
-[fastly]: https://www.fastly.com/
 [origin server]: https://www.rfc-editor.org/rfc/rfc9110.html#name-origin-server
 
 ```
@@ -15,11 +12,10 @@ DNS -> CDN -> Origin
 Examples:
 
 ```
-DNSimple -> Fastly -> Heroku
-DNSimple -> Cloudfront -> Heroku
+DNSimple -> Cloudflare -> Heroku
+Cloudflare -> Cloudflare -> Heroku
 Route 53 -> CloudFront -> S3
 Route 53 -> CloudFront -> EC2
-Route 53 -> CloudFront -> ELB -> EC2
 ```
 
 ## Without an asset host
@@ -114,42 +110,6 @@ config.public_file_server.headers = {
 The [`immutable` directive][immutable] eliminates revalidation requests.
 
 [immutable]: https://code.facebook.com/posts/557147474482256/this-browser-tweak-saved-60-of-requests-to-facebook/
-
-## CloudFront setup
-
-To use CloudFront:
-
-- "Download" CloudFront distribution
-- "Origin Domain Name" as `www.example.com`
-- "Origin Protocol Policy" to "Match Viewer"
-- "Object Caching" to "Use Origin Cache Headers"
-- "Forward Query Strings" to "No (Improves Caching)"
-- "Distribution State" to "Enabled"
-
-## Fastly setup
-
-To use Fastly, there's no additional "Origin Pull" configuration.
-
-The deployment process can be adjusted to:
-
-```bash
-git push heroku HEAD:main --app example
-heroku run rake purge --app example
-```
-
-The `purge` rake task:
-
-```ruby
-task :purge do
-  api_key = ENV["FASTLY_KEY"]
-  site_key = ENV["FASTLY_SITE_KEY"]
-  `curl -X POST -H 'Fastly-Key: #{api_key}' https://api.fastly.com/service/#{site_key}/purge_all`
-  puts 'Cache purged'
-end
-```
-
-For more advanced caching and cache invalidation at an object level,
-see the [fastly-rails](https://github.com/fastly/fastly-rails) gem.
 
 ## Caching entire HTML pages
 

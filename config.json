@@ -1,229 +1,56 @@
 [
   {
-    "description": "Serve a web app from multiple Fly.io regions and route read-only queries to Postgres replicas",
-    "id": "fly-io-multi-region-postgres-read-replicas",
-    "updated": "2022-12-05"
+    "theme": "Postgres",
+    "description": "Developing with and operating my preferred relational database.",
+    "articles": [
+      "heroku-postgres-restore-staging-development",
+      "create-postgres-indexes-concurrently",
+      "postgres-concat-ws-function",
+      "postgres-set-variable",
+      "postgres-full-text-search-tsvectors-triggers"
+    ]
   },
   {
-    "description": "Pair programmed with OpenAI's ChatGPT",
-    "id": "heroku-dataclips-clone",
-    "updated": "2022-12-03"
+    "theme": "Testing",
+    "description": "An automated test suite is one of the most important parts of ensuring software quality.",
+    "articles": [
+      "test-mock-vs-stub-vs-spy",
+      "four-phase-test",
+      "mystery-guests-in-tests"
+    ]
   },
   {
-    "description": "Daily deploys with Deno and GitHub Actions' scheduled workflows",
-    "id": "schedule-deno-builds-with-github-actions",
-    "updated": "2022-11-23"
+    "theme": "Workflow",
+    "description": "How are chunks of work structured? What should we work on next?",
+    "articles": [
+      "pull-requests-and-kanban",
+      "monorepo"
+    ]
   },
   {
-    "description": "Restore a production database into staging and development environments",
-    "id": "heroku-postgres-restore-staging-development",
-    "updated": "2022-08-22"
+    "theme": "Dependencies, builds, packaging, and CI",
+    "description": "All the junk required to pull together written software into a developable and deployable format.",
+    "articles": [
+      "pessimistic-operator-ruby",
+      "config-block-ruby"
+    ]
   },
   {
-    "description": "Persist jobs in a Postgres queue and work them with the Ruby Postgres driver",
-    "id": "ruby-postgres-job-queue",
-    "updated": "2022-05-04"
+    "theme": "Application design",
+    "description": "Tutorials and architectures for common patterns I've run into on the job.",
+    "articles": [
+      "ruby-postgres-job-queue",
+      "cache-api",
+      "heroku-postgres-read-replica-with-rails",
+      "dns-cdn-origin",
+      "process-model"
+    ]
   },
   {
-    "description": "Cache HTTP GET response bodies to improve performance and avoid hitting rate limits",
-    "id": "cache-api",
-    "updated": "2022-02-17"
-  },
-  {
-    "description": "Make ~/.ssh/authorized_keys look nicer",
-    "id": "ssh-ed25519",
-    "updated": "2022-01-24"
-  },
-  {
-    "description": "A fast feedback loop for writing SQL in Vim and visualizing Postgres EXPLAIN output",
-    "id": "postgres-visualize-slow-queries",
-    "updated": "2022-01-21"
-  },
-  {
-    "description": "Syntax highlight, tab complete, auto-fix, lint, and jump to definition, implementation, and references",
-    "id": "vim-react-typescript",
-    "updated": "2021-06-14"
-  },
-  {
-    "description": "Read and write to a Heroku Postgres database as primary and read from a follower in targeted call sites",
-    "id": "heroku-postgres-read-replica-with-rails",
-    "updated": "2021-02-26"
-  },
-  {
-    "description": "Use concat_ws() instead of concat() to avoid ugly output",
-    "id": "postgres-concat-ws-function",
-    "updated": "2020-12-05"
-  },
-  {
-    "description": "In psql, set variables and reference them",
-    "id": "postgres-set-variable",
-    "updated": "2020-10-10"
-  },
-  {
-    "description": "Run SQL against a Postgres database from Vim",
-    "id": "run-sql-from-vim",
-    "updated": "2020-09-21"
-  },
-  {
-    "description": "Format SQL on save in Vim",
-    "id": "format-sql-in-vim",
-    "updated": "2020-08-03"
-  },
-  {
-    "description": "When my production app processes change state on Heroku, I want to be notified in Slack",
-    "id": "heroku-slack-aws-lambda",
-    "updated": "2020-06-16"
-  },
-  {
-    "description": "A secure runtime for JavaScript and TypeScript",
-    "id": "deno",
-    "updated": "2020-05-26"
-  },
-  {
-    "description": "When to access an API with a specialized library and when to write a custom thin client",
-    "id": "thin-api-clients",
-    "updated": "2020-04-08"
-  },
-  {
-    "description": "End-to-end with a kanban board, GitHub code review, continuous integration, and continuous delivery",
-    "id": "pull-requests-and-kanban",
-    "updated": "2020-03-26"
-  },
-  {
-    "description": "Keep it synced with the upstream repository",
-    "id": "update-a-github-fork",
-    "updated": "2020-03-26"
-  },
-  {
-    "description": "Block ads, trackers, and malicious websites with /etc/hosts",
-    "id": "block-etc-hosts",
-    "updated": "2020-02-08"
-  },
-  {
-    "description": "Avoid mistakes when editing prose in Markdown files and Git commit messages",
-    "id": "spell-check-in-vim",
-    "updated": "2018-11-12"
-  },
-  {
-    "description": "My laptop repo sets up a macOS machine as a software development environment",
-    "id": "laptop-sh",
-    "updated": "2018-11-12"
-  },
-  {
-    "description": "How we organized our code into a monorepo at our startup and how it evolved over time",
-    "id": "monorepo",
-    "updated": "2018-11-01"
-  },
-  {
-    "description": "Define Unix processes in a manifest named Procfile and use tools to manage those processes",
-    "id": "process-model",
-    "updated": "2018-10-16"
-  },
-  {
-    "description": "Dirs and files matching the patterns defined in this file are ignored for git commits, ag searches, and fzf searches",
-    "id": "gitignore",
-    "updated": "2018-06-21"
-  },
-  {
-    "description": "Set up and configure ASDF as a version manager for multiple programming languages",
-    "id": "asdf-version-manager",
-    "updated": "2018-05-07"
-  },
-  {
-    "description": "Rather than pointing DNS directly to an origin server, point it to a CDN that pulls content from the origin",
-    "id": "dns-cdn-origin",
-    "updated": "2018-03-11"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/align-github-flavored-markdown-tables-in-vim",
-    "description": "Align GitHub-Flavored Markdown tables in Vim in a few quick keystrokes",
-    "id": "align-markdown-tables-in-vim",
-    "updated": "2016-06-15"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/how-to-reduce-a-large-heroku-compiled-slug-size",
-    "description": "Steps to resolve the 'Compiled slug size: 300.1M is too large (max is 300M)' error",
-    "id": "reduce-heroku-slug-size",
-    "updated": "2016-06-13"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/create-a-retention-curve-with-mixpanel-and-google-sheets",
-    "description": "How to build a retention curve chart in Google Sheets from a Mixpanel tabular cohort report",
-    "id": "retention-curves-mixpanel-google-sheets",
-    "updated": "2015-07-01"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/optimizing-full-text-search-with-postgres-tsvector-columns-and-triggers",
-    "description": "Speed up Postgres full-text searches with a tsvector column as cache and trigger to keep the cache updated",
-    "id": "postgres-full-text-search-tsvectors-triggers",
-    "updated": "2015-06-25"
-  },
-  {
-    "description": "Tradeoffs for unit tests that use mocks, stubs, or spies",
-    "id": "test-mock-vs-stub-vs-spy",
-    "updated": "2015-03-19"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/north-star-metric",
-    "description": "How many people get authentic value from our product?",
-    "id": "north-star-metric",
-    "updated": "2014-12-25"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/faster-grepping-in-vim",
-    "description": "Search a project for files, text, or word under cursor",
-    "id": "search-projects-in-vim",
-    "updated": "2013-11-27"
-  },
-  {
-    "description": "Runs focused tests from Vim with a keystroke",
-    "id": "run-tests-vim",
-    "updated": "2013-08-05"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/how-to-create-postgres-indexes-concurrently-in",
-    "description": "Use Postgres' CONCURRENTLY option for CREATE INDEX to avoid locking writes to a table",
-    "id": "create-postgres-indexes-concurrently",
-    "updated": "2013-07-30"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/wrap-existing-text-at-80-characters-in-vim",
-    "description": "Wrap text to set textwidth with visual select and gq",
-    "id": "wrap-text-in-vim",
-    "updated": "2013-04-07"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/sort-lines-alphabetically-in-vim",
-    "description": "Sort lines alphabetically with visual select and :sort",
-    "id": "sort-lines-in-vim",
-    "updated": "2013-02-01"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/four-phase-test",
-    "description": "A pattern for Ruby unit tests (but not integration tests)",
-    "id": "four-phase-test",
-    "updated": "2012-09-28"
-  },
-  {
-    "description": "Extend a Ruby object's responsibilities without subclassing",
-    "id": "decorators-ruby",
-    "updated": "2011-12-26"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/rubys-pessimistic-operator",
-    "description": "Stabilize Ruby dependencies with the pessimistic operator and Semantic Versioning",
-    "id": "pessimistic-operator-ruby",
-    "updated": "2010-12-29"
-  },
-  {
-    "description": "Configure a Ruby library",
-    "id": "config-block-ruby",
-    "updated": "2010-01-20"
-  },
-  {
-    "canonical": "https://thoughtbot.com/blog/mystery-guest",
-    "description": "An anti-pattern in Ruby tests that hides cause and effect",
-    "id": "mystery-guests-in-tests",
-    "updated": "2009-07-28"
+    "theme": "Clients and SDKs",
+    "description": "Some things to think about when writing software that makes network calls to other services.",
+    "articles": [
+      "thin-api-clients"
+    ]
   }
 ]

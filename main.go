@@ -15,7 +15,6 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
@@ -24,10 +23,10 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"path/filepath"
 	"regexp"
 	"runtime"
 	"strings"
-	"time"
 
 	"github.com/alecthomas/chroma/v2"
 	htmlfmt "github.com/alecthomas/chroma/v2/formatters/html"
@@ -41,7 +40,6 @@ import (
 
 var blogURL = "https://dancroak.com"
 var wd string
-var showScheduled = true
 
 func main() {
 	if len(os.Args) < 2 {
@@ -63,7 +61,6 @@ func main() {
 		fmt.Println("Serving at http://localhost:2000")
 		serve(":2000")
 	case "build":
-		showScheduled = false
 		build()
 		fmt.Println("Built at ./public")
 	default:
@@ -97,7 +94,7 @@ func exitWith(s string) {
 	os.Exit(1)
 }
 
-// Article contains data loaded from config.json and parsed Markdown
+// Article contains data loaded from articles/*.md
 type Article struct {
 	Canonical   string `json:"canonical,omitempty"`
 	Description string `json:"description"`
@@ -110,23 +107,11 @@ type Article struct {
 }
 
 func add(id string) {
-	articles := load()
-
 	noDashes := strings.Replace(id, "-", " ", -1)
 	noUnderscores := strings.Replace(noDashes, "_", " ", -1)
 	title := strings.Title(noUnderscores)
 	content := []byte("# " + title + "\n\n\n")
 	check(ioutil.WriteFile(wd+"/articles/"+id+".md", content, 0644))
-
-	a := Article{
-		ID:      id,
-		Updated: time.Now().Format("2006-01-02"),
-	}
-
-	articles = append([]Article{a}, articles...)
-	config, err := json.MarshalIndent(articles, "", "  ")
-	check(err)
-	check(ioutil.WriteFile(wd+"/config.json", config, 0644))
 }
 
 func serve(addr string) {
@@ -148,72 +133,53 @@ func serve(addr string) {
 }
 
 func build() {
-	articles := load()
-
-	// public directories
+	// clean public dir
+	check(os.MkdirAll(wd+"/public/", os.ModePerm))
 	dir, err := ioutil.ReadDir(wd + "/public")
+	check(err)
 	for _, d := range dir {
 		os.RemoveAll(path.Join([]string{"public", d.Name()}...))
 	}
-	check(os.MkdirAll(wd+"/public/images", os.ModePerm))
 
-	// index page
-	indexPage := template.Must(template.ParseFiles(wd + "/theme/index.html"))
-	f, err := os.Create("public/index.html")
-	check(err)
-	indexData := struct {
-		Articles []Article
-	}{
-		Articles: articles,
-	}
-	check(indexPage.Execute(f, indexData))
+	// build article pages
+	page := template.Must(template.ParseFiles(wd + "/theme/article.html"))
+	articles := load()
 
-	// article pages
-	articlePage := template.Must(template.ParseFiles(wd + "/theme/article.html"))
 	for _, a := range articles {
-		check(os.Mkdir(wd+"/public/"+a.ID, os.ModePerm))
+		check(os.MkdirAll(wd+"/public/"+a.ID, os.ModePerm))
 		f, err := os.Create(wd + "/public/" + a.ID + "/index.html")
 		check(err)
-		articleData := struct {
+		data := struct {
 			Article Article
 		}{
 			Article: a,
 		}
-		check(articlePage.Execute(f, articleData))
+		check(page.Execute(f, data))
 	}
 
-	// images
-	cmd := exec.Command("cp", "-a", wd+"/images/.", wd+"/public/images")
-	cmd.Run()
+	// copy index page
+	exec.Command("cp", "-a", wd+"/theme/index.html", wd+"/public/").Run()
 
-	// favicon.ico, and additional files from theme
-	cmd = exec.Command("cp", "-a", wd+"/theme/public/.", wd+"/public")
-	cmd.Run()
+	// copy static assets
+	check(os.MkdirAll(wd+"/public/images", os.ModePerm))
+	exec.Command("cp", "-a", wd+"/images/.", wd+"/public/images").Run()
+	exec.Command("cp", "-a", wd+"/theme/public/.", wd+"/public").Run()
 }
 
 func load() []Article {
-	config, err := ioutil.ReadFile(wd + "/config.json")
-	check(err)
 	var articles []Article
-	check(json.Unmarshal(config, &articles))
+	dir, err := ioutil.ReadDir(wd + "/articles")
+	check(err)
 
-	for i, a := range articles {
-		t, err := time.Parse("2006-01-02", a.Updated)
-		check(err)
-
-		now := time.Now()
-		if showScheduled == false && t.After(now) {
-			continue
-		}
-
-		title, body := preProcess("articles/" + a.ID + ".md")
+	for _, f := range dir {
+		title, body := preProcess("articles/" + f.Name())
 		ext := parser.CommonExtensions | parser.AutoHeadingIDs
 		html := markdown.ToHTML(
 			[]byte(body),
 			parser.NewWithExtensions(ext),
 			html.NewRenderer(html.RendererOptions{
 				AbsolutePrefix: blogURL,
-				RenderNodeHook: func(w io.Writer, node ast.Node, entering bool) (ast.WalkStatus, bool) {
+				RenderNodeHook: func(w io.Writer, node ast.Node, _entering bool) (ast.WalkStatus, bool) {
 					codeBlock, ok := node.(*ast.CodeBlock)
 					if !ok {
 						return ast.GoToNext, false
@@ -222,19 +188,19 @@ func load() []Article {
 					syntaxHighlight(w, string(codeBlock.Literal), lang)
 					return ast.GoToNext, true
 				},
-			}), // RenderNodeHook
+			}),
 		)
 
+		info, err := os.Stat("articles/" + f.Name())
+		check(err)
+
 		a := Article{
-			Body:        template.HTML(html),
-			Canonical:   a.Canonical,
-			Description: a.Description,
-			ID:          a.ID,
-			Updated:     a.Updated,
-			UpdatedOn:   t.Format("January 2, 2006"),
-			Title:       title,
+			Body:      template.HTML(html),
+			ID:        strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())),
+			UpdatedOn: info.ModTime().Format("January 2, 2006"),
+			Title:     title,
 		}
-		articles[i] = a
+		articles = append(articles, a)
 	}
 
 	return articles

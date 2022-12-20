@@ -76,7 +76,7 @@ A unit test using a
 describe "fetch" do
   it "logs errors" do
     allow(HTTP).to receive(:get).and_raise("error")
-    spy(ErrorLogger) # stub
+    spy(ErrorLogger) # spy
 
     result = fetch("https://example.com")
 

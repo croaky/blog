@@ -1,4 +1,4 @@
-# Run SQL from Vim
+# Run SQL in Vim
 
 When I run `<Leader>r` from a `.sql` file in Vim,
 the file's contents are run against my Postgres database through `psql`
