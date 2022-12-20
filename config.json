@@ -3,21 +3,11 @@
     "theme": "Laptop",
     "description": "How I configure my macOS laptop for software development with Vim, Kitty, zsh, Postgres, Go, Ruby, and more.",
     "articles": [
-      "ssh-ed25519",
       "postgres-visualize-slow-queries",
-      "vim-react-typescript",
-      "run-sql-from-vim",
-      "format-sql-in-vim",
       "update-a-github-fork",
       "block-etc-hosts",
-      "spell-check-in-vim",
-      "laptop-sh",
-      "wrap-text-in-vim",
-      "sort-lines-in-vim",
       "gitignore",
-      "asdf-version-manager",
-      "search-projects-in-vim",
-      "run-tests-vim"
+      "asdf-version-manager"
     ]
   },
   {

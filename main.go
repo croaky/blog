@@ -156,12 +156,13 @@ func build() {
 		check(page.Execute(f, data))
 	}
 
+	// copy index page
+	exec.Command("cp", "-a", wd+"/theme/index.html", wd+"/public/").Run()
+
 	// copy static assets
 	check(os.MkdirAll(wd+"/public/images", os.ModePerm))
-	cmd := exec.Command("cp", "-a", wd+"/images/.", wd+"/public/images")
-	cmd.Run()
-	cmd = exec.Command("cp", "-a", wd+"/theme/public/.", wd+"/public")
-	cmd.Run()
+	exec.Command("cp", "-a", wd+"/images/.", wd+"/public/images").Run()
+	exec.Command("cp", "-a", wd+"/theme/public/.", wd+"/public").Run()
 }
 
 func load() []Article {

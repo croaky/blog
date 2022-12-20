@@ -1,4 +1,4 @@
-# Configure Vim for React and TypeScript
+# React and TypeScript in Vim
 
 This article describes a macOS setup and Vim 8 configuration
 for React and TypeScript with syntax highlighting,

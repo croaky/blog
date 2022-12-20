@@ -20,10 +20,14 @@
         --tan: rgb(255, 240, 230);
         --white: rgb(255, 255, 255);
 
-        /* dark theme */
-        --title: var(--purple);
         --body-bg: rgb(25, 30, 45);
         --body-fg: rgb(255, 255, 255);
+        --code-bg: rgba(123, 148, 206, 0.1);
+        --code-fg: var(--white);
+        --link-bg-hover: rgb(150, 100, 200, 0.2);
+        --link-color: var(--purple);
+        --link-underline: rgb(150, 100, 200, 0.5);
+        --link-underline-hover: var(--purple);
       }
       html,
       body {
@@ -41,15 +45,15 @@
         -webkit-font-smoothing: antialiased;
       }
       a {
-        border-bottom: 1px solid var(--purple);
-        color: var(--body-fg);
+        border-bottom: 2px solid var(--link-underline);
+        color: var(--link-color);
+        outline: 0;
         text-decoration: none;
-        transition: all 0.1s;
+        transition: all 0.2s ease;
       }
       a:hover {
-        border-bottom: 2px solid var(--purple);
-        color: var(--purple);
-        transition: all 0.2s ease;
+        background-color: var(--link-bg-hover);
+        border-bottom: 2px solid var(--link-underline-hover);
       }
       .container {
         margin: 3rem;
@@ -94,16 +98,28 @@
         display: flex;
         margin: 1rem 0;
       }
-      .title {
-        border-bottom: none;
-        font-weight: bold;
-        transition: none;
-        color: var(--title);
-      }
       .description {
         margin-block-start: 0;
         margin-block-end: 0;
         opacity: 0.8;
+      }
+      .title {
+        border-bottom: none;
+        color: var(--purple);
+        font-weight: bold;
+        transition: none;
+      }
+      main ul {
+        list-style-type: none;
+        padding-inline-start: 2rem;
+      }
+      code {
+        background-color: var(--code-bg);
+        color: var(--code-fg);
+        font-family: "SFMono-Regular", Consolas, Monaco, Menlo, monospace;
+        font-size: 88%;
+        margin: 0 0.05em;
+        padding: 3px 5px;
       }
       @media (max-width: 1000px) {
         .container {
@@ -189,10 +205,30 @@
       </ul>
 
       <main>
+        <p>These are a few of my notes about writing software for the web.</p>
         <h2>Laptop</h2>
         <p>
-          How I configure my macOS laptop for software development with Vim,
-          Kitty, zsh, Postgres, Go, Ruby, and more.
+          I use a machine with an Apple M1 chip and manage my development
+          environment in a <a href="/laptop">Laptop</a> Git repository.
+        </p>
+        <p>
+          Vim is my text editor, specifically Neovim in a Kitty terminal. Read
+          basics on how to
+          <a href="/wrap-text-in-vim">wrap text</a>,
+          <a href="/sort-lines-in-vim">sort lines</a>,
+          <a href="/search-projects-in-vim">search your project</a>,
+          <a href="/spell-check-in-vim">spell check</a>, or
+          <a href="/format-sql-in-vim">format SQL</a> in Vim. My
+          <code>Leader</code> key is <code>Space</code>, used to
+          <a href="/run-tests-in-vim">run tests</a> and
+          <a href="/run-sql-in-vim">run SQL</a>. See
+          <a href="/react-typescript-in-vim">React and TypeScript in Vim</a>
+          for a longer piece about plugin managers and Language Server
+          Protocols.
+        </p>
+        <p>
+          A few of my other development environment preferences are
+          <a href="/ssh-ed25519">SSH Key with Ed25519</a>.
         </p>
         <div class="article">
           <div>
@@ -257,29 +293,12 @@
         </div>
         <div class="article">
           <div>
-            <a href="/ssh-ed25519" class="title">SSH Key with Ed25519</a>
-            <p class="description">Make ~/.ssh/authorized_keys look nicer</p>
-          </div>
-        </div>
-        <div class="article">
-          <div>
             <a href="/postgres-visualize-slow-queries" class="title"
               >Postgres Visualize Slow Queries</a
             >
             <p class="description">
               A fast feedback loop for writing SQL in Vim and visualizing
               Postgres EXPLAIN output
-            </p>
-          </div>
-        </div>
-        <div class="article">
-          <div>
-            <a href="/vim-react-typescript" class="title"
-              >Configure Vim for React and TypeScript</a
-            >
-            <p class="description">
-              Syntax highlight, tab complete, auto-fix, lint, and jump to
-              definition, implementation, and references
             </p>
           </div>
         </div>
@@ -310,20 +329,6 @@
               >Postgres \set Variable</a
             >
             <p class="description">In psql, set variables and reference them</p>
-          </div>
-        </div>
-        <div class="article">
-          <div>
-            <a href="/run-sql-from-vim" class="title">Run SQL from Vim</a>
-            <p class="description">
-              Run SQL against a Postgres database from Vim
-            </p>
-          </div>
-        </div>
-        <div class="article">
-          <div>
-            <a href="/format-sql-in-vim" class="title">Format SQL in Vim</a>
-            <p class="description">Format SQL on save in Vim</p>
           </div>
         </div>
         <div class="article">
@@ -380,24 +385,6 @@
             <a href="/block-etc-hosts" class="title">Block with /etc/hosts</a>
             <p class="description">
               Block ads, trackers, and malicious websites with /etc/hosts
-            </p>
-          </div>
-        </div>
-        <div class="article">
-          <div>
-            <a href="/spell-check-in-vim" class="title">Spell Check in Vim</a>
-            <p class="description">
-              Avoid mistakes when editing prose in Markdown files and Git commit
-              messages
-            </p>
-          </div>
-        </div>
-        <div class="article">
-          <div>
-            <a href="/laptop-sh" class="title">laptop.sh</a>
-            <p class="description">
-              My laptop repo sets up a macOS machine as a software development
-              environment
             </p>
           </div>
         </div>
@@ -514,24 +501,6 @@
         </div>
         <div class="article">
           <div>
-            <a href="/search-projects-in-vim" class="title"
-              >Search Projects in Vim</a
-            >
-            <p class="description">
-              Search a project for files, text, or word under cursor
-            </p>
-          </div>
-        </div>
-        <div class="article">
-          <div>
-            <a href="/run-tests-vim" class="title">Run Tests in Vim</a>
-            <p class="description">
-              Runs focused tests from Vim with a keystroke
-            </p>
-          </div>
-        </div>
-        <div class="article">
-          <div>
             <a href="/create-postgres-indexes-concurrently" class="title"
               >Create Indexes Concurrently</a
             >
@@ -543,33 +512,9 @@
         </div>
         <div class="article">
           <div>
-            <a href="/wrap-text-in-vim" class="title">Wrap Text in Vim</a>
-            <p class="description">
-              Wrap text to set textwidth with visual select and gq
-            </p>
-          </div>
-        </div>
-        <div class="article">
-          <div>
-            <a href="/sort-lines-in-vim" class="title">Sort Lines in Vim</a>
-            <p class="description">
-              Sort lines alphabetically with visual select and :sort
-            </p>
-          </div>
-        </div>
-        <div class="article">
-          <div>
             <a href="/four-phase-test" class="title">Four-Phase Test</a>
             <p class="description">
               A pattern for Ruby unit tests (but not integration tests)
-            </p>
-          </div>
-        </div>
-        <div class="article">
-          <div>
-            <a href="/decorators-ruby" class="title">Decorators</a>
-            <p class="description">
-              Extend a Ruby object&#39;s responsibilities without subclassing
             </p>
           </div>
         </div>
