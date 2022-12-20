@@ -3,7 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Short articles about software" />
+    <meta
+      name="description"
+      content="A few notes about writing and running
+    software"
+    />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <title>Dan Croak</title>
     <style>
@@ -194,31 +198,23 @@
         <a href="/asdf-version-manager">ASDF</a> for Ruby versions.
       </p>
       <h2>Git</h2>
-      <p>I use a <a href="/monorepo">monorepo</a> for my version control.</p>
       <p>
-        Here's my
+        I use a <a href="/monorepo">monorepo</a> for version control. Here's my
         <a href="/pull-requests-and-kanban">end-to-end workflow</a> with a
         kanban board, GitHub code review, continuous integration, and continuous
         delivery.
-      </p>
-      <p>
-        Little tip: <a href="/gitignore">gitignore</a> is used not only by Git
-        but also <code>ag</code> and <code>fzf</code>.
       </p>
       <h2>Vim</h2>
       <p>My text editor is Neovim in a Kitty terminal.</p>
       <p>
         On file save, ALE auto-fixes code. See
-        <a href="/format-sql-in-vim">format SQL</a> as an example.
-      </p>
-      <p>
-        A few additional formatting operations are
-        <a href="/wrap-text-in-vim">wrap text</a>,
+        <a href="/format-sql-in-vim">format SQL</a> as an example. Additional
+        formatting operations include <a href="/wrap-text-in-vim">wrap text</a>,
         <a href="/sort-lines-in-vim">sort lines</a>, and
         <a href="/align-markdown-tables-in-vim">align Markdown tables</a>.
       </p>
       <p>
-        <a href="/spell-check-in-vim">Spell check</a> is on when editing
+        I enable <a href="/spell-check-in-vim">spell check</a> when editing
         Markdown documents and Git commit messages.
       </p>
       <p>
@@ -271,12 +267,10 @@
       </p>
       <h2>Tests</h2>
       <p>
-        To help see unit test cause and effect "at a glance", I structure them
-        as <a href="/four-phase-test">four-phase tests</a> and avoid
-        <a href="/mystery-guests-in-tests">mystery guests</a>.
-      </p>
-      <p>
-        <a href="/test-mock-vs-stub-vs-spy">Use stubs and spies</a> and avoid
+        To better see cause and effect, I use a
+        <a href="/four-phase-test">four-phase test</a> structure, avoid
+        <a href="/mystery-guests-in-tests">mystery guests</a>, and
+        <a href="/test-mock-vs-stub-vs-spy">use stubs and spies</a> instead of
         mocks.
       </p>
       <h2>HTML</h2>
@@ -318,13 +312,13 @@
       </p>
       <h2>Heroku</h2>
       <p>
-        These are troubleshooting steps for
+        These are steps for
         <a href="reduce-heroku-slug-size"
-          >reducing a Heroku slug size for a Ruby app</a
+          >reducing a Heroku slug size in a Ruby app</a
         >.
       </p>
       <p>
-        When my Heroku production app processes change state, I
+        When my production app processes change state, I
         <a href="/heroku-slack-aws-lambda"
           >send Slack notifications with AWS Lambda</a
         >.
@@ -346,12 +340,9 @@
       </p>
       <h2>Growth</h2>
       <p>
-        Growth is a discipline that emerged at tech companies in the 2010s. It
-        blends design, marketing, and engineering to help users get value from
-        products.
-      </p>
-      <p>
-        When I've worked on growth for SaaS products, a
+        Growth is a discipline that blends design, marketing, and engineering to
+        help users get value from products. When I've worked on growth for SaaS
+        products, a
         <a href="/north-star-metric">north star metric</a> and
         <a href="/retention-curves-mixpanel-google-sheets">retention curves</a>
         have been helpful inputs to the roadmap.
