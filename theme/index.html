@@ -275,32 +275,16 @@
         instead of <code>concat()</code> to avoid ugly output.
       </p>
       <h2>Testing</h2>
-      <div class="article">
-        <div>
-          <a href="/mystery-guests-in-tests" class="title">Mystery Guest</a>
-          <p class="description">
-            An anti-pattern in tests that hides cause and effect
-          </p>
-        </div>
-      </div>
-      <div class="article">
-        <div>
-          <a href="/test-mock-vs-stub-vs-spy" class="title"
-            >Test Mock vs. Stub vs. Spy</a
-          >
-          <p class="description">
-            Tradeoffs for unit tests that use mocks, stubs, or spies
-          </p>
-        </div>
-      </div>
-      <div class="article">
-        <div>
-          <a href="/four-phase-test" class="title">Four-Phase Test</a>
-          <p class="description">
-            A pattern for Ruby unit tests (but not integration tests)
-          </p>
-        </div>
-      </div>
+      <p>
+        To help see unit test cause and effect "at a glance", I structure them
+        as <a href="/four-phase-test">four-phase tests</a> and avoid
+        <a href="/mystery-guests-in-tests">mystery guests</a>.
+      </p>
+      <p>
+        I
+        <a href="/test-mock-vs-stub-vs-spy">use stubs and spies</a> and avoid
+        mocks.
+      </p>
       <h2>CI/CD</h2>
       <p>
         <a href="/schedule-deno-builds-with-github-actions">
@@ -309,31 +293,32 @@
       </p>
       <h2>Heroku</h2>
       <p>
-        <a href="/heroku-slack-aws-lambda">Heroku to Slack with AWS Lambda</a>
-        When my production app processes change state on Heroku, I want to be
-        notified in Slack
+        When my Heroku production app processes change state, I
+        <a href="/heroku-slack-aws-lambda"
+          >send Slack notifications with AWS Lambda</a
+        >.
+      </p>
+      <p>
+        Heroku Postgres has a great feature they call "dataclips" which let
+        users enter SQL queries into a <code>textarea</code>, run them against a
+        read replica, and export to CSV. I wrote a
+        <a href="/heroku-dataclips-clone">Heroku dataclips clone</a>
+        for fun.
+      </p>
+      <p>
+        Configure
+        <a href="/heroku-postgres-read-replica-with-rails"
+          >Heroku Postgres read replicas with Rails</a
+        >
+        to scale read traffic and free primary database connections for writes.
       </p>
       <h2>Fly.io</h2>
       <p>
-        <a href="/fly-io-multi-region-postgres-read-replicas"
-          >Fly.io Multi-Region Postgres Read Replicas</a
-        >
-        Serve a web app from multiple Fly.io regions and route read-only queries
-        to Postgres replicas
-      </p>
-      <h2>Application examples</h2>
-      <p>
-        <a href="/heroku-dataclips-clone" class="title"
-          >Heroku Dataclips Clone</a
-        >
-      </p>
-      <h2>Rails</h2>
-      <p>
-        Read and write to a Heroku Postgres database as primary and read from a
-        follower in targeted call sites
-        <a href="/heroku-postgres-read-replica-with-rails"
-          >Heroku Postgres Read Replica with Rails</a
-        >
+        Even better is to serve a web app from
+        <a href="/fly-io-multi-region-postgres-read-replicas">
+          multiple Fly.io regions and route read-only queries to same-region
+          Postgres replicas</a
+        >.
       </p>
       <div class="article">
         <div>
@@ -371,23 +356,6 @@
             Rather than pointing DNS directly to an origin server, point it to a
             CDN that pulls content from the origin
           </p>
-        </div>
-      </div>
-      <div class="article">
-        <div>
-          <a href="/pessimistic-operator-ruby" class="title"
-            >Pessimistic Operator</a
-          >
-          <p class="description">
-            Stabilize Ruby dependencies with the pessimistic operator and
-            Semantic Versioning
-          </p>
-        </div>
-      </div>
-      <div class="article">
-        <div>
-          <a href="/config-block-ruby" class="title">Config Block</a>
-          <p class="description">Configure a Ruby library</p>
         </div>
       </div>
     </main>
