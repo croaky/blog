@@ -1,5 +1,10 @@
 name: deno
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 0 * * *" # every day at midnight UTC
 
 jobs:
   deploy:

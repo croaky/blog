@@ -99,25 +99,6 @@
       main {
         margin: 1.25rem 0;
       }
-      .article {
-        display: flex;
-        margin: 1rem 0;
-      }
-      .description {
-        margin-block-start: 0;
-        margin-block-end: 0;
-        opacity: 0.8;
-      }
-      .title {
-        border-bottom: none;
-        color: var(--purple);
-        font-weight: bold;
-        transition: none;
-      }
-      main ul {
-        list-style-type: none;
-        padding-inline-start: 2rem;
-      }
       code {
         background-color: var(--code-bg);
         color: var(--code-fg);
@@ -140,9 +121,6 @@
           margin: 1rem;
           max-width: 92.5%;
           width: 1000px;
-        }
-        .article {
-          margin: 0 0 1.25rem 0;
         }
       }
     </style>
@@ -216,52 +194,65 @@
         <a href="/asdf-version-manager">ASDF</a> for Ruby versions.
       </p>
       <h2>Git</h2>
-      <p>I love a <a href="/monorepo">monorepo</a>.</p>
+      <p>I use a <a href="/monorepo">monorepo</a> for my version control.</p>
       <p>
-        Configure <a href="/gitignore">gitignore</a> not only for Git but also
-        <code>ag</code> and <code>fzf</code> searches.
+        Here's my
+        <a href="/pull-requests-and-kanban">end-to-end workflow</a> with a
+        kanban board, GitHub code review, continuous integration, and continuous
+        delivery.
+      </p>
+      <p>
+        Little tip: <a href="/gitignore">gitignore</a> is used not only by Git
+        but also <code>ag</code> and <code>fzf</code>.
       </p>
       <h2>Vim</h2>
+      <p>My text editor is Neovim in a Kitty terminal.</p>
       <p>
-        My text editor is Neovim in a Kitty terminal. Read how to
-        <a href="/wrap-text-in-vim">wrap text</a>,
-        <a href="/sort-lines-in-vim">sort lines</a>,
-        <a href="/search-projects-in-vim">search a project</a>, or
-        <a href="/spell-check-in-vim">spell check</a> in Vim. I
-        <a href="/run-tests-in-vim">run tests</a> and single file programs via
+        Basic text operations include
+        <a href="/wrap-text-in-vim">wrap text</a> and
+        <a href="/sort-lines-in-vim">sort lines</a>.
+      </p>
+      <p>
+        <a href="/spell-check-in-vim">Spell check</a> is on when editing
+        Markdown documents and Git commit messages.
+      </p>
+      <p>
+        I use <code>ag</code> to
+        <a href="/search-projects-in-vim">search a project</a>.
+      </p>
+      <p>
+        On file save, Vim auto-formats code. See
+        <a href="/format-sql-in-vim">format SQL</a> example.
+      </p>
+      <p>
+        I
+        <a href="/run-tests-in-vim">run tests</a>,
+        <a href="/run-sql-in-vim">run SQL</a> and other single file programs via
         the <code>Leader</code> key mapped to <code>Space</code>.
-        <!--
+      </p>
+      <!--
             See <a href="/react-typescript-in-vim">React and TypeScript in Vim</a>
             for a details about plugins and Language Server Protocol.
           -->
-      </p>
-      <p>
-        In Vim, I
-        <a href="/format-sql-in-vim">format SQL</a>,
-        <a href="/run-sql-in-vim">run SQL</a> and
-        <a href="postgres-visualize-slow-queries">debug slow Postgres queries</a
-        >.
-      </p>
       <h2>Postgres</h2>
       <p>
-        I often
+        I
         <a href="/heroku-postgres-restore-staging-development">
-          restore my development Postgres from a production copy</a
-        >.
-      </p>
-      <p>
-        I've had good luck the last two years operating a
-        <a href="/ruby-postgres-job-queue"
-          >Postgres-backed queue worked by the Ruby Postgres driver</a
-        >.
-      </p>
-      <p>
-        Speed up
-        <a href="/postgres-full-text-search-tsvectors-triggers">
-          Postgres full-text searches</a
+          restore my development database from a production copy</a
         >
-        with a <code>tsvector</code> column as cache and trigger to keep the
-        cache updated.
+        first thing each morning.
+      </p>
+      <p>
+        This is my process to
+        <a href="postgres-visualize-slow-queries">debug slow queries</a>.
+      </p>
+      <p>
+        Redis-backed queues are more popular in the Ruby community, but for the
+        last two years, I've been running a
+        <a href="/ruby-postgres-job-queue"
+          >Postgres-backed queue worked by the <code>pg</code> driver</a
+        >
+        in production.
       </p>
       <p>
         <a href="/create-postgres-indexes-concurrently"
@@ -274,7 +265,15 @@
         <a href="/postgres-concat-ws-function"><code>concat_ws</code></a>
         instead of <code>concat()</code> to avoid ugly output.
       </p>
-      <h2>Testing</h2>
+      <p>
+        Speed up
+        <a href="/postgres-full-text-search-tsvectors-triggers">
+          Postgres full-text searches</a
+        >
+        with a <code>tsvector</code> column as cache and trigger to keep the
+        cache updated.
+      </p>
+      <h2>Tests</h2>
       <p>
         To help see unit test cause and effect "at a glance", I structure them
         as <a href="/four-phase-test">four-phase tests</a> and avoid
@@ -285,11 +284,29 @@
         <a href="/test-mock-vs-stub-vs-spy">use stubs and spies</a> and avoid
         mocks.
       </p>
-      <h2>CI/CD</h2>
+      <h2>HTML</h2>
       <p>
-        <a href="/schedule-deno-builds-with-github-actions">
-          Daily deploys with Deno and GitHub Actions scheduled workflows
-        </a>
+        What's the nicest way to to
+        <a href="/static-html"
+          >statically generate some HTML and put it on the internet</a
+        >?
+      </p>
+      <h2>Unix</h2>
+      <p>
+        Define <a href="/process-model">Unix processes in a manifest</a> named
+        <code>Procfile</code> and use tools to manage those processes.
+      </p>
+      <h2>HTTP</h2>
+      <p>
+        Don't point DNS directly to an origin server,
+        <a href="/dns-cdn-origin"
+          >point DNS to a CDN that pulls content from the origin</a
+        >.
+      </p>
+      <p>
+        I prefer writing
+        <a href="/thin-api-clients">thin HTTP clients</a> rather than using a
+        third-party SDK.
       </p>
       <h2>Heroku</h2>
       <p>
@@ -320,44 +337,6 @@
           Postgres replicas</a
         >.
       </p>
-      <div class="article">
-        <div>
-          <a href="/thin-api-clients" class="title">Thin API Clients</a>
-          <p class="description">
-            When to access an API with a specialized library and when to write a
-            custom thin client
-          </p>
-        </div>
-      </div>
-      <div class="article">
-        <div>
-          <a href="/pull-requests-and-kanban" class="title"
-            >Pull Requests and Kanban</a
-          >
-          <p class="description">
-            End-to-end with a kanban board, GitHub code review, continuous
-            integration, and continuous delivery
-          </p>
-        </div>
-      </div>
-      <div class="article">
-        <div>
-          <a href="/process-model" class="title">Process Model</a>
-          <p class="description">
-            Define Unix processes in a manifest named Procfile and use tools to
-            manage those processes
-          </p>
-        </div>
-      </div>
-      <div class="article">
-        <div>
-          <a href="/dns-cdn-origin" class="title">DNS to CDN to Origin</a>
-          <p class="description">
-            Rather than pointing DNS directly to an origin server, point it to a
-            CDN that pulls content from the origin
-          </p>
-        </div>
-      </div>
     </main>
   </body>
 </html>
