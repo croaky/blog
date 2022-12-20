@@ -1,22 +1,5 @@
 [
   {
-    "theme": "Laptop",
-    "articles": [
-      "update-a-github-fork",
-      "gitignore",
-      "asdf-version-manager"
-    ]
-  },
-  {
-    "theme": "Hosting",
-    "description": "Deploy and host web applications.",
-    "articles": [
-      "fly-io-multi-region-postgres-read-replicas",
-      "schedule-deno-builds-with-github-actions",
-      "heroku-slack-aws-lambda"
-    ]
-  },
-  {
     "theme": "Postgres",
     "description": "Developing with and operating my preferred relational database.",
     "articles": [
@@ -25,17 +8,6 @@
       "postgres-concat-ws-function",
       "postgres-set-variable",
       "postgres-full-text-search-tsvectors-triggers"
-    ]
-  },
-  {
-    "theme": "Application design",
-    "description": "Tutorials and architectures for common patterns I've run into on the job.",
-    "articles": [
-      "ruby-postgres-job-queue",
-      "cache-api",
-      "heroku-postgres-read-replica-with-rails",
-      "dns-cdn-origin",
-      "process-model"
     ]
   },
   {
@@ -56,18 +28,29 @@
     ]
   },
   {
-    "theme": "Clients and SDKs",
-    "description": "Some things to think about when writing software that makes network calls to other services.",
-    "articles": [
-      "thin-api-clients"
-    ]
-  },
-  {
     "theme": "Dependencies, builds, packaging, and CI",
     "description": "All the junk required to pull together written software into a developable and deployable format.",
     "articles": [
       "pessimistic-operator-ruby",
       "config-block-ruby"
+    ]
+  },
+  {
+    "theme": "Application design",
+    "description": "Tutorials and architectures for common patterns I've run into on the job.",
+    "articles": [
+      "ruby-postgres-job-queue",
+      "cache-api",
+      "heroku-postgres-read-replica-with-rails",
+      "dns-cdn-origin",
+      "process-model"
+    ]
+  },
+  {
+    "theme": "Clients and SDKs",
+    "description": "Some things to think about when writing software that makes network calls to other services.",
+    "articles": [
+      "thin-api-clients"
     ]
   }
 ]
