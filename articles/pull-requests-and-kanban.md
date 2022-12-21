@@ -1,19 +1,13 @@
 # Pull Requests and Kanban
 
-GitHub pull requests have been the central part of
-my teams' workflows for more than 10 years.
-
-An outer, lighter layer of those workflows
-has been a kanban board to manage tasks.
-I've mostly used [Trello](https://trello.com)
-but lately have been using [Notion](https://notion.so).
-Here's an example board:
+Here's an example kanban board in [Notion](https://notion.so):
 
 ![Kanban board](/images/kanban-board.png)
 
 We add new work to the board as a card in the "Next Up" column.
 It might represent a feature, bug, or chore.
 Cards are sorted by priority.
+
 To start a new task,
 I put my face on the top unassigned card in "Next Up",
 move it to "In Progress",
@@ -40,11 +34,11 @@ I open a pull request from the command line
 via [GitHub CLI](https://cli.github.com/):
 
 ```bash
-gh pr create --web
+gh pr create --fill
+gh pr view --web
 ```
 
-This opens a new pull request form in a web browser.
-I edit the pull request title and description and open it.
+This opens a new pull request in a web browser.
 
 A GitHub webhook starts a
 [CI](https://www.martinfowler.com/articles/continuousIntegration.html) build.
@@ -70,23 +64,19 @@ I make the suggested changes and commit them:
 
 ```bash
 git add --all
-git commit -v
-```
-
-We've usually had these branch protection rules enabled:
-"Require pull request reviews before merging",
-"Require status checks to pass before merging",
-and "Require branches to be up to date before merging".
-So, I might need to push again:
-
-```bash
+git commit --verbose
 git push
 ```
 
+We have branch protection rules enabled:
+"Require pull request reviews before merging",
+"Require status checks to pass before merging",
+and "Require branches to be up to date before merging".
+
 Once the pull request has been approved, feedback addressed, and CI has passed,
 I press the "Squash and merge" button.
-[This Chrome extension](https://github.com/croaky/laptop/blob/main/chrome/github-pr.js)
-copies the pull request title and body to the commit's title and message.
+We have the repo settings for commit message set to
+"Default to pull request title and description".
 
 After the pull request merges cleanly,
 back on the command line in `my-branch`, I run
