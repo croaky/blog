@@ -1,17 +1,12 @@
 # Monorepo
 
-Organizing code into a monorepo can offer a great software development workflow.
-This is an example of how a monorepo evolved at our startup.
+Imagine we are software engineers at a devtool SaaS organization.
+The software we write to support the organization
+will take the shape of multiple programs.
 
-## Mentality
-
-Imagine we are software engineers at an organization.
-We expect to write software to support the organization,
-and for that software to take the shape of multiple programs.
-
-We plan to work incrementally,
-to choose technologies suited to their tasks that we also enjoy,
-and to be unafraid to write custom software
+We work incrementally,
+choose technologies suited to their tasks that we also enjoy,
+and are unafraid to write custom software
 that improves our happiness and productivity.
 
 ## New repo
@@ -44,17 +39,14 @@ cd $ORG
 
 The `$ORG` environment variable will be used throughout the codebase.
 
-## Initial design
+## Design
 
-We design an initial architecture like this:
+We design an architecture like this:
 
-- a "Dashboard" web interface for customers, written in React (TypeScript)
-- mobile apps for customers, written in React Native (TypeScript)
-- SDKs for customers, written for Go, Node (TypeScript), and Ruby
-- an internal HTTP API used by the web interface and SDKs, written in Go
+- a "Dashboard" web interface for customers (Svelte, TypeScript)
+- SDKs for customers (Go, Node, Ruby)
+- an HTTP server (Go)
 - a Postgres database backing the HTTP API
-
-We add new files and directories (old files omitted with `...` for brevity):
 
 ```
 .
@@ -63,10 +55,6 @@ We add new files and directories (old files omitted with `...` for brevity):
 │   └── serverd
 │       └── main.go
 ├── dashboard
-├── mobile
-│   └── app
-│       ├── android
-│       └── ios
 ├── sdk
 │   ├── go
 │   ├── node
@@ -77,11 +65,8 @@ We add new files and directories (old files omitted with `...` for brevity):
 
 ## Commit messages
 
-We use [community conventions][commit] for commit messages
-with the addition that the first line ("subject line")
-should be prefixed:
-
-[commit]: https://chris.beams.io/posts/git-commit/
+We use commit message [conventions](https://chris.beams.io/posts/git-commit/)
+with a subject line prefix:
 
 ```
 $ git log
@@ -90,35 +75,26 @@ sdk/node: enable Keep-Alive in HTTP agent
 server: document access to prod db
 ```
 
-The prefix refers to the module
-that the patch is primarily concerned with.
-It often, but not always, matches a filesystem directory,
+The prefix refers to the module that is changing.
+It often matches a filesystem directory.
+Sometimes the change will touch files across modules,
+but the prefix should be "where the action is."
 
-If a module's interface changes,
-the patch will likely touch other files
-to conform to the new interface,
-but the prefix should be where the action is.
-
-Although we don't worry about it much,
-we try to keep the subject line under 50 characters.
-It can be nice to [err on the side of brevity][brevity]
+We try to keep the subject line under 50 characters and
+[err on the side of brevity](https://golang.org/doc/effective_go.html#package-names)
 for module names.
-
-[brevity]: https://golang.org/doc/effective_go.html#package-names
 
 ## Dependencies
 
 To aid local development and help onboard teammates,
-we might provide a `setup.sh` script for each project.
-In turn,
-each `setup.sh` script might invoke more general `$ORG/bin/setup-*` scripts.
+we provide a `setup.sh` script for each module.
+In turn, each `setup.sh` script might invoke more general `$ORG/bin/setup-*` scripts.
 
-Since all engineers have `$ORG/bin` on our `$PATH`,
-all scripts in `bin/` are available everywhere at our shell
+Since everyone has `$ORG/bin` on their `$PATH`,
+scripts in `bin/` are available in everyone's shells
 without a directory prefix.
 
-We can also use [ASDF](asdf-version-manager)'s `.tool-versions` file
-to pin versions for dependencies:
+[ASDF](/asdf-version-manager)'s `.tool-versions` can pin versions for dependencies:
 
 ```
 .
@@ -126,13 +102,10 @@ to pin versions for dependencies:
 ├── .tool-versions
 ├── bin
 │   ├── setup-go
-│   ├── setup-localhost-tls
 │   ├── setup-node
 │   ├── setup-postgres
 │   └── setup-ruby
 ├── dashboard
-│   └── setup.sh
-├── mobile
 │   └── setup.sh
 ├── sdk
 │  ├── go
@@ -163,45 +136,27 @@ at the top of the file hierarchy:
 └── .prettierrc.yml
 ```
 
-## Infrastructure
-
-Our software can only be fully realized once it's in our customers' hands.
-We choose Amazon Web Services (AWS) as a host for our core software,
-such as EC2 for the HTTP API.
-
-We add an `infra` directory for [Terraform], `systemd`, `bash` files, etc.:
-
-[terraform]: https://www.terraform.io/
-
-```
-.
-├── ...
-└── infra
-```
-
 ## CI
 
 To move quickly without breaking things,
 we write automated tests
 and run those tests continuously
-when we integrate our changes into the codebase.
+when we integrate our changes.
 
-We also want our Continuous Integration (CI) service to:
+We want our Continuous Integration (CI) service to:
 
 - begin running the tests in < 5s after opening or editing a pull request
-- run the tests in an environment with [parity] to the production environment
+- run tests in an environment with [parity] to production
 - run only the tests relevant to the change
 
 [parity]: https://12factor.net/dev-prod-parity
 
-We observe common causes of slow-starting tests on hosted CI services
-are multi-tenant queues and containerization.
-In those environments,
+Common causes of slow-starting tests on hosted CI services
+are multi-tenant queues and containerization:
 noisy neighbors backlog the queues
 and containers have cache misses.
 
-To meet our design goals, we write our own CI service, `testbot`
-(design credit [Keith Rarick](https://xph.us/)):
+To meet our design goals, we write our own CI service, `testbot`:
 
 ```
 .
@@ -270,8 +225,7 @@ The command is run by a `testbot worker`,
 which is continuously long polling `testbot farmer` via HTTP over TLS,
 asking for test jobs.
 
-Each `testbot worker` runs on an EC2 instance
-created from the same Amazon Machine Image (AMI) used by our production server.
+Each `testbot worker` runs on Heroku with Go, Node, and Ruby buildpacks.
 We run more instances to increase test parallelism.
 
 In this example,
@@ -299,7 +253,7 @@ This script can be used in `Testfile`s:
 
 ```
 $ cat $ORG/dashboard/Testfile
-tests: with-serverd $ORG/dashboard/test.sh
+tests: cd $ORG/dashboard && with-serverd ./test.sh
 $ cat $ORG/sdk/go/Testfile
 tests: cd $ORG/sdk && with-serverd go test -cover ./...
 ```
@@ -332,19 +286,13 @@ and [Rubygems](https://rubygems.org/)
 but we like the monorepo as the canonical place
 for our development workflow.
 
-So, we decide to mirror the SDK code to open source repos.
-
+So, we mirror the SDK code to open source repos.
 This provides community access.
 Although the community patch workflow is a bit manual,
 these are SDKs tightly coupled to our product
 and we expect community patches to be rare.
 
-Other kinds of projects such as general-purpose libraries
-might be better suited to live as
-standalone open source repos outside the monorepo.
-
-To meet our design goals, we write a `mirrorbot` program
-(design credit [Bob Glickstein](https://www.geebobg.com/)):
+To meet our design goals, we write a `mirrorbot` program:
 
 ```
 .
@@ -418,8 +366,7 @@ and eventually v2,
 we want to carefully ensure backwards compatibility.
 
 To meet our design goals,
-we write `with-go-sdk`, `with-node-sdk`, and `with-ruby-sdk` scripts
-(design credit [Keith Rarick](https://xph.us/)):
+we write `with-go-sdk`, `with-node-sdk`, and `with-ruby-sdk` scripts:
 
 ```
 .
@@ -468,37 +415,48 @@ they are useful for quickly testing bug reports
 from customers on a particular version,
 and hopefully providing a great customer experience for them.
 
-## Repo integrations
+## Deploy
 
-We often want to integrate tools such as
-[Netlify](https://www.netlify.com/)
-or [Heroku](https://www.heroku.com/)
-with the repo.
-
-Usually, integrating with third-party tools involves providing a manifest like:
-
-```bash
-cd subdir && command
-```
-
-For Heroku specifically,
-we found it helpful to write a [Monorepo buildpack][buildpack],
-which involves adding a `heroku.sh` file
-to the subdirectory for Heroku-deployable projects:
-
-[buildpack]: https://github.com/croaky/heroku-buildpack-monorepo
+We'll deploy `mirrorbot`, `serverd`, and `testbot` to
+[Heroku](https://www.heroku.com/),
+which expects a `Procfile` manifest for each program:
 
 ```
 .
 ├── ...
 ├── cmd
-│   └── mirrorbot
+│   ├── mirrorbot
+│   │   ├── Procfile
+│   │   └── main.go
+│   ├── serverd
+│   │   ├── Procfile
+│   │   └── main.go
+│   └── testbot
 │       ├── Procfile
-│       └── heroku.sh
-└── testbot
-    └── farmer
-        ├── Procfile
-        └── heroku.sh
+│       └── main.go
+```
+
+Heroku uses a stack of "buildpacks" to set up its build system.
+We use a "monorepo" buildpack first in the stack,
+which uses an `APP_BASE=subdir` config variable to tell Heroku
+where to find the `Procfile` program.
+
+```bash
+heroku buildpacks:add -a <app> https://github.com/lstoll/heroku-buildpack-monorepo
+heroku config:set APP_BASE=cmd/serverd -a <app>
+```
+
+We use the Go buildpack second in the stack,
+which will install our Go program as a binary in `bin/program`.
+
+```bash
+heroku buildpacks:add -a <app> heroku/go
+```
+
+Our `Procfile` contains, for example:
+
+```bash
+web: bin/mirrorbot
 ```
 
 ## Conclusion
@@ -514,7 +472,7 @@ it can help to write custom tools.
 Writing those custom tools offers an opportunity
 to design an ideal experience for the engineering team.
 
-In this example, the final directory structure looks something like this:
+The final directory structure looks like this:
 
 ```
 .
@@ -526,7 +484,6 @@ In this example, the final directory structure looks something like this:
 ├── Testfile
 ├── bin
 │   ├── setup-go
-│   ├── setup-localhost-tls
 │   ├── setup-node
 │   ├── setup-postgres
 │   ├── setup-ruby
@@ -538,23 +495,16 @@ In this example, the final directory structure looks something like this:
 │   ├── mirrorbot
 │   │   ├── Procfile
 │   │   ├── Testfile
-│   │   ├── heroku.sh
 │   │   ├── main.go
 │   │   └── setup.sh
 │   ├── serverd
+│   │   ├── Procfile
 │   │   └── main.go
 │   └── testbot
+│       ├── Procfile
 │       └── main.go
 ├── dashboard
 │   ├── Testfile
-│   └── setup.sh
-├── infra
-│   └── setup.sh
-├── mobile
-│   ├── Testfile
-│   ├── app
-│   │   ├── android
-│   │   └── ios
 │   └── setup.sh
 ├── sdk
 │   ├── go
@@ -572,8 +522,6 @@ In this example, the final directory structure looks something like this:
 └── testbot
     ├── Testfile
     ├── farmer
-    │   ├── Procfile
-    │   ├── heroku.sh
     │   └── main.go
     ├── setup.sh
     └── worker
