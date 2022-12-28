@@ -94,12 +94,9 @@ Since everyone has `$ORG/bin` on their `$PATH`,
 scripts in `bin/` are available in everyone's shells
 without a directory prefix.
 
-[ASDF](/asdf-version-manager)'s `.tool-versions` can pin versions for dependencies:
-
 ```
 .
 ├── ...
-├── .tool-versions
 ├── bin
 │   ├── setup-go
 │   ├── setup-node
