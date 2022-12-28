@@ -187,58 +187,50 @@
       <p>Notes about writing and running software</p>
       <h2>Laptop</h2>
       <p>
-        I develop on an <a href="/laptop">laptop</a> with an Apple M1 chip. A
-        <code>laptop.sh</code> script symlinks dotfiles to <code>$HOME</code>
-        and sets up a text editor (Vim), programming language runtimes (Go,
-        Ruby), and language servers (HTML, SQL). Homebrew manages most packages
-        but I use Postgres.app for Postgres.
+        I develop on a laptop with an Apple Silicon chip. A
+        <a href="/laptop"><code>laptop.sh</code></a> script symlinks dotfiles to
+        <code>$HOME</code> and sets up my text editor (Neovim), programming
+        languages (Go, Ruby), language servers (HTML, SQL), and CLIs (GitHub,
+        Fly, Heroku, Railway, Tailscale).
       </p>
       <h2>Git</h2>
       <p>
         I use a <a href="/monorepo">monorepo</a> for version control. Here's my
         <a href="/pull-requests-and-kanban">end-to-end workflow</a> with a
-        kanban board, GitHub code review, continuous integration, and continuous
-        delivery.
+        kanban board, GitHub code review, and CI/CD.
       </p>
-      <h2>Vim</h2>
+      <h2>Neovim</h2>
       <p>My text editor is Neovim in a Kitty terminal.</p>
       <p>
-        On file save, ALE auto-fixes code. See
-        <a href="/format-sql-in-vim">format SQL</a> as an example. Additional
-        formatting operations include <a href="/wrap-text-in-vim">wrap text</a>,
-        <a href="/sort-lines-in-vim">sort lines</a>, and
-        <a href="/align-markdown-tables-in-vim">align Markdown tables</a>.
+        A few settings help
+        <a href="/wrap-text-in-vim">wrap text</a>,
+        <a href="/spell-check-in-vim">spell check</a> in Markdown docs and Git
+        commits, and <a href="/format-sql-in-vim">auto-fix code</a> on file
+        save.
       </p>
       <p>
-        I enable <a href="/spell-check-in-vim">spell check</a> when editing
-        Markdown documents and Git commit messages.
+        <code>\</code>
+        <a href="/search-projects-in-vim">searches projects</a>.
+        <code>|</code>
+        <a href="/align-markdown-tables-in-vim">aligns Markdown tables</a>.
+        <code>Shift+V</code>, <code>:sort</code>
+        <a href="/sort-lines-in-vim">sorts lines</a>.
       </p>
       <p>
-        Use <code>ag</code> to
-        <a href="/search-projects-in-vim">search a project</a>.
-      </p>
-      <p>
-        <a href="/run-tests-in-vim">Run tests</a>,
-        <a href="/run-sql-in-vim">run SQL</a> and other single file programs via
-        the <code>Leader</code> key mapped to <code>Space</code>.
+        My <code>Leader</code> key is mapped to <code>Space</code>.
+        <code>Leader+r</code>
+        <a href="/run-sql-in-vim">runs code</a>. <code>Leader+t</code> and
+        <code>Leader+s</code> <a href="/run-tests-in-vim">run tests</a>.
       </p>
       <h2>Postgres</h2>
       <p>
-        I
-        <a href="/heroku-postgres-restore-staging-development">
-          restore my development database from a production copy</a
-        >
-        first thing each morning.
-      </p>
-      <p>
-        This is my process to
+        These steps help me
         <a href="postgres-visualize-slow-queries">debug slow queries</a>.
       </p>
       <p>
-        Redis-backed queues are more popular in the Ruby community, but for the
-        last two years, I've been running a
+        For years, I've been happily running
         <a href="/ruby-postgres-job-queue"
-          >Postgres-backed queue worked by the <code>pg</code> driver</a
+          >the simplest possible Postgres-backed job queues</a
         >
         in production.
       </p>
@@ -307,6 +299,13 @@
         for fun.
       </p>
       <h2>Heroku</h2>
+      <p>
+        I
+        <a href="/heroku-postgres-restore-staging-development">
+          restore my development database from a production copy</a
+        >
+        daily.
+      </p>
       <p>
         These are steps for
         <a href="reduce-heroku-slug-size"

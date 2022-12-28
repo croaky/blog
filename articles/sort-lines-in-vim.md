@@ -19,7 +19,7 @@ You want to sort the list alphabetically.
 You select the lines visually:
 
 ```
-Shift + V
+Shift+v
 ```
 
 You invoke the `sort` function:

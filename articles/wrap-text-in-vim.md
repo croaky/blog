@@ -10,7 +10,7 @@ You want to re-format it to wrap to 80 characters.
 Select the lines of text you want to re-format:
 
 ```
-v
+Shift+v
 ```
 
 Reformat it:
@@ -29,6 +29,6 @@ If want the 80 character setting to apply automatically
 for file types like Markdown,
 add this to your `vimrc`:
 
-```
+```vim
 au BufRead,BufNewFile *.md setlocal textwidth=80
 ```

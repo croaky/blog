@@ -3,8 +3,8 @@
 I use a custom static site generator to publish this blog.
 It automatically deploys to Deno:
 
-1. when I merge new articles into my Git repository's `main` branch and
-2. every day at midnight UTC to support "scheduled article" functionality
+1. when I merge new articles into my Git repo's `main` branch and
+2. every day at midnight for "scheduled articles"
 
 ```yaml
 name: deno
