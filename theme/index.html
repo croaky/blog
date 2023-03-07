@@ -187,40 +187,27 @@
       <p>Notes about writing and running software</p>
       <h2>Laptop</h2>
       <p>
-        I develop on a laptop with an Apple Silicon chip. A
+        I use an Apple Silicon laptop. A
         <a href="/laptop"><code>laptop.sh</code></a> script symlinks dotfiles to
-        <code>$HOME</code> and sets up my text editor (Neovim), programming
-        languages (Go, Ruby), language servers (HTML, SQL), and CLIs (GitHub,
-        Fly, Heroku, Railway, Tailscale).
+        <code>$HOME</code> and sets up my text editor, programming languages,
+        language servers, and CLIs.
       </p>
       <h2>Git</h2>
       <p>
-        I use a <a href="/monorepo">monorepo</a> for version control. Here's my
-        <a href="/pull-requests-and-kanban">end-to-end workflow</a> with a
-        kanban board, GitHub code review, and CI/CD.
+        At work, I prefer a <a href="/monorepo">monorepo</a> and a
+        <a href="/pull-requests-and-kanban">workflow</a> with a kanban board,
+        GitHub code review, and CI/CD.
       </p>
       <h2>Neovim</h2>
-      <p>My text editor is Neovim in a Kitty terminal.</p>
       <p>
-        A few settings help
-        <a href="/wrap-text-in-vim">wrap text</a>,
-        <a href="/spell-check-in-vim">spell check</a> in Markdown docs and Git
-        commits, and <a href="/format-sql-in-vim">auto-fix code</a> on file
-        save.
-      </p>
-      <p>
-        <code>\</code>
-        <a href="/search-projects-in-vim">searches projects</a>.
-        <code>|</code>
-        <a href="/align-markdown-tables-in-vim">aligns Markdown tables</a>.
-        <code>Shift+V</code>, <code>:sort</code>
-        <a href="/sort-lines-in-vim">sorts lines</a>.
-      </p>
-      <p>
-        My <code>Leader</code> key is mapped to <code>Space</code>.
+        My text editor is Neovim in a Kitty terminal. My
+        <code>Leader</code> key is mapped to <code>Space</code>.
         <code>Leader+r</code>
         <a href="/run-sql-in-vim">runs code</a>. <code>Leader+t</code> and
-        <code>Leader+s</code> <a href="/run-tests-in-vim">run tests</a>.
+        <code>Leader+s</code> <a href="/run-tests-in-vim">run tests</a>. I
+        <a href="/format-sql-in-vim">fix code</a> on file save.
+        <code>\</code>
+        <a href="/search-projects-in-vim">searches projects</a>.
       </p>
       <h2>Postgres</h2>
       <p>
@@ -228,30 +215,21 @@
         <a href="postgres-visualize-slow-queries">debug slow queries</a>.
       </p>
       <p>
-        For years, I've been happily running
-        <a href="/ruby-postgres-job-queue"
-          >the simplest possible Postgres-backed job queues</a
-        >
+        I happily run
+        <a href="/ruby-postgres-job-queue">Postgres-backed job queues</a>
         in production.
       </p>
       <p>
+        I try to
         <a href="/create-postgres-indexes-concurrently"
-          >Create indexes concurrently</a
+          >create indexes concurrently</a
         >
         to avoid locking writes to a table.
       </p>
       <p>
-        Use
+        I like
         <a href="/postgres-concat-ws-function"><code>concat_ws</code></a>
         instead of <code>concat()</code> to avoid ugly output.
-      </p>
-      <p>
-        Speed up
-        <a href="/postgres-full-text-search-tsvectors-triggers">
-          Postgres full-text searches</a
-        >
-        with a <code>tsvector</code> column as cache and trigger to keep the
-        cache updated.
       </p>
       <h2>Tests</h2>
       <p>
@@ -264,23 +242,19 @@
       <h2>HTML</h2>
       <p>
         There are many ways to
-        <a href="/static-html">build static HTML and put it on the internet</a>
-        but I've been happiest with a little custom Go program that runs on
-        GitHub Actions and deploys to <a href="/deno">Deno</a> when I merge
-        changes.
+        <a href="/static-html">put static HTML on the internet</a>
+        but I've been happiest with a custom Go script that runs on GitHub
+        Actions when I merge changes and deploys to
+        <a href="/deno">Deno Deploy</a>.
       </p>
       <h2>Unix</h2>
       <p>
-        Create <a href="/ssh-ed25519">SSH keys with Ed25519</a> instead of RSA
+        I like <a href="/ssh-ed25519">SSH keys with Ed25519</a> instead of RSA
         for good security, performance, and aesthetics.
-      </p>
-      <p>
-        Define <a href="/process-model">Unix processes in a manifest</a> named
-        <code>Procfile</code> and use tools to manage those processes.
       </p>
       <h2>HTTP</h2>
       <p>
-        Don't point DNS directly to an origin server,
+        I don't point DNS directly to an origin server. I
         <a href="/dns-cdn-origin"
           >point DNS to a CDN that pulls content from the origin</a
         >.
@@ -307,19 +281,13 @@
         daily.
       </p>
       <p>
-        These are steps for
-        <a href="reduce-heroku-slug-size"
-          >reducing a Heroku slug size in a Ruby app</a
-        >.
-      </p>
-      <p>
         When my production app processes change state, I
         <a href="/heroku-slack-aws-lambda"
           >send Slack notifications with AWS Lambda</a
         >.
       </p>
       <p>
-        Configure
+        If needed, I configure
         <a href="/heroku-postgres-read-replica-with-rails"
           >Heroku Postgres read replicas with Rails</a
         >
