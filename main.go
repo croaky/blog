@@ -208,10 +208,10 @@ func load() []Article {
 			output, err := cmd.Output()
 			check(err)
 
-			updatedTime, err := time.Parse("Mon, 02 Jan 2006", strings.TrimSpace(string(output)))
+			t, err := time.Parse("Mon, 02 Jan 2006", strings.TrimSpace(string(output)))
 			check(err)
 
-			updatedOn = updatedTime.Format("January 2, 2006")
+			updatedOn = t.Format("January 2, 2006")
 		}
 
 		a := Article{
