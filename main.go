@@ -27,6 +27,7 @@ import (
 	"regexp"
 	"runtime"
 	"strings"
+	"time"
 
 	"github.com/alecthomas/chroma/v2"
 	htmlfmt "github.com/alecthomas/chroma/v2/formatters/html"
@@ -40,6 +41,7 @@ import (
 
 var blogURL = "https://dancroak.com"
 var wd string
+var serving bool
 
 func main() {
 	if len(os.Args) < 2 {
@@ -58,6 +60,7 @@ func main() {
 		add(id)
 		fmt.Println("Added ./articles/" + id + ".md")
 	case "serve":
+		serving = true
 		fmt.Println("Serving at http://localhost:2000")
 		serve(":2000")
 	case "build":
@@ -191,13 +194,30 @@ func load() []Article {
 			}),
 		)
 
-		info, err := os.Stat("articles/" + f.Name())
-		check(err)
+		updatedOn := ""
+
+		if serving {
+			// use the faster method of OS modified date
+			info, err := os.Stat("articles/" + f.Name())
+			check(err)
+
+			updatedOn = info.ModTime().Format("January 2, 2006")
+		} else {
+			// use the accurate Git date for CI / CD
+			cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%a, %d %b %Y", "--", "articles/"+f.Name())
+			output, err := cmd.Output()
+			check(err)
+
+			updatedTime, err := time.Parse("Mon, 02 Jan 2006", strings.TrimSpace(string(output)))
+			check(err)
+
+			updatedOn = updatedTime.Format("January 2, 2006")
+		}
 
 		a := Article{
 			Body:      template.HTML(html),
 			ID:        strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())),
-			UpdatedOn: info.ModTime().Format("January 2, 2006"),
+			UpdatedOn: updatedOn,
 			Title:     title,
 		}
 		articles = append(articles, a)
