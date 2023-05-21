@@ -23,6 +23,7 @@ jobs:
 
       - name: Build site
         shell: bash
+        run: git log -1 --format="%cd" --date="format:%a, %d %b %Y" -- articles/laptop.md
         run: go run main.go build
 
       - name: Upload to Deno Deploy

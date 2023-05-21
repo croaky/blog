@@ -27,7 +27,6 @@ import (
 	"regexp"
 	"runtime"
 	"strings"
-	"time"
 
 	"github.com/alecthomas/chroma/v2"
 	htmlfmt "github.com/alecthomas/chroma/v2/formatters/html"
@@ -193,19 +192,14 @@ func load() []Article {
 		)
 
 		// use the accurate Git date for CI / CD
-		cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%a, %d %b %Y", "--", "articles/"+f.Name())
-		output, err := cmd.Output()
+		cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", "articles/"+f.Name())
+		updatedOn, err := cmd.Output()
 		check(err)
-
-		t, err := time.Parse("Mon, 02 Jan 2006", strings.TrimSpace(string(output)))
-		check(err)
-
-		updatedOn := t.Format("January 2, 2006")
 
 		a := Article{
 			Body:      template.HTML(html),
 			ID:        strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())),
-			UpdatedOn: updatedOn,
+			UpdatedOn: string(updatedOn),
 			Title:     title,
 		}
 		articles = append(articles, a)
