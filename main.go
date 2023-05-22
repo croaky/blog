@@ -191,13 +191,15 @@ func load() []Article {
 			}),
 		)
 
-		info, err := os.Stat("articles/" + f.Name())
+		// Calculate last updated date from Git, rather than OS modified, for CI/CD
+		cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", "articles/"+f.Name())
+		updatedOn, err := cmd.Output()
 		check(err)
 
 		a := Article{
 			Body:      template.HTML(html),
 			ID:        strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())),
-			UpdatedOn: info.ModTime().Format("January 2, 2006"),
+			UpdatedOn: string(updatedOn),
 			Title:     title,
 		}
 		articles = append(articles, a)
