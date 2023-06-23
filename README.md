@@ -1,7 +1,7 @@
 # blog
 
 Short articles about software at <https://dancroak.com>.
-Static site generator deployed to [Deno Deploy](https://deno.com/deploy).
+Static site generator deployed to [Render](https://render.com/docs/static-sites).
 
 ## Setup
 
