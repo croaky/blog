@@ -4,23 +4,16 @@ Test-driven development thrives on a tight feedback loop
 but switching from editor to shell
 to manually run specs is inefficient.
 
-Tools such as `autotest` and `guard` run specs whenever a file gets saved.
+Tools such as `guard` can run specs whenever a file gets saved.
 Although an improvement over a manual workflow,
-those approaches often run the suite when not needed
-and run too many or too few specs.
+those approaches run many unnecessary tests.
 
-Enter [vim-rspec],
-a lightweight Vim plugin that runs specs directly from within Vim
-with the press of a key.
+[vim-test](https://github.com/vim-test/vim-test) is a plugin that runs tests
+from within Vim with a keystroke.
 
-[vim-rspec]: https://github.com/thoughtbot/vim-rspec
-
-It exposes methods such as `RunNearestSpec()`,
-`RunCurrentSpecFile()`, and
-`RunLastSpec()`,
+It exposes commands such as `:TestNearest`, `:TestFile`, and `:TestLast`,
 which can be bound to a key mapping of your choice.
 
-In [croaky/laptop](https://github.com/croaky/laptop/blob/main/dotfiles/editor/vimrc),
 I bind those methods to `<Leader>s`, `<Leader>t`, and `<Leader>l`.
 
 Cursor over any line within an RSpec spec like this:
