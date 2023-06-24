@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{.Article.Title}}</title>
     <meta name="author" content="Dan Croak" />
-    {{- if .Article.Canonical }}
-    <link rel="canonical" href="{{.Article.Canonical}}" />
-    {{- end }} {{- if .Article.Description }}
-    <meta name="description" content="{{.Article.Description}}" />
-    {{- end }}
     <style>
       :root {
         /* sizes */
@@ -250,7 +245,7 @@
         <header>
           <h1>{{.Article.Title}}</h1>
 
-          <time datetime="{{.Article.Updated}}">
+          <time>
             updated {{.Article.UpdatedOn}}
           </time>
         </header>

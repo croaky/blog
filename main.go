@@ -36,6 +36,8 @@ import (
 	"github.com/gomarkdown/markdown/ast"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 var blogURL = "https://dancroak.com"
@@ -96,20 +98,17 @@ func exitWith(s string) {
 
 // Article contains data loaded from articles/*.md
 type Article struct {
-	Canonical   string `json:"canonical,omitempty"`
-	Description string `json:"description"`
-	ID          string `json:"id"`
-	Updated     string `json:"updated"`
-
-	Body      template.HTML `json:"-"`
-	Title     string        `json:"-"`
-	UpdatedOn string        `json:"-"`
+	ID        string
+	Title     string
+	UpdatedOn string
+	Body      template.HTML
 }
 
 func add(id string) {
-	noDashes := strings.Replace(id, "-", " ", -1)
-	noUnderscores := strings.Replace(noDashes, "_", " ", -1)
-	title := strings.Title(noUnderscores)
+	noDashes := strings.ReplaceAll(id, "-", " ")
+	noUnderscores := strings.ReplaceAll(noDashes, "_", " ")
+	c := cases.Title(language.Und)
+	title := c.String(noUnderscores)
 	content := []byte("# " + title + "\n\n\n")
 	check(ioutil.WriteFile(wd+"/articles/"+id+".md", content, 0644))
 }
@@ -173,6 +172,7 @@ func load() []Article {
 
 	for _, f := range dir {
 		title, body := preProcess("articles/" + f.Name())
+
 		ext := parser.CommonExtensions | parser.AutoHeadingIDs
 		html := markdown.ToHTML(
 			[]byte(body),
@@ -191,16 +191,15 @@ func load() []Article {
 			}),
 		)
 
-		// Calculate last updated date from Git
 		cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", "articles/"+f.Name())
 		updatedOn, err := cmd.Output()
 		check(err)
 
 		a := Article{
-			Body:      template.HTML(html),
 			ID:        strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())),
-			UpdatedOn: string(updatedOn),
 			Title:     title,
+			UpdatedOn: string(updatedOn),
+			Body:      template.HTML(html),
 		}
 		articles = append(articles, a)
 	}
@@ -252,7 +251,7 @@ func preProcess(filepath string) (title, body string) {
 		line := scanner.Text()
 
 		if isFirst {
-			if strings.Index(line, "# ") == -1 {
+			if !strings.HasPrefix(line, "# ") {
 				exitWith("error: first line must be an h1 like: # Intro")
 			}
 
