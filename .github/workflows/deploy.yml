@@ -13,20 +13,8 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
-    permissions:
-      contents: read # Needed to clone the repository
 
     steps:
-      - name: clone repo
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }} # Needed for correct "Last updated" dates
-          fetch-depth: 0
-
-      - name: build site
-        shell: bash
-        run: go run main.go build
-
       - name: deploy to Render
         shell: bash
         env:
