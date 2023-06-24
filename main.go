@@ -7,7 +7,7 @@ Serve site on localhost:
 
 	blog serve
 
-Build site (HTML, images, code, Netlify files) to `public/`:
+Build site (HTML, images, code) to `public/`:
 
 	blog build
 */
