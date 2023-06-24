@@ -162,12 +162,12 @@ The `theme/index.html` template accepts a data structure like this:
 
 ## Publish
 
-Configure [Deno Deploy](https://deno.com/deploy):
+Create a static site on [Render](https://render.com/docs/static-sites):
 
 - Repository: `https://github.com/croaky/blog`
-- Production branch: `main`
-- Build command: `go run main.go build`
-- Public folder: `public`
+- Branch: `main`
+- Build command: `git fetch --unshallow && go run main.go build`
+- Publish directory: `public`
 
 To publish articles, commit and push to the GitHub repo.
 
