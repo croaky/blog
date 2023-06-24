@@ -191,7 +191,7 @@ func load() []Article {
 			}),
 		)
 
-		// Calculate last updated date from Git, rather than OS modified, for CI/CD
+		// Calculate last updated date from Git
 		cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", "articles/"+f.Name())
 		updatedOn, err := cmd.Output()
 		check(err)
