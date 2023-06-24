@@ -1,7 +1,6 @@
 # blog
 
 Short articles about software at <https://dancroak.com>.
-Static site generator deployed to [Render](https://render.com/docs/static-sites).
 
 ## Setup
 
@@ -99,9 +98,8 @@ Refer to them in articles:
 
 All `theme/public` files are copied to `public`.
 
-The `theme/*.html` files
-are parsed as [Go templates](https://gowebexamples.com/templates/).
-The `theme/article.html` template accepts a data structure like this:
+The `theme/article.html` file is parsed as a [Go template](https://gowebexamples.com/templates/)
+and accepts a data structure like this:
 
 ```
 {
@@ -118,15 +116,15 @@ The `theme/index.html` template is pure HTML.
 It is up to the author to decide how to lay out their index
 and link to their articles.
 
-## Publish
+## Deploy
 
-Create a static site on [Render](https://render.com/docs/static-sites):
+Create a static site on [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-anything/):
 
 - Repository: `https://github.com/croaky/blog`
-- Branch: `main`
+- Production branch: `main`
 - Build command: `git fetch --unshallow && go run main.go build`
-- Publish directory: `public`
+- Build output directory: `public`
 
-To publish articles, commit and push to the GitHub repo.
+To deploy the site, commit and push to the GitHub repo.
 
-View deploy logs in the Render web interface.
+View deploy logs in the Cloudflare web interface.

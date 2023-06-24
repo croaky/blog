@@ -1,45 +1,138 @@
-# Build Static HTML with GitHub Actions and Deploy to Deno
+# Static HTML with Go and Cloudflare Pages
 
-I use a custom static site generator to publish this blog.
-It automatically deploys to Deno:
+This blog is written with a custom Go static site generator.
+It is automatically deployed to Cloudflare Pages
+when I merge new articles into my Git repo's `main` branch.
 
-1. when I merge new articles into my Git repo's `main` branch and
-2. every day at midnight for "scheduled articles"
+## Go CLI
 
-```yaml
-name: deno
-on:
-  push:
-    branches:
-      - main
-  schedule:
-    - cron: "0 0 * * *" # every day at midnight UTC
+The static site generator uses Go's [embed package](https://pkg.go.dev/embed).
 
-jobs:
-  deploy:
-    name: deploy
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write # Needed for auth with Deno Deploy
-      contents: read # Needed to clone the repository
+[Install Go 1.16+](https://golang.org/doc/install) and then run:
 
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v2
-
-      - name: Build site
-        shell: bash
-        run: go run main.go build
-
-      - name: Upload to Deno Deploy
-        uses: denoland/deployctl@v1
-        with:
-          project: "croaky-blog"
-          entrypoint: https://deno.land/std@0.131.0/http/file_server.ts
-          root: public
+```
+go install ./...
 ```
 
-GitHub runs the workflow,
-which executes a Go program to generate HTML,
-and deploys the site to [Deno](https://deno.com).
-Then, [Deno serves HTML as a static file server](https://deno.com/blog/deploy-static-files).
+This installs a `blog` command-line program:
+
+```
+usage:
+  blog add <article-url-slug>
+  blog serve
+  blog build
+```
+
+It expects a file layout like this:
+
+```
+.
+├── articles
+│   └── example.md
+├── code
+│   └── example.rb
+├── images
+│   └── example.png
+└-─ theme
+    ├── public
+    │   └── favicon.ico
+    ├── article.html
+    └── index.html
+```
+
+## Write
+
+Add an article:
+
+```
+blog add example-article
+```
+
+Edit `articles/example-article.md` in a text editor.
+It is a [GitHub-Flavored Markdown](https://github.github.com/gfm/) file
+with no front matter.
+
+The first line of the file is the article title.
+It must be an `<h1>` tag:
+
+```md
+# Example Article
+```
+
+Preview at <http://localhost:2000> with:
+
+```
+blog serve
+```
+
+Embed code blocks from external files into Markdown like this:
+
+    Instantiate a client:
+
+    ```embed
+    code/example.rb instantiate
+    ```
+
+This embeds code from `code/example.rb`
+between `begindoc` and `enddoc` magic comments
+with an id `instantiate`:
+
+```ruby
+# begindoc: instantiate
+require 'example-sdk'
+
+client = Example::Client.new(
+  credential: '...',
+  name: 'example',
+)
+# enddoc: instantiate
+```
+
+This way, external files whose code is embedded in the Markdown prose
+can be run, linted, or tested in CI.
+
+Add images to the `images` directory.
+Refer to them in articles:
+
+```md
+![alt text](/images/example.png)
+```
+
+## Modify theme
+
+All `theme/public` files are copied to `public`.
+
+The `theme/article.html` file is parsed as a [Go template](https://gowebexamples.com/templates/)
+and accepts a data structure like this:
+
+```
+{
+  Article: {
+    ID:            "example-article",
+    Title:         "Example Article",
+    LastUpdatedOn: "April 15, 2018",
+    Body:          "<p>Hello, world.</p>",
+  }
+}
+```
+
+The `theme/index.html` template is pure HTML.
+It is up to the author to decide how to lay out their index
+and link to their articles.
+
+## Cloudflare Pages
+
+Create a static site on [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-anything/):
+
+- Repository: `https://github.com/croaky/blog`
+- Production branch: `main`
+- Build command: `git fetch --unshallow && go run main.go build`
+- Build output directory: `public`
+
+Use [the Cloudflare v2 build
+environment](https://developers.cloudflare.com/pages/platform/language-support-and-tools/)
+for the latest version of Go.
+
+To deploy the site, commit and push to the GitHub repo.
+
+View deploy logs in the Cloudflare web interface.
