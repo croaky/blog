@@ -1,16 +1,16 @@
-# Pull Requests and Kanban
+# Kanban
 
 Here's an example kanban board in [Notion](https://notion.so):
 
 ![Kanban board](/images/kanban-board.png)
 
-We add new work to the board as a card in the "Next Up" column.
-It might represent a feature, bug, or chore.
+Add a card in the "To do" column.
+It might be a feature, bug, or chore.
 Cards are sorted by priority.
 
-To start a new task,
-I put my face on the top unassigned card in "Next Up",
-move it to "In Progress",
+To start a new card,
+I put my face on the top unassigned card in "To do",
+move it to "Doing",
 and make a branch:
 
 ```bash
@@ -44,7 +44,6 @@ A GitHub webhook starts a
 [CI](https://www.martinfowler.com/articles/continuousIntegration.html) build.
 Another GitHub webhook posts the pull request to a team
 [Slack](https://slack.com) channel.
-I move the card to the "Pull Requests" column.
 
 A teammate clicks the link in the Slack channel.
 The teammate comments in-line on the code,
@@ -96,11 +95,10 @@ git branch -D "$branch"
 git remote prune origin
 ```
 
-I move the card to the "Integrating" column.
-This state is for the time period when
+At this point,
 web apps are continuously delivered to a staging environment,
 mobile apps are continuously delivered as ad-hoc builds,
 and team members are acceptance testing.
 
 When everything looks good,
-the code is deployed to production and the card moves to "Delivered".
+the code is deployed to production and the card moves to "Done".

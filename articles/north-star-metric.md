@@ -98,7 +98,7 @@ compares rows of `teams` by an offset of `1`.
 The result set looks like this:
 
 | week       | teams | growth  |
-| ---        | ---   | ---     |
+| ---------- | ----- | ------- |
 | 2014-09-22 | 114   | N/A     |
 | 2014-09-29 | 170   | 0.4912  |
 | 2014-10-06 | 197   | 0.1588  |
@@ -235,19 +235,6 @@ The guidance from our North Star metric
 causes us to ask questions such as
 "which customer acquisition channels are working the best?", or
 "do we have an awareness problem or an activation problem?"
-
-Compare the Hound chart to another product's chart:
-
-![Anonymous growth chart][anon]
-
-[anon]: images/anonymous-growth-chart.png
-
-In this example,
-the data is telling us
-that we're still
-making something people want,
-not yet ready for
-marketing something people want.
 
 ## Prioritize work by answering questions
 

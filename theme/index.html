@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Articles on writing and operating software"
+      content="Articles about writing and operating software"
     />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <title>Dan Croak</title>
@@ -157,20 +157,6 @@
         </a>
       </li>
       <li>
-        <a href="https://twitter.com/croaky" target="_blank" rel="noopener">
-          <svg
-            role="img"
-            xmlns="https://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <title>Twitter icon</title>
-            <path
-              d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
-            />
-          </svg>
-        </a>
-      </li>
-      <li>
         <a href="https://linkedin.com/in/croaky" target="_blank" rel="noopener">
           <svg
             role="img"
@@ -184,134 +170,127 @@
           </svg>
         </a>
       </li>
+      <li>
+        <a href="https://twitter.com/croaky" target="_blank" rel="noopener">
+          <svg
+            role="img"
+            xmlns="https://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <title>Twitter icon</title>
+            <path
+              d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
+            />
+          </svg>
+        </a>
+      </li>
     </ul>
 
     <main>
-      <p>Notes about writing and running software</p>
-      <h2>Laptop</h2>
-      <p>
-        I use an Apple Silicon laptop. A
-        <a href="/laptop"><code>laptop.sh</code></a> script symlinks dotfiles to
-        <code>$HOME</code> and sets up my text editor, programming languages,
-        language servers, and CLIs.
-      </p>
+      <h2>Open source projects</h2>
+      <li><a href="/laptop">Laptop</a> script and dotfiles</li>
+      <li><a href="/webstack">Webstack</a> research on next-gen Herokus</li>
       <h2>Git</h2>
-      <p>
-        At work, I prefer a <a href="/monorepo">monorepo</a> and a
-        <a href="/pull-requests-and-kanban">workflow</a> with a kanban board,
-        GitHub code review, and CI/CD.
-      </p>
-      <h2>Neovim</h2>
-      <p>
-        My text editor is Neovim in a Kitty terminal. My
-        <code>Leader</code> key is mapped to <code>Space</code>.
-        <code>Leader+r</code>
-        <a href="/run-sql-in-vim">runs code</a>. <code>Leader+t</code> and
-        <code>Leader+s</code> <a href="/run-tests-in-vim">run tests</a>. I
-        <a href="/format-sql-in-vim">fix code</a> on file save.
-        <code>\</code>
-        <a href="/search-projects-in-vim">searches projects</a>.
-      </p>
-      <h2>Postgres</h2>
-      <p>
-        These steps help me
-        <a href="postgres-debug-slow-queries">debug slow queries</a>.
-      </p>
-      <p>
-        I happily run
-        <a href="/ruby-postgres-job-queue">Postgres-backed job queues</a>
-        in production.
-      </p>
-      <p>
-        I try to
-        <a href="/create-postgres-indexes-concurrently"
-          >create indexes concurrently</a
-        >
-        to avoid locking writes to a table.
-      </p>
-      <p>
-        I like
-        <a href="/postgres-concat-ws-function"><code>concat_ws</code></a>
-        instead of <code>concat()</code> to avoid ugly output.
-      </p>
-      <h2>Tests</h2>
-      <p>
-        To better see cause and effect, I use a
-        <a href="/four-phase-test">four-phase test</a> structure, avoid
-        <a href="/mystery-guests-in-tests">mystery guests</a>, and
-        <a href="/test-mock-vs-stub-vs-spy">use stubs and spies</a> instead of
-        mocks.
-      </p>
-      <h2>HTML</h2>
-      <p>
-        There are many ways to put
-        <a href="/static-html">static HTML</a> on the internet
-        but my favorite is a custom Go static site generator
-        that deploys to Cloudflare Pages.
-      </p>
-      <h2>Unix</h2>
-      <p>
-        I like <a href="/ssh-ed25519">SSH keys with Ed25519</a> instead of RSA
-        for good security, performance, and aesthetics.
-      </p>
-      <h2>HTTP</h2>
-      <p>
-        I don't point DNS directly to an origin server. I
-        <a href="/dns-cdn-origin"
-          >point DNS to a CDN that pulls content from the origin</a
-        >.
-      </p>
-      <p>
-        I prefer writing
-        <a href="/thin-api-clients">thin HTTP clients</a> rather than using a
-        third-party SDK.
-      </p>
-      <h2>Ruby</h2>
-      <p>
-        Heroku Postgres has a great feature they call "dataclips" which let
-        users enter SQL queries into a <code>textarea</code>, run them against a
-        read replica, and export to CSV. I wrote a
-        <a href="/heroku-dataclips-clone">Heroku dataclips clone</a>
-        for fun.
-      </p>
-      <h2>Heroku</h2>
-      <p>
-        I
-        <a href="/heroku-postgres-restore-staging-development">
-          restore my development database from a production copy</a
-        >
-        daily.
-      </p>
-      <p>
-        When my production app processes change state, I
-        <a href="/heroku-slack-aws-lambda"
-          >send Slack notifications with AWS Lambda</a
-        >.
-      </p>
-      <p>
-        If needed, I configure
-        <a href="/heroku-postgres-read-replica-with-rails"
-          >Heroku Postgres read replicas with Rails</a
-        >
-        to scale read traffic and free primary database connections for writes.
-      </p>
-      <h2>Fly.io</h2>
-      <p>
-        Even better is to serve a web app from
-        <a href="/fly-io-multi-region-postgres-read-replicas">
-          multiple Fly.io regions and route read-only queries to same-region
-          Postgres replicas</a
-        >.
-      </p>
+      <ul>
+        <li>
+          <a href="/kanban">Kanban</a>
+        </li>
+        <li>
+          <a href="/monorepo">Monorepo</a>
+        </li>
+      </ul>
       <h2>Growth</h2>
-      <p>
-        Growth is a discipline that blends design, marketing, and engineering to
-        help users get value from products. When I've worked on growth for SaaS
-        products, a
-        <a href="/north-star-metric">north star metric</a> and
-        <a href="/retention-curves-mixpanel-google-sheets">retention curves</a>
-        have been helpful inputs to the roadmap.
-      </p>
+      <ul>
+        <li>
+          <a href="/north-star-metric">North star metric</a>
+        </li>
+        <li>
+          <a href="/retention-curves-mixpanel-google-sheets"
+            >Retention curves</a
+          >
+        </li>
+      </ul>
+      <h2>HTML</h2>
+      <ul>
+        <li>
+          <a href="/static-html">Static HTML with Go and Cloudflare Pages</a>
+        </li>
+      </ul>
+      <h2>HTTP</h2>
+      <ul>
+        <li>
+          <a href="/dns-cdn-origin">DNS to CDN to origin</a>
+        </li>
+        <li>
+          <a href="/thin-api-clients">Thin HTTP clients</a>
+        </li>
+      </ul>
+      <h2>Postgres</h2>
+      <ul>
+        <li>
+          <a href="/postgres-concat-ws-function">concat_ws</a>
+        </li>
+        <li>
+          <a href="/create-postgres-indexes-concurrently"
+            >Create indexes concurrently</a
+          >
+        </li>
+        <li>
+          <a href="postgres-debug-slow-queries">Debug slow queries</a>
+        </li>
+        <li>
+          <a href="/postgres-download-restore">Download prod, restore dev</a>
+        </li>
+        <li>
+          <a href="/fly-io-multi-region-postgres-read-replicas">
+            Fly.io multi-region read replicas</a
+          >
+        </li>
+        <li>
+          <a href="/heroku-postgres-read-replica-with-rails"
+            >Heroku read replicas with Rails</a
+          >
+        </li>
+        <li>
+          <a href="/heroku-dataclips-clone">Heroku dataclips clone</a>
+        </li>
+        <li>
+          <a href="/ruby-postgres-job-queue">Postgres-backed job queues</a>
+        </li>
+      </ul>
+      <h2>Tests</h2>
+      <ul>
+        <li>
+          <a href="/four-phase-test">Four-phase tests</a>
+        </li>
+        <li>
+          <a href="/mystery-guests-in-tests">Mystery guests</a>
+        </li>
+        <li>
+          <a href="/test-mock-vs-stub-vs-spy">Stubs and spies</a>
+        </li>
+      </ul>
+      <h2>Unix</h2>
+      <ul>
+        <li>
+          <a href="/ssh-ed25519">SSH keys with Ed25519</a>
+        </li>
+      </ul>
+      <h2>Vim</h2>
+      <ul>
+        <li>
+          <a href="/format-sql-in-vim">Fix code on file save</a>
+        </li>
+        <li>
+          <a href="/run-sql-in-vim">Run SQL</a>
+        </li>
+        <li>
+          <a href="/run-tests-in-vim">Run tests</a>
+        </li>
+        <li>
+          <a href="/search-projects-in-vim">Search projects</a>
+        </li>
+      </ul>
     </main>
   </body>
 </html>
