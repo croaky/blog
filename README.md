@@ -30,12 +30,11 @@ It expects a file layout like this:
 │   └── example.rb
 ├── images
 │   └── example.png
-├── theme
-│   ├── public
-│   │   └── favicon.ico
-│   ├── article.html
-│   └── index.html
-└── config.json
+└-─ theme
+    ├── public
+    │   └── favicon.ico
+    ├── article.html
+    └── index.html
 ```
 
 ## Write
@@ -96,33 +95,6 @@ Refer to them in articles:
 ![alt text](/images/example.png)
 ```
 
-Configure articles in `config.json`:
-
-```
-[
-  {
-    "description": "Draft scheduled for future date.",
-    "id": "article-draft-scheduled",
-    "updated": "2050-01-01"
-  },
-  {
-    "canonical": "https://seo.example.com/avoid-duplicate-content-penalty",
-    "description": "Canonical article is on a separate site.",
-    "id": "article-with-rel-canonical",
-    "updated": "2018-01-15"
-  }
-]
-```
-
-The `description` is used for the article page's `meta` description.
-
-The `id` must match a Markdown file `articles/id.md`.
-It is also used for the article's URL slug.
-
-The `updated` date can be in the future.
-A [GitHub Action is scheduled daily](https://dancroak.com/schedule-deno-builds-with-github-actions)
-to auto-publish.
-
 ## Modify theme
 
 All `theme/public` files are copied to `public`.
@@ -134,31 +106,17 @@ The `theme/article.html` template accepts a data structure like this:
 ```
 {
   Article: {
-    Body:          "<p>Hello, world.</p>",
-    Canonical:     "https://seo.example.com/avoid-duplicate-content-penalty"
-    Description:   "Hello, world.",
     ID:            "example-article",
-    LastUpdatedOn: "April 15, 2018",
     Title:         "Example Article",
+    LastUpdatedOn: "April 15, 2018",
+    Body:          "<p>Hello, world.</p>",
   }
 }
 ```
 
-The `theme/index.html` template accepts a data structure like this:
-
-```
-{
-  Articles: [
-    {
-      Body:          "<p>Hello, world.</p>",
-      Description:   "Hello, world.",
-      ID:            "example-article",
-      LastUpdatedIn: "2018 April",
-      Title:         "Example Article",
-    }
-  ],
-}
-```
+The `theme/index.html` template is pure HTML.
+It is up to the author to decide how to lay out their index
+and link to their articles.
 
 ## Publish
 
@@ -171,4 +129,4 @@ Create a static site on [Render](https://render.com/docs/static-sites):
 
 To publish articles, commit and push to the GitHub repo.
 
-View deploy logs in the Deno Deploy web interface.
+View deploy logs in the Render web interface.
