@@ -39,11 +39,13 @@
         margin: 0;
         padding: 0;
       }
+      html {
+        font-size: 20px;
+        line-height: 1.5;
+      }
       body {
         background-color: var(--body-bg);
         color: var(--body-fg);
-        font-size: 24px;
-        line-height: 36px;
         text-rendering: optimizelegibility;
         -webkit-font-smoothing: antialiased;
       }
@@ -76,8 +78,8 @@
       }
       h1 {
         color: var(--purple);
-        font-size: 50px;
-        line-height: 60px;
+        font-size: 2rem;
+        line-height: 2rem;
         margin-bottom: 5px;
         max-width: var(--content-max-width);
       }
@@ -85,7 +87,7 @@
         color: rgb(150, 150, 150);
       }
       h2 {
-        font-size: 1.2em;
+        font-size: 1.2rem;
         margin-block-start: 1.25em;
         margin-block-end: 0.5em;
       }
@@ -142,7 +144,7 @@
       code {
         color: var(--code-fg);
         font-family: "SFMono-Regular", Consolas, Monaco, Menlo, monospace;
-        font-size: 88%;
+        font-size: 0.88rem;
         margin: 0;
         padding: 0;
         word-wrap: break-word;
@@ -168,16 +170,11 @@
       /* mobile */
       @media (max-width: 700px) {
         body {
-          font-size: 18px;
-          line-height: 30px;
+          font-size: 0.88rem;
         }
         .container {
           margin: 1rem;
           max-width: 92.5%;
-        }
-        h1 {
-          font-size: 40px;
-          line-height: 50px;
         }
         h2 {
           margin: 2rem 0 0.5rem;
@@ -245,9 +242,7 @@
         <header>
           <h1>{{.Article.Title}}</h1>
 
-          <time>
-            updated {{.Article.UpdatedOn}}
-          </time>
+          <time> updated {{.Article.UpdatedOn}} </time>
         </header>
 
         {{.Article.Body}}
