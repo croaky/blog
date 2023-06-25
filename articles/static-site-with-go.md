@@ -1,8 +1,10 @@
-# Static HTML with Go and Cloudflare Pages
+# Static site with Go and Cloudflare Pages
 
-This blog is written with a custom Go static site generator.
-It is automatically deployed to Cloudflare Pages
-when I merge new articles into my Git repo's `main` branch.
+This blog is written with a small, custom Go static site generator.
+It is auto-deployed to Cloudflare Pages
+when I merge Markdown articles into the
+[croaky/blog](https://github.com/croaky/blog)
+Git repo's `main` branch.
 
 ## Go CLI
 

@@ -1,6 +1,6 @@
 # blog
 
-Short articles about software at <https://dancroak.com>.
+Short articles about writing and operating software at <https://dancroak.com>.
 
 ## Setup
 
