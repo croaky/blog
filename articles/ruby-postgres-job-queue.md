@@ -1,4 +1,4 @@
-# Postgres-Backed Job Queue in Ruby
+# Postgres-Backed Job Queue with Ruby
 
 A few lines of Ruby with the [pg](https://github.com/ged/ruby-pg) driver
 is a simple alternative to a job queuing library.
