@@ -15,25 +15,40 @@
         --content-max-width: 700px;
         --social-icons-width: 24px;
 
-        /* colors */
+        /* Light mode */
         --charcoal: rgb(20, 20, 20);
         --pink: rgb(215, 0, 95);
         --purple: rgb(150, 100, 200);
         --purple-faded: rgb(150, 100, 200, 0.1);
         --tan: rgb(255, 240, 230);
         --white: rgb(255, 255, 255);
+        --body-bg: var(--white);
+        --body-bg: rgb(252, 242, 232);
+        --link-bg-hover: rgb(180, 120, 220, 0.2);
+        --link-color: rgb(100, 50, 150);
+        --link-underline: rgb(180, 120, 220, 0.5);
+        --link-underline-hover: rgb(100, 50, 150);
 
-        --body-bg: rgb(25, 30, 45);
-        --body-fg: rgb(255, 255, 255);
-        --code-bg: rgba(123, 148, 206, 0.1);
-        --code-fg: var(--white);
-        --link-bg-hover: rgb(150, 100, 200, 0.2);
-        --link-color: var(--purple);
-        --link-underline: rgb(150, 100, 200, 0.5);
-        --link-underline-hover: var(--purple);
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+          --charcoal: rgb(240, 240, 240);
+          --pink: rgb(255, 100, 150);
+          --purple: rgb(180, 120, 220);
+          --purple-faded: rgb(180, 120, 220, 0.1);
+          --tan: rgb(255, 250, 240);
+          --white: rgb(255, 255, 255);
+          --body-bg: rgb(25, 30, 45);
+          --body-fg: var(--white);
+          --link-bg-hover: rgb(150, 100, 200, 0.2);
+          --link-color: rgb(150, 100, 200);
+          --link-underline: rgb(150, 100, 200, 0.5);
+          --link-underline-hover: rgb(150, 100, 200);
+        }
       }
       html,
       body {
+        background-color: var(--body-bg);
+        color: var(--body-fg);
         font-family: system-ui, -apple-system, Roboto, "Helvetica", "Arial",
           sans-serif;
         margin: 0;
