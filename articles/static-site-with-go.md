@@ -1,16 +1,14 @@
 # Static site with Go and Cloudflare Pages
 
-This blog is written with a small, custom Go static site generator.
-It is auto-deployed to Cloudflare Pages
-when I merge Markdown articles into the
-[croaky/blog](https://github.com/croaky/blog)
-Git repo's `main` branch.
+This blog is written with a small, custom Go static site generator. It is
+auto-deployed to Cloudflare Pages when Markdown articles are merged into the
+[croaky/blog](https://github.com/croaky/blog) Git repo's `main` branch.
 
 ## Go CLI
 
-The static site generator uses Go's [embed package](https://pkg.go.dev/embed).
-
-[Install Go 1.16+](https://golang.org/doc/install) and then run:
+The static site generator uses Go's [embed package](https://pkg.go.dev/embed),
+which requires a version of [Go](https://golang.org/doc/install) 1.16 or higher.
+Install it, then run:
 
 ```
 go install ./...
@@ -69,8 +67,6 @@ blog serve
 
 Embed code blocks from external files into Markdown like this:
 
-    Instantiate a client:
-
     ```embed
     code/example.rb instantiate
     ```
@@ -93,6 +89,12 @@ client = Example::Client.new(
 This way, external files whose code is embedded in the Markdown prose
 can be run, linted, or tested in CI.
 
+If you want to embed the whole file, no magic comments are needed:
+
+    ```embed
+    code/example.rb
+    ```
+
 Add images to the `images` directory.
 Refer to them in articles:
 
@@ -104,8 +106,9 @@ Refer to them in articles:
 
 All `theme/public` files are copied to `public`.
 
-The `theme/article.html` file is parsed as a [Go template](https://gowebexamples.com/templates/)
-and accepts a data structure like this:
+The `theme/article.html` file is parsed as a [Go template](https://gowebexamples.com/templates/).
+Syntax highlighting is generated at build time (no client-side JavaScript highlighting).
+`theme/article.html` accepts a data structure like this:
 
 ```
 {

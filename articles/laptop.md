@@ -33,15 +33,18 @@ Run:
 
 ## What it sets up
 
-The script is tested on macOS Big Sur (11.3)
-on arm64 (Apple Silicon) and x86_64 (Intel) chips.
+The script can safely be run multiple times. I run it most workday mornings.
+It is tested on the latest version of macOS on a arm64 (Apple Silicon) chip.
 It:
 
 - installs system packages with Homebrew package manager
-- changes shell to Z shell (zsh)
+- configures the shell (zsh)
 - creates symlinks for dotfiles to `$HOME`
 - installs programming language runtimes
-- installs or updates Vim plugins
+- installs or updates text editor plugins
 
-It can safely be run multiple times.
-I run it most workday mornings.
+It also adds a few scripts to `$PATH` whose details are described in these articles:
+
+- [`adblock`](/block-with-etc-hosts)
+- [`kill-pid-on-port` and `kill-pid-running`](/kill-pid)
+- [`replace`](/find-and-replace)
