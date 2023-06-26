@@ -188,9 +188,7 @@ Which lets us chart the data
 and make other calculations,
 such as averaging the growth rate:
 
-![Hound's growth Google Spreadsheet chart][chart]
-
-[chart]: images/hound-growth-chart.png
+![Hound's growth Google Spreadsheet chart](/images/hound-growth-chart.png)
 
 The new versus retained teams bottom chart
 is generated
