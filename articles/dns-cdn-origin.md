@@ -12,7 +12,7 @@ DNS -> CDN -> Origin
 Example:
 
 ```
-Cloudflare -> Cloudflare -> Render
+Cloudflare DNS -> Cloudflare CDN -> Render
 ```
 
 ## Without an asset host
