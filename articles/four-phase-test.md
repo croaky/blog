@@ -1,8 +1,7 @@
-# Four-Phase Test
+# Four-phase test
 
-[Four-Phase Test](http://xunitpatterns.com/Four%20Phase%20Test.html)
-is a testing pattern, applicable to all programming languages and unit tests
-(but not integration tests).
+Four-phase test is a testing pattern, applicable to all programming languages
+and unit tests (but not integration tests).
 
 It takes the following general form:
 

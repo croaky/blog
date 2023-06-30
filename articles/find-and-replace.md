@@ -1,4 +1,4 @@
-# Find and Replace
+# Find and replace
 
 It can be convenient to find and replace by a given list of files from the command line:
 

@@ -1,4 +1,4 @@
-# Postgres Download Prod, Restore Dev
+# Postgres download prod, restore dev
 
 I restore my development database from a production copy daily using these bash
 scripts. They depend on standard Unix tools, Postgres, and [Crunchy

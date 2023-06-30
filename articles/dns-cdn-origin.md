@@ -1,4 +1,4 @@
-# DNS to CDN to Origin
+# DNS to CDN to origin
 
 Content Distribution Networks (CDNs)
 pull content from their [origin server] during HTTP requests to cache them:

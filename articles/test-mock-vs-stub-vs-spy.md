@@ -1,9 +1,6 @@
-# Test Mock vs. Stub vs. Spy
+# Test mock vs. stub vs. spy
 
-[Test mocks](http://xunitpatterns.com/Mock%20Object.html),
-[test stubs](http://xunitpatterns.com/Test%20Stub.html), and
-[test spies](http://xunitpatterns.com/Test%20Spy.html)
-can be used in unit tests, with tradeoffs.
+Test mocks, stubs, and spies can be used in unit tests, with tradeoffs.
 Consider this system under test:
 
 ```ruby

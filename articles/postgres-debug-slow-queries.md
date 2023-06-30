@@ -1,4 +1,4 @@
-# Debug Slow Postgres Queries
+# Debug slow Postgres queries
 
 Write SQL in Vim, [format](format-sql-in-vim),
 and [run](run-sql-from-vim) until the query is correct.

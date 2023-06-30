@@ -1,4 +1,4 @@
-# Retention Curves
+# Retention curves
 
 Product retention is often measured using cohort reports with tools such as
 Amplitude, Google Analytics, iTunes Connect Analytics, or Mixpanel.
