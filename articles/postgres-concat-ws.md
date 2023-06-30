@@ -1,4 +1,4 @@
-# Postgres concat_ws() Function
+# Postgres concat_ws()
 
 Postgres provides a
 [`concat_ws()`](https://www.postgresql.org/docs/current/functions-string.html)

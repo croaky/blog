@@ -1,4 +1,4 @@
-# Ruby Script File Guard
+# Ruby script file guard
 
 One of the most common snippets of Ruby code I write is:
 

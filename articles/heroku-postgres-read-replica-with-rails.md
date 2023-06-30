@@ -1,4 +1,4 @@
-# Heroku Postgres Read Replica with Rails
+# Heroku Postgres read replica with Rails
 
 As a production Ruby on Rails app on Heroku scales,
 you may want to move some database read load to a replica

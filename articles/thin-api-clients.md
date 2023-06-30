@@ -1,4 +1,4 @@
-# Thin API Clients
+# Thin API clients
 
 I've sometimes seen open source libraries
 used as an API client for a SaaS service

@@ -1,4 +1,4 @@
-# Fly.io Multi-Region Postgres Read Replicas
+# Fly.io multi-region Postgres read replicas
 
 For improved latency,
 you might want to deploy your app to one or more of

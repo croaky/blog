@@ -1,4 +1,4 @@
-# Kill PID
+# Kill PID on port or by name
 
 Kill processes listening on a given port:
 

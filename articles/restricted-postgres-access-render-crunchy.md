@@ -1,4 +1,4 @@
-# Restricted Postgres Access Between Render and Crunchy Bridge
+# Restricted Postgres access between Render and Crunchy Bridge
 
 I recently migrated a Ruby on Rails app from Heroku's Common Runtime and Heroku
 Postgres to [Render and Crunchy Bridge](/webstack).

@@ -1,4 +1,4 @@
-# Search Projects in Vim
+# Search projects in Vim
 
 Projects can be searched for specific text within Vim:
 
