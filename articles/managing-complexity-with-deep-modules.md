@@ -1,4 +1,4 @@
-# Philosophy Of Software Design
+# Managing complexity with deep modules
 
 One of my favorite books on software is
 [A Philosophy of Software Design](https://amzn.to/2OQkBEQ).
