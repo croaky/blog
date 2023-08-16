@@ -8,7 +8,7 @@ The configuration for this is in `~/.vim/ftplugin/sql.vim`:
 
 ```vim
 " Run current file
-nmap <buffer> <Leader>r :!clear && psql -d $(cat .db) -f %<CR>
+nmap <buffer> <Leader>r :redraw!<CR>:!psql -d $(cat .db) -f %<CR>
 ```
 
 I also have a `.db` file that contains only the local database name:
