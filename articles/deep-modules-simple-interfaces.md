@@ -6,7 +6,7 @@ especially its parts about "deep modules."
 
 Deep modules have powerful functionality and simple interfaces:
 
-```
+```txt
 ===========
 |         |
 |         |
