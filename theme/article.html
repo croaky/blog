@@ -55,7 +55,7 @@
         padding: 0;
       }
       html {
-        font-size: 20px;
+        font-size: 16px;
         line-height: 1.5;
       }
       body {
@@ -92,11 +92,16 @@
         margin: 1.5rem 0;
       }
       h1 {
-        color: var(--purple);
+        color: var(--charcoal);
         font-size: 2rem;
         line-height: 2rem;
         margin-bottom: 5px;
         max-width: var(--content-max-width);
+
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+          color: var(--white);
+        }
       }
       time {
         color: rgb(150, 150, 150);
