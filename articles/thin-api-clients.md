@@ -42,10 +42,6 @@ If there is some lightweight authentication with a header token,
 an idempotency key, or retry logic,
 I would still choose to write a thin client.
 
-I would use a third-party library if the authentication mechanism
-is more complex or we need to use a large surface area of the API,
-stitching together many endpoints.
-
 Another "thin" variation is
 to choose the lightest option of open source libraries.
 For example, to add a new credit card to a React Native app, I've used the

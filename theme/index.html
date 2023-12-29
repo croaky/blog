@@ -64,10 +64,19 @@
         text-rendering: optimizelegibility;
         -webkit-font-smoothing: antialiased;
       }
-      h2 {
+      main h2 {
         font-size: 1.2rem;
-        margin-block-start: 1.25em;
-        margin-block-end: 0.5em;
+        margin-block-start: 0.2em;
+        margin-block-end: 0.2em;
+      }
+      main ul {
+        list-style-type: none;
+        margin-block-start: 0.2em;
+        margin-block-end: 1.2em;
+        padding-inline-start: var(--social-icons-width);
+      }
+      main li {
+        padding: 2px 0;
       }
       a {
         border-bottom: 2px solid var(--link-underline);
@@ -196,14 +205,6 @@
     </ul>
 
     <main>
-      <h2>Software design</h2>
-      <ul>
-        <li>
-          <a href="/deep-modules-simple-interfaces"
-            >Deep modules, simple interfaces</a
-          >
-        </li>
-      </ul>
       <h2>Git</h2>
       <ul>
         <li>
@@ -211,6 +212,12 @@
         </li>
         <li>
           <a href="/monorepo">Monorepo</a>
+        </li>
+      </ul>
+      <h2>Go</h2>
+      <ul>
+        <li>
+          <a href="/static-site-with-go">Blog</a>
         </li>
       </ul>
       <h2>Growth</h2>
@@ -228,18 +235,28 @@
           <a href="/dns-cdn-origin">DNS to CDN to origin</a>
         </li>
         <li>
-          <a href="/thin-api-clients">Thin HTTP clients</a>
+          <a href="/thin-api-clients">Thin API clients</a>
         </li>
       </ul>
-      <h2>Open source projects</h2>
+      <h2>PaaS</h2>
       <ul>
         <li>
-          <a href="/static-site-with-go">Blog</a>
+          <a href="/fly-io-multi-region-postgres-read-replicas">
+            Fly.io multi-region Postgres read replicas</a
+          >
         </li>
-        <li><a href="/laptop">Laptop</a></li>
-        <li><a href="/webstack">Webstack</a></li>
+        <li>
+          <a href="/heroku-postgres-read-replica-with-rails"
+            >Heroku Postgres read replicas with Rails</a
+          >
+        </li>
+        <li>
+          <a href="/webstack"
+            >Comparison of Aiven, Crunchy Bridge, Fly.io, Heroku, Neon,
+            Northflank, Railway, Render</a
+          >
+        </li>
       </ul>
-
       <h2>Postgres</h2>
       <ul>
         <li>
@@ -265,18 +282,8 @@
       <h2>Ruby</h2>
       <ul>
         <li>
-          <a href="/fly-io-multi-region-postgres-read-replicas">
-            Fly.io multi-region Postgres read replicas</a
-          >
-        </li>
-        <li>
           <a href="/heroku-dataclips-clone"
             >Heroku dataclips clone with Sinatra</a
-          >
-        </li>
-        <li>
-          <a href="/heroku-postgres-read-replica-with-rails"
-            >Heroku Postgres read replicas with Rails</a
           >
         </li>
         <li>
@@ -299,8 +306,17 @@
         <li>
           <a href="/kill-pid">Kill PID on port, or by name</a>
         </li>
+        <li><a href="/laptop">Laptop</a></li>
         <li>
           <a href="/ssh-ed25519">SSH keys with Ed25519</a>
+        </li>
+      </ul>
+      <h2>Software design</h2>
+      <ul>
+        <li>
+          <a href="/deep-modules-simple-interfaces"
+            >Deep modules, simple interfaces</a
+          >
         </li>
       </ul>
       <h2>Tests</h2>
