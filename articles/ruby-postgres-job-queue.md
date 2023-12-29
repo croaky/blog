@@ -1,108 +1,147 @@
 # Postgres-backed job queues with Ruby
 
-A few lines of Ruby with the [pg](https://github.com/ged/ruby-pg) driver
-is a simple alternative to a job queuing library.
-Job queues are defined as database tables
-and workers are defined in one Ruby file.
+The following describes a simple Ruby and Postgres job queuing system
+with these attributes
 
-Depending on the queue requirements,
-either polling or Postgres' `LISTEN/NOTIFY` may be appropriate.
+- Each queue runs 1 job at a time.
+- Jobs are worked First In, First Out.
+- Jobs are any object with an interface `Job.new(db).call`.
+  with optional args `Job.new(db).call(foo: 1, bar: "baz")`.
+- The only dependencies are Ruby, Postgres, and
+  [the pg gem](https://github.com/ged/ruby-pg).
 
-```
-queue_poll: bundle exec ruby queue_poll.rb
-queue_listen: bundle exec ruby queue_listen.rb
-```
+I have been running a system like this in production for a few years.
 
-To run one worker on Heroku:
+## Short history of Ruby job queuing systems
 
-```bash
-heroku ps:scale queue_poll=1
-```
+There have been many open source job queuing systems in the Ruby community.
 
-Or:
+[Sidekiq](https://sidekiq.org/) and [Resque](https://github.com/resque/resque)
+are popular but store their jobs in Redis, an additional database to operate.
+Other systems have been backed by a relational database
+such as [QueueClassic](https://github.com/QueueClassic/queue_classic),
+[Delayed Job](https://github.com/collectiveidea/delayed_job) (from Shopify),
+[Que](https://github.com/que-rb/que), and
+[GoodJob](https://github.com/bensheldon/good_job).
 
-```bash
-heroku ps:scale queue_listen=1
-```
+The relational database architecture may be gaining in popularity.
+`FOR UPDATE SKIP LOCKED`, which avoids blocking and waiting on locks when polling jobs,
+was added to Postgres in 2016 and to MySQL in 2018.
+In 2023, Basecamp released
+[Solid Queue](https://github.com/basecamp/solid_queue),
+an abstraction built around `FOR UPDATE SKIP LOCKED`
+that will be [the default ActiveJob backend in Rails 8](https://github.com/rails/rails/issues/50442).
 
-Queues can contain heterogeneous job types.
-But, if you want to avoid backup in one queue affecting jobs of another type,
-create N numbers of (1 job queue table + 1 job worker).
+While these are all great projects, I haven't been using them
+as I have more modest needs.
 
-## Poll
+## Modest needs
 
-With a `job_queue` table...
+In my application, I have ~20 queues.
+~80% of these invoke third-party APIs that have rate limits
+such as GitHub, Discord, Slack, and Postmark.
+I don't need these jobs to be high-throughput or highly parallel;
+processing one at a time is fine.
+
+## How
+
+Create a `jobs` table in Postgres:
 
 ```sql
-CREATE TABLE job_queue (
+CREATE TABLE jobs (
   id SERIAL,
-  created_at timestamp DEFAULT now() NOT NULL,
-  status text DEFAULT 'pending'::text NOT NULL,
+  queue text NOT NULL,
   name text NOT NULL,
-  data jsonb NOT NULL,
-  worked_at timestamp
+  args jsonb DEFAULT '{}' NOT NULL,
+  status text DEFAULT 'pending'::text NOT NULL,
+  created_at timestamp DEFAULT now() NOT NULL,
+  started_at timestamp,
+  finished_at timestamp
 );
 ```
 
-...the job worker could look like:
+Run a Ruby process like:
 
-```embed
-code/ruby-postgres-job-queue/poll.rb all
+```bash
+bundle exec ruby queues.rb
 ```
 
-## Listen
-
-With a `job_queue` table, `NOTIFY` function, and `TRIGGER`...
-
-```sql
-CREATE TABLE job_queue (
-  id SERIAL,
-  created_at timestamp DEFAULT now() NOT NULL,
-  status text DEFAULT 'pending'::text NOT NULL,
-  name text NOT NULL,
-  data jsonb NOT NULL,
-  worked_at timestamp
-);
-
-CREATE FUNCTION notify_job_queued() RETURNS TRIGGER AS $$
-BEGIN
-  PERFORM
-    pg_notify('job_queued', cast(NEW.id AS varchar));
-  RETURN NULL;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER on_job_queue
-  AFTER INSERT ON job_queue
-  FOR EACH ROW
-  EXECUTE PROCEDURE notify_job_queued();
-```
-
-...the job worker could look like:
-
-```embed
-code/ruby-postgres-job-queue/listen.rb all
-```
-
-## Enqueue
-
-In either case, enqueue a job by `INSERT`ing into the queue table.
+Edit a `queues.rb` file like:
 
 ```ruby
 require "pg"
+require_relative "lib/discord/worker"
+require_relative "lib/github/worker"
+require_relative "lib/postmark/worker"
+require_relative "lib/slack/worker"
+
+$stdout.sync = true
+
+workers = [
+  Discord::Worker,
+  Github::Worker,
+  Postmark::Worker,
+  Slack::Worker
+].freeze
+
+# Ensure all workers implement the interface.
+workers.each(&:validate!)
+
+# Ensure queues are only worked on by one worker.
+dup_queues = workers.map(&:queue).tally.select { |_, v| v > 1 }.keys
+if dup_queues.any?
+  raise "duplicate queues: #{dup_queues.join(", ")}"
+end
+
+children = workers.map do |worker|
+  # Fork a thread for each worker.
+  fork do
+    # Initialize worker with its own db connection.
+    db = PG.connect(ENV.fetch("DATABASE_URL"))
+    worker.new(db).poll
+  rescue SignalException
+    # Prevent child processes from being interrupted.
+    # Leave signal handling to the parent process.
+  end
+end
+
+begin
+  children.each { |pid| Process.wait(pid) }
+rescue SignalException => sig
+  if Signal.list.values_at("HUP", "INT", "KILL", "QUIT", "TERM").include?(sig.signo)
+    children.each { |pid| Process.kill("KILL", pid) }
+  end
+end
+```
+
+Edit a `lib/github/worker.rb` file like:
+
+```embed
+code/ruby-postgres-job-queue/github_worker.rb
+```
+
+Enqueue a job by `INSERT`ing into the jobs table:
+
+```ruby
 require "json"
+require "pg"
 
-conn = PG.connect(ENV.fetch("DATABASE_URL"))
+db = PG.connect(ENV.fetch("DATABASE_URL"))
 
-conn.exec_params(<<~SQL, [{company_id: 1}.to_json])
-  INSERT INTO job_queue (name, data)
-  VALUES ('JobOne', $1)
+db.exec_params(<<~SQL, [{company_id: 1}.to_json])
+  INSERT INTO jobs (queue, name, args)
+  VALUES ('github', 'JobOne', $1)
 SQL
 
 job = conn.exec(<<~SQL).first
-  SELECT data
-  FROM job_queue
+  SELECT
+    args
+  FROM
+    jobs
+  ORDER BY
+    created_at DESC
+  LIMIT 1
 SQL
 
-puts JSON.parse(job["data"]).dig("company_id") # 1
+puts JSON.parse(job["args"]).dig("company_id") # 1
 ```
