@@ -1,10 +1,9 @@
 # IVP
 
 I've been working at [IVP](https://www.ivp.com)
-(Institutional Venture Partners)
 as a software engineer since 2020.
 
-IVP is a growth stage venture capital firm.
+IVP is a venture capital firm.
 Since 1980, IVP has invested in ~400 companies and ~130 have gone public.
 IVP often first invests in Series B or C rounds.
 
@@ -38,8 +37,6 @@ IVP portfolio examples by first invested year:
   cloud infrastructure tools
 - 2020 [Aiven](https://aiven.io/)
   managed open source databases
-- 2020 [CircleCI](https://circleci.com/)
-  continuous integration platform
 - 2020 [Whisper](https://whisper.ai/)
   AI hearing aids
 - 2020 [WHOOP](https://www.whoop.com/)
