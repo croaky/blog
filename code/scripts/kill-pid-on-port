@@ -1,4 +1,0 @@
-#!/bin/bash
-# kill-pid-on-port
-
-lsof -n -i :"$1" | grep LISTEN | awk '{ print $2 }' | xargs kill
