@@ -47,6 +47,10 @@ IVP portfolio examples by first invested year:
   collaborative UI design
 - 2021 [Superhuman](https://superhuman.com/)
   email productivity
+- 2023 [DeepL](https://www.deepl.com)
+  AI language translation
+- 2023 [Perplexity](https://www.perplexity.ai/)
+  AI search engine
 
 There are ~50 people at the firm.
 The team helps companies grow and go public.
