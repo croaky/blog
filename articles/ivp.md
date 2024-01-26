@@ -37,8 +37,6 @@ IVP portfolio examples by first invested year:
   cloud infrastructure tools
 - 2020 [Aiven](https://aiven.io/)
   managed open source databases
-- 2020 [Whisper](https://whisper.ai/)
-  AI hearing aids
 - 2020 [WHOOP](https://www.whoop.com/)
   fitness wearable
 - 2021 [Hello Heart](https://www.helloheart.com/)
