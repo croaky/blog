@@ -110,7 +110,7 @@ func add(id string) {
 	c := cases.Title(language.Und)
 	title := c.String(noUnderscores)
 	content := []byte("# " + title + "\n\n\n")
-	check(ioutil.WriteFile(wd+"/articles/"+id+".md", content, 0644))
+	check(os.WriteFile(wd+"/articles/"+id+".md", content, 0644))
 }
 
 func serve(addr string) {
@@ -133,11 +133,10 @@ func serve(addr string) {
 
 func build() {
 	// clean public dir
-	check(os.MkdirAll(wd+"/public/", os.ModePerm))
-	dir, err := ioutil.ReadDir(wd + "/public")
+	dirEntries, err := os.ReadDir(wd + "/public")
 	check(err)
-	for _, d := range dir {
-		os.RemoveAll(path.Join([]string{"public", d.Name()}...))
+	for _, d := range dirEntries {
+		os.RemoveAll(path.Join("public", d.Name()))
 	}
 
 	// build article pages
