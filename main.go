@@ -118,20 +118,26 @@ func serve(addr string) {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		startTime := time.Now()
 
-		// Trim trailing slash for consistency
-		path := strings.TrimSuffix(r.URL.Path, "/")
-
-		// Don't rebuild for favicon or images.
-		if path != "" && path != "/favicon.ico" && path != "/logo.png" && !strings.HasPrefix(path, "/images") {
-			buildArticle(path)
-		}
-		if path == "" {
-			path = "/" // for logs
-			copyFile(wd+"/theme/index.html", wd+"/public/index.html")
+		// Redirect requests with a trailing slash to the version without it
+		path := r.URL.Path
+		if path != "/" && strings.HasSuffix(path, "/") {
+			http.Redirect(w, r, strings.TrimSuffix(path, "/"), http.StatusMovedPermanently)
+			return
 		}
 
-		fs := http.FileServer(http.Dir(wd + "/public"))
-		fs.ServeHTTP(w, r)
+		// Serve the index page for the root path
+		if path == "/" {
+			http.ServeFile(w, r, wd+"/theme/index.html")
+		} else if path != "/favicon.ico" && !strings.HasPrefix(path, "/images") {
+			// Build and serve the article for non-root paths
+			articleID := strings.TrimPrefix(path, "/")
+			buildArticle(articleID)
+			http.ServeFile(w, r, wd+"/public/"+articleID+"/index.html")
+		} else {
+			// Serve static files for other paths
+			fs := http.StripPrefix("/public", http.FileServer(http.Dir(wd+"/public")))
+			fs.ServeHTTP(w, r)
+		}
 
 		duration := time.Since(startTime)
 		fmt.Printf("%7.1f ms %s %s\n", float64(duration)/float64(time.Millisecond), r.Method, path)
