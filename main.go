@@ -14,19 +14,20 @@ Build site (HTML, images, code) to `public/`:
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"html/template"
 	"io"
+	"io/fs"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"os/exec"
 	"path"
 	"path/filepath"
-	"regexp"
 	"runtime"
 	"strings"
+	"sync"
+	"time"
 
 	"github.com/alecthomas/chroma/v2"
 	htmlfmt "github.com/alecthomas/chroma/v2/formatters/html"
@@ -115,20 +116,98 @@ func add(id string) {
 
 func serve(addr string) {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		// log every request except favicon.ico noise
-		if r.URL.Path != "/favicon.ico" {
-			fmt.Println(r.Method + " " + r.URL.Path)
-		}
+		startTime := time.Now()
 
-		// don't rebuild for images or favicon
-		if !strings.HasPrefix(r.URL.Path, "/images/") && !strings.HasPrefix(r.URL.Path, "/favicon.ico") {
-			build()
+		// Trim trailing slash for consistency
+		path := strings.TrimSuffix(r.URL.Path, "/")
+
+		// Don't rebuild for favicon or images.
+		if path != "" && path != "/favicon.ico" && !strings.HasPrefix(path, "/images") {
+			buildArticle(path)
+		} else {
+			buildIndex()
 		}
 
 		fs := http.FileServer(http.Dir(wd + "/public"))
 		fs.ServeHTTP(w, r)
+
+		if path == "" {
+			path = "/"
+		}
+		duration := time.Since(startTime)
+		fmt.Printf("%7.1f ms %s %s\n", float64(duration)/float64(time.Millisecond), r.Method, path)
 	})
 	check(http.ListenAndServe(addr, nil))
+}
+
+func buildArticle(articleID string) {
+	page := template.Must(template.ParseFiles(wd + "/theme/article.html"))
+
+	// Load the specific article
+	article, err := loadArticle(articleID)
+	if err != nil {
+		fmt.Println("Article not found:", articleID)
+		return
+	}
+
+	// Build the article page
+	check(os.MkdirAll(wd+"/public/"+article.ID, os.ModePerm))
+	f, err := os.Create(wd + "/public/" + article.ID + "/index.html")
+	check(err)
+	data := struct {
+		Article Article
+	}{
+		Article: article,
+	}
+	check(page.Execute(f, data))
+}
+
+func loadArticle(articleID string) (Article, error) {
+	articlePath := wd + "/articles/" + articleID + ".md"
+	content, err := ioutil.ReadFile(articlePath)
+	if err != nil {
+		return Article{}, err
+	}
+
+	// Split the content into title and body
+	parts := strings.SplitN(string(content), "\n", 2)
+	if len(parts) < 2 {
+		return Article{}, fmt.Errorf("error: article must have a title and body")
+	}
+	title, body := parts[0], parts[1]
+
+	// Preprocess the article
+	title, htmlBody := preProcess(title, body)
+
+	// Get the last updated date using Git
+	cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", articlePath)
+	updatedOn, err := cmd.Output()
+	if err != nil {
+		return Article{}, err
+	}
+
+	return Article{
+		ID:        articleID,
+		Title:     title,
+		UpdatedOn: strings.TrimSpace(string(updatedOn)),
+		Body:      htmlBody,
+	}, nil
+}
+
+func buildIndex() {
+	// Load the index page template
+	page := template.Must(template.ParseFiles(wd + "/theme/index.html"))
+
+	// Create the index page
+	check(os.MkdirAll(wd+"/public", os.ModePerm))
+	f, err := os.Create(wd + "/public/index.html")
+	check(err)
+
+	// You can pass data to the template if needed, for example, a list of articles
+	// For simplicity, we'll pass an empty struct here
+	data := struct{}{}
+
+	check(page.Execute(f, data))
 }
 
 func build() {
@@ -143,25 +222,57 @@ func build() {
 	page := template.Must(template.ParseFiles(wd + "/theme/article.html"))
 	articles := load()
 
+	var wg sync.WaitGroup
 	for _, a := range articles {
-		check(os.MkdirAll(wd+"/public/"+a.ID, os.ModePerm))
-		f, err := os.Create(wd + "/public/" + a.ID + "/index.html")
-		check(err)
-		data := struct {
-			Article Article
-		}{
-			Article: a,
-		}
-		check(page.Execute(f, data))
+		wg.Add(1)
+		go func(a Article) {
+			defer wg.Done()
+			check(os.MkdirAll(wd+"/public/"+a.ID, os.ModePerm))
+			f, err := os.Create(wd + "/public/" + a.ID + "/index.html")
+			check(err)
+			data := struct {
+				Article Article
+			}{
+				Article: a,
+			}
+			check(page.Execute(f, data))
+		}(a)
 	}
+	wg.Wait()
 
 	// copy index page
-	exec.Command("cp", "-a", wd+"/theme/index.html", wd+"/public/").Run()
+	copyFile(wd+"/theme/index.html", wd+"/public/index.html")
 
 	// copy static assets
-	check(os.MkdirAll(wd+"/public/images", os.ModePerm))
-	exec.Command("cp", "-a", wd+"/images/.", wd+"/public/images").Run()
-	exec.Command("cp", "-a", wd+"/theme/public/.", wd+"/public").Run()
+	copyDir(wd+"/images", wd+"/public/images")
+	copyDir(wd+"/theme/public", wd+"/public")
+}
+
+func copyFile(src, dst string) {
+	source, err := os.Open(src)
+	check(err)
+	defer source.Close()
+
+	destination, err := os.Create(dst)
+	check(err)
+	defer destination.Close()
+
+	_, err = io.Copy(destination, source)
+	check(err)
+}
+
+func copyDir(src, dst string) {
+	err := filepath.Walk(src, func(path string, info fs.FileInfo, err error) error {
+		check(err)
+		relPath := strings.TrimPrefix(path, src)
+		targetPath := filepath.Join(dst, relPath)
+		if info.IsDir() {
+			return os.MkdirAll(targetPath, info.Mode())
+		}
+		copyFile(path, targetPath)
+		return nil
+	})
+	check(err)
 }
 
 func load() []Article {
@@ -170,35 +281,30 @@ func load() []Article {
 	check(err)
 
 	for _, f := range dir {
-		title, body := preProcess("articles/" + f.Name())
+		articlePath := wd + "/articles/" + f.Name()
+		content, err := ioutil.ReadFile(articlePath)
+		check(err)
 
-		ext := parser.CommonExtensions | parser.AutoHeadingIDs
-		html := markdown.ToHTML(
-			[]byte(body),
-			parser.NewWithExtensions(ext),
-			html.NewRenderer(html.RendererOptions{
-				AbsolutePrefix: blogURL,
-				RenderNodeHook: func(w io.Writer, node ast.Node, _entering bool) (ast.WalkStatus, bool) {
-					codeBlock, ok := node.(*ast.CodeBlock)
-					if !ok {
-						return ast.GoToNext, false
-					}
-					lang := string(codeBlock.Info)
-					syntaxHighlight(w, string(codeBlock.Literal), lang)
-					return ast.GoToNext, true
-				},
-			}),
-		)
+		// Split the content into title and body
+		parts := strings.SplitN(string(content), "\n", 2)
+		if len(parts) < 2 {
+			exitWith("error: article must have a title and body")
+		}
+		title, body := parts[0], parts[1]
 
-		cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", "articles/"+f.Name())
+		// Preprocess the article
+		title, htmlBody := preProcess(title, body)
+
+		// Get the last updated date using Git
+		cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", articlePath)
 		updatedOn, err := cmd.Output()
 		check(err)
 
 		a := Article{
 			ID:        strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())),
 			Title:     title,
-			UpdatedOn: string(updatedOn),
-			Body:      template.HTML(html),
+			UpdatedOn: strings.TrimSpace(string(updatedOn)),
+			Body:      htmlBody,
 		}
 		articles = append(articles, a)
 	}
@@ -235,92 +341,32 @@ code/example.rb
 Bad input in the Markdown document or source code file
 will stop the program with a non-zero exit code and error text.
 */
-func preProcess(filepath string) (title, body string) {
-	f, err := os.Open(filepath)
-	check(err)
-	defer f.Close()
-
-	var (
-		scanner = bufio.NewScanner(f)
-		isFirst = true
-		isEmbed = false
-	)
-
-	for scanner.Scan() {
-		line := scanner.Text()
-
-		if isFirst {
-			if !strings.HasPrefix(line, "# ") {
-				exitWith("error: first line must be an h1 like: # Intro")
-			}
-
-			title = line[2:]
-			isFirst = false
-			continue
-		}
-
-		if line == "```embed" {
-			isEmbed = true
-			continue
-		}
-
-		if isEmbed {
-			parts := strings.Split(line, " ")
-			if len(parts) != 1 && len(parts) != 2 {
-				exitWith("error: embed line must be filepath id (code/test.rb id) or filepath (code/test.rb)")
-			}
-
-			filename := parts[0]
-			srcCode, err := ioutil.ReadFile(wd + "/" + filename)
-			check(err)
-
-			begindoc := 0
-			enddoc := len(srcCode) - 1
-
-			if len(parts) == 2 {
-				id := parts[1]
-				sep := "begindoc: " + id + "\n"
-				begindoc = strings.Index(string(srcCode), sep)
-				if begindoc == -1 {
-					exitWith("error: embed separator not found " + sep + " in " + filename)
-				}
-				// end of comment line
-				begindoc += len(sep)
-
-				sep = "enddoc: " + id
-				enddoc = strings.Index(string(srcCode), sep)
-				if enddoc == -1 {
-					exitWith("error: embed separator not found " + sep + " in " + filename)
-				}
-				// backtrack to last newline to cut out comment character(s)
-				enddoc = strings.LastIndex(string(srcCode[0:enddoc]), "\n")
-			}
-
-			rawLines := strings.Split(string(srcCode[begindoc:enddoc]), "\n")
-
-			leadingWhitespace := regexp.MustCompile("(?m)(^[ \t]*)(?:[^ \t])")
-			var margin string
-			var lines []string
-
-			for i, l := range rawLines {
-				if i == 0 {
-					margin = leadingWhitespace.FindAllStringSubmatch(l, -1)[0][1]
-				}
-				dedented := regexp.MustCompile("(?m)^"+margin).ReplaceAllString(l, "")
-				lines = append(lines, dedented)
-			}
-
-			ext := strings.Trim(path.Ext(filename), ".")
-			body += "```" + ext + "\n" + strings.Join(lines, "\n")
-
-			isEmbed = false
-			continue
-		}
-
-		body += "\n" + line
+func preProcess(title, body string) (string, template.HTML) {
+	// Remove the "# " prefix from the title
+	if strings.HasPrefix(title, "# ") {
+		title = strings.TrimPrefix(title, "# ")
 	}
 
-	return title, body
+	// Markdown to HTML conversion
+	ext := parser.CommonExtensions | parser.AutoHeadingIDs
+	htmlBody := markdown.ToHTML(
+		[]byte(body),
+		parser.NewWithExtensions(ext),
+		html.NewRenderer(html.RendererOptions{
+			AbsolutePrefix: blogURL,
+			RenderNodeHook: func(w io.Writer, node ast.Node, _entering bool) (ast.WalkStatus, bool) {
+				codeBlock, ok := node.(*ast.CodeBlock)
+				if !ok {
+					return ast.GoToNext, false
+				}
+				lang := string(codeBlock.Info)
+				syntaxHighlight(w, string(codeBlock.Literal), lang)
+				return ast.GoToNext, true
+			},
+		}),
+	)
+
+	return title, template.HTML(htmlBody)
 }
 
 func syntaxHighlight(w io.Writer, source, lang string) error {
