@@ -10,306 +10,13 @@ Serve site on localhost:
 Build site (HTML, images, code) to `public/`:
 
 	blog build
-*/
-package main
 
-import (
-	"fmt"
-	"html/template"
-	"io"
-	"io/fs"
-	"io/ioutil"
-	"net/http"
-	"os"
-	"os/exec"
-	"path"
-	"path/filepath"
-	"runtime"
-	"strings"
-	"sync"
-	"time"
+When building an article, the program scans line-by-line.
+It first extracts the title from the first line...
 
-	"github.com/alecthomas/chroma/v2"
-	htmlfmt "github.com/alecthomas/chroma/v2/formatters/html"
-	"github.com/alecthomas/chroma/v2/lexers"
-	"github.com/alecthomas/chroma/v2/styles"
-	"github.com/gomarkdown/markdown"
-	"github.com/gomarkdown/markdown/ast"
-	"github.com/gomarkdown/markdown/html"
-	"github.com/gomarkdown/markdown/parser"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
-)
-
-var blogURL = "https://dancroak.com"
-var wd string
-
-func main() {
-	if len(os.Args) < 2 {
-		usage()
-	}
-	var err error
-	wd, err = os.Getwd()
-	check(err)
-
-	switch os.Args[1] {
-	case "add":
-		if len(os.Args) != 3 {
-			usage()
-		}
-		id := os.Args[2]
-		add(id)
-		fmt.Println("Added ./articles/" + id + ".md")
-	case "serve":
-		fmt.Println("Serving at http://localhost:2000")
-		serve(":2000")
-	case "build":
-		build()
-		fmt.Println("Built at ./public")
-	default:
-		usage()
-	}
-}
-
-func usage() {
-	const s = `usage:
-  blog add <article-url-slug>
-  blog serve
-  blog build
-`
-	fmt.Fprint(os.Stderr, s)
-	os.Exit(2)
-}
-
-func check(err error) {
-	if err != nil {
-		fmt.Println(err)
-		_, file, no, ok := runtime.Caller(1)
-		if ok {
-			fmt.Printf("%s#%d\n", file, no)
-		}
-		os.Exit(1)
-	}
-}
-
-func exitWith(s string) {
-	fmt.Println(s)
-	os.Exit(1)
-}
-
-// Article contains data loaded from articles/*.md
-type Article struct {
-	ID        string
-	Title     string
-	UpdatedOn string
-	Body      template.HTML
-}
-
-func add(id string) {
-	noDashes := strings.ReplaceAll(id, "-", " ")
-	noUnderscores := strings.ReplaceAll(noDashes, "_", " ")
-	c := cases.Title(language.Und)
-	title := c.String(noUnderscores)
-	content := []byte("# " + title + "\n\n\n")
-	check(os.WriteFile(wd+"/articles/"+id+".md", content, 0644))
-}
-
-func serve(addr string) {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		startTime := time.Now()
-
-		// Redirect requests with a trailing slash to the version without it
-		path := r.URL.Path
-		if path != "/" && strings.HasSuffix(path, "/") {
-			http.Redirect(w, r, strings.TrimSuffix(path, "/"), http.StatusMovedPermanently)
-			return
-		}
-
-		// Serve the index page for the root path
-		if path == "/" {
-			http.ServeFile(w, r, wd+"/theme/index.html")
-		} else if path != "/favicon.ico" && !strings.HasPrefix(path, "/images") {
-			// Build and serve the article for non-root paths
-			articleID := strings.TrimPrefix(path, "/")
-			buildArticle(articleID)
-			http.ServeFile(w, r, wd+"/public/"+articleID+"/index.html")
-		} else {
-			// Serve static files for other paths
-			fs := http.StripPrefix("/public", http.FileServer(http.Dir(wd+"/public")))
-			fs.ServeHTTP(w, r)
-		}
-
-		duration := time.Since(startTime)
-		fmt.Printf("%7.1f ms %s %s\n", float64(duration)/float64(time.Millisecond), r.Method, path)
-	})
-	check(http.ListenAndServe(addr, nil))
-}
-
-func buildArticle(articleID string) {
-	page := template.Must(template.ParseFiles(wd + "/theme/article.html"))
-
-	// Load the specific article
-	article, err := loadArticle(articleID)
-	if err != nil {
-		fmt.Println("Article not found:", articleID)
-		return
-	}
-
-	// Build the article page
-	check(os.MkdirAll(wd+"/public/"+article.ID, os.ModePerm))
-	f, err := os.Create(wd + "/public/" + article.ID + "/index.html")
-	check(err)
-	data := struct {
-		Article Article
-	}{
-		Article: article,
-	}
-	check(page.Execute(f, data))
-}
-
-func loadArticle(articleID string) (Article, error) {
-	articlePath := wd + "/articles/" + articleID + ".md"
-	content, err := ioutil.ReadFile(articlePath)
-	if err != nil {
-		return Article{}, err
-	}
-
-	// Split the content into title and body
-	parts := strings.SplitN(string(content), "\n", 2)
-	if len(parts) < 2 {
-		return Article{}, fmt.Errorf("error: article must have a title and body")
-	}
-	title, body := parts[0], parts[1]
-
-	// Preprocess the article
-	title, htmlBody := preProcess(title, body)
-
-	// Get the last updated date using Git. Necessary for CI and Cloudflare Pages
-	// that shallow clone the repo. We can't depend on filesystem modified date.
-	cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", articlePath)
-	updatedOn, err := cmd.Output()
-	if err != nil {
-		return Article{}, err
-	}
-
-	return Article{
-		ID:        articleID,
-		Title:     title,
-		UpdatedOn: strings.TrimSpace(string(updatedOn)),
-		Body:      htmlBody,
-	}, nil
-}
-
-func build() {
-	// Ensure the public directory exists
-	err := os.MkdirAll(wd+"/public", os.ModePerm)
-	check(err)
-
-	// Clean the public directory
-	dirEntries, err := os.ReadDir(wd + "/public")
-	check(err)
-	for _, d := range dirEntries {
-		os.RemoveAll(path.Join(wd+"/public", d.Name()))
-	}
-
-	// Build article pages
-	page := template.Must(template.ParseFiles(wd + "/theme/article.html"))
-	articles := load()
-
-	var wg sync.WaitGroup
-	for _, a := range articles {
-		wg.Add(1)
-		go func(a Article) {
-			defer wg.Done()
-			check(os.MkdirAll(wd+"/public/"+a.ID, os.ModePerm))
-			f, err := os.Create(wd + "/public/" + a.ID + "/index.html")
-			check(err)
-			data := struct {
-				Article Article
-			}{
-				Article: a,
-			}
-			check(page.Execute(f, data))
-		}(a)
-	}
-	wg.Wait()
-
-	// Copy index page
-	copyFile(wd+"/theme/index.html", wd+"/public/index.html")
-
-	// Copy static assets
-	copyDir(wd+"/images", wd+"/public/images")
-	copyDir(wd+"/theme/public", wd+"/public")
-}
-
-func copyFile(src, dst string) {
-	source, err := os.Open(src)
-	check(err)
-	defer source.Close()
-
-	destination, err := os.Create(dst)
-	check(err)
-	defer destination.Close()
-
-	_, err = io.Copy(destination, source)
-	check(err)
-}
-
-func copyDir(src, dst string) {
-	err := filepath.Walk(src, func(path string, info fs.FileInfo, err error) error {
-		check(err)
-		relPath := strings.TrimPrefix(path, src)
-		targetPath := filepath.Join(dst, relPath)
-		if info.IsDir() {
-			return os.MkdirAll(targetPath, info.Mode())
-		}
-		copyFile(path, targetPath)
-		return nil
-	})
-	check(err)
-}
-
-func load() []Article {
-	var articles []Article
-	dir, err := ioutil.ReadDir(wd + "/articles")
-	check(err)
-
-	for _, f := range dir {
-		articlePath := wd + "/articles/" + f.Name()
-		content, err := ioutil.ReadFile(articlePath)
-		check(err)
-
-		// Split the content into title and body
-		parts := strings.SplitN(string(content), "\n", 2)
-		if len(parts) < 2 {
-			exitWith("error: article must have a title and body")
-		}
-		title, body := parts[0], parts[1]
-
-		// Preprocess the article
-		title, htmlBody := preProcess(title, body)
-
-		// Get the last updated date using Git
-		cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", articlePath)
-		updatedOn, err := cmd.Output()
-		check(err)
-
-		a := Article{
-			ID:        strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())),
-			Title:     title,
-			UpdatedOn: strings.TrimSpace(string(updatedOn)),
-			Body:      htmlBody,
-		}
-		articles = append(articles, a)
-	}
-
-	return articles
-}
-
-/*
-preProcess scans the Markdown document at filepath line-by-line,
-extracting article title and "pre-processing" the article body
-which can then be passed to a Markdown compiler at the call site.
+```
+# Article Title
+```
 
 When the scanner encounters an "embed" code fence like this...
 
@@ -334,28 +41,278 @@ code/example.rb
 
 Bad input in the Markdown document or source code file
 will stop the program with a non-zero exit code and error text.
+
+When the scanner is done, it passes its processed result to a standard Markdown
+compiler to finish compilation to HTML.
 */
+
+package main
+
+import (
+	"fmt"
+	"html/template"
+	"io"
+	"io/fs"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
+	"sync"
+	"time"
+
+	"github.com/alecthomas/chroma/v2"
+	chromaHTML "github.com/alecthomas/chroma/v2/formatters/html"
+	"github.com/alecthomas/chroma/v2/lexers"
+	"github.com/alecthomas/chroma/v2/styles"
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/ast"
+	markdownHTML "github.com/gomarkdown/markdown/html"
+	"github.com/gomarkdown/markdown/parser"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
+)
+
+var (
+	blogURL = "https://dancroak.com"
+	wd      string
+)
+
+func main() {
+	if len(os.Args) < 2 {
+		usage()
+	}
+	var err error
+	wd, err = os.Getwd()
+	fatal(err, "Failed to get working directory")
+
+	switch os.Args[1] {
+	case "add":
+		if len(os.Args) != 3 {
+			usage()
+		}
+		add(os.Args[2])
+		fmt.Println("Added ./articles/" + os.Args[2] + ".md")
+	case "serve":
+		fmt.Println("Serving at http://localhost:2000")
+		serve(":2000")
+	case "build":
+		build()
+		fmt.Println("Built at ./public")
+	default:
+		usage()
+	}
+}
+
+func usage() {
+	fmt.Fprintln(os.Stderr, "usage:\n  blog add <article-url-slug>\n  blog serve\n  blog build")
+	os.Exit(2)
+}
+
+func fatal(err error, msg string) {
+	if err != nil {
+		fmt.Printf("%s: %v\n", msg, err)
+		os.Exit(1)
+	}
+}
+
+type Article struct {
+	ID        string
+	Title     string
+	UpdatedOn string
+	Body      template.HTML
+}
+
+func add(id string) {
+	title := cases.Title(language.Und).String(strings.ReplaceAll(strings.ReplaceAll(id, "-", " "), "_", " "))
+	content := []byte("# " + title + "\n\n\n")
+	fatal(os.WriteFile(filepath.Join(wd, "articles", id+".md"), content, 0644), "Failed to add article")
+}
+
+func serve(addr string) {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		startTime := time.Now()
+
+		// Normalize the path
+		path := strings.TrimSuffix(r.URL.Path, "/")
+		if path == "" {
+			path = "/"
+		}
+
+		// Serve the index page for the root path
+		if path == "/" {
+			http.ServeFile(w, r, filepath.Join(wd, "theme", "index.html"))
+		} else if path != "/favicon.ico" && !strings.HasPrefix(path, "/images") {
+			// Build and serve the article for non-root paths
+			buildArticle(strings.TrimPrefix(path, "/"))
+			http.ServeFile(w, r, filepath.Join(wd, "public", path, "index.html"))
+		} else {
+			// Serve static files for other paths
+			fs := http.StripPrefix("/public", http.FileServer(http.Dir(filepath.Join(wd, "public"))))
+			fs.ServeHTTP(w, r)
+		}
+
+		fmt.Printf("%7.1f ms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
+	})
+	fatal(http.ListenAndServe(addr, nil), "Failed to serve")
+}
+
+func build() {
+	publicDir := filepath.Join(wd, "public")
+	fatal(os.MkdirAll(publicDir, os.ModePerm), "Failed to create public directory")
+
+	// Clean the public directory
+	dirEntries, err := os.ReadDir(publicDir)
+	fatal(err, "Failed to read public directory")
+	for _, d := range dirEntries {
+		fatal(os.RemoveAll(filepath.Join(publicDir, d.Name())), "Failed to remove file in public directory")
+	}
+
+	// Build article pages
+	page := template.Must(template.ParseFiles(filepath.Join(wd, "theme", "article.html")))
+	articles := load()
+
+	var wg sync.WaitGroup
+	for _, a := range articles {
+		wg.Add(1)
+		go func(a Article) {
+			defer wg.Done()
+			articleDir := filepath.Join(publicDir, a.ID)
+			fatal(os.MkdirAll(articleDir, os.ModePerm), "Failed to create article directory")
+			f, err := os.Create(filepath.Join(articleDir, "index.html"))
+			fatal(err, "Failed to create article index.html")
+			fatal(page.Execute(f, struct{ Article Article }{a}), "Failed to execute article template")
+		}(a)
+	}
+	wg.Wait()
+
+	// Copy static assets
+	copyDir(filepath.Join(wd, "theme", "index.html"), filepath.Join(publicDir, "index.html"))
+	copyDir(filepath.Join(wd, "images"), filepath.Join(publicDir, "images"))
+	copyDir(filepath.Join(wd, "theme", "public"), publicDir)
+}
+
+func copyFile(src, dst string) {
+	source, err := os.Open(src)
+	fatal(err, "Failed to open source file")
+	defer source.Close()
+
+	destination, err := os.Create(dst)
+	fatal(err, "Failed to create destination file")
+	defer destination.Close()
+
+	_, err = io.Copy(destination, source)
+	fatal(err, "Failed to copy file")
+}
+
+func copyDir(src, dst string) {
+	err := filepath.Walk(src, func(path string, info fs.FileInfo, err error) error {
+		fatal(err, "Failed to walk directory")
+		targetPath := filepath.Join(dst, strings.TrimPrefix(path, src))
+		if info.IsDir() {
+			return os.MkdirAll(targetPath, info.Mode())
+		}
+		copyFile(path, targetPath)
+		return nil
+	})
+	fatal(err, "Failed to copy directory")
+}
+
+func load() []Article {
+	var articles []Article
+	dir, err := ioutil.ReadDir(filepath.Join(wd, "articles"))
+	fatal(err, "Failed to read articles directory")
+
+	for _, f := range dir {
+		articlePath := filepath.Join(wd, "articles", f.Name())
+		content, err := ioutil.ReadFile(articlePath)
+		fatal(err, "Failed to read article file")
+
+		parts := strings.SplitN(string(content), "\n", 2)
+		if len(parts) < 2 {
+			fatal(fmt.Errorf("article must have a title and body"), "Invalid article format")
+		}
+
+		title, body := preProcess(parts[0], parts[1])
+
+		cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", articlePath)
+		updatedOn, err := cmd.Output()
+		fatal(err, "Failed to get last updated date")
+
+		articles = append(articles, Article{
+			ID:        strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())),
+			Title:     title,
+			UpdatedOn: strings.TrimSpace(string(updatedOn)),
+			Body:      body,
+		})
+	}
+
+	return articles
+}
+
+func buildArticle(articleID string) {
+	article, err := loadArticle(articleID)
+	if err != nil {
+		fmt.Printf("Article not found: %s\n", articleID)
+		return
+	}
+
+	articleDir := filepath.Join(wd, "public", article.ID)
+	fatal(os.MkdirAll(articleDir, os.ModePerm), "Failed to create article directory")
+
+	f, err := os.Create(filepath.Join(articleDir, "index.html"))
+	fatal(err, "Failed to create article index.html")
+
+	page := template.Must(template.ParseFiles(filepath.Join(wd, "theme", "article.html")))
+	fatal(page.Execute(f, struct{ Article Article }{article}), "Failed to execute article template")
+}
+
+func loadArticle(articleID string) (Article, error) {
+	articlePath := filepath.Join(wd, "articles", articleID+".md")
+	content, err := ioutil.ReadFile(articlePath)
+	if err != nil {
+		return Article{}, err
+	}
+
+	parts := strings.SplitN(string(content), "\n", 2)
+	if len(parts) < 2 {
+		return Article{}, fmt.Errorf("article must have a title and body")
+	}
+
+	title, body := preProcess(parts[0], parts[1])
+
+	cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", articlePath)
+	updatedOn, err := cmd.Output()
+	if err != nil {
+		return Article{}, err
+	}
+
+	return Article{
+		ID:        articleID,
+		Title:     title,
+		UpdatedOn: strings.TrimSpace(string(updatedOn)),
+		Body:      body,
+	}, nil
+}
+
 func preProcess(title, body string) (string, template.HTML) {
-	// Remove the "# " prefix from the title
 	if strings.HasPrefix(title, "# ") {
 		title = strings.TrimPrefix(title, "# ")
 	}
 
-	// Markdown to HTML conversion
 	ext := parser.CommonExtensions | parser.AutoHeadingIDs
 	htmlBody := markdown.ToHTML(
 		[]byte(body),
 		parser.NewWithExtensions(ext),
-		html.NewRenderer(html.RendererOptions{
+		markdownHTML.NewRenderer(markdownHTML.RendererOptions{
 			AbsolutePrefix: blogURL,
-			RenderNodeHook: func(w io.Writer, node ast.Node, _entering bool) (ast.WalkStatus, bool) {
-				codeBlock, ok := node.(*ast.CodeBlock)
-				if !ok {
-					return ast.GoToNext, false
+			RenderNodeHook: func(w io.Writer, node ast.Node, entering bool) (ast.WalkStatus, bool) {
+				if codeBlock, ok := node.(*ast.CodeBlock); ok {
+					syntaxHighlight(w, string(codeBlock.Literal), string(codeBlock.Info))
+					return ast.GoToNext, true
 				}
-				lang := string(codeBlock.Info)
-				syntaxHighlight(w, string(codeBlock.Literal), lang)
-				return ast.GoToNext, true
+				return ast.GoToNext, false
 			},
 		}),
 	)
@@ -363,26 +320,22 @@ func preProcess(title, body string) (string, template.HTML) {
 	return title, template.HTML(htmlBody)
 }
 
-func syntaxHighlight(w io.Writer, source, lang string) error {
-	// lexer
-	l := lexers.Get(lang)
-	if l == nil {
-		l = lexers.Analyse(source)
+func syntaxHighlight(w io.Writer, source, lang string) {
+	lexer := lexers.Get(lang)
+	if lexer == nil {
+		lexer = lexers.Analyse(source)
 	}
-	if l == nil {
-		l = lexers.Fallback
+	if lexer == nil {
+		lexer = lexers.Fallback
 	}
-	l = chroma.Coalesce(l)
+	lexer = chroma.Coalesce(lexer)
 
-	// formatter
-	f := htmlfmt.New(htmlfmt.Standalone(false), htmlfmt.WithClasses(true))
+	formatter := chromaHTML.New(chromaHTML.WithClasses(true))
+	style := styles.Fallback
 
-	// style
-	s := styles.Fallback
+	iterator, err := lexer.Tokenise(nil, source)
+	fatal(err, "Failed to tokenise source for syntax highlighting")
 
-	it, err := l.Tokenise(nil, source)
-	if err != nil {
-		return err
-	}
-	return f.Format(w, s, it)
+	err = formatter.Format(w, style, iterator)
+	fatal(err, "Failed to format syntax highlighting")
 }
