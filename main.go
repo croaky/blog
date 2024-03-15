@@ -201,14 +201,18 @@ func loadArticle(articleID string) (Article, error) {
 }
 
 func build() {
-	// clean public dir
+	// Ensure the public directory exists
+	err := os.MkdirAll(wd+"/public", os.ModePerm)
+	check(err)
+
+	// Clean the public directory
 	dirEntries, err := os.ReadDir(wd + "/public")
 	check(err)
 	for _, d := range dirEntries {
-		os.RemoveAll(path.Join("public", d.Name()))
+		os.RemoveAll(path.Join(wd+"/public", d.Name()))
 	}
 
-	// build article pages
+	// Build article pages
 	page := template.Must(template.ParseFiles(wd + "/theme/article.html"))
 	articles := load()
 
@@ -230,10 +234,10 @@ func build() {
 	}
 	wg.Wait()
 
-	// copy index page
+	// Copy index page
 	copyFile(wd+"/theme/index.html", wd+"/public/index.html")
 
-	// copy static assets
+	// Copy static assets
 	copyDir(wd+"/images", wd+"/public/images")
 	copyDir(wd+"/theme/public", wd+"/public")
 }
