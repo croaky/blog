@@ -6,7 +6,7 @@ on:
     branches: [main]
 jobs:
   test-ubuntu:
-    name: Test on Ubuntu
+    name: ubuntu
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +22,7 @@ jobs:
         run: go test -v ./...
 
   test-macos:
-    name: Test on macOS
+    name: macos
     runs-on: macos-latest
 
     steps:
