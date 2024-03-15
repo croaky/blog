@@ -122,18 +122,17 @@ func serve(addr string) {
 		path := strings.TrimSuffix(r.URL.Path, "/")
 
 		// Don't rebuild for favicon or images.
-		if path != "" && path != "/favicon.ico" && !strings.HasPrefix(path, "/images") {
+		if path != "" && path != "/favicon.ico" && path != "/logo.png" && !strings.HasPrefix(path, "/images") {
 			buildArticle(path)
-		} else {
-			buildIndex()
+		}
+		if path == "" {
+			path = "/" // for logs
+			copyFile(wd+"/theme/index.html", wd+"/public/index.html")
 		}
 
 		fs := http.FileServer(http.Dir(wd + "/public"))
 		fs.ServeHTTP(w, r)
 
-		if path == "" {
-			path = "/"
-		}
 		duration := time.Since(startTime)
 		fmt.Printf("%7.1f ms %s %s\n", float64(duration)/float64(time.Millisecond), r.Method, path)
 	})
@@ -179,7 +178,8 @@ func loadArticle(articleID string) (Article, error) {
 	// Preprocess the article
 	title, htmlBody := preProcess(title, body)
 
-	// Get the last updated date using Git
+	// Get the last updated date using Git. Necessary for CI and Cloudflare Pages
+	// that shallow clone the repo. We can't depend on filesystem modified date.
 	cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", articlePath)
 	updatedOn, err := cmd.Output()
 	if err != nil {
@@ -192,22 +192,6 @@ func loadArticle(articleID string) (Article, error) {
 		UpdatedOn: strings.TrimSpace(string(updatedOn)),
 		Body:      htmlBody,
 	}, nil
-}
-
-func buildIndex() {
-	// Load the index page template
-	page := template.Must(template.ParseFiles(wd + "/theme/index.html"))
-
-	// Create the index page
-	check(os.MkdirAll(wd+"/public", os.ModePerm))
-	f, err := os.Create(wd + "/public/index.html")
-	check(err)
-
-	// You can pass data to the template if needed, for example, a list of articles
-	// For simplicity, we'll pass an empty struct here
-	data := struct{}{}
-
-	check(page.Execute(f, data))
 }
 
 func build() {
