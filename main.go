@@ -98,7 +98,7 @@ func main() {
 		fmt.Println("Serving at http://localhost:2000")
 		serve(":2000")
 	case "build":
-		build()
+		build("public")
 		fmt.Println("Built at ./public")
 	default:
 		usage()
@@ -158,15 +158,16 @@ func serve(addr string) {
 	fatal(http.ListenAndServe(addr, nil), "Failed to serve")
 }
 
-func build() {
-	publicDir := filepath.Join(wd, "public")
-	fatal(os.MkdirAll(publicDir, os.ModePerm), "Failed to create public directory")
+func build(outputDir string) {
+	// Ensure the output directory exists
+	err := os.MkdirAll(outputDir, os.ModePerm)
+	fatal(err, "Failed to create output directory")
 
-	// Clean the public directory
-	dirEntries, err := os.ReadDir(publicDir)
-	fatal(err, "Failed to read public directory")
+	// Clean the output directory
+	dirEntries, err := os.ReadDir(outputDir)
+	fatal(err, "Failed to read output directory")
 	for _, d := range dirEntries {
-		fatal(os.RemoveAll(filepath.Join(publicDir, d.Name())), "Failed to remove file in public directory")
+		fatal(os.RemoveAll(filepath.Join(outputDir, d.Name())), "Failed to remove file in output directory")
 	}
 
 	// Build article pages
@@ -178,7 +179,7 @@ func build() {
 		wg.Add(1)
 		go func(a Article) {
 			defer wg.Done()
-			articleDir := filepath.Join(publicDir, a.ID)
+			articleDir := filepath.Join(outputDir, a.ID)
 			fatal(os.MkdirAll(articleDir, os.ModePerm), "Failed to create article directory")
 			f, err := os.Create(filepath.Join(articleDir, "index.html"))
 			fatal(err, "Failed to create article index.html")
@@ -188,9 +189,9 @@ func build() {
 	wg.Wait()
 
 	// Copy static assets
-	copyDir(filepath.Join(wd, "theme", "index.html"), filepath.Join(publicDir, "index.html"))
-	copyDir(filepath.Join(wd, "images"), filepath.Join(publicDir, "images"))
-	copyDir(filepath.Join(wd, "theme", "public"), publicDir)
+	copyDir(filepath.Join(wd, "theme", "index.html"), filepath.Join(outputDir, "index.html"))
+	copyDir(filepath.Join(wd, "images"), filepath.Join(outputDir, "images"))
+	copyDir(filepath.Join(wd, "theme", "public"), outputDir)
 }
 
 func copyFile(src, dst string) {
