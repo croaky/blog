@@ -76,3 +76,25 @@ func checkHTMLTitle(t *testing.T, doc *html.Node, expectedTitle string) {
 		t.Errorf("Expected title '%s', got '%s'", expectedTitle, title)
 	}
 }
+
+func TestPreProcessEmbed(t *testing.T) {
+	// Set the working directory to the directory containing the test files
+	wd, err := os.Getwd()
+	if err != nil {
+		t.Fatalf("Failed to get working directory: %v", err)
+	}
+
+	// Path to the test article and code files
+	articlePath := filepath.Join(wd, "articles", "postgres-download-restore.md")
+
+	// Run the preProcess function on the test article
+	_, body := preProcess(articlePath)
+
+	// Check that the body contains the expected embedded code lines
+	if !strings.Contains(string(body), "pg_dump") {
+		t.Errorf("Expected body to contain embedded code line %q, got: %s", "pg_dump", body)
+	}
+	if !strings.Contains(string(body), "pg_restore") {
+		t.Errorf("Expected body to contain embedded code line %q, got: %s", "pg_restore", body)
+	}
+}
