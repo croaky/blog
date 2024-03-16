@@ -91,8 +91,8 @@ manage a few DNS records to protect your web apps and databases from DDoS attack
 
 These are the deepest modules I can think of. With only a few
 lines of code or configuration, we can utilize hugely powerful systems.
-However, they can fail by including unnecessary details or omitting crucial
-ones.
+However, the design of modules can fail by including unnecessary details or
+omitting crucial ones.
 
 Software is composed of layers, each providing a different abstraction. It's
 important to pull complexity downwards, making modules simpler for users at the
