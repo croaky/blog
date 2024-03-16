@@ -1,6 +1,6 @@
 # blog
 
-Articles about writing and operating software at <https://dancroak.com>.
+Articles at <https://dancroak.com>
 
 ## Setup
 
@@ -102,6 +102,10 @@ Refer to them in articles:
 
 All `theme/public` files are copied to `public`.
 
+The `theme/index.html` template is pure HTML.
+It is up to the author to decide how to lay out their index
+and link to their articles.
+
 The `theme/article.html` file is parsed as a [Go template](https://gowebexamples.com/templates/).
 Syntax highlighting is generated at build time (no client-side JavaScript highlighting).
 `theme/article.html` accepts a data structure like this:
@@ -116,10 +120,6 @@ Syntax highlighting is generated at build time (no client-side JavaScript highli
   }
 }
 ```
-
-The `theme/index.html` template is pure HTML.
-It is up to the author to decide how to lay out their index
-and link to their articles.
 
 ## Deploy
 
