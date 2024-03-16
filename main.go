@@ -143,14 +143,14 @@ func serve(addr string) {
 		// Serve the index page for the root path
 		if path == "/" {
 			http.ServeFile(w, r, filepath.Join(wd, "theme", "index.html"))
-		} else if path != "/favicon.ico" && !strings.HasPrefix(path, "/images") {
+		} else if strings.HasPrefix(path, "/images") {
+			// Serve static files
+			fs := http.StripPrefix("/images", http.FileServer(http.Dir(filepath.Join(wd, "theme", "images"))))
+			fs.ServeHTTP(w, r)
+		} else {
 			// Build and serve the article for non-root paths
 			buildArticle(strings.TrimPrefix(path, "/"))
 			http.ServeFile(w, r, filepath.Join(wd, "public", path, "index.html"))
-		} else {
-			// Serve static files for other paths
-			fs := http.StripPrefix("/public", http.FileServer(http.Dir(filepath.Join(wd, "public"))))
-			fs.ServeHTTP(w, r)
 		}
 
 		fmt.Printf("%7.1f ms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
@@ -170,6 +170,10 @@ func build(outputDir string) {
 		fatal(os.RemoveAll(filepath.Join(outputDir, d.Name())), "Failed to remove file in output directory")
 	}
 
+	// Copy theme static files
+	copyDir(filepath.Join(wd, "theme", "index.html"), filepath.Join(outputDir, "index.html"))
+	copyDir(filepath.Join(wd, "theme", "images"), filepath.Join(outputDir, "images"))
+
 	// Build article pages
 	page := template.Must(template.ParseFiles(filepath.Join(wd, "theme", "article.html")))
 	articles := load()
@@ -187,11 +191,6 @@ func build(outputDir string) {
 		}(a)
 	}
 	wg.Wait()
-
-	// Copy static assets
-	copyDir(filepath.Join(wd, "theme", "index.html"), filepath.Join(outputDir, "index.html"))
-	copyDir(filepath.Join(wd, "images"), filepath.Join(outputDir, "images"))
-	copyDir(filepath.Join(wd, "theme", "public"), outputDir)
 }
 
 func copyFile(src, dst string) {
