@@ -49,6 +49,7 @@ compiler to finish compilation to HTML.
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"html/template"
 	"io"
@@ -57,7 +58,9 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 	"time"
@@ -193,17 +196,29 @@ func build(outputDir string) {
 	wg.Wait()
 }
 
-func copyFile(src, dst string) {
-	source, err := os.Open(src)
-	fatal(err, "Failed to open source file")
+func copyFile(srcPath, dstPath string) error {
+	// Ensure the parent directory exists
+	if err := os.MkdirAll(filepath.Dir(dstPath), 0755); err != nil {
+		return fmt.Errorf("failed to create parent directory: %w", err)
+	}
+
+	source, err := os.Open(srcPath)
+	if err != nil {
+		return fmt.Errorf("failed to open source file: %w", err)
+	}
 	defer source.Close()
 
-	destination, err := os.Create(dst)
-	fatal(err, "Failed to create destination file")
+	destination, err := os.Create(dstPath)
+	if err != nil {
+		return fmt.Errorf("failed to create destination file: %w", err)
+	}
 	defer destination.Close()
 
-	_, err = io.Copy(destination, source)
-	fatal(err, "Failed to copy file")
+	if _, err := io.Copy(destination, source); err != nil {
+		return fmt.Errorf("failed to copy file: %w", err)
+	}
+
+	return nil
 }
 
 func copyDir(src, dst string) {
@@ -226,16 +241,9 @@ func load() []Article {
 
 	for _, f := range dir {
 		articlePath := filepath.Join(wd, "articles", f.Name())
-		content, err := ioutil.ReadFile(articlePath)
-		fatal(err, "Failed to read article file")
+		title, body := preProcess(articlePath)
 
-		parts := strings.SplitN(string(content), "\n", 2)
-		if len(parts) < 2 {
-			fatal(fmt.Errorf("article must have a title and body"), "Invalid article format")
-		}
-
-		title, body := preProcess(parts[0], parts[1])
-
+		// Get last updated date
 		cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", articlePath)
 		updatedOn, err := cmd.Output()
 		fatal(err, "Failed to get last updated date")
@@ -270,18 +278,9 @@ func buildArticle(articleID string) {
 
 func loadArticle(articleID string) (Article, error) {
 	articlePath := filepath.Join(wd, "articles", articleID+".md")
-	content, err := ioutil.ReadFile(articlePath)
-	if err != nil {
-		return Article{}, err
-	}
+	title, body := preProcess(articlePath)
 
-	parts := strings.SplitN(string(content), "\n", 2)
-	if len(parts) < 2 {
-		return Article{}, fmt.Errorf("article must have a title and body")
-	}
-
-	title, body := preProcess(parts[0], parts[1])
-
+	// Get last updated date
 	cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", articlePath)
 	updatedOn, err := cmd.Output()
 	if err != nil {
@@ -296,9 +295,94 @@ func loadArticle(articleID string) (Article, error) {
 	}, nil
 }
 
-func preProcess(title, body string) (string, template.HTML) {
-	if strings.HasPrefix(title, "# ") {
-		title = strings.TrimPrefix(title, "# ")
+func preProcess(filePath string) (string, template.HTML) {
+	f, err := os.Open(filePath)
+	if err != nil {
+		fatal(err, "Failed to open file")
+	}
+	defer f.Close()
+
+	var (
+		scanner = bufio.NewScanner(f)
+		isFirst = true
+		isEmbed = false
+		title   string
+		body    string
+	)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		if isFirst {
+			if !strings.HasPrefix(line, "# ") {
+				fatal(fmt.Errorf("first line must be an h1 like: # Intro"), "Invalid first line")
+			}
+
+			title = line[2:]
+			isFirst = false
+			continue
+		}
+
+		if line == "```embed" {
+			isEmbed = true
+			continue
+		}
+
+		if isEmbed {
+			parts := strings.Split(line, " ")
+			if len(parts) != 1 && len(parts) != 2 {
+				fatal(fmt.Errorf("embed line must be filepath id (code/test.rb id) or filepath (code/test.rb)"), "Invalid embed line format")
+			}
+
+			filename := parts[0]
+			srcCodePath := filepath.Join(wd, filename)
+			srcCode, err := ioutil.ReadFile(srcCodePath)
+			if err != nil {
+				fatal(err, "Failed to read embedded file")
+			}
+
+			begindoc := 0
+			enddoc := len(srcCode) - 1
+
+			if len(parts) == 2 {
+				id := parts[1]
+				sep := "begindoc: " + id + "\n"
+				begindoc = strings.Index(string(srcCode), sep)
+				if begindoc == -1 {
+					fatal(fmt.Errorf("embed separator not found: %s in %s", sep, filename), "Failed to extract embedded content")
+				}
+				begindoc += len(sep)
+
+				sep = "enddoc: " + id
+				enddoc = strings.Index(string(srcCode), sep)
+				if enddoc == -1 {
+					fatal(fmt.Errorf("embed separator not found: %s in %s", sep, filename), "Failed to extract embedded content")
+				}
+				enddoc = strings.LastIndex(string(srcCode[0:enddoc]), "\n")
+			}
+
+			rawLines := strings.Split(string(srcCode[begindoc:enddoc]), "\n")
+
+			leadingWhitespace := regexp.MustCompile("(?m)(^[ \t]*)(?:[^ \t])")
+			var margin string
+			var lines []string
+
+			for i, l := range rawLines {
+				if i == 0 {
+					margin = leadingWhitespace.FindAllStringSubmatch(l, -1)[0][1]
+				}
+				dedented := regexp.MustCompile("(?m)^"+margin).ReplaceAllString(l, "")
+				lines = append(lines, dedented)
+			}
+
+			ext := strings.Trim(path.Ext(filename), ".")
+			body += "```" + ext + "\n" + strings.Join(lines, "\n")
+
+			isEmbed = false
+			continue
+		}
+
+		body += "\n" + line
 	}
 
 	ext := parser.CommonExtensions | parser.AutoHeadingIDs
