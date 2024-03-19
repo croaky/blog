@@ -5,7 +5,13 @@ as a software engineer since 2020.
 
 IVP is a venture capital firm.
 Since 1980, IVP has invested in ~400 companies and ~130 have gone public.
+Our newest fund is [fund 18](https://www.ivp.com/content/the-road-ahead-ivp-18/),
+a $1,6B vehicle.
+
 IVP often first invests in Series B or C rounds.
+Each year, we evaluate approximately ~10,000 companies,
+meet with ~1,000, consider term sheets for ~100,
+and invest in ~10.
 
 IVP portfolio examples by first invested year:
 
@@ -49,6 +55,8 @@ IVP portfolio examples by first invested year:
   AI language translation
 - 2023 [Perplexity](https://www.perplexity.ai/)
   AI search engine
+- 2024 [Glean](https://www.glean.com/)
+  AI search across all your company's data
 
 There are ~50 people at the firm.
 The team helps companies grow and go public.
