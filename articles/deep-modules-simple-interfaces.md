@@ -1,10 +1,9 @@
 # Deep modules, simple interfaces
 
-One of my favorite books on software is
-[A Philosophy of Software Design](https://amzn.to/2OQkBEQ),
-especially its parts about "deep modules."
-
-Deep modules have powerful functionality and simple interfaces:
+I like the parts of
+[A Philosophy of Software Design](https://amzn.to/2OQkBEQ)
+that talk about "deep modules" with powerful functionality and simple
+interfaces:
 
 ```txt
 ===========
@@ -21,14 +20,11 @@ Deep module   Shallow module
 The breadth `===` of interface is a cost.
 The depth `|` of functionality is a benefit.
 
-I believe this principle to be true at the micro-level of programming such as
-defining structs, classes, or packages.
-
 For example, the garbage collector in a language such as [Go](https://go.dev/)
-is as deep module. This module has no interface at all; it works invisibly
-behind the scenes to reclaim unused memory. Adding garbage collection to a
-system actually shrinks its overall interface, since it eliminates the interface
-for freeing objects.
+can be thought of as a deep module. This module has no interface at all; it
+works invisibly behind the scenes to reclaim unused memory. Adding garbage
+collection to a system shrinks its overall interface by eliminating the
+interface for freeing objects.
 
 The effect is magnified at the level of APIs.
 
