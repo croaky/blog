@@ -1,7 +1,5 @@
 #!/bin/bash
 set -euo pipefail
 
-# begindoc: content
 mkdir -p tmp
 pg_dump -Fc "$(cb uri app-production)" > tmp/latest.backup
-# enddoc: content
