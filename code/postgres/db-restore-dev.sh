@@ -4,13 +4,13 @@ set -euo pipefail
 db="app_development"
 dropdb --if-exists "$db"
 createdb "$db"
-psql "$db" -c "
+psql "$db" <<SQL
   CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
   CREATE EXTENSION IF NOT EXISTS pg_trgm;
   CREATE EXTENSION IF NOT EXISTS plpgsql;
-"
+SQL
 pg_restore tmp/latest.backup --verbose --no-acl --no-owner --dbname "$db"
-psql "$db" -c "
+psql "$db" <<SQL
   UPDATE ar_internal_metadata
   SET value = 'development'
   WHERE key = 'environment';
@@ -34,4 +34,4 @@ psql "$db" -c "
       'dev1@example.com',
       'dev2@example.com'
     );
-"
+SQL
