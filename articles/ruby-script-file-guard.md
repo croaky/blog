@@ -23,10 +23,10 @@ represents the path to the file that contains the current line of code.
 Here's a longer example:
 
 ```embed
-code/ruby-script-file-guard/client.rb
+code/ruby/lib/github/client.rb
 ```
 
-I might put this file in `lib/service/client.rb` and
+I might put this file in `lib/github/client.rb` and
 reference it from other files in `lib/**/*.rb`,
 which will not run the code in the `if $0 == __FILE__` guard.
 

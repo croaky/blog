@@ -1,19 +1,17 @@
-# frozen_string_literal: true
-
 require "dotenv/load"
 require "http"
 require "json"
 
-module Service
+module Github
   class Client
     def get(path)
       resp = HTTP
-        .headers(
-          accept: "application/json",
-          apikey: ENV.fetch("API_KEY")
+        .basic_auth(
+          user: ENV.fetch("GITHUB_CLIENT_ID"),
+          pass: ENV.fetch("GITHUB_CLIENT_SECRET")
         )
         .timeout(10)
-        .get("https://api.example.com#{path}")
+        .get("https://api.github.com#{path}")
       if resp.code / 100 != 2
         return {"err" => "response code #{resp.code}"}
       end
@@ -26,5 +24,5 @@ module Service
 end
 
 if $0 == __FILE__
-  pp Service::Client.new.get("/v1/users/1")
+  pp Github::Client.new.get("/orgs/deer-framework/repos")
 end
