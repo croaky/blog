@@ -23,7 +23,7 @@ represents the path to the file that contains the current line of code.
 Here's a longer example:
 
 ```embed
-code/ruby/github/client.rb
+code/ruby/lib/github/client.rb
 ```
 
 I might put this file in `lib/github/client.rb` and
