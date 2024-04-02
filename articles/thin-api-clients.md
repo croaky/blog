@@ -8,7 +8,7 @@ a "thin" client written by the application developers.
 Here's an example of a "thin" API client:
 
 ```embed
-code/thin-api-clients/slack_webhook.rb all
+code/ruby/lib/slack/webhook.rb all
 ```
 
 This triggers a
@@ -33,7 +33,7 @@ A "thinner" client would use only the language's standard library,
 such as this Go version of the same program:
 
 ```embed
-code/thin-api-clients/slackwebhook.go all
+code/go/slackwebhook.go all
 ```
 
 If my only needs are a `POST` request with JSON body,
@@ -51,5 +51,5 @@ In this case, we only need to get a token from Stripe's API
 and send the token to our backend for processing.
 
 ```embed
-code/thin-api-clients/stripe-card-token.ts all
+code/js/stripe.ts all
 ```
