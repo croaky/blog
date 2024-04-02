@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-# begindoc: content
 db="app_development"
 dropdb --if-exists "$db"
 createdb "$db"
@@ -36,4 +35,3 @@ psql "$db" -c "
       'dev2@example.com'
     );
 "
-# enddoc: content

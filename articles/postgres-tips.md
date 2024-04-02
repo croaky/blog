@@ -14,14 +14,14 @@ The `db-download-prod` script
 downloads the backup to `tmp/latest.backup`:
 
 ```embed
-code/postgres/db-download-prod content
+code/postgres/db-download-prod.sh
 ```
 
 The `db-restore-dev` script restores from the `tmp/latest.backup` file
 and does custom post-processing as needed for the project:
 
 ```embed
-code/postgres/db-restore-dev content
+code/postgres/db-restore-dev.sh
 ```
 
 ## concat_ws
