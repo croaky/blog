@@ -85,7 +85,7 @@ func TestPreProcessEmbed(t *testing.T) {
 	}
 
 	// Path to the test article and code files
-	articlePath := filepath.Join(wd, "articles", "postgres-download-restore.md")
+	articlePath := filepath.Join(wd, "articles", "postgres-tips.md")
 
 	// Run the preProcess function on the test article
 	_, body := preProcess(articlePath)
