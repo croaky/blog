@@ -17,7 +17,8 @@ Cloudflare DNS -> Cloudflare CDN -> Render
 
 ## Without an asset host
 
-If a `CNAME` record for a domain name points to a Rails app on Render:
+If a `CNAME` record for a domain name points to a Rails app on
+[Render](https://render.com):
 
 ```
 www.example.com -> example.onrender.com
@@ -34,8 +35,8 @@ The first HTTP request for a static asset:
 The logs will contain lines like this:
 
 ```
-GET "/assets/application-ql4h2308y.js"
-GET "/assets/application-ql4h2308y.css"
+GET "/assets/app-ql4h2308y.js"
+GET "/assets/app-ql4h2308y.css"
 ```
 
 This isn't the best use of Ruby processes;
@@ -54,7 +55,7 @@ the browser requests the latest version.
 The first time a user requests an asset, it will look like this:
 
 ```
-GET www.example.com/application-ql4h2308y.css
+GET www.example.com/app-ql4h2308y.css
 ```
 
 A Cloudflare cache miss "pulls from the origin",
@@ -69,10 +70,10 @@ will be cached, with no second HTTP request to the origin.
 All HTTP requests using verbs other than `GET` and `HEAD`
 proxy through to the origin.
 
-## esbuild configuation
+## esbuild config
 
-I recommend not using the Rails asset pipeline and instead using
-[esbuild](https://esbuild.github.io/).
+I recommend using [esbuild](https://esbuild.github.io/) instead of the Rails
+asset pipeline.
 
 Example `package.json` configuring React and TypeScript with linting and typechecking:
 
@@ -125,7 +126,7 @@ const args = process.argv.slice(2);
 const watch = args.includes("--watch");
 
 let opts = {
-  entryPoints: ["js/application.ts", "css/application.scss"],
+  entryPoints: ["js/app.ts", "css/app.scss"],
   plugins: [sassPlugin()],
   bundle: true,
   external: ["fonts/*"],
@@ -154,12 +155,12 @@ if (watch) {
 }
 ```
 
-## Rails configuration
+## Rails config
 
 In `config/environments/production.rb`:
 
 ```ruby
-config.action_controller.asset_host = ENV.fetch("APPLICATION_HOST")
+config.action_controller.asset_host = ENV.fetch("APP_HOST")
 config.public_file_server.enabled = true
   config.public_file_server.headers = {
     "Cache-Control" => "public, s-maxage=2592000, maxage=86400, immutable"
@@ -168,3 +169,39 @@ config.public_file_server.enabled = true
 
 The [`immutable` directive](https://code.facebook.com/posts/557147474482256/this-browser-tweak-saved-60-of-requests-to-facebook/)
 eliminates revalidation requests.
+
+In `Rakefile`:
+
+```ruby
+require "digest"
+
+# ...
+
+namespace :assets do
+  task :precompile do
+    ["public/css/app.css", "public/js/app.js"].each do |old_path|
+      hash = Digest::MD5.file(File.expand_path(old_path, __dir__))
+      old_base, old_ext = old_path.split(".")
+      new_path = "#{old_base}-#{hash}.#{old_ext}"
+      system "mv #{old_path} #{new_path}"
+    end
+  end
+end
+```
+
+## Render config
+
+In our production web service on Render,
+our build command will look like this:
+
+```
+npm install && npm run build && bundle install && bundle exec rake db:migrate && rake assets:precompile
+```
+
+In order, this:
+
+1. Builds JavaScript dependencies via NPM
+2. Transpiles, bundles, minifies via esbuild
+3. Builds Ruby dependencies via Bundler
+4. Migrates the database
+5. Fingerprints the static assets using the above rake task
