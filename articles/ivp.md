@@ -6,7 +6,7 @@ as a software engineer since 2020.
 IVP is a venture capital firm.
 Since 1980, IVP has invested in ~400 companies and ~130 have gone public.
 Our newest fund is [fund 18](https://www.ivp.com/content/the-road-ahead-ivp-18/),
-a $1,6B vehicle.
+a $1.6B vehicle.
 
 IVP often first invests in Series B or C rounds.
 Each year, we evaluate approximately ~10,000 companies,
