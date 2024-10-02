@@ -1,23 +1,19 @@
 # IVP
 
-I've been working at [IVP](https://www.ivp.com)
-as a software engineer since 2020.
-
-IVP is a venture capital firm.
-IVP has invested in ~400 high-growth companies. ~130 have gone public.
-Our newest fund is [fund 18](https://www.ivp.com/content/the-road-ahead-ivp-18/),
-a $1.6B vehicle.
+Since 2020, I've been working at [IVP](https://www.ivp.com), a venture capital firm.
+IVP has invested in ~400 high-growth companies, of whom ~130 have gone public.
+[Fund
+18](https://www.ivp.com/content/the-road-ahead-ivp-18/) is our newest fund.
 
 IVP often first invests in Series B or C rounds,
 right after a company has proven product/market fit.
-Each year, we evaluate approximately ~10,000 companies,
-meet with ~1,000, consider term sheets for ~100,
+Each year, we evaluate ~10,000 companies,
+meet with ~1,000,
+consider term sheets for ~100,
 and invest in ~10.
 
-IVP portfolio examples by first invested year:
+Some of our portfolio includes:
 
-- 2024 [Vercel](https://vercel.com/)
-  frontend cloud
 - 2024 [Chainguard](https://www.chainguard.dev/)
   container security
 - 2024 [Abridge](https://abridge.com/)
@@ -40,8 +36,6 @@ IVP portfolio examples by first invested year:
   cybersecurity
 - 2017 [Discord](https://discord.com/)
   community group chat
-- 2017 [Amplitude](https://amplitude.com/)
-  product analytics
 - 2015 [Uber](https://www.uber.com/)
   ride sharing
 - 2015 [Datadog](https://datadog.com/)
