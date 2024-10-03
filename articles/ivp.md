@@ -1,18 +1,15 @@
 # IVP
 
-Since 2020, I've been working at [IVP](https://www.ivp.com), a venture capital firm.
-IVP has invested in ~400 high-growth companies, of whom ~130 have gone public.
-[Fund
-18](https://www.ivp.com/content/the-road-ahead-ivp-18/) is our newest fund.
+I work at [IVP](https://www.ivp.com), a venture capital firm.
 
-IVP often first invests in Series B or C rounds,
+IVP invests in 10-15 high-growth companies each year,
+typically starting at Series B or C rounds,
 right after a company has proven product/market fit.
-Each year, we evaluate ~10,000 companies,
-meet with ~1,000,
-consider term sheets for ~100,
-and invest in ~10.
 
-Some of our portfolio includes:
+Our team of ~75 people help companies grow and go public,
+with 130+ IPOs and counting.
+
+Some example companies we've invested in are:
 
 - 2024 [Chainguard](https://www.chainguard.dev/)
   container security
@@ -22,8 +19,6 @@ Some of our portfolio includes:
   AI search engine
 - 2023 [DeepL](https://www.deepl.com)
   AI language translation
-- 2021 [Superhuman](https://superhuman.com/)
-  email productivity
 - 2021 [Figma](https://www.figma.com/)
   collaborative UI design
 - 2020 [WHOOP](https://www.whoop.com/)
@@ -50,9 +45,3 @@ Some of our portfolio includes:
   real-time social network
 - 2008 [Netflix](https://www.netflix.com/)
   video streaming
-
-There are ~75 people at the firm.
-The team helps companies grow and go public.
-See some lessons learned in the
-[SaaS Fundraising Handbook](https://www.ivp.com/content/saas-fundraising-playbook/)
-and [Three Paths to Going Public](https://www.ivp.com/content/three-paths-to-going-public/).
