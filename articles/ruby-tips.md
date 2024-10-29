@@ -1,4 +1,8 @@
-# Ruby script file guard
+# Ruby tips
+
+Here are a few quick Ruby tips.
+
+## File guard
 
 One of the most common snippets of Ruby code I write is:
 
