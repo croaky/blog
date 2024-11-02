@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -13,86 +13,47 @@
     <style>
       :root {
         /* sizes */
-        --content-max-width: 700px;
-        --social-icons-width: 24px;
+        --w-700: 700px;
+        --w-24: 24px;
 
-        /* Light mode */
-        --charcoal: rgb(20, 20, 20);
-        --pink: rgb(215, 0, 95);
-        --purple: rgb(150, 100, 200);
-        --purple-faded: rgb(150, 100, 200, 0.1);
-        --tan: rgb(255, 240, 230);
+        /* colors */
+        --black: rgb(20, 20, 20);
+        --purple-200: rgb(100, 50, 150, 0.2);
+        --purple: rgb(100, 50, 150);
         --white: rgb(255, 255, 255);
-        --body-bg: var(--white);
-        --body-bg: rgb(252, 242, 232);
-        --link-bg-hover: rgb(180, 120, 220, 0.2);
-        --link-color: rgb(100, 50, 150);
-        --link-underline: rgb(180, 120, 220, 0.5);
-        --link-underline-hover: rgb(100, 50, 150);
-
-        /* Dark mode */
-        @media (prefers-color-scheme: dark) {
-          --charcoal: rgb(240, 240, 240);
-          --pink: rgb(255, 100, 150);
-          --purple: rgb(180, 120, 220);
-          --purple-faded: rgb(180, 120, 220, 0.1);
-          --tan: rgb(255, 250, 240);
-          --white: rgb(255, 255, 255);
-          --body-bg: rgb(25, 30, 45);
-          --body-fg: var(--white);
-          --link-bg-hover: rgb(150, 100, 200, 0.2);
-          --link-color: rgb(150, 100, 200);
-          --link-underline: rgb(150, 100, 200, 0.5);
-          --link-underline-hover: rgb(150, 100, 200);
-        }
       }
       html,
       body {
-        background-color: var(--body-bg);
-        color: var(--body-fg);
-        font-family: system-ui, -apple-system, Roboto, "Helvetica", "Arial",
+        background-color: var(--white);
+        color: var(--black);
+        font-family:
+          system-ui,
+          -apple-system,
+          Roboto,
+          "Helvetica",
+          "Arial",
           sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      html {
         font-size: 16px;
         line-height: 1.5;
-      }
-      body {
-        background-color: var(--body-bg);
-        color: var(--body-fg);
+        margin: 0;
+        padding: 0;
         text-rendering: optimizelegibility;
         -webkit-font-smoothing: antialiased;
       }
-      main h2 {
-        font-size: 1.2rem;
-        margin-block-start: 0.2em;
-        margin-block-end: 0.2em;
-      }
-      main ul {
-        list-style-type: none;
-        margin-block-start: 0.2em;
-        margin-block-end: 1.2em;
-        padding-inline-start: var(--social-icons-width);
-      }
-      main li {
-        padding: 2px 0;
-      }
       a {
-        border-bottom: 2px solid var(--link-underline);
-        color: var(--link-color);
+        border-bottom: 2px solid var(--purple-200);
+        color: var(--purple);
         outline: 0;
         text-decoration: none;
         transition: all 0.2s ease;
       }
       a:hover {
-        background-color: var(--link-bg-hover);
-        border-bottom: 2px solid var(--link-underline-hover);
+        background-color: var(--purple-200);
+        border-bottom: 2px solid var(--purple);
       }
       .container {
         margin: 3rem;
-        max-width: var(--content-max-width);
+        max-width: var(--w-700);
       }
       .logo {
         border: none;
@@ -119,18 +80,15 @@
         padding-bottom: 0;
       }
       .social a {
-        background-color: var(--body-bg);
+        background-color: var(--white);
       }
       .social svg {
-        fill: var(--body-fg);
+        fill: var(--black);
         transition: all 0.2s ease;
-        width: var(--social-icons-width);
+        width: var(--w-24);
       }
       .social svg:hover {
         fill: var(--purple);
-      }
-      main {
-        margin: 1.25rem 0;
       }
       @media (max-width: 1000px) {
         .container {
@@ -192,8 +150,7 @@
 
     <main>
       <p>
-        I’m a software engineer at <a href="/ivp">IVP</a>, a venture capital
-        firm. I work from home in
+        I'm a software engineer at <a href="/ivp">IVP</a>. I work from home in
         <a href="https://www.youtube.com/watch?v=2yZQ-pr4oC0" target="_blank"
           >Duxbury</a
         >

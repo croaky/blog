@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -10,103 +10,69 @@
     <style>
       :root {
         /* sizes */
-        --code-max-width: 1400px;
-        --content-max-width: 700px;
+        --w-1400: 1400px;
+        --w-700: 700px;
 
-        /* Light mode */
-        --charcoal: rgb(20, 20, 20);
+        /* colors */
+        --black-500: rgb(20, 20, 20, 0.5);
+        --black: rgb(20, 20, 20);
+        --orange: rgb(249, 115, 22);
         --pink: rgb(215, 0, 95);
-        --purple: rgb(150, 100, 200);
-        --purple-faded: rgb(150, 100, 200, 0.1);
-        --orange: rgb(245, 163, 20);
+        --purple-200: rgb(100, 50, 150, 0.2);
+        --purple: rgb(100, 50, 150);
         --white: rgb(255, 255, 255);
-        --body-bg: rgb(252, 242, 232);
-        --body-fg: rgb(30, 30, 30);
-        --code-bg: var(--white);
-        --code-fg: rgb(30, 30, 30);
-        --link-bg-hover: rgb(180, 120, 220, 0.2);
-        --link-color: rgb(100, 50, 150);
-        --link-underline: rgb(180, 120, 220, 0.5);
-        --link-underline-hover: rgb(100, 50, 150);
-
-        /* Dark mode */
-        @media (prefers-color-scheme: dark) {
-          --charcoal: rgb(240, 240, 240);
-          --pink: rgb(255, 100, 150);
-          --purple: rgb(180, 120, 220);
-          --purple-faded: rgb(180, 120, 220, 0.1);
-          --yellow: rgb(255, 208, 128);
-          --white: rgb(255, 255, 255);
-          --body-bg: rgb(25, 30, 45);
-          --body-fg: rgb(255, 255, 255);
-          --code-bg: rgba(123, 148, 206, 0.1);
-          --code-fg: var(--white);
-          --link-bg-hover: rgb(150, 100, 200, 0.2);
-          --link-color: rgb(150, 100, 200);
-          --link-underline: rgb(150, 100, 200, 0.5);
-          --link-underline-hover: rgb(150, 100, 200);
-        }
       }
       html,
       body {
-        background-color: var(--body-bg);
-        color: var(--body-fg);
-        font-family: system-ui, -apple-system, Roboto, "Helvetica", "Arial",
+        background-color: var(--white);
+        color: var(--black);
+        font-family:
+          system-ui,
+          -apple-system,
+          Roboto,
+          "Helvetica",
+          "Arial",
           sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      html {
         font-size: 16px;
         line-height: 1.5;
-      }
-      body {
-        background-color: var(--body-bg);
-        color: var(--body-fg);
+        margin: 0;
+        padding: 0;
         text-rendering: optimizelegibility;
         -webkit-font-smoothing: antialiased;
       }
       a {
-        border-bottom: 2px solid var(--link-underline);
-        color: var(--link-color);
+        border-bottom: 2px solid var(--purple-200);
+        color: var(--purple);
         outline: 0;
         text-decoration: none;
         transition: all 0.2s ease;
       }
       a:hover {
-        background-color: var(--link-bg-hover);
-        border-bottom: 2px solid var(--link-underline-hover);
+        background-color: var(--purple-200);
+        border-bottom: 2px solid var(--purple);
       }
       .container {
         margin: 3rem;
-        max-width: var(--code-max-width);
+        max-width: var(--w-1400);
       }
-      a.logo {
+      .logo {
         border: none;
       }
-      nav img {
+      .logo img {
         border-radius: 50%;
         display: block;
         margin-right: 8px;
         width: 64px;
       }
-      article {
-        margin: 1.5rem 0;
-      }
       h1 {
-        color: var(--charcoal);
+        color: var(--black);
         font-size: 2rem;
         line-height: 2rem;
         margin-bottom: 5px;
-        max-width: var(--content-max-width);
-
-        /* Dark mode */
-        @media (prefers-color-scheme: dark) {
-          color: var(--white);
-        }
+        max-width: var(--w-700);
       }
       time {
-        color: rgb(150, 150, 150);
+        color: var(--black-500);
       }
       h2 {
         font-size: 1.2rem;
@@ -119,7 +85,7 @@
       p {
         margin: 0 0 1.5rem;
         max-width: 100%;
-        width: var(--content-max-width);
+        width: var(--w-700);
       }
       pre {
         margin-bottom: 1.5rem;
@@ -127,30 +93,20 @@
       article img {
         width: 100%;
       }
-      blockquote {
-        background-color: var(--mask);
-        border-left: 4px solid var(--theme-highlight);
-        margin: 0;
-        max-width: var(--content-max-width);
-        padding: 5px 25px;
-      }
       ul {
         margin: 1rem 0;
       }
       li {
         margin: 0.5rem 0;
         max-width: 100%;
-        width: var(--content-max-width);
+        width: var(--w-700);
       }
       header {
         margin: 20px 0 30px 0;
       }
-      .author {
-        color: var(--body-fg);
-        font-weight: bold;
-      }
       pre {
-        background-color: var(--code-bg);
+        background-color: var(--white);
+        border: 1px solid var(--black-500);
         border-radius: 3px;
         overflow-x: scroll;
         margin: 0 0 1.5rem 0;
@@ -158,7 +114,7 @@
         word-wrap: normal;
       }
       code {
-        color: var(--code-fg);
+        color: var(--black);
         font-family: "SFMono-Regular", Consolas, Monaco, Menlo, monospace;
         font-size: 0.8rem;
         margin: 0;
@@ -166,7 +122,7 @@
         word-wrap: break-word;
       }
       :not(pre) > code {
-        background-color: var(--code-bg);
+        background-color: var(--white);
         margin: 0 0.05em;
         padding: 3px 5px;
       }
@@ -195,9 +151,6 @@
         h2 {
           margin: 2rem 0 0.5rem;
         }
-        blockquote {
-          padding: 5px 15px;
-        }
         p {
           margin: 1rem 0;
         }
@@ -219,13 +172,7 @@
       .chroma .n,
       .chroma .nt,
       .chroma .nx {
-        /* Light mode */
-        color: var(--body-fg);
-
-        /* Dark mode */
-        @media (prefers-color-scheme: dark) {
-          color: var(--white);
-        }
+        color: var(--black);
       }
       .chroma .k,
       .chroma .nb,
@@ -235,13 +182,7 @@
       .chroma .no,
       .chroma .s,
       .chroma .s2 {
-        /* Light mode */
         color: var(--orange);
-
-        /* Dark mode */
-        @media (prefers-color-scheme: dark) {
-          color: var(--yellow);
-        }
       }
       .chroma .c,
       .chroma .c1,
@@ -249,13 +190,7 @@
       .chroma .cp,
       .chroma .o,
       .chroma .p {
-        /* Light mode */
-        color: var(--body-fg);
-
-        /* Dark mode */
-        @media (prefers-color-scheme: dark) {
-          color: var(--light-gray);
-        }
+        color: var(--black);
       }
     </style>
   </head>
