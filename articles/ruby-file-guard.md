@@ -1,20 +1,10 @@
-# Ruby tips
-
-Here are a few quick Ruby tips.
-
-## File guard
-
-One of the most common snippets of Ruby code I write is:
+# Ruby file guard
 
 ```ruby
 if $0 == __FILE__
   # pp something
 end
 ```
-
-I use this snippet to ensure that certain code is only executed when the file is
-run directly, and not when it is required or loaded as a module by another
-script.
 
 `$0` contains the file name of the Ruby script currently being run. If the
 script is being executed directly, `$0` will hold the name of the script file.
@@ -30,9 +20,7 @@ Here's a longer example:
 code/ruby/lib/github/client.rb
 ```
 
-I might put this file in `lib/github/client.rb` and
-reference it from other files in `lib/**/*.rb`,
+I can reference `Github::Client` from other files in the project,
 which will not run the code in the `if $0 == __FILE__` guard.
 
-But, I can also run the file directly to print the return value
-of the `#get` method, which offers a tight feedback loop for testing.
+I can also run the file directly for a tight feedback loop during development.

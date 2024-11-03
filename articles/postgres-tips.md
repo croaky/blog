@@ -86,35 +86,3 @@ Time: 1 ms
 ```
 
 Using `concat_ws()` instead of `concat()` prevents `AB / / CD`.
-
-## Create indexes concurrently
-
-By default,
-Postgres' `CREATE INDEX` locks writes (but not reads) to a table.
-That can be unacceptable during a production deploy.
-On a large table, indexing can take hours.
-
-Postgres has a [`CONCURRENTLY` option for `CREATE INDEX`](https://www.postgresql.org/docs/current/sql-createindex.html)
-that creates the index without preventing concurrent
-`INSERT`s, `UPDATE`s, or `DELETE`s on the table.
-
-One caveat is that
-[concurrent indexes must be created outside a transaction](https://www.postgresql.org/docs/current/sql-createindex.html#SQL-CREATEINDEX-CONCURRENTLY).
-
-If you want to do this in ActiveRecord:
-
-```ruby
-class AddIndexToAsksActive < ActiveRecord::Migration
-  disable_ddl_transaction!
-
-  def change
-    add_index :asks, :active, algorithm: :concurrently
-  end
-end
-```
-
-The `disable_ddl_transaction!` method applies only to that migration file.
-Adjacent migrations still run in their own transactions
-and roll back automatically if they fail.
-Therefore, it's a good idea to isolate concurrent index migrations
-to their own migration files.
