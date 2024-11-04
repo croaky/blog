@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -12,7 +11,7 @@ import (
 
 func TestBuild(t *testing.T) {
 	// Set up temporary directories for the test
-	tempOutputDir, err := ioutil.TempDir("", "site_test_output")
+	tempOutputDir, err := os.MkdirTemp("", "site_test_output")
 	if err != nil {
 		t.Fatalf("Failed to create temp output directory: %v", err)
 	}
@@ -38,7 +37,7 @@ func TestBuild(t *testing.T) {
 }
 
 func parseHTML(t *testing.T, filePath string) *html.Node {
-	content, err := ioutil.ReadFile(filePath)
+	content, err := os.ReadFile(filePath)
 	if err != nil {
 		t.Fatalf("Failed to read file: %v", err)
 	}
@@ -85,7 +84,7 @@ func TestPreProcessEmbed(t *testing.T) {
 	}
 
 	// Path to the test article and code files
-	articlePath := filepath.Join(wd, "articles", "postgres-tips.md")
+	articlePath := filepath.Join(wd, "articles", "dev-data.md")
 
 	// Run the preProcess function on the test article
 	_, body := preProcess(articlePath)
