@@ -3,7 +3,7 @@
 For each change to my web app,
 I add a card to a kanban board in [Notion](https://notion.com):
 
-![Kanban board](/images/kanban-board.png)
+![Kanban board](/images/kanban.png)
 
 The card might refer to a feature, bug, or chore.
 Cards are sorted by priority in each column.
