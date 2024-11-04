@@ -1,13 +1,14 @@
 # Monorepo
 
-Imagine we are software engineers at a devtool SaaS organization.
-The software we write to support the organization
-will take the shape of multiple programs.
+Imagine we are software engineers at a devtool startup.
+Our team will write and maintain multiple programs.
 
 We work incrementally,
-choose technologies suited to their tasks that we also enjoy,
-and are unafraid to write custom software
-that improves our happiness and productivity.
+use technologies suited to their tasks and our preferences,
+and write custom tooling when needed,
+such as
+[testbot])https://github.com/wepogo/testbot),
+a Continuous Integration tool for private GitHub monorepos.
 
 ## New repo
 

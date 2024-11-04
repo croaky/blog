@@ -24,5 +24,5 @@ module Github
 end
 
 if $0 == __FILE__
-  pp Github::Client.new.get("/orgs/deer-framework/repos")
+  pp Github::Client.new.get("/orgs/thoughtbot/repos")
 end
