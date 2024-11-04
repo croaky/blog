@@ -1,23 +1,23 @@
-# Kanban
+# Git workflow
 
-Here's an example kanban board in [Notion](https://notion.so):
+When I think of a change to my web app,
+I add a card to a kanban board in [Notion](https://notion.com):
 
 ![Kanban board](/images/kanban-board.png)
 
-Add a card in the "To do" column.
-It might be a feature, bug, or chore.
-Cards are sorted by priority.
+The card might refer to a feature, bug, or chore.
+Cards are sorted by priority in each column.
 
-To start a new card,
-I put my face on the top unassigned card in "To do",
+When I'm ready to work on the change,
+I assign myself to the card,
 move it to "Doing",
-and make a branch:
+and make a Git branch:
 
 ```bash
 git checkout -b my-branch
 ```
 
-I make my changes and then commit them to version control:
+I edit the codebase and commit the changed files to version control:
 
 ```bash
 git add --all
@@ -30,75 +30,82 @@ I push the feature to a remote branch:
 git push
 ```
 
-I open a pull request from the command line
+This only pushes `my-branch` to GitHub because I have this setting in
+my `~/.gitconfig`:
+
+```
+[push]
+  default = current
+```
+
+I open a pull request (PR) from the command line
 via [GitHub CLI](https://cli.github.com/):
 
 ```bash
 gh pr create --fill
+```
+
+This triggers webhooks that create:
+
+1. a [CI](https://www.martinfowler.com/articles/continuousIntegration.html) build
+2. a [Slack](https://slack.com) message in my team's channel
+
+I open new pull request in a web browser:
+
+```bash
 gh pr view --web
 ```
 
-This opens a new pull request in a web browser.
+I review the code again.
+I may push follow-up changes or edit the PR description.
 
-A GitHub webhook starts a
-[CI](https://www.martinfowler.com/articles/continuousIntegration.html) build.
-Another GitHub webhook posts the pull request to a team
-[Slack](https://slack.com) channel.
+When CI passes,
+I open the Slack thread and ask a teammate
+to review:
 
-A teammate clicks the link in the Slack channel.
-The teammate comments in-line on the code,
-[offers feedback, and approves it][pr].
-
-[pr]: https://help.github.com/articles/about-pull-request-reviews/
-
-Code review before code lands in `main` offers these benefits:
-
-- The whole team learns about new code as it is written.
-- Mistakes are caught earlier.
-- Coding standards are likely to be established and followed.
-- Feedback is likely to be applied.
-- Context ("Why did we write this?") is less likely to be forgotten.
-
-I make the suggested changes and commit them:
-
-```bash
-git add --all
-git commit --verbose
-git push
+```
+@buddy PTAL
 ```
 
-We have branch protection rules enabled:
-"Require pull request reviews before merging",
-"Require status checks to pass before merging",
-and "Require branches to be up to date before merging".
+"PTAL" means "Please Take A Look".
 
-Once the pull request has been approved, feedback addressed, and CI has passed,
+When they are ready to review,
+they add an 👀 emoji to the thread
+and open the PR in a browser.
+
+They comment in-line on the code,
+[offer feedback, and approve it](https://help.github.com/articles/about-pull-request-reviews/).
+
+I make any suggested changes and commit them.
+
+My repo has these settings:
+
+1. Require pull request reviews before merging
+2. Require status checks to pass before merging
+3. Require branches to be up to date before merging
+4. Default commit message to pull request title and description
+
 I press the "Squash and merge" button.
-We have the repo settings for commit message set to
-"Default to pull request title and description".
 
-After the pull request merges cleanly,
-back on the command line in `my-branch`, I run
-[this script](https://github.com/croaky/laptop/blob/main/bin/git-post-land):
+GitHub triggers a webhook to deploy the `main` branch
+to my staging environment on [Render](https://render.com).
+
+I acceptance test on staging.
+When everything looks good,
+I move back to the command line.
+
+In `my-branch`, I run
+[this script](https://github.com/croaky/laptop/blob/main/bin/git-post-land),
+which runs some cleanup and moves me back to `main`:
 
 ```bash
 git post-land
 ```
 
-It runs some cleanup and moves me back to `main`:
+I deploy to production with deploy script:
 
 ```bash
-git checkout main
-git fetch origin
-git merge --ff-only origin/main
-git branch -D "$branch"
-git remote prune origin
+deploy-prod
 ```
 
-At this point,
-web apps are continuously delivered to a staging environment,
-mobile apps are continuously delivered as ad-hoc builds,
-and team members are acceptance testing.
-
-When everything looks good,
-the code is deployed to production and the card moves to "Done".
+I move the card on the kanban board to "Done".
