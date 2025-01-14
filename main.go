@@ -1,51 +1,3 @@
-/*
-Add an article:
-
-	blog add <article-url-slug>
-
-Serve site on localhost:
-
-	blog serve
-
-Build site (HTML, images, code) to `public/`:
-
-	blog build
-
-When building an article, the program scans line-by-line.
-It first extracts the title from the first line...
-
-```
-# Article Title
-```
-
-When the scanner encounters an "embed" code fence like this...
-
-```embed
-code/example.rb id
-```
-
-...it loads the file and finds "magic comments" in the source like this...
-
-# begindoc: id
-puts "here"
-# enddoc: id
-
-The lines between magic comments
-are embedded back in the original code fence.
-
-To embed the entire file, don't include an ID or magic comments...
-
-```embed
-code/example.rb
-```
-
-Bad input in the Markdown document or source code file
-will stop the program with a non-zero exit code and error text.
-
-When the scanner is done, it passes its processed result to a standard Markdown
-compiler to finish compilation to HTML.
-*/
-
 package main
 
 import (
@@ -54,7 +6,6 @@ import (
 	"html/template"
 	"io"
 	"io/fs"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"os/exec"
@@ -236,7 +187,7 @@ func copyDir(src, dst string) {
 
 func load() []Article {
 	var articles []Article
-	dir, err := ioutil.ReadDir(filepath.Join(wd, "articles"))
+	dir, err := os.ReadDir(filepath.Join(wd, "articles"))
 	fatal(err, "Failed to read articles directory")
 
 	for _, f := range dir {
@@ -336,7 +287,7 @@ func preProcess(filePath string) (string, template.HTML) {
 
 			filename := parts[0]
 			srcCodePath := filepath.Join(wd, filename)
-			srcCode, err := ioutil.ReadFile(srcCodePath)
+			srcCode, err := os.ReadFile(srcCodePath)
 			if err != nil {
 				fatal(err, "Failed to read embedded file")
 			}
