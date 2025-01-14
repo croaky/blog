@@ -1,28 +1,21 @@
-require "dotenv/load"
 require "http"
 require "json"
 
-module Github
+module GitHub
   class Client
-    def get(path)
-      resp = HTTP
-        .basic_auth(
-          user: ENV.fetch("GITHUB_CLIENT_ID"),
-          pass: ENV.fetch("GITHUB_CLIENT_SECRET")
-        )
-        .timeout(10)
-        .get("https://api.github.com#{path}")
+    def get(path) # => (json: Hash | nil, err: String | nil)
+      resp = HTTP.timeout(1).get("https://api.github.com#{path}")
       if resp.code / 100 != 2
-        return {"err" => "response code #{resp.code}"}
+        return [nil, resp.status]
       end
 
-      JSON.parse(resp.body)
-    rescue HTTP::TimeoutError
-      {"err" => "10s timeout"}
+      [JSON.parse(resp.body), nil]
+    rescue => err
+      [nil, err.to_s]
     end
   end
 end
 
 if $0 == __FILE__
-  pp Github::Client.new.get("/orgs/thoughtbot/repos")
+  pp GitHub::Client.new.get("/orgs/thoughtbot/repos")
 end

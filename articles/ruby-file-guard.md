@@ -1,5 +1,7 @@
 # Ruby file guard
 
+I commonly use this stanza at the bottom of my Ruby files:
+
 ```ruby
 if $0 == __FILE__
   # pp something
@@ -20,7 +22,7 @@ Here's a longer example:
 code/ruby/lib/github/client.rb
 ```
 
-I can reference `Github::Client` from other files in the project,
+I can reference `GitHub::Client` from other files in the project,
 which will not run the code in the `if $0 == __FILE__` guard.
 
 I can also run the file directly for a tight feedback loop during development.

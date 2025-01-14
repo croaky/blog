@@ -1,5 +1,10 @@
 AllCops:
-  TargetRubyVersion: 3.3
+  TargetRubyVersion: 3.4
+  Exclude:
+    - "db/schema.rb"
+    - "sorbet/**/*.rb"
+    - "vendor/**/*"
+  SuggestExtensions: false
 
 Bundler/DuplicatedGem:
   Enabled: true
@@ -26,6 +31,9 @@ Bundler/InsecureProtocolSource:
 
 Bundler/OrderedGems:
   Enabled: false
+
+Gemspec/AddRuntimeDependency:
+  Enabled: true
 
 Gemspec/DependencyVersion:
   Enabled: false
@@ -510,6 +518,9 @@ Lint/DuplicateRequire:
 Lint/DuplicateRescueException:
   Enabled: true
 
+Lint/DuplicateSetElement:
+  Enabled: true
+
 Lint/EachWithObjectArgument:
   Enabled: true
 
@@ -566,6 +577,9 @@ Lint/FormatParameterMismatch:
 Lint/HashCompareByIdentity:
   Enabled: false
 
+Lint/HashNewWithKeywordArgumentsAsDefault:
+  Enabled: true
+
 Lint/HeredocMethodCallPosition:
   Enabled: false
 
@@ -588,10 +602,16 @@ Lint/InheritException:
 Lint/InterpolationCheck:
   Enabled: true
 
+Lint/ItWithoutArgumentsInBlock:
+  Enabled: false
+
 Lint/LambdaWithoutLiteralBlock:
   Enabled: false
 
 Lint/LiteralAsCondition:
+  Enabled: true
+
+Lint/LiteralAssignmentInCondition:
   Enabled: true
 
 Lint/LiteralInInterpolation:
@@ -641,6 +661,9 @@ Lint/NumberConversion:
   Enabled: false
 
 Lint/NumberedParameterAssignment:
+  Enabled: true
+
+Lint/NumericOperationWithConstantResult:
   Enabled: true
 
 Lint/OrAssignmentToConstant:
@@ -791,6 +814,9 @@ Lint/TripleQuotes:
 Lint/UnderscorePrefixedVariableName:
   Enabled: true
 
+Lint/UnescapedBracketInRegexp:
+  Enabled: true
+
 Lint/UnexpectedBlockArity:
   Enabled: false
 
@@ -824,11 +850,17 @@ Lint/UselessAccessModifier:
 Lint/UselessAssignment:
   Enabled: true
 
+Lint/UselessDefined:
+  Enabled: true
+
 Lint/UselessElseWithoutRescue:
   Enabled: false
 
 Lint/UselessMethodDefinition:
   Enabled: false
+
+Lint/UselessNumericOperation:
+  Enabled: true
 
 Lint/UselessRescue:
   Enabled: true
@@ -975,12 +1007,14 @@ Style/Alias:
   Enabled: true
   EnforcedStyle: prefer_alias_method
 
+Style/AmbiguousEndlessMethodDefinition:
+  Enabled: true
+
 Style/AndOr:
   Enabled: true
 
 Style/ArgumentsForwarding:
   Enabled: true
-  AllowOnlyRestArgument: true
 
 Style/ArrayCoercion:
   Enabled: false
@@ -1009,6 +1043,9 @@ Style/BeginBlock:
 
 Style/BisectedAttrAccessor:
   Enabled: false
+
+Style/BitwisePredicate:
+  Enabled: true
 
 Style/BlockComments:
   Enabled: true
@@ -1043,6 +1080,9 @@ Style/ClassMethodsDefinitions:
 
 Style/ClassVars:
   Enabled: false
+
+Style/CombinableDefined:
+  Enabled: true
 
 Style/CollectionCompact:
   Enabled: false
@@ -1095,6 +1135,9 @@ Style/DateTime:
   Enabled: false
 
 Style/DefWithParentheses:
+  Enabled: true
+
+Style/DigChain:
   Enabled: true
 
 Style/Dir:
@@ -1187,7 +1230,13 @@ Style/FetchEnvVar:
 Style/FileEmpty:
   Enabled: true
 
+Style/FileNull:
+  Enabled: true
+
 Style/FileRead:
+  Enabled: true
+
+Style/FileTouch:
   Enabled: true
 
 Style/FileWrite:
@@ -1282,6 +1331,9 @@ Style/InverseMethods:
 Style/IpAddresses:
   Enabled: false
 
+Style/KeywordArgumentsMerging:
+  Enabled: true
+
 Style/KeywordParametersOrder:
   Enabled: true
 
@@ -1300,6 +1352,9 @@ Style/MagicCommentFormat:
   Enabled: false
 
 Style/MapCompactWithConditionalBlock:
+  Enabled: true
+
+Style/MapIntoArray:
   Enabled: true
 
 Style/MapToHash:
@@ -1570,6 +1625,9 @@ Style/RedundantInitialize:
 Style/RedundantInterpolation:
   Enabled: true
 
+Style/RedundantInterpolationUnfreeze:
+  Enabled: true
+
 Style/RedundantLineContinuation:
   Enabled: true
 
@@ -1642,6 +1700,9 @@ Style/SafeNavigation:
     - try
     - try!
 
+Style/SafeNavigationChainLength:
+  Enabled: true
+
 Style/Sample:
   Enabled: true
 
@@ -1658,6 +1719,9 @@ Style/Semicolon:
 Style/Send:
   Enabled: false
 
+Style/SendWithLiteralMethodName:
+  Enabled: true
+
 Style/SignalException:
   Enabled: false
 
@@ -1666,6 +1730,9 @@ Style/SingleArgumentDig:
 
 Style/SingleLineBlockParams:
   Enabled: false
+
+Style/SingleLineDoEndBlock:
+  Enabled: true
 
 Style/SingleLineMethods:
   Enabled: true
@@ -1719,6 +1786,12 @@ Style/StructInheritance:
 
 Style/SwapValues:
   Enabled: false
+
+Style/SuperArguments:
+  Enabled: false
+
+Style/SuperWithArgsParentheses:
+  Enabled: true
 
 Style/SymbolArray:
   Enabled: false
