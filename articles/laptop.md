@@ -35,7 +35,7 @@ It:
 
 - installs system packages with Homebrew
 - sets the shell to [zsh](https://www.zsh.org/)
-- sets the terminal to [kitty](https://sw.kovidgoyal.net/kitty/)
+- sets the terminal to [Ghostty](https://ghostty.org/)
 - symlinks dotfiles from the repo to `$HOME`
 - installs Go and Ruby programming languages
 - sets up [Neovim](https://neovim.io/)
