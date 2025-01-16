@@ -7,7 +7,7 @@ We work incrementally,
 use technologies suited to their tasks and our preferences,
 and write custom tooling when needed,
 such as
-[testbot])https://github.com/wepogo/testbot),
+[testbot](https://github.com/wepogo/testbot),
 a Continuous Integration tool for private GitHub monorepos.
 
 ## New repo
