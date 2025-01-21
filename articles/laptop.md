@@ -312,30 +312,3 @@ To disable and re-enable it:
 adblock undo
 adblock
 ```
-
-## Kill PID scripts
-
-[The `kill-pid-on-port` script](https://github.com/croaky/laptop/blob/main/bin/kill-pid-on-port)
-kills processes listening on a given port:
-
-```bash
-kill-pid-on-port 3000
-```
-
-[The `kill-pid-running`
-script](https://github.com/croaky/laptop/blob/main/bin/kill-pid-running)
-kills running process by its name:
-
-```bash
-kill-pid-running sqls
-```
-
-## Find and replace script
-
-[The `replace`
-script](https://github.com/croaky/laptop/blob/main/bin/replace)
-finds and replaces code/text by a file glob:
-
-```bash
-replace foo bar **/*.rb
-```
