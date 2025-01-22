@@ -1,4 +1,4 @@
-# vim / format on save
+# vim / format sql on save
 
 When I save a `.sql` file in Vim,
 it auto-formats it with [pgFormatter](https://github.com/darold/pgFormatter)
@@ -7,10 +7,8 @@ and [ALE](https://github.com/dense-analysis/ale).
 In `laptop.sh`:
 
 ```bash
-# pgformatter
 brew install pgformatter
 
-# Vim plugins
 if [ -e "$HOME/.vim/autoload/plug.vim" ]; then
   nvim --headless +PlugUpgrade +qa
 else
