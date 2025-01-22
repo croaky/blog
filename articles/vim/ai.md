@@ -10,6 +10,9 @@ is passed through [mdembed](/cmd/mdembed) before it is sent to the LLM:
 
 ![embedded code via mdembed](/images/vim-ai-embed.gif)
 
+When I use `<Leader>r`, a new conversation is started.
+If I want to continue the last conversation, I use `<Leader>c`.
+
 ## Vim config
 
 In `laptop.sh`:
@@ -87,3 +90,39 @@ apis:
         aliases: ["llama3"]
         max-input-chars: 650000
 ```
+
+## So what?
+
+I like
+<a href="https://sankalp.bearblog.dev/evolution-of-ai-assisted-coding-features-and-developer-interaction-patterns/" target="_blank">this</a>
+analogy:
+
+> The lower the gear in a car, the more control you have over the engine but you
+> can go with less speed. If you feel in control, go to a higher gear. If you
+> are overwhelmed or stuck, go to a lower gear. AI assisted coding is all about
+> grokking when you need to gain more granular control and when you need to let
+> go of control to move faster. Higher level gears leave more room for errors
+> and trust issues.
+
+When I want to work in a lower gear, I use small chunks of code in my Markdown
+prompt. When I want to work in a higher gear, I embed one or more files in my
+Markdown prompt.
+
+I also agree with
+<a href="https://crawshaw.io/blog/programming-with-llms"
+target="_blank">this</a> from David Crawshaw:
+
+> Give an LLM a specific objective and all the background material it needs so
+> it can craft a well-contained code review packet. Avoid creating a situation
+> with so much complexity and ambiguity that the LLM gets confused and produces
+> bad results. I want a blank slate on which to craft a well-contained request.
+
+The best results I've had using LLMs for programming are when I prepare a good
+prompt and use a reasoning model like o1. The longer a conversation goes
+back-and-forth with follow-up requests, the more the LLM gets confused and won't
+produce what I want.
+
+I generally prefer to start with a fresh prompt for each request (`<Leader>r`),
+editing my `tmp.md` and embedding files from my codebase,
+some of which I may have edited,
+based on anything I learned from earlier LLM requests.
