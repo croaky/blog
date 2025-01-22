@@ -1,4 +1,4 @@
-# Monorepo
+# git / monorepo
 
 Imagine we are software engineers at a devtool startup.
 Our team will write and maintain multiple programs.

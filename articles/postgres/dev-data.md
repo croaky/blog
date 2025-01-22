@@ -1,4 +1,4 @@
-# Dev data
+# postgres / dev data
 
 I frequently download and restore my production database to my laptop
 using the following scripts, which are placed in my project's Git repo.

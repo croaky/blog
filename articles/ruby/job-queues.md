@@ -1,4 +1,4 @@
-# Postgres-backed job queues with Ruby
+# ruby / job queues
 
 The following describes a simple Ruby and Postgres job queuing system
 with these attributes

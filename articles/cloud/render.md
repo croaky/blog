@@ -1,4 +1,4 @@
-# cloud / Render
+# cloud / render
 
 From 2009-2023, my web stack most often included Heroku
 but I wanted to move to a new provider.

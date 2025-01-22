@@ -1,4 +1,4 @@
-# Ruby file guard
+# ruby / file guard
 
 I commonly use this stanza at the bottom of my Ruby files:
 

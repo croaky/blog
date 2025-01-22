@@ -1,4 +1,4 @@
-# Format on save in Vim
+# vim / format on save
 
 When I save a `.sql` file in Vim,
 it auto-formats it with [pgFormatter](https://github.com/darold/pgFormatter)
