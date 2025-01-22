@@ -1,34 +1,14 @@
 # cloud / render
 
-From 2009-2023, my web stack most often included Heroku
-but I wanted to move to a new provider.
+From 2009-2023, I most frequently deployed my database-backed web apps to
+[Heroku](https://heroku.com).
+In 2023, I wanted to move to a new provider.
 I created a [webstack](https://github.com/croaky/webstack) repo
 to prototype options.
 
 Based on the users of the primary web app I work on,
-I set up API checks via [Checkly](https://www.checklyhq.com/) from Northern California and London.
-
-The hosting providers I tested the most were:
-
-- [Fly.io](https://fly.io)
-- [Heroku](https://heroku.com)
-- [Northflank](https://northflank.com/)
-- [Railway](https://railway.app)
-- [Render](https://render.com)
-
-The Postgres databases I tested the most were:
-
-- [Aiven](https://aiven.com/)
-- [Crunchy Bridge](https://crunchybridge.com/)
-- Fly.io
-- Heroku
-- [Neon](https://neon.tech)
-- Northflank
-- Railway
-- Render
-
-I also spent some time with Vercel, PlanetScale, Supabase, Cockroach, and Fly.io SQLite.
-See the repo for details on those; they aren't covered in this article.
+I set up API checks via [Checkly](https://www.checklyhq.com/) from
+Northern California and London.
 
 Each stack served a healthcheck-style HTTP API endpoint that executed a
 `SELECT 1` to a SQL database and responded with JSON `{"status":"ok"}`.
@@ -94,7 +74,7 @@ My baseline Heroku workflow has historically been:
   follower](https://devcenter.heroku.com/articles/heroku-postgres-follower-databases)
   and continuous backups
 
-While performance and reliability have been very good on Heroku,
+While performance and reliability have been good on Heroku,
 I wanted to migrate off due to the platform's offerings beginning to stagnate.
 My confidence was particularly shaken when its GitHub integration broke in April
 2022 and it took over a month to be resolved.
@@ -105,13 +85,14 @@ from public internet without a major increase in cost.
 
 ## Render
 
-For the app I work on, I ended up choosing Render and Crunchy Bridge Postgres.
+For the app I work on, I ended up choosing
+[Render](https://render.com)
+and [Crunchy Bridge](https://crunchybridge.com/) Postgres.
 
-It felt like the smallest step from Heroku.
-I felt both companies were mature organizations and reliability for my software would be good.
-I am "all-in" on Postgres; I use it as my queuing system and have no other databases such as Redis.
+This combo felt like the smallest step from Heroku.
+I felt both companies were mature orgs and my software would be reliable.
 
-Pros:
+Some things I liked about Render:
 
 - Good customer support.
 - [IP access control on Postgres databases](https://render.com/docs/databases)
@@ -120,23 +101,20 @@ Pros:
 - [Zero-downtime deploys via health checks](https://render.com/docs/deploys#zero-downtime-deploys)
 - SOC2 certified.
 
-Cons:
-
-- Slower builds than Railway.
-- Unlike Fly, no multi-region deployments.
-
 ## Recommendations for others
 
-Consider Fly if your priorities are multi-region, low-latency, or lowest cost.
+Consider [Fly.io](https://fly.io) if your priorities are multi-region,
+low-latency, or lowest cost.
 
-Consider Northflank if your app and users are mainly in Europe, or if your
-mindset is particularly oriented around Docker or Kubernetes.
+Consider [Northflank](https://northflank.com/) if your users are mainly in
+Europe, or if your mindset is particularly oriented around Docker or Kubernetes.
 
-Consider Railway if your priorities are fast build times or you want to interact
-with your infrastructure primarily via web UI.
+Consider [Railway](https://railway.app) if your priorities are fast build times
+or you want to interact with your infrastructure primarily via web UI.
 
-Consider Aiven if you have multiple database types you want managed
-such as some combination of Postgres, Redis, Kafka, or ElasticSearch.
+Consider [Aiven](https://aiven.com/) if you have multiple database types you
+want managed such as some combination of Postgres, Redis, Kafka, or
+ElasticSearch.
 
 Consider Crunchy Bridge if you are "all-in" on Postgres and want your database
 tooling and support to be optimized around Postgres.
