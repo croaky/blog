@@ -1,16 +1,18 @@
-# Find and replace script
+# Command line find and replace
 
-I use a [`replace` script](https://github.com/croaky/laptop/blob/main/bin/replace)
-to find and replace code/text by a file glob:
+To find and replace code/text by a file glob:
 
 ```bash
 replace foo bar **/*.rb
 ```
 
-The implementation is:
+Script:
 
 ```bash
 #!/bin/bash
+#
+# https://github.com/croaky/laptop/blob/main/bin/replace
+
 find_this="$1"
 shift
 replace_with="$1"
