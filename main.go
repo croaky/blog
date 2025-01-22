@@ -9,9 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"path"
 	"path/filepath"
-	"regexp"
 	"strings"
 	"sync"
 	"time"
@@ -258,7 +256,6 @@ func preProcess(filePath string) (string, template.HTML) {
 	var (
 		scanner = bufio.NewScanner(f)
 		isFirst = true
-		isEmbed = false
 		title   string
 		lines   []string // Collect lines in a slice
 	)
@@ -273,71 +270,6 @@ func preProcess(filePath string) (string, template.HTML) {
 
 			title = line[2:]
 			isFirst = false
-			continue
-		}
-
-		if line == "```embed" {
-			isEmbed = true
-			continue
-		}
-
-		if isEmbed {
-			parts := strings.Split(line, " ")
-			if len(parts) != 1 && len(parts) != 2 {
-				fatal(fmt.Errorf("embed line must be filepath id (code/test.rb id) or filepath (code/test.rb)"), "Invalid embed line format")
-			}
-
-			filename := parts[0]
-			srcCodePath := filepath.Join(wd, filename)
-			srcCode, err := os.ReadFile(srcCodePath)
-			if err != nil {
-				fatal(err, "Failed to read embedded file")
-			}
-
-			begindoc := 0
-			enddoc := len(srcCode)
-
-			if len(parts) == 2 {
-				id := parts[1]
-				sep := "begindoc: " + id + "\n"
-				begindoc = strings.Index(string(srcCode), sep)
-				if begindoc == -1 {
-					fatal(fmt.Errorf("embed separator not found: %s in %s", sep, filename), "Failed to extract embedded content")
-				}
-				begindoc += len(sep)
-
-				sep = "enddoc: " + id
-				enddoc = strings.Index(string(srcCode), sep)
-				if enddoc == -1 {
-					fatal(fmt.Errorf("embed separator not found: %s in %s", sep, filename), "Failed to extract embedded content")
-				}
-			}
-
-			rawLines := strings.Split(string(srcCode[begindoc:enddoc]), "\n")
-
-			leadingWhitespace := regexp.MustCompile(`(?m)(^[ \t]*)(?:[^ \t])`)
-			var margin string
-			var dedentedLines []string
-
-			for i, l := range rawLines {
-				if i == 0 {
-					match := leadingWhitespace.FindStringSubmatch(l)
-					if len(match) > 1 {
-						margin = match[1]
-					} else {
-						margin = ""
-					}
-				}
-				dedented := strings.TrimPrefix(l, margin)
-				dedentedLines = append(dedentedLines, dedented)
-			}
-
-			ext := strings.Trim(path.Ext(filename), ".")
-			// Append the code block with an extra blank line after it
-			lines = append(lines, "```"+ext)
-			lines = append(lines, dedentedLines...)
-			lines = append(lines, "```", "")
-			isEmbed = false
 			continue
 		}
 

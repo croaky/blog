@@ -6,9 +6,7 @@ auto-deployed to Cloudflare Pages when Markdown articles are merged into the
 
 ## Go CLI
 
-The static site generator uses Go's [embed package](https://pkg.go.dev/embed),
-which requires a version of [Go](https://golang.org/doc/install) 1.16 or higher.
-Install it, then run:
+Install [Go](https://golang.org/doc/install), then run:
 
 ```
 go install ./...
@@ -29,8 +27,6 @@ It expects a file layout like this:
 .
 ├── articles
 │   └── example.md
-├── code
-│   └── example.rb
 ├── images
 │   └── example.png
 └-─ theme
@@ -42,13 +38,7 @@ It expects a file layout like this:
 
 ## Write
 
-Add an article:
-
-```
-blog add example-article
-```
-
-Edit `articles/example-article.md` in a text editor.
+Edit `articles/example.md` in a text editor.
 It is a [GitHub-Flavored Markdown](https://github.github.com/gfm/) file
 with no front matter.
 
@@ -64,36 +54,6 @@ Preview at <http://localhost:2000> with:
 ```
 blog serve
 ```
-
-Embed code blocks from external files into Markdown like this:
-
-    ```embed
-    code/example.rb instantiate
-    ```
-
-This embeds code from `code/example.rb`
-between `begindoc` and `enddoc` magic comments
-with an id `instantiate`:
-
-```ruby
-# begindoc: instantiate
-require 'example-sdk'
-
-client = Example::Client.new(
-  credential: '...',
-  name: 'example',
-)
-# enddoc: instantiate
-```
-
-This way, external files whose code is embedded in the Markdown prose
-can be run, linted, or tested in CI.
-
-If you want to embed the whole file, no magic comments are needed:
-
-    ```embed
-    code/example.rb
-    ```
 
 Add images to the `images` directory.
 Refer to them in articles:
