@@ -7,8 +7,17 @@ a "thin" client written by the application developers.
 
 Here's an example of a "thin" API client:
 
-```embed
-code/ruby/lib/slack/webhook.rb all
+```ruby
+require "bundler/inline"
+
+gemfile do
+  source "https://rubygems.org"
+  gem "http"
+end
+
+HTTP.post(ENV["SLACK_WEBHOOK"], json: {
+  text: "Hello, world!"
+})
 ```
 
 This triggers a
@@ -32,8 +41,44 @@ because I prefer its interface to the Ruby standard library's interface.
 A "thinner" client would use only the language's standard library,
 such as this Go version of the same program:
 
-```embed
-code/go/slackwebhook.go all
+```go
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"os"
+)
+
+func main() {
+	url := os.Getenv("SLACK_WEBHOOK")
+	if url == "" {
+		log.Fatalln("no webhook provided")
+	}
+
+	reqBody, err := json.Marshal(map[string]string{
+		"text": "Hello, world!",
+	})
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(reqBody))
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	fmt.Println(string(respBody))
+}
 ```
 
 If my only needs are a `POST` request with JSON body,

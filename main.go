@@ -24,8 +24,6 @@ import (
 	"github.com/gomarkdown/markdown/ast"
 	markdownHTML "github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 )
 
 var (
@@ -42,12 +40,6 @@ func main() {
 	fatal(err, "Failed to get working directory")
 
 	switch os.Args[1] {
-	case "add":
-		if len(os.Args) != 3 {
-			usage()
-		}
-		add(os.Args[2])
-		fmt.Println("Added ./articles/" + os.Args[2] + ".md")
 	case "serve":
 		fmt.Println("Serving at http://localhost:2000")
 		serve(":2000")
@@ -60,7 +52,7 @@ func main() {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage:\n  blog add <article-url-slug>\n  blog serve\n  blog build")
+	fmt.Fprintln(os.Stderr, "usage:\n  blog serve\n  blog build")
 	os.Exit(2)
 }
 
@@ -76,15 +68,6 @@ type Article struct {
 	Title     string
 	UpdatedOn string
 	Body      template.HTML
-}
-
-func add(id string) {
-	title := cases.Title(language.Und).String(strings.ReplaceAll(strings.ReplaceAll(filepath.Base(id), "-", " "), "_", " "))
-	content := []byte("# " + title + "\n\n\n")
-	articlePath := filepath.Join(wd, "articles", id+".md")
-	articleDir := filepath.Dir(articlePath)
-	fatal(os.MkdirAll(articleDir, os.ModePerm), "Failed to create article directory")
-	fatal(os.WriteFile(articlePath, content, 0644), "Failed to add article")
 }
 
 func serve(addr string) {

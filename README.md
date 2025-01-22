@@ -14,7 +14,6 @@ This installs a `blog` command-line program from [main.go](main.go):
 
 ```
 usage:
-  blog add <article-url-slug>
   blog serve
   blog build
 ```
@@ -38,13 +37,7 @@ It expects a file layout like this:
 
 ## Write
 
-Add an article:
-
-```
-blog add example-article
-```
-
-Edit `articles/example-article.md` in a text editor.
+Edit `articles/example.md` in a text editor.
 It is a [GitHub-Flavored Markdown](https://github.github.com/gfm/) file
 with no front matter.
 
