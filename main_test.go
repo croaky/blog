@@ -76,7 +76,7 @@ func checkHTMLTitle(t *testing.T, doc *html.Node, expectedTitle string) {
 	}
 }
 
-func TestPreProcessEmbed(t *testing.T) {
+func TestPreProcess(t *testing.T) {
 	// Set the working directory to the directory containing the test files
 	wd, err := os.Getwd()
 	if err != nil {
@@ -84,16 +84,16 @@ func TestPreProcessEmbed(t *testing.T) {
 	}
 
 	// Path to the test article and code files
-	articlePath := filepath.Join(wd, "articles", "dev-data.md")
+	articlePath := filepath.Join(wd, "articles", "postgres", "dev-data.md")
 
 	// Run the preProcess function on the test article
 	_, body := preProcess(articlePath)
 
-	// Check that the body contains the expected embedded code lines
+	// Check that the body contains expected code lines
 	if !strings.Contains(string(body), "pg_dump") {
-		t.Errorf("Expected body to contain embedded code line %q, got: %s", "pg_dump", body)
+		t.Errorf("Expected body to contain code line %q, got: %s", "pg_dump", body)
 	}
 	if !strings.Contains(string(body), "pg_restore") {
-		t.Errorf("Expected body to contain embedded code line %q, got: %s", "pg_restore", body)
+		t.Errorf("Expected body to contain code line %q, got: %s", "pg_restore", body)
 	}
 }

@@ -1,4 +1,4 @@
-# Serve static assets
+# web / serve static assets
 
 Content Distribution Networks (CDNs)
 pull content from their [origin server] during HTTP requests to cache them:

@@ -7,8 +7,17 @@ a "thin" client written by the application developers.
 
 Here's an example of a "thin" API client:
 
-```embed
-code/ruby/lib/slack/webhook.rb all
+```ruby
+require "bundler/inline"
+
+gemfile do
+  source "https://rubygems.org"
+  gem "http"
+end
+
+HTTP.post(ENV["SLACK_WEBHOOK"], json: {
+  text: "Hello, world!"
+})
 ```
 
 This triggers a
@@ -32,8 +41,44 @@ because I prefer its interface to the Ruby standard library's interface.
 A "thinner" client would use only the language's standard library,
 such as this Go version of the same program:
 
-```embed
-code/go/slackwebhook.go all
+```go
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"os"
+)
+
+func main() {
+	url := os.Getenv("SLACK_WEBHOOK")
+	if url == "" {
+		log.Fatalln("no webhook provided")
+	}
+
+	reqBody, err := json.Marshal(map[string]string{
+		"text": "Hello, world!",
+	})
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(reqBody))
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	fmt.Println(string(respBody))
+}
 ```
 
 If my only needs are a `POST` request with JSON body,
@@ -41,15 +86,3 @@ I would write a thin client.
 If there is some lightweight authentication with a header token,
 an idempotency key, or retry logic,
 I would still choose to write a thin client.
-
-Another "thin" variation is
-to choose the lightest option of open source libraries.
-For example, to add a new credit card to a React Native app, I've used the
-[stripe-client](https://www.npmjs.com/package/stripe-client) Node package
-instead of alternatives that have iOS and Android dependencies.
-In this case, we only need to get a token from Stripe's API
-and send the token to our backend for processing.
-
-```embed
-code/js/stripe.ts all
-```
