@@ -13,6 +13,7 @@
 
         /* colors */
         --black: rgb(20, 20, 20);
+        --black-500: rgb(20, 20, 20, 0.5);
         --purple-200: rgb(100, 50, 150, 0.2);
         --purple: rgb(100, 50, 150);
         --white: rgb(255, 255, 255);
@@ -39,7 +40,6 @@
       }
       body {
         margin: 3rem;
-        max-width: var(--w-700);
       }
       a {
         border-bottom: 2px solid var(--purple-200);
@@ -88,9 +88,18 @@
         fill: var(--purple);
       }
       main {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-gap: 20px;
         margin: 2rem auto;
       }
-      main h3 {
+      section {
+        padding: 20px 20px 24px 20px;
+        border: 1px solid var(--black-500);
+        border-radius: 3px;
+      }
+      section h3 {
+        margin-block-start: 0;
         margin-block-end: 0;
       }
       main ul {
@@ -167,83 +176,99 @@
     </ul>
 
     <main>
-      <h3>cloud/</h3>
-      <ul>
-        <li><a href="/cloud/render">render</a></li>
-      </ul>
-      <h3>cmd/</h3>
-      <ul>
-        <li>
-          <a href="/cmd/adblock">adblock</a>
-        </li>
-        <li>
-          <a href="/cmd/kill-pid-on-port">kill-pid-on-port</a>
-        </li>
-        <li>
-          <a href="/cmd/kill-pid-running">kill-pid-running</a>
-        </li>
-        <li>
-          <a href="/cmd/laptop">laptop</a>
-        </li>
-        <li>
-          <a href="/cmd/mdembed">mdembed</a>
-        </li>
-        <li>
-          <a href="/cmd/replace">replace</a>
-        </li>
-      </ul>
-      <h3>git/</h3>
-      <ul>
-        <li>
-          <a href="/git/monorepo">monorepo</a>
-        </li>
-        <li>
-          <a href="/git/workflow">workflow</a>
-        </li>
-      </ul>
-      <h3>go/</h3>
-      <ul>
-        <li>
-          <a href="/go/static-site">static site</a>
-        </li>
-      </ul>
-      <h3>postgres/</h3>
-      <ul>
-        <li>
-          <a href="/postgres/debug-slow-queries">debug slow queries</a>
-        </li>
-        <li>
-          <a href="/postgres/dev-data">dev data</a>
-        </li>
-      </ul>
-      <h3>ruby/</h3>
-      <ul>
-        <li><a href="/ruby/file-guard">file guard</a></li>
-        <li>
-          <a href="/ruby/job-queues">job queues</a>
-        </li>
-      </ul>
-      <h3>vim/</h3>
-      <ul>
-        <li>
-          <a href="/vim/format-sql-on-save">format sql on save</a>
-        </li>
-        <li>
-          <a href="/vim/run-sql">run sql</a>
-        </li>
-        <li>
-          <a href="/vim/run-tests">run tests</a>
-        </li>
-        <li>
-          <a href="/vim/search-project">search project</a>
-        </li>
-      </ul>
-      <h3>web/</h3>
-      <ul>
-        <li>
-          <a href="/web/serve-static-assets">serve static assets</a>
-        </li>
-      </ul>
+      <section>
+        <h3>cloud/</h3>
+        <ul>
+          <li><a href="/cloud/render">render</a></li>
+        </ul>
+      </section>
+      <section>
+        <h3>cmd/</h3>
+        <ul>
+          <li>
+            <a href="/cmd/adblock">adblock</a>
+          </li>
+          <li>
+            <a href="/cmd/kill-pid-on-port">kill-pid-on-port</a>
+          </li>
+          <li>
+            <a href="/cmd/kill-pid-running">kill-pid-running</a>
+          </li>
+          <li>
+            <a href="/cmd/laptop">laptop</a>
+          </li>
+          <li>
+            <a href="/cmd/mdembed">mdembed</a>
+          </li>
+          <li>
+            <a href="/cmd/replace">replace</a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>git/</h3>
+        <ul>
+          <li>
+            <a href="/git/monorepo">monorepo</a>
+          </li>
+          <li>
+            <a href="/git/workflow">workflow</a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>go/</h3>
+        <ul>
+          <li>
+            <a href="/go/static-site">static site</a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>postgres/</h3>
+        <ul>
+          <li>
+            <a href="/postgres/debug-slow-queries">debug slow queries</a>
+          </li>
+          <li>
+            <a href="/postgres/dev-data">dev data</a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>ruby/</h3>
+        <ul>
+          <li><a href="/ruby/file-guard">file guard</a></li>
+          <li>
+            <a href="/ruby/job-queues">job queues</a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>vim/</h3>
+        <ul>
+          <li>
+            <a href="/vim/format-sql-on-save">format sql on save</a>
+          </li>
+          <li>
+            <a href="/vim/run-sql">run sql</a>
+          </li>
+          <li>
+            <a href="/vim/run-tests">run tests</a>
+          </li>
+          <li>
+            <a href="/vim/search-project">search project</a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>web/</h3>
+        <ul>
+          <li>
+            <a href="/web/serve-static-assets">serve static assets</a>
+          </li>
+        </ul>
+      </section>
     </main>
   </body>
 </html>
