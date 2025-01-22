@@ -1,4 +1,4 @@
-# Kill PID on port
+# cmd / kill-pid-on-port
 
 To kill a process listening on a given port:
 

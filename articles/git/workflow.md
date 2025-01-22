@@ -1,4 +1,4 @@
-# Workflow
+# git / workflow
 
 For each change to my web app,
 I add a card to a kanban board in [Notion](https://notion.com):

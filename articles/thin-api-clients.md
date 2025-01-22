@@ -41,15 +41,3 @@ I would write a thin client.
 If there is some lightweight authentication with a header token,
 an idempotency key, or retry logic,
 I would still choose to write a thin client.
-
-Another "thin" variation is
-to choose the lightest option of open source libraries.
-For example, to add a new credit card to a React Native app, I've used the
-[stripe-client](https://www.npmjs.com/package/stripe-client) Node package
-instead of alternatives that have iOS and Android dependencies.
-In this case, we only need to get a token from Stripe's API
-and send the token to our backend for processing.
-
-```embed
-code/js/stripe.ts all
-```

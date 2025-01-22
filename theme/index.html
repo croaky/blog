@@ -90,6 +90,9 @@
       main {
         margin: 2rem auto;
       }
+      main h3 {
+        margin-block-end: 0;
+      }
       main ul {
         margin: 0;
         padding: 0;
@@ -164,65 +167,66 @@
     </ul>
 
     <main>
-      <h3>Command line</h3>
+      <h3>cloud/</h3>
+      <ul>
+        <li><a href="/cloud/render">render</a></li>
+      </ul>
+      <h3>cmd/</h3>
       <ul>
         <li>
-          <a href="/command-line/laptop"
-            >Dotfiles for HTML, CSS, JS, Go, Postgres, Vim</a
-          >
+          <a href="/cmd/kill-pid-on-port">kill-pid-on-port</a>
         </li>
         <li>
-          <a href="/command-line/find-and-replace">Find and replace</a>
+          <a href="/cmd/kill-pid-running">kill-pid-running</a>
         </li>
         <li>
-          <a href="/command-line/kill-pid">Kill PID</a>
-        </li>
-        <li><a href="/webstack">Webstack</a> - PaaS and managed Postgres</li>
-        <li>
-          <a href="/workflow">Workflow</a>
-          - kanban board and Git branches
+          <a href="/cmd/laptop">laptop</a>
         </li>
         <li>
-          <a href="/serve-static-assets"
-            >Static assets with CDN, Cache-Control, file digest</a
-          >
-        </li>
-        <li>
-          <a href="/monorepo">Testbot CI for private GitHub monorepos</a>
+          <a href="/cmd/replace">replace</a>
         </li>
       </ul>
-      <h3>Go</h3>
+      <h3>git/</h3>
       <ul>
         <li>
-          <a href="/go/static-site">Static site with Cloudflare Pages</a>
+          <a href="/git/monorepo">monorepo</a>
+        </li>
+        <li>
+          <a href="/git/workflow">workflow</a>
         </li>
       </ul>
-      <h3>Postgres</h3>
+      <h3>go/</h3>
       <ul>
         <li>
-          <a href="/postgres/dev-data">Dev data</a>
-        </li>
-        <li>
-          <a href="/postgres/debug-slow-queries">Debug slow queries</a>
+          <a href="/go/static-site">static site</a>
         </li>
       </ul>
-      <h3>Ruby</h3>
+      <h3>postgres/</h3>
       <ul>
         <li>
-          <a href="/ruby/postgres-job-queue">Job queues with Postgres</a>
+          <a href="/postgres/dev-data">dev data</a>
         </li>
-        <li><a href="/ruby/file-guard">File guard</a></li>
+        <li>
+          <a href="/postgres/debug-slow-queries">debug slow queries</a>
+        </li>
       </ul>
-      <h3>Vim</h3>
+      <h3>ruby/</h3>
       <ul>
         <li>
-          <a href="/vim/format-on-save">Format on save</a>
+          <a href="/ruby/job-queues">job queues</a>
         </li>
+        <li><a href="/ruby/file-guard">file guard</a></li>
+      </ul>
+      <h3>vim/</h3>
+      <ul>
         <li>
-          <a href="/vim/kill-pid-on-port">Kill PID on port</a>
+          <a href="/vim/format-on-save">format on save</a>
         </li>
+      </ul>
+      <h3>web/</h3>
+      <ul>
         <li>
-          <a href="/vim/kill-pid-running-process">Kill PID running process</a>
+          <a href="/web/serve-static-assets">serve static assets</a>
         </li>
       </ul>
     </main>

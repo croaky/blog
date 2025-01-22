@@ -1,4 +1,4 @@
-# Command line find and replace
+# cmd / replace
 
 To find and replace code/text by a file glob:
 

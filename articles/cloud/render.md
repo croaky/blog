@@ -1,4 +1,4 @@
-# Webstack
+# cloud / Render
 
 From 2009-2023, my web stack most often included Heroku
 but I wanted to move to a new provider.
@@ -80,12 +80,6 @@ func main() {
 }
 ```
 
-Neon and Crunchy Bridge offer connection pooling via PgBouncer, which I enabled.
-See [Neon docs](https://neon.tech/docs/get-started-with-neon/connection-pooling/),
-and [Crunchy Bridge docs](https://docs.crunchybridge.com/how-to/pgbouncer/).
-In Neon, you enable it with a web UI toggle.
-In Crunchy Bridge, you enable it by \`psql\`'ing into your cluster and running `CREATE EXTENSION crunchy_pooler;`.
-
 ## Heroku
 
 My baseline Heroku workflow has historically been:
@@ -109,80 +103,17 @@ Heroku lacked some long overdue features such as HTTP/2 support and
 it was not possible to restrict access to its Postgres database
 from public internet without a major increase in cost.
 
-## Fly.io
-
-Pros:
-
-- I was able to best performance of any platform I tested.
-- HTTP/2 support.
-- The CLI is fantastic.
-- SOC2 certified.
-
-Cons:
-
-- [Fly's Postgres databases are not
-  managed](https://fly.io/docs/rails/getting-started/migrate-from-heroku/#databases),
-  which requires extra monitoring and operating work.
-- They are undergoing a platform architecture migration to "Fly Apps v2" that
-  makes it awkward to navigate the docs and CLI output. While I had good uptime in
-  my testing, there have been many reports from others on their forum that
-  reliability hasn't been great during the Apps v2 migration.
-- The web UI is not as aesthetic as Heroku, Northflank, Railway, or Render.
-- Slower builds than Railway.
-
-## Northflank
-
-Pros:
-
-- Good customer support.
-- Comprehensive feature set.
-- Excellent UI.
-- Build with Docker, Heroku buildpacks, or Paketo buildpacks.
-- Deploy to US Central or Europe West.
-- Nice organization of infra into projects and deployment via staging-production pipeline.
-- Managed Postgres.
-- HA Postgres databases.
-- Hourly Postgres backups.
-- Postgres read replicas.
-- Postgres can be networked to be hidden from the internet.
-- HTTP/2 works, TLS terminates at Northflank's routing layer.
-
-Cons:
-
-- Performance didn't seem as good in my testing as Fly or Render.
-- I could get `heroku/buildpacks:20` working, but not `heroku/builder:22`.
-- Unlike Fly and Render, not SOC2 certified.
-- Unlike Fly, no multi-region deployments.
-- Unlike Render, no built-in DDoS protection.
-- Slower builds than Railway.
-
-## Railway
-
-Pros:
-
-- The web UI is absolutely gorgeous.
-- Fast build times via [Nixpacks](https://docs.railway.app/deploy/builds).
-- Web services and Postgres are easy to set up and connect to each other. The UI
-  provides a great visualization of their relationship.
-- Fast pull request environments.
-- Nice in-browser SQL editor / console.
-- Philosophically aligned with my general mentality of wanting to not think in containers.
-
-Cons:
-
-- The only region supported so far is US West. [Other regions are
-  planned](https://feedback.railway.app/feature-requests/p/configurable-deployment-region)
-- Postgres databases are exposed to the public internet like Heroku Postgres on
-  Heroku's Common Runtime. [Private networking is
-  planned](https://feedback.railway.app/feature-requests/p/internal-networking)
-- HA Postgres databases are not available.
-
 ## Render
 
+For the app I work on, I ended up choosing Render and Crunchy Bridge Postgres.
+
+It felt like the smallest step from Heroku.
+I felt both companies were mature organizations and reliability for my software would be good.
+I am "all-in" on Postgres; I use it as my queuing system and have no other databases such as Redis.
+
 Pros:
 
 - Good customer support.
-- Managed Postgres.
 - [IP access control on Postgres databases](https://render.com/docs/databases)
 - [DDoS protection](https://render.com/docs/ddos-protection)
 - HTTP/3 and HTTP/2 support.
@@ -191,17 +122,8 @@ Pros:
 
 Cons:
 
-- HA Postgres databases are not available.
 - Slower builds than Railway.
 - Unlike Fly, no multi-region deployments.
-
-## My stack choice
-
-For the app I work on, I ended up choosing Render and Crunchy Bridge Postgres.
-
-It felt like the smallest step from Heroku.
-I felt both companies were mature organizations and reliability for my software would be good.
-I am "all-in" on Postgres; I use it as my queuing system and have no other databases such as Redis.
 
 ## Recommendations for others
 

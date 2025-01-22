@@ -1,4 +1,4 @@
-# Laptop
+# cmd / laptop
 
 I maintain a [laptop](https://github.com/croaky/laptop) repo
 which sets up a macOS machine

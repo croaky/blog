@@ -79,9 +79,12 @@ type Article struct {
 }
 
 func add(id string) {
-	title := cases.Title(language.Und).String(strings.ReplaceAll(strings.ReplaceAll(id, "-", " "), "_", " "))
+	title := cases.Title(language.Und).String(strings.ReplaceAll(strings.ReplaceAll(filepath.Base(id), "-", " "), "_", " "))
 	content := []byte("# " + title + "\n\n\n")
-	fatal(os.WriteFile(filepath.Join(wd, "articles", id+".md"), content, 0644), "Failed to add article")
+	articlePath := filepath.Join(wd, "articles", id+".md")
+	articleDir := filepath.Dir(articlePath)
+	fatal(os.MkdirAll(articleDir, os.ModePerm), "Failed to create article directory")
+	fatal(os.WriteFile(articlePath, content, 0644), "Failed to add article")
 }
 
 func serve(addr string) {
@@ -89,24 +92,31 @@ func serve(addr string) {
 		startTime := time.Now()
 
 		// Normalize the path
-		path := strings.TrimSuffix(r.URL.Path, "/")
-		if path == "" {
-			path = "/"
-		}
-
-		// Serve the index page for the root path
+		path := r.URL.Path
 		if path == "/" {
 			http.ServeFile(w, r, filepath.Join(wd, "theme", "index.html"))
-		} else if strings.HasPrefix(path, "/images") {
-			// Serve static files
-			fs := http.StripPrefix("/images", http.FileServer(http.Dir(filepath.Join(wd, "theme", "images"))))
-			fs.ServeHTTP(w, r)
-		} else {
-			// Build and serve the article for non-root paths
-			buildArticle(strings.TrimPrefix(path, "/"))
-			http.ServeFile(w, r, filepath.Join(wd, "public", path, "index.html"))
+			fmt.Printf("%7.1f ms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
+			return
 		}
 
+		// Serve static files
+		if strings.HasPrefix(path, "/images/") {
+			fs := http.StripPrefix("/images/", http.FileServer(http.Dir(filepath.Join(wd, "theme", "images"))))
+			fs.ServeHTTP(w, r)
+			fmt.Printf("%7.1f ms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
+			return
+		}
+
+		// Build and serve the article for non-root paths
+		articleID := strings.TrimPrefix(path, "/")
+		buildArticle(articleID)
+		articleFilePath := filepath.Join(wd, "public", articleID, "index.html")
+		if _, err := os.Stat(articleFilePath); os.IsNotExist(err) {
+			http.NotFound(w, r)
+			fmt.Printf("%7.1f ms %s %s (not found)\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
+			return
+		}
+		http.ServeFile(w, r, articleFilePath)
 		fmt.Printf("%7.1f ms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
 	})
 	fatal(http.ListenAndServe(addr, nil), "Failed to serve")
@@ -187,25 +197,31 @@ func copyDir(src, dst string) {
 
 func load() []Article {
 	var articles []Article
-	dir, err := os.ReadDir(filepath.Join(wd, "articles"))
-	fatal(err, "Failed to read articles directory")
+	articlesDir := filepath.Join(wd, "articles")
+	err := filepath.WalkDir(articlesDir, func(path string, d fs.DirEntry, err error) error {
+		fatal(err, "Failed to walk articles directory")
+		if !d.IsDir() && strings.HasSuffix(d.Name(), ".md") {
+			// Generate article ID relative to articles dir, without extension
+			relPath, err := filepath.Rel(articlesDir, path)
+			fatal(err, "Failed to get relative path")
+			id := strings.TrimSuffix(relPath, filepath.Ext(relPath))
+			title, body := preProcess(path)
 
-	for _, f := range dir {
-		articlePath := filepath.Join(wd, "articles", f.Name())
-		title, body := preProcess(articlePath)
+			// Get last updated date
+			cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", path)
+			updatedOn, err := cmd.Output()
+			fatal(err, "Failed to get last updated date")
 
-		// Get last updated date
-		cmd := exec.Command("git", "log", "-1", "--format=%cd", "--date=format:%B %d, %Y", "--", articlePath)
-		updatedOn, err := cmd.Output()
-		fatal(err, "Failed to get last updated date")
-
-		articles = append(articles, Article{
-			ID:        strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())),
-			Title:     title,
-			UpdatedOn: strings.TrimSpace(string(updatedOn)),
-			Body:      body,
-		})
-	}
+			articles = append(articles, Article{
+				ID:        filepath.ToSlash(id),
+				Title:     title,
+				UpdatedOn: strings.TrimSpace(string(updatedOn)),
+				Body:      body,
+			})
+		}
+		return nil // Continue walking
+	})
+	fatal(err, "Failed to walk articles directory")
 
 	return articles
 }
@@ -229,6 +245,9 @@ func buildArticle(articleID string) {
 
 func loadArticle(articleID string) (Article, error) {
 	articlePath := filepath.Join(wd, "articles", articleID+".md")
+	if _, err := os.Stat(articlePath); os.IsNotExist(err) {
+		return Article{}, fmt.Errorf("article not found")
+	}
 	title, body := preProcess(articlePath)
 
 	// Get last updated date
@@ -239,7 +258,7 @@ func loadArticle(articleID string) (Article, error) {
 	}
 
 	return Article{
-		ID:        articleID,
+		ID:        filepath.ToSlash(articleID),
 		Title:     title,
 		UpdatedOn: strings.TrimSpace(string(updatedOn)),
 		Body:      body,
@@ -320,14 +339,19 @@ func preProcess(filePath string) (string, template.HTML) {
 
 			for i, l := range rawLines {
 				if i == 0 {
-					margin = leadingWhitespace.FindAllStringSubmatch(l, -1)[0][1]
+					match := leadingWhitespace.FindAllStringSubmatch(l, -1)
+					if len(match) > 0 {
+						margin = match[0][1]
+					} else {
+						margin = ""
+					}
 				}
 				dedented := regexp.MustCompile("(?m)^"+margin).ReplaceAllString(l, "")
 				lines = append(lines, dedented)
 			}
 
 			ext := strings.Trim(path.Ext(filename), ".")
-			body += "```" + ext + "\n" + strings.Join(lines, "\n")
+			body += "```" + ext + "\n" + strings.Join(lines, "\n") + "\n```\n"
 
 			isEmbed = false
 			continue

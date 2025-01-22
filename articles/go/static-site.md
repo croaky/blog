@@ -1,4 +1,4 @@
-# Static site with Go and Cloudflare Pages
+# go / static site
 
 This blog is written with a small, custom Go static site generator. It is
 auto-deployed to Cloudflare Pages when Markdown articles are merged into the

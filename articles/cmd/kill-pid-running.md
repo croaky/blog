@@ -1,4 +1,4 @@
-# Kill PID running process
+# cmd / kill-pid-running
 
 To kill a running process by its name:
 
