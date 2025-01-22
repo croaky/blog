@@ -277,7 +277,7 @@ func preProcess(filePath string) (string, template.HTML) {
 		isFirst = true
 		isEmbed = false
 		title   string
-		body    string
+		lines   []string // Collect lines in a slice
 	)
 
 	for scanner.Scan() {
@@ -312,7 +312,7 @@ func preProcess(filePath string) (string, template.HTML) {
 			}
 
 			begindoc := 0
-			enddoc := len(srcCode) - 1
+			enddoc := len(srcCode)
 
 			if len(parts) == 2 {
 				id := parts[1]
@@ -328,38 +328,46 @@ func preProcess(filePath string) (string, template.HTML) {
 				if enddoc == -1 {
 					fatal(fmt.Errorf("embed separator not found: %s in %s", sep, filename), "Failed to extract embedded content")
 				}
-				enddoc = strings.LastIndex(string(srcCode[0:enddoc]), "\n")
 			}
 
 			rawLines := strings.Split(string(srcCode[begindoc:enddoc]), "\n")
 
-			leadingWhitespace := regexp.MustCompile("(?m)(^[ \t]*)(?:[^ \t])")
+			leadingWhitespace := regexp.MustCompile(`(?m)(^[ \t]*)(?:[^ \t])`)
 			var margin string
-			var lines []string
+			var dedentedLines []string
 
 			for i, l := range rawLines {
 				if i == 0 {
-					match := leadingWhitespace.FindAllStringSubmatch(l, -1)
-					if len(match) > 0 {
-						margin = match[0][1]
+					match := leadingWhitespace.FindStringSubmatch(l)
+					if len(match) > 1 {
+						margin = match[1]
 					} else {
 						margin = ""
 					}
 				}
-				dedented := regexp.MustCompile("(?m)^"+margin).ReplaceAllString(l, "")
-				lines = append(lines, dedented)
+				dedented := strings.TrimPrefix(l, margin)
+				dedentedLines = append(dedentedLines, dedented)
 			}
 
 			ext := strings.Trim(path.Ext(filename), ".")
-			body += "```" + ext + "\n" + strings.Join(lines, "\n") + "\n```\n"
-
+			// Append the code block with an extra blank line after it
+			lines = append(lines, "```"+ext)
+			lines = append(lines, dedentedLines...)
+			lines = append(lines, "```", "")
 			isEmbed = false
 			continue
 		}
 
-		body += "\n" + line
+		lines = append(lines, line)
 	}
 
+	if err := scanner.Err(); err != nil {
+		fatal(err, "Error reading file")
+	}
+
+	body := strings.Join(lines, "\n")
+
+	// Render the markdown to HTML with syntax highlighting
 	ext := parser.CommonExtensions | parser.AutoHeadingIDs
 	htmlBody := markdown.ToHTML(
 		[]byte(body),

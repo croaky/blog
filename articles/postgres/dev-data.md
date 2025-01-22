@@ -10,12 +10,12 @@ The `db-download-prod` script
 downloads the backup to `tmp/latest.backup`:
 
 ```embed
-code/postgres/db-download-prod.sh
+code/postgres/db-download-prod.bash
 ```
 
 The `db-restore-dev` script restores from the `tmp/latest.backup` file
 and does custom post-processing as needed for the project:
 
 ```embed
-code/postgres/db-restore-dev.sh
+code/postgres/db-restore-dev.bash
 ```
