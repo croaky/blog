@@ -191,7 +191,8 @@ end
 
 ## Render config
 
-In our production web service on Render,
+In our production web service on
+<a href="https://render.com" target="_blank">Render</a>,
 our build command will look like this:
 
 ```

@@ -12,29 +12,6 @@ with these attributes
 
 I have been running a system like this in production for a few years.
 
-## Short history of Ruby job queuing systems
-
-There have been many open source job queuing systems in the Ruby community.
-
-[Sidekiq](https://sidekiq.org/) and [Resque](https://github.com/resque/resque)
-are popular but store their jobs in Redis, an additional database to operate.
-Other systems have been backed by a relational database
-such as [QueueClassic](https://github.com/QueueClassic/queue_classic),
-[Delayed Job](https://github.com/collectiveidea/delayed_job) (from Shopify),
-[Que](https://github.com/que-rb/que), and
-[GoodJob](https://github.com/bensheldon/good_job).
-
-The relational database architecture may be gaining in popularity.
-`FOR UPDATE SKIP LOCKED`, which avoids blocking and waiting on locks when polling jobs,
-was added to Postgres in 2016 and to MySQL in 2018.
-In 2023, Basecamp released
-[Solid Queue](https://github.com/basecamp/solid_queue),
-an abstraction built around `FOR UPDATE SKIP LOCKED`
-that will be [the default ActiveJob backend in Rails 8](https://github.com/rails/rails/issues/50442).
-
-While these are all great projects, I haven't been using them
-as I have more modest needs.
-
 ## Modest needs
 
 In my application, I have ~20 queues.

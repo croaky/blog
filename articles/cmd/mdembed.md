@@ -44,7 +44,7 @@ I wanted the following workflow in Vim:
 1. Open `tmp.md` in my project.
 2. Write a prompt for an LLM (Large Language Model).
 3. Reference other files, or subsets of files, in my project.
-4. Hit a key combo (`Space+r` for me) to send all the contents to an LLM.
+4. Hit a key combo (e.g. `Space+r`) to send the contents to an LLM.
 5. Open a visual split to render the LLM's response.
 
 `mdembed` handles step 3.

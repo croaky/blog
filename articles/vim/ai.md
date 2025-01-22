@@ -108,21 +108,10 @@ When I want to work in a lower gear, I use small chunks of code in my Markdown
 prompt. When I want to work in a higher gear, I embed one or more files in my
 Markdown prompt.
 
-I also agree with
-<a href="https://crawshaw.io/blog/programming-with-llms"
-target="_blank">this</a> from David Crawshaw:
+The best results I've had using LLMs are when I prepare a good, isolated prompt.
+The longer a conversation goes back-and-forth with follow-ups, the more the LLM
+gets confused and won't produce what I want.
 
-> Give an LLM a specific objective and all the background material it needs so
-> it can craft a well-contained code review packet. Avoid creating a situation
-> with so much complexity and ambiguity that the LLM gets confused and produces
-> bad results. I want a blank slate on which to craft a well-contained request.
-
-The best results I've had using LLMs for programming are when I prepare a good
-prompt and use a reasoning model like o1. The longer a conversation goes
-back-and-forth with follow-up requests, the more the LLM gets confused and won't
-produce what I want.
-
-I generally prefer to start with a fresh prompt for each request (`<Leader>r`),
-editing my `tmp.md` and embedding files from my codebase,
-some of which I may have edited,
-based on anything I learned from earlier LLM requests.
+I prefer to start with a fresh prompt for each request (`<Leader>r`), editing my
+`tmp.md` based on anything I learned from earlier LLM requests,
+embedding files from the codebase (some of which I may have edited).

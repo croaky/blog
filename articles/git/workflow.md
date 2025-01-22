@@ -1,7 +1,8 @@
 # git / workflow
 
 For each change to my web app,
-I add a card to a kanban board in [Notion](https://notion.com):
+I add a card to a kanban board in
+<a href="https://notion.com" target="_blank">Notion</a>:
 
 ![Kanban board](/images/kanban.png)
 
@@ -82,7 +83,8 @@ My repo has these settings:
 I press the "Squash and merge" button.
 
 GitHub triggers a webhook to deploy the `main` branch
-to my staging environment on [Render](https://render.com).
+to my staging environment on
+<a href="https://render.com" target="_blank">Render</a>.
 
 I acceptance test on staging.
 When everything looks good,
