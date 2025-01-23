@@ -201,7 +201,7 @@ I wanted the following workflow in Vim:
 2. Write a prompt for an LLM (Large Language Model),
    referencing other files, or subsets of files, in my project.
 3. Hit a key combo (`<Leader>+r`) to send the contents to an LLM
-   and render the LLM's response in a visual split.
+   and render the LLM's response in a vertical split.
 
 `mdembed` handles the Markdown parsing steps.
 [mods](https://github.com/charmbracelet/mods) handles the LLM steps:
@@ -210,7 +210,7 @@ I wanted the following workflow in Vim:
 go install github.com/charmbracelet/mods@latest
 ```
 
-So, my Vim config runs the following Unix pipeline in a visual split:
+So, my Vim config runs the following Unix pipeline in a vertical split:
 
 ```bash
 cat example.md | mdembed | mods
