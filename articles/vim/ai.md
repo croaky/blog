@@ -38,9 +38,16 @@ local function filetype_autocmd(ft, callback)
 	})
 end
 
+local function run_file(key, cmd_template, split_cmd)
+	local cmd = cmd_template:gsub("%%", vim.fn.expand("%:p"))
+	buf_map(0, "n", key, function()
+		vim.cmd(split_cmd)
+		vim.cmd("terminal " .. cmd)
+	end)
+end
+
 -- Markdown
 filetype_autocmd("markdown", function()
-	-- Run through LLM
 	run_file("<Leader>r", "cat % | mdembed | mods", "vsplit")
 	run_file("<Leader>c", "cat % | mdembed | mods -C", "vsplit")
 end)
