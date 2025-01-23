@@ -1,6 +1,7 @@
 # cmd / mdembed
 
 `mdembed` is a command line tool to embed file contents in Markdown.
+It is [open source](https://github.com/croaky/mdembed).
 
 Install:
 
@@ -8,17 +9,108 @@ Install:
 go install github.com/croaky/mdembed
 ```
 
-In `input.md`:
+In `input1.md`:
 
-    Embed a whole file:
+````md
+# Examples
 
-    ```embed
-    f1.rb
-    ```
+Embed a whole file:
+
+```embed
+f1.rb
+```
+
+Embed multiple whole files:
+
+```embed
+f1.rb
+f2.go
+```
+
+Embed specific lines in a file:
+
+```embed
+f3.js log
+```
+
+Embed multiple blocks within files:
+
+```embed
+f4.html h1
+f4.html ul
+```
+
+Embed Markdown files and their embeds recursively:
+
+```embed
+input2.md
+```
+````
 
 In `f1.rb`:
 
-    puts "hi"
+```rb
+puts "hi"
+```
+
+In `f2.go`:
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("hi")
+}
+```
+
+In `f3.js`:
+
+```js
+console.log("Not embedded");
+
+// emdo log
+console.log("hi");
+// emdone log
+
+console.log("Not embedded");
+```
+
+In `f4.html`:
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <title>Not embedded</title>
+  </head>
+  <body>
+    <!-- emdo h1 -->
+    <h1>h1</h1>
+    <!-- emdone h1 -->
+    <p>not embedded</p>
+    <!-- emdo ul -->
+    <ul>
+      <li>1</li>
+      <li>2</li>
+    </ul>
+    <!-- emdone ul -->
+  </body>
+</html>
+```
+
+In `input2.md`:
+
+````md
+## Input2
+
+Embed from within an embedded Markdown file:
+
+```embed
+f1.rb
+```
+````
 
 Run:
 
@@ -28,14 +120,72 @@ cat input.md | mdembed
 
 The output will be:
 
-    Embed a whole file:
+````md
+# Examples
 
-    ```rb
-    # f1.rb
-    puts "hi"
-    ```
+Embed a whole file:
 
-See [examples](https://github.com/croaky/mdembed/tree/main/examples) for more.
+```rb
+# f1.rb
+puts "hi"
+```
+
+Embed multiple whole files:
+
+```rb
+# f1.rb
+puts "hi"
+```
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("hi")
+}
+```
+
+Embed specific lines in a file:
+
+```js
+console.log("hi");
+```
+
+Embed multiple blocks within files:
+
+```html
+<h1>h1</h1>
+```
+
+```html
+<ul>
+  <li>1</li>
+  <li>2</li>
+</ul>
+```
+
+Embed Markdown files and their embeds recursively:
+
+## Input2
+
+Embed from within an embedded Markdown file:
+
+```rb
+# f1.rb
+puts "hi"
+```
+````
+
+`mdembed` embeds code blocks in the output Markdown, using the original file
+extension as the code fence attribute. If `emdo` and `emdone` magic comments
+were used, it will only embed the code block wrapped by the magic comments. It
+is aware of code comment styles for Bash, CSS, Go, Haml, HTML, JavaScript, Lua,
+Ruby, Sass, SQL, and TypeScript.
+
+If you reference another Markdown file, `mdembed` will embed its contents
+directly, recursively embedding its code blocks.
 
 ## So what?
 
