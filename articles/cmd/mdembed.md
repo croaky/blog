@@ -33,7 +33,7 @@ Embed specific lines in a file:
 f3.js log
 ```
 
-Embed multiple blocks within files:
+Embed multiple blocks within the same file:
 
 ```embed
 f4.html h1
@@ -138,6 +138,7 @@ puts "hi"
 ```
 
 ```go
+// f2.go
 package main
 
 import "fmt"
@@ -150,16 +151,19 @@ func main() {
 Embed specific lines in a file:
 
 ```js
+// f3.js
 console.log("hi");
 ```
 
-Embed multiple blocks within files:
+Embed multiple blocks within the same file:
 
 ```html
+<!-- f4.html -->
 <h1>h1</h1>
 ```
 
 ```html
+<!-- f4.html -->
 <ul>
   <li>1</li>
   <li>2</li>
@@ -178,11 +182,13 @@ puts "hi"
 ```
 ````
 
-`mdembed` embeds code blocks in the output Markdown, using the original file
-extension as the code fence attribute. If `emdo` and `emdone` magic comments
-were used, it will only embed the code block wrapped by the magic comments. It
-is aware of code comment styles for Bash, CSS, Go, Haml, HTML, JavaScript, Lua,
-Ruby, Sass, SQL, and TypeScript.
+`mdembed` embeds code blocks in the output Markdown,
+removing surrounding whitespace.
+The file extension is used as the code fence attribute.
+
+If `emdo` and `emdone` magic comments were used, it will only embed the code
+block wrapped by the magic comments. It is aware of code comment styles for
+Bash, CSS, Go, Haml, HTML, JavaScript, Lua, Ruby, Sass, SQL, and TypeScript.
 
 If you reference another Markdown file, `mdembed` will embed its contents
 directly, recursively embedding its code blocks.
