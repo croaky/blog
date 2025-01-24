@@ -13,5 +13,7 @@ Script:
 #
 # https://github.com/croaky/laptop/blob/main/bin/kill-pid-on-port
 
+set -euo pipefail
+
 lsof -n -i :"$1" | grep LISTEN | awk '{ print $2 }' | xargs kill
 ```
