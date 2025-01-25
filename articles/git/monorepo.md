@@ -2,13 +2,9 @@
 
 Imagine we are software engineers at a devtool startup.
 Our team will write and maintain multiple programs.
-
 We work incrementally,
 use technologies suited to their tasks and our preferences,
-and write custom tooling when needed,
-such as
-[testbot](https://github.com/wepogo/testbot),
-a Continuous Integration tool for private GitHub monorepos.
+and write custom tooling when needed.
 
 ## New repo
 
@@ -21,22 +17,28 @@ We initialize a monorepo on GitHub: `org/repo`:
 
 We write a `README.md`:
 
-```markdown
+````md
 Add to your shell profile:
 
 # Set environment variable to monorepo path
 
+```sh
 export ORG="$HOME/org"
+```
 
 # Prepend monorepo scripts
 
+```sh
 export PATH="$ORG/bin:$PATH"
+```
 
 Clone:
 
+```sh
 git clone https://github.com/org/repo.git $ORG
 cd $ORG
 ```
+````
 
 The `$ORG` environment variable will be used throughout the codebase.
 
@@ -44,8 +46,8 @@ The `$ORG` environment variable will be used throughout the codebase.
 
 We design an architecture like this:
 
-- a "Dashboard" web interface for customers (Svelte, TypeScript)
-- SDKs for customers (Go, Node, Ruby)
+- a "Dashboard" web interface for customers (HTML, CSS, JavaScript)
+- SDKs for customers (Go, JavaScript, Ruby)
 - an HTTP server (Go)
 - a Postgres database backing the HTTP API
 
@@ -58,7 +60,7 @@ We design an architecture like this:
 ├── dashboard
 ├── sdk
 │   ├── go
-│   ├── node
+│   ├── js
 │   └── ruby
 └── server
     └── http_handler.go
@@ -66,13 +68,13 @@ We design an architecture like this:
 
 ## Commit messages
 
-We use commit message [conventions](https://chris.beams.io/posts/git-commit/)
+We use [commit message conventions](https://chris.beams.io/posts/git-commit/)
 with a subject line prefix:
 
 ```
 $ git log
 dashboard: redirect to new project form after sign up
-sdk/node: enable Keep-Alive in HTTP agent
+sdk/js: enable Keep-Alive in HTTP agent
 server: document access to prod db
 ```
 
@@ -80,10 +82,8 @@ The prefix refers to the module that is changing.
 It often matches a filesystem directory.
 Sometimes the change will touch files across modules,
 but the prefix should be "where the action is."
-
-We try to keep the subject line under 50 characters and
-[err on the side of brevity](https://golang.org/doc/effective_go.html#package-names)
-for module names.
+Try to keep the subject line under 50 characters and
+[err on the side of brevity](https://golang.org/doc/effective_go.html#package-names).
 
 ## Dependencies
 
@@ -100,7 +100,7 @@ without a directory prefix.
 ├── ...
 ├── bin
 │   ├── setup-go
-│   ├── setup-node
+│   ├── setup-js
 │   ├── setup-postgres
 │   └── setup-ruby
 ├── dashboard
@@ -108,7 +108,7 @@ without a directory prefix.
 ├── sdk
 │  ├── go
 │  │   └── setup.sh
-│  ├── node
+│  ├── js
 │  │   └── setup.sh
 │  └── ruby
 │      └── setup.sh
@@ -119,7 +119,7 @@ without a directory prefix.
 ## Formatting
 
 Our Go code is already formatted with [gofmt]
-but we could be more consistent in our TypeScript and Ruby code.
+but we could be more consistent in our JavaScript and Ruby code.
 We add config files for [Prettier] and [Rubocop]
 at the top of the file hierarchy:
 
@@ -167,7 +167,7 @@ To meet our design goals, we write our own CI service, `testbot`:
 ├── sdk
 │   ├── go
 │   │   └── Testfile
-│   ├── node
+│   ├── js
 │   │   └── Testfile
 │   └── ruby
 │       └── Testfile
@@ -187,8 +187,8 @@ We open a GitHub pull request to add a new feature to the SDKs:
 ```
 sdk/go/account.go             | 10 +++++-----
 sdk/go/account_test.go        | 10 +++++-----
-sdk/node/src/account.ts       | 10 +++++-----
-sdk/node/test/account.ts      | 10 +++++-----
+sdk/js/src/account.ts       | 10 +++++-----
+sdk/js/test/account.ts      | 10 +++++-----
 sdk/ruby/lib/account.rb       | 10 +++++-----
 sdk/ruby/spec/account_spec.rb | 10 +++++-----
 6 files changed, 60 insertions(+), 60 deletions(-)
@@ -206,8 +206,8 @@ Each `Testfile` defines test jobs for its directory. Ours might be:
 ```
 $ cat $ORG/sdk/go/Testfile
 tests: cd $ORG/sdk && go test -cover ./...
-$ cat $ORG/sdk/node/Testfile
-tests: cd $ORG/sdk/node && npm install && npm test
+$ cat $ORG/sdk/js/Testfile
+tests: cd $ORG/sdk/js && npm install && npm test
 $ cat $ORG/sdk/ruby/Testfile
 tests: $ORG/sdk/ruby/test.sh
 ```
@@ -333,11 +333,11 @@ and monorepo directories and files to target repo directories and files.
 For example:
 
 ```yaml
-github.com/org/org-sdk-node:
+github.com/org/org-sdk-js:
   - branch:
       - main: main
   - mirror:
-      - sdk/node: /
+      - sdk/js: /
 github.com/org/org-sdk-ruby:
   - branch:
       - main: main
@@ -364,14 +364,14 @@ and eventually v2,
 we want to carefully ensure backwards compatibility.
 
 To meet our design goals,
-we write `with-go-sdk`, `with-node-sdk`, and `with-ruby-sdk` scripts:
+we write `with-go-sdk`, `with-js-sdk`, and `with-ruby-sdk` scripts:
 
 ```
 .
 ├── ...
 └── bin
     ├── with-go-sdk
-    ├── with-node-sdk
+    ├── with-js-sdk
     └── with-ruby-sdk
 ```
 
@@ -379,7 +379,7 @@ We use these scripts to run processes using a given version of our SDKs:
 
 ```
 with-go-sdk [version] [command]
-with-node-sdk [version] [command]
+with-js-sdk [version] [command]
 with-ruby-sdk [version] [command]
 ```
 
@@ -482,11 +482,11 @@ The final directory structure looks like this:
 ├── Testfile
 ├── bin
 │   ├── setup-go
-│   ├── setup-node
+│   ├── setup-js
 │   ├── setup-postgres
 │   ├── setup-ruby
 │   ├── with-go-sdk
-│   ├── with-node-sdk
+│   ├── with-js-sdk
 │   ├── with-ruby-sdk
 │   └── with-serverd
 ├── cmd
@@ -507,7 +507,7 @@ The final directory structure looks like this:
 ├── sdk
 │   ├── go
 │   │   └── setup.sh
-│   ├── node
+│   ├── js
 │   │   ├── Testfile
 │   │   └── setup.sh
 │   └── ruby
