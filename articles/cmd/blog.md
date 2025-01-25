@@ -1,10 +1,10 @@
-# go / static site
+# cmd / blog
 
-This blog is written with a small, custom Go static site generator. It is
-auto-deployed to Cloudflare Pages when Markdown articles are merged into the
-[croaky/blog](https://github.com/croaky/blog) Git repo's `main` branch.
+I edit this blog using a simple Go static site generator co-located
+with the articles at
+[croaky/blog](https://github.com/croaky/blog).
 
-## Go CLI
+## CLI
 
 Install [Go](https://golang.org/doc/install), then run:
 
@@ -16,7 +16,6 @@ This installs a `blog` command-line program:
 
 ```
 usage:
-  blog add <article-url-slug>
   blog serve
   blog build
 ```
@@ -38,7 +37,7 @@ It expects a file layout like this:
 
 ## Write
 
-Edit `articles/example.md` in a text editor.
+Edit `articles/example.md`.
 It is a [GitHub-Flavored Markdown](https://github.github.com/gfm/) file
 with no front matter.
 
@@ -98,6 +97,6 @@ Use [the Cloudflare v2 build
 environment](https://developers.cloudflare.com/pages/platform/language-support-and-tools/)
 for the latest version of Go.
 
-To deploy the site, commit and push to the GitHub repo.
+To deploy the site, commit and push to the `main` branch of the GitHub repo.
 
 View deploy logs in the Cloudflare web interface.
