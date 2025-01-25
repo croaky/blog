@@ -29,17 +29,17 @@ The first HTTP request for a static asset:
 - is received by Render.com's load balancers, which terminates TLS
 - is forwarded to the [Render.com web service](https://render.com/docs/web-services),
   which needs to bind to host `0.0.0.0` on a port, usually specified by a `PORT` variable.
-- passed to one of the running [Puma workers](https://github.com/puma/puma) (web server process)
-- routed by Rails to the asset (CSS, JS, img, font file)
+- passed to one of the running web server processes.
+- routed by the web server to the asset (CSS, JS, img, font file)
 
 The logs will contain lines like this:
 
 ```
-GET "/assets/app-ql4h2308y.js"
-GET "/assets/app-ql4h2308y.css"
+200 GET /assets/app-ql4h2308y.js
+200 GET /assets/app-ql4h2308y.css
 ```
 
-This isn't the best use of Ruby processes;
+This isn't the best use of web processes;
 they should be reserved for handling application logic.
 Response time is degraded by waiting for processes
 to finish their work.
@@ -55,7 +55,7 @@ the browser requests the latest version.
 The first time a user requests an asset, it will look like this:
 
 ```
-GET www.example.com/app-ql4h2308y.css
+200 GET /assets/app-ql4h2308y.css
 ```
 
 A Cloudflare cache miss "pulls from the origin",
@@ -75,7 +75,7 @@ proxy through to the origin.
 I recommend using [esbuild](https://esbuild.github.io/) instead of the Rails
 asset pipeline.
 
-Example `package.json` configuring React and TypeScript with linting and typechecking:
+Example `package.json` configuring React, Sass, and TypeScript:
 
 ```json
 {
@@ -89,31 +89,14 @@ Example `package.json` configuring React and TypeScript with linting and typeche
     "react-select": "^5.7.2"
   },
   "scripts": {
-    "build": "node build.mjs",
-    "buildwatch": "node build.mjs --watch",
-    "lint": "eslint js",
-    "typecheck": "tsc --noEmit"
+    "build": "node build.mjs"
   },
   "devDependencies": {
-    "@tsconfig/recommended": "^1.0.2",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@typescript-eslint/eslint-plugin": "^5.57.1",
-    "@typescript-eslint/parser": "^5.57.1",
-    "eslint": "^8.37.0",
     "typescript": "^5.0.3"
   }
 }
 ```
 
-Note the `build` and `buildwatch` scripts:
-
-```
-"build": "node build.mjs",
-"buildwatch": "node build.mjs --watch",
-```
-
-`buildwatch` is run continuously in development.
 `build` is run as part of the Render "Build command" during deployment.
 
 Example `build.mjs`:
@@ -123,7 +106,6 @@ import * as esbuild from "esbuild";
 import { sassPlugin } from "esbuild-sass-plugin";
 
 const args = process.argv.slice(2);
-const watch = args.includes("--watch");
 
 let opts = {
   entryPoints: ["js/app.ts", "css/app.scss"],
@@ -137,22 +119,12 @@ let opts = {
   outdir: "public",
 };
 
-if (watch) {
-  // dev
-  let ctx = await esbuild.context({
-    ...opts,
-    sourcemap: true,
-  });
-  await ctx.watch();
-  console.log("watching...");
-} else {
-  // deploy
-  await esbuild.build({
-    ...opts,
-    minify: true,
-    keepNames: true,
-  });
-}
+// deploy
+await esbuild.build({
+  ...opts,
+  minify: true,
+  keepNames: true,
+});
 ```
 
 ## Rails config
@@ -160,14 +132,13 @@ if (watch) {
 In `config/environments/production.rb`:
 
 ```ruby
-config.action_controller.asset_host = ENV.fetch("APP_HOST")
 config.public_file_server.enabled = true
   config.public_file_server.headers = {
     "Cache-Control" => "public, s-maxage=2592000, maxage=86400, immutable"
   }
 ```
 
-The [`immutable` directive](https://code.facebook.com/posts/557147474482256/this-browser-tweak-saved-60-of-requests-to-facebook/)
+The [immutable directive](https://code.facebook.com/posts/557147474482256/this-browser-tweak-saved-60-of-requests-to-facebook/)
 eliminates revalidation requests.
 
 In `Rakefile`:
@@ -196,7 +167,7 @@ In our production web service on
 our build command will look like this:
 
 ```
-npm install && npm run build && bundle install && bundle exec rake db:migrate && rake assets:precompile
+npm install && npm run build && bundle install && bundle exec rake db:migrate && bundle exec rake assets:precompile
 ```
 
 In order, this:
