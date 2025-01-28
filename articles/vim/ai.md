@@ -31,25 +31,30 @@ In `init.lua`:
 -- https://github.com/croaky/laptop/blob/main/vim/init.lua
 
 -- Helper functions
+local function buf_map(bufnr, mode, lhs, rhs, opts)
+  opts = vim.tbl_extend("force", { noremap = true, silent = true, buffer = bufnr }, opts or {})
+  vim.keymap.set(mode, lhs, rhs, opts)
+end
+
 local function filetype_autocmd(ft, callback)
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = ft,
-		callback = callback,
-	})
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = ft,
+    callback = callback,
+  })
 end
 
 local function run_file(key, cmd_template, split_cmd)
-	local cmd = cmd_template:gsub("%%", vim.fn.expand("%:p"))
-	buf_map(0, "n", key, function()
-		vim.cmd(split_cmd)
-		vim.cmd("terminal " .. cmd)
-	end)
+  local cmd = cmd_template:gsub("%%", vim.fn.expand("%:p"))
+  buf_map(0, "n", key, function()
+    vim.cmd(split_cmd)
+    vim.cmd("terminal " .. cmd)
+  end)
 end
 
 -- Markdown
 filetype_autocmd("markdown", function()
-	run_file("<Leader>r", "cat % | mdembed | mods", "vsplit")
-	run_file("<Leader>c", "cat % | mdembed | mods -C", "vsplit")
+  run_file("<Leader>r", "cat % | mdembed | mods", "vsplit")
+  run_file("<Leader>c", "cat % | mdembed | mods -C", "vsplit")
 end)
 ```
 
