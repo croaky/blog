@@ -1,7 +1,8 @@
 # vim / ai
 
-From a Markdown file in Vim, I type `<Leader>r` to send the contents to an LLM
-such as OpenAI o1 or o1-mini and have it display the output in a vertical split:
+I type `<Leader>r` from a Markdown file in Vim to send the contents to an LLM
+such as <a href="https://platform.openai.com/docs/models#o1" target="_blank">o1</a>
+and display the output in a vertical split:
 
 ![using an LLM from Neovim](/images/vim-ai.gif)
 
@@ -10,8 +11,7 @@ is passed through [mdembed](/cmd/mdembed) before it is sent to the LLM:
 
 ![embedded code via mdembed](/images/vim-ai-embed.gif)
 
-When I use `<Leader>r`, a new conversation is started.
-If I want to continue the last conversation, I use `<Leader>c`.
+I can type `<Leader>c` to continue the last conversation.
 
 ## Vim config
 
