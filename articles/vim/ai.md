@@ -64,7 +64,7 @@ mods --settings
 Example:
 
 ```yaml
-default-model: o1-preview
+default-model: o1
 apis:
   openai:
     base-url: https://api.openai.com/v1
@@ -72,30 +72,33 @@ apis:
     api-key-env: OPENAI_API_KEY
     models: # https://platform.openai.com/docs/models
       o1-preview:
+        aliases: ["o1"]
         max-input-chars: 792000
         fallback: o1-mini
       o1-mini:
         max-input-chars: 500000
-        fallback: gpt-4o
-      gpt-4o:
-        max-input-chars: 392000
   anthropic:
     base-url: https://api.anthropic.com/v1
     api-key:
     api-key-env: ANTHROPIC_API_KEY
     models: # https://docs.anthropic.com/en/docs/about-claude/models
       claude-3-5-sonnet-20240620:
-        aliases: ["claude3.5-sonnet", "claude-3-5-sonnet", "sonnet-3.5"]
-        max-input-chars: 680000
-      claude-3-opus-20240229:
-        aliases: ["claude3-opus", "opus"]
+        aliases: ["claude", "sonnet"]
         max-input-chars: 680000
   ollama:
     base-url: http://localhost:11434/api
     models: # https://ollama.com/library
-      "llama3:70b":
-        aliases: ["llama3"]
-        max-input-chars: 650000
+      "deepseek-r1:latest":
+        aliases: ["deepseek"]
+        max-input-chars: 500000
+```
+
+To set up [Ollama](https://ollama.com/) models such as
+[DeepSeek-R1](https://ollama.com/library/deepseek-r1):
+
+```bash
+brew install ollama
+ollama run deepseek-r1
 ```
 
 ## So what?
