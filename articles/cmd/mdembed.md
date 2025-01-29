@@ -5,8 +5,15 @@ It is [open source](https://github.com/croaky/mdembed).
 
 Install:
 
-```bash
+```sh
 go install github.com/croaky/mdembed
+```
+
+Ensure `$(go env GOPATH)/bin` is on your `$PATH`.
+For me, I have this in my `~/.zshrc`:
+
+```sh
+PATH="$HOME/go/bin:$PATH"
 ```
 
 In `input1.md`:
