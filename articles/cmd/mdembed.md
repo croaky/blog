@@ -3,18 +3,21 @@
 `mdembed` is a command line tool to embed file contents in Markdown.
 It is [open source](https://github.com/croaky/mdembed).
 
-Install:
+## Install
 
 ```sh
 go install github.com/croaky/mdembed
 ```
 
-Ensure `$(go env GOPATH)/bin` is on your `$PATH`.
-For me, I have this in my `~/.zshrc`:
+Ensure `$(go env GOPATH)/bin` is on your `$PATH`. For example, in `~/.zshrc`:
 
 ```sh
-PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 ```
+
+See more on <a href="https://go.dev/wiki/SettingGOPATH" target="_blank">GOPATH at the Go wiki</a>.
+
+## Use
 
 In `input1.md`:
 
