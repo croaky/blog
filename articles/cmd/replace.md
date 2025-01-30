@@ -13,14 +13,17 @@ Script:
 #
 # https://github.com/croaky/laptop/blob/main/bin/replace
 
+set -euo pipefail
+
 find_this="$1"
 shift
 replace_with="$1"
 shift
 
-items=$(ag -l --nocolor "$find_this" "$@")
+items=$(rg -l "$find_this" "$@")
+
 IFS=$'\n'
 for item in $items; do
-  sed "s/$find_this/$replace_with/g" "$item" > tmpfile && mv tmpfile "$item"
+  sed -i '' "s/$find_this/$replace_with/g" "$item"
 done
 ```
