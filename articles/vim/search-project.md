@@ -9,66 +9,41 @@ Projects can be searched for specific text within Vim:
 `grep` is a built-in command of Vim.
 By default, it will use the system's `grep` command.
 I override it to use
-[The Silver Searcher](https://github.com/ggreer/the_silver_searcher)'s
-`ag` command.
+[ripgrep](https://github.com/BurntSushi/ripgrep/)'s
+`rg` command.
 
-In `~/.vimrc`:
+## Search word under cursor
 
-```vim
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+In `~/.vimrc`, this config helps me search for the text under the cursor
+and show the results in a "quickfix" window:
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
+```lua
+vim.opt.grepprg = "rg --vimgrep"
+map("n", "K", ':grep! "\\b<C-R><C-W>\\b"<CR>:cw<CR>')
 ```
 
-This searches for the text under the cursor
-and shows the results in a "quickfix" window:
-
-```vim
-" bind <Leader>k to grep word under cursor
-nnoremap <Leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-```
-
-It looks like this when `<Leader>k`
-is typed with the cursor over `SubscriptionMailer`:
+It looks like this when `K`
+is typed with the cursor over `processMD`:
 
 ![Vim quickfix under cursor](/images/quickfix-under-cursor.png)
 
 Cursor over each search result, hit `Enter`, and the file will be opened.
 
-This defines a new command `Ag` to search for the provided text
-and open a quickfix window:
+## Search contents of files in project
 
-```vim
-" bind \ (backward slash) to grep shortcut
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-```
+Also in `~/.vimrc`, this defines a new command `Rg` mapped to `\` to search for
+the provided text and open a quickfix window:
 
-Map it to any character, such as `\`:
-
-```vim
-nnoremap \ :Ag<SPACE>
+```lua
+vim.api.nvim_set_keymap("n", "\\", ":Rg<SPACE>", { noremap = true })
 ```
 
 When `\` is pressed, Vim waits for input:
 
 ```vim
-:Ag
+:Rg
 ```
 
-Standard `ag` arguments may be passed in at this point:
-
-```vim
-:Ag -i Stripe app/models
-```
-
-Hitting `Enter` results in:
+It looks like this when I search for `:Rg lua`:
 
 ![Vim qickfix window with search results](/images/quickfix-custom-command.png)
