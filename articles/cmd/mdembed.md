@@ -1,6 +1,7 @@
 # cmd / mdembed
 
-`mdembed` is a command line tool to embed file contents in Markdown.
+`mdembed` is a command line tool to embed programming file contents in Markdown.
+
 It is [open source](https://github.com/croaky/mdembed).
 
 ## Install
@@ -9,13 +10,13 @@ It is [open source](https://github.com/croaky/mdembed).
 go install github.com/croaky/mdembed
 ```
 
-Ensure `$(go env GOPATH)/bin` is on your `$PATH`. For example, in `~/.zshrc`:
+For that to work, Go must be installed and
+<a href="https://go.dev/wiki/SettingGOPATH" target="_blank">`$(go env GOPATH)/bin`</a>
+must be on your `$PATH`:
 
 ```sh
 export PATH="$HOME/go/bin:$PATH"
 ```
-
-See more on <a href="https://go.dev/wiki/SettingGOPATH" target="_blank">GOPATH at the Go wiki</a>.
 
 ## Use
 
@@ -197,8 +198,14 @@ removing surrounding whitespace.
 The file extension is used as the code fence attribute.
 
 If `emdo` and `emdone` magic comments were used, it will only embed the code
-block wrapped by the magic comments. It is aware of code comment styles for
-Bash, CSS, Go, Haml, HTML, JavaScript, Lua, Ruby, Sass, SQL, and TypeScript.
+block wrapped by the magic comments.
+
+It is aware of code comment styles for Ada, Assembly, Awk, Bash, C, Clojure,
+COBOL, C++, C#, CSS, D, Dart, Elm, Erlang, Elixir, Fortran, F#, Gleam, Go, Haml,
+Haskell, HTML, Java, Julia, JavaScript, Kotlin, Lisp, Logo, Lua, MATLAB, OCaml,
+Objective-C, Mojo, Nim, Pascal, PHP, Perl, Prolog, Python, R, Ruby, Rust, Scala,
+Schema, Sass, Shell, Solidity, SQL, Swift, Tcl, TypeScript, VBScript, Visual
+Basic, Wolfram, and Zig.
 
 If you reference another Markdown file, `mdembed` will embed its contents
 directly, recursively embedding its code blocks.
