@@ -15,47 +15,55 @@ I can type `<Leader>c` to continue the last conversation.
 
 ## Vim config
 
-In `laptop.sh`:
+I install Go via Homebrew, and `mods` and `mdembed` via Go::
 
-```bash
+```sh
 # https://github.com/croaky/laptop/blob/main/laptop.sh
+
+brew "go"
 
 # AI via CLI
 go install github.com/charmbracelet/mods@latest
 go install github.com/croaky/mdembed@latest
 ```
 
-In `init.lua`:
+I make `mods` and `mdembed` available to Vim by adding
+<a href="https://go.dev/wiki/SettingGOPATH" target="_blank">`$(go env GOPATH)/bin`</a>
+to my `$PATH`:
+
+```sh
+# https://github.com/croaky/laptop/blob/main/shell/zshrc
+
+export PATH="$HOME/go/bin:$PATH"
+```
+
+I map `<Leader>r` and `<Leader>c` to the `mdembed` and `mods` pipelines:
 
 ```lua
 -- https://github.com/croaky/laptop/blob/main/vim/init.lua
 
 -- Helper functions
-local function buf_map(bufnr, mode, lhs, rhs, opts)
-  opts = vim.tbl_extend("force", { noremap = true, silent = true, buffer = bufnr }, opts or {})
+local function map(mode, lhs, rhs, opts)
+  opts = vim.tbl_extend("keep", opts or {}, { noremap = true, silent = false })
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-local function filetype_autocmd(ft, callback)
-  vim.api.nvim_create_autocmd("FileType", {
-    pattern = ft,
-    callback = callback,
-  })
-end
-
 local function run_file(key, cmd_template, split_cmd)
-  local cmd = cmd_template:gsub("%%", vim.fn.expand("%:p"))
-  buf_map(0, "n", key, function()
+  map("n", key, function()
+    local cmd = cmd_template:gsub("%%", vim.fn.expand("%:p"))
     vim.cmd(split_cmd)
     vim.cmd("terminal " .. cmd)
-  end)
+  end, { buffer = 0 })
 end
 
 -- Markdown
-filetype_autocmd("markdown", function()
-  run_file("<Leader>r", "cat % | mdembed | mods", "vsplit")
-  run_file("<Leader>c", "cat % | mdembed | mods -C", "vsplit")
-end)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    run_file("<Leader>r", "cat % | mdembed | mods", "vsplit")
+    run_file("<Leader>c", "cat % | mdembed | mods -C", "vsplit")
+  end,
+})
 ```
 
 ## LLM config
@@ -101,7 +109,7 @@ apis:
 To set up [Ollama](https://ollama.com/) models such as
 [DeepSeek-R1](https://ollama.com/library/deepseek-r1):
 
-```bash
+```sh
 brew install ollama
 ollama run deepseek-r1
 ```
