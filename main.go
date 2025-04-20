@@ -76,7 +76,7 @@ func serve(addr string) {
 		path := r.URL.Path
 		if path == "/" {
 			http.ServeFile(w, r, filepath.Join(wd, "theme", "index.html"))
-			fmt.Printf("%7.1f ms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
+			fmt.Printf("%7.1fms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
 			return
 		}
 
@@ -84,7 +84,7 @@ func serve(addr string) {
 		if strings.HasPrefix(path, "/images/") {
 			fs := http.StripPrefix("/images/", http.FileServer(http.Dir(filepath.Join(wd, "theme", "images"))))
 			fs.ServeHTTP(w, r)
-			fmt.Printf("%7.1f ms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
+			fmt.Printf("%7.1fms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
 			return
 		}
 
@@ -94,11 +94,11 @@ func serve(addr string) {
 		articleFilePath := filepath.Join(wd, "public", articleID, "index.html")
 		if _, err := os.Stat(articleFilePath); os.IsNotExist(err) {
 			http.NotFound(w, r)
-			fmt.Printf("%7.1f ms %s %s (not found)\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
+			fmt.Printf("%7.1fms %s %s (not found)\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
 			return
 		}
 		http.ServeFile(w, r, articleFilePath)
-		fmt.Printf("%7.1f ms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
+		fmt.Printf("%7.1fms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
 	})
 	fatal(http.ListenAndServe(addr, nil), "Failed to serve")
 }
