@@ -10,7 +10,7 @@ adblock
 Unlike browser extension ad blockers,
 it works on all apps on my device (not only web browsers).
 
-Unlike DNS sinkholes,
+Unlike DNS sinkholes like [Pi-hole](https://pi-hole.net/),
 it only works on my laptop (not phones or tablets on the network)
 but it does not require an additional always-on device such as a Raspberry Pi
 and it works reliably when using the laptop away from home.
