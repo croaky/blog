@@ -24,10 +24,7 @@ import (
 	"github.com/gomarkdown/markdown/parser"
 )
 
-var (
-	blogURL = "https://dancroak.com"
-	wd      string
-)
+var blogURL, wd string
 
 func main() {
 	if len(os.Args) < 2 {
@@ -39,9 +36,11 @@ func main() {
 
 	switch os.Args[1] {
 	case "serve":
+		blogURL = "http://localhost:2000"
 		fmt.Println("Serving at http://localhost:2000")
 		serve(":2000")
 	case "build":
+		blogURL = "https://dancroak.com"
 		build("public")
 		fmt.Println("Built at ./public")
 	default:
@@ -91,15 +90,18 @@ func serve(addr string) {
 		// Build and serve the article for non-root paths
 		articleID := strings.TrimPrefix(path, "/")
 		buildArticle(articleID)
+
 		articleFilePath := filepath.Join(wd, "public", articleID, "index.html")
 		if _, err := os.Stat(articleFilePath); os.IsNotExist(err) {
 			http.NotFound(w, r)
 			fmt.Printf("%7.1fms %s %s (not found)\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
 			return
 		}
+
 		http.ServeFile(w, r, articleFilePath)
 		fmt.Printf("%7.1fms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
 	})
+
 	fatal(http.ListenAndServe(addr, nil), "Failed to serve")
 }
 
