@@ -1,8 +1,7 @@
 # git / workflow
 
-For each change to my web app,
-I add a card to a kanban board in
-<a href="https://notion.com" target="_blank">Notion</a>:
+For each change to my software,
+I add a card to a kanban board:
 
 ![Kanban board](/images/kanban.png)
 
