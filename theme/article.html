@@ -82,12 +82,17 @@
       }
       p {
         margin: 0 0 1.5rem;
-        max-width: var(--w-700);
         width: 100%;
       }
-      p > img {
-        display: block;
+      p {
+        max-width: var(--w-700);
+      }
+      p:has(img) {
         max-width: var(--w-1400);
+      }
+      p > img {
+        margin: 1rem 0;
+        max-width: 100%;
       }
       ul {
         margin: 1rem 0;
@@ -133,10 +138,6 @@
         .container {
           margin: 2rem;
           max-width: 92.5%;
-        }
-        p > img {
-          margin: 1rem 0;
-          max-width: 100%;
         }
       }
       /* mobile */
