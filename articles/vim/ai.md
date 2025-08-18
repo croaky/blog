@@ -106,14 +106,6 @@ apis:
         max-input-chars: 500000
 ```
 
-To set up [Ollama](https://ollama.com/) models such as
-[DeepSeek-R1](https://ollama.com/library/deepseek-r1):
-
-```sh
-brew install ollama
-ollama run deepseek-r1
-```
-
 ## So what?
 
 I like
