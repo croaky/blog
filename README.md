@@ -82,6 +82,38 @@ Syntax highlighting is generated at build time (no client-side JavaScript highli
 }
 ```
 
+Use [Tufte CSS](https://edwardtufte.github.io/tufte-css/) for
+typography and layout.
+
+Instead of footnotes, use sidenotes that appear in the margin on desktop
+and toggle on mobile:
+
+```html
+Text with a sidenote.
+<label for="sn-example" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-example" class="margin-toggle" />
+<span class="sidenote">This is a sidenote that appears in the margin.</span>
+```
+
+For notes without numbers, use marginal notes:
+
+```html
+Text with a marginal note.
+<label for="mn-example" class="margin-toggle">&#8853;</label>
+<input type="checkbox" id="mn-example" class="margin-toggle" />
+<span class="marginnote">This is a marginal note with a symbol.</span>
+```
+
+Make images, code blocks, or other content span the full page width:
+
+```html
+<div class="fullwidth">
+  <p>This content spans the full width of the page.</p>
+</div>
+```
+
+Add the HTML directly to Markdown articles.
+
 ## Deploy
 
 Create a static site on [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-anything/):
