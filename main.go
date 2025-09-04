@@ -87,6 +87,17 @@ func serve(addr string) {
 			return
 		}
 
+		// Serve CSS files with correct MIME type
+		if strings.HasPrefix(path, "/css/") {
+			if strings.HasSuffix(path, ".css") {
+				w.Header().Set("Content-Type", "text/css")
+			}
+			fs := http.StripPrefix("/css/", http.FileServer(http.Dir(filepath.Join(wd, "theme", "css"))))
+			fs.ServeHTTP(w, r)
+			fmt.Printf("%7.1fms %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
+			return
+		}
+
 		// Build and serve the article for non-root paths
 		articleID := strings.TrimPrefix(path, "/")
 		buildArticle(articleID)
@@ -120,6 +131,7 @@ func build(outputDir string) {
 	// Copy theme static files
 	copyDir(filepath.Join(wd, "theme", "index.html"), filepath.Join(outputDir, "index.html"))
 	copyDir(filepath.Join(wd, "theme", "images"), filepath.Join(outputDir, "images"))
+	copyDir(filepath.Join(wd, "theme", "css"), filepath.Join(outputDir, "css"))
 
 	// Build article pages
 	page := template.Must(template.ParseFiles(filepath.Join(wd, "theme", "article.html")))

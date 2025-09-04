@@ -6,222 +6,49 @@
     <meta name="author" content="Dan Croak" />
     <title>{{.Article.Title}}</title>
     <link rel="icon" href="/images/favicon.ico" />
-    <style>
-      :root {
-        /* sizes */
-        --w-1400: 1400px;
-        --w-700: 700px;
-
-        /* colors */
-        --black-500: rgb(20, 20, 20, 0.5);
-        --black: rgb(20, 20, 20);
-        --orange: rgb(249, 115, 22);
-        --pink: rgb(215, 0, 95);
-        --purple-200: rgb(100, 50, 150, 0.2);
-        --purple: rgb(100, 50, 150);
-        --white: rgb(255, 255, 255);
-      }
-      html,
-      body {
-        background-color: var(--white);
-        color: var(--black);
-        font-family:
-          system-ui,
-          -apple-system,
-          Roboto,
-          "Helvetica",
-          "Arial",
-          sans-serif;
-        font-size: 16px;
-        line-height: 1.5;
-        margin: 0;
-        padding: 0;
-        text-rendering: optimizelegibility;
-        -webkit-font-smoothing: antialiased;
-      }
-      a {
-        border-bottom: 2px solid var(--purple-200);
-        color: var(--purple);
-        outline: 0;
-        text-decoration: none;
-        transition: all 0.2s ease;
-      }
-      a:hover {
-        border-bottom: 2px solid var(--purple);
-      }
-      .container {
-        margin: 3rem;
-        max-width: var(--w-1400);
-      }
-      .croaky {
-        border: none;
-      }
-      .croaky img {
-        border-radius: 50%;
-        display: block;
-        margin-right: 8px;
-        width: 64px;
-      }
-      h1 {
-        color: var(--black);
-        font-size: 2rem;
-        line-height: 2rem;
-        margin-bottom: 5px;
-        max-width: var(--w-700);
-      }
-      time {
-        color: var(--black-500);
-      }
-      h2 {
-        font-size: 1.2rem;
-        margin-block-start: 1.25em;
-        margin-block-end: 0.5em;
-      }
-      h2:hover {
-        cursor: pointer;
-      }
-      p {
-        margin: 0 0 1.5rem;
-        width: 100%;
-      }
-      p {
-        max-width: var(--w-700);
-      }
-      p:has(img) {
-        max-width: var(--w-1400);
-      }
-      p > img {
-        margin: 1rem 0;
-        max-width: 100%;
-      }
-      ul {
-        margin: 1rem 0;
-      }
-      li {
-        margin: 0.5rem 0;
-        max-width: 100%;
-        width: var(--w-700);
-      }
-      header {
-        margin: 20px 0 30px 0;
-      }
-      pre {
-        background-color: var(--white);
-        border: 1px solid var(--black-500);
-        border-radius: 3px;
-        overflow-x: scroll;
-        margin: 0 0 1.5rem 0;
-        padding: 10px 15px;
-        word-wrap: normal;
-      }
-      code {
-        color: var(--black);
-        font-family: "SFMono-Regular", Consolas, Monaco, Menlo, monospace;
-        font-size: 0.8rem;
-        margin: 0;
-        padding: 0;
-        word-wrap: break-word;
-      }
-      :not(pre) > code {
-        background-color: var(--white);
-        margin: 0 0.05em;
-        padding: 3px 5px;
-      }
-      td,
-      th {
-        padding: 0 20px 5px 0;
-      }
-      th {
-        text-align: left;
-      }
-      @media (max-width: 1000px) {
-        .container {
-          margin: 2rem;
-          max-width: 92.5%;
-        }
-      }
-      /* mobile */
-      @media (max-width: 700px) {
-        body {
-          font-size: 0.9rem;
-        }
-        .container {
-          margin: 1rem;
-          max-width: 92.5%;
-        }
-        h2 {
-          margin: 2rem 0 0.5rem;
-        }
-        p {
-          margin: 1rem 0;
-        }
-      }
-      /* syntax highlighting */
-      .chroma .err,
-      .chroma .gh,
-      .chroma .kn,
-      .chroma .kp,
-      .chroma .m,
-      .chroma .mi,
-      .chroma .no,
-      .chroma .vi,
-      .chroma .ss {
-        color: var(--pink);
-      }
-      .chroma .kc,
-      .chroma .kd,
-      .chroma .n,
-      .chroma .nt,
-      .chroma .nx {
-        color: var(--black);
-      }
-      .chroma .k,
-      .chroma .nb,
-      .chroma .nf {
-        color: var(--purple);
-      }
-      .chroma .no,
-      .chroma .s,
-      .chroma .s2 {
-        color: var(--orange);
-      }
-      .chroma .c,
-      .chroma .c1,
-      .chroma .ch,
-      .chroma .cp,
-      .chroma .o,
-      .chroma .p {
-        color: var(--black);
-      }
-    </style>
+    <!-- Preload critical fonts -->
+    <link
+      rel="preload"
+      href="/css/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff"
+      as="font"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/css/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff"
+      as="font"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/tufte.css" />
+    <link rel="stylesheet" href="/css/tufte-overrides.css" />
   </head>
   <body>
-    <div class="container">
-      <nav>
-        <a class="croaky" href="/">
-          <img
-            alt="Dan's profile photo"
-            src="/images/croaky.png"
-            width="64px"
-            height="64px"
-          />
-        </a>
-      </nav>
+    <header class="site-header">
+      <a class="profile-link" href="/">
+        <img
+          class="profile-image"
+          alt="Dan's profile photo"
+          src="/images/croaky.png"
+          width="64"
+          height="64"
+        />
+      </a>
+    </header>
 
-      <article>
-        <header>
-          <h1>{{.Article.Title}}</h1>
+    <article>
+      <section>
+        <h1>{{.Article.Title}}</h1>
+        <p class="byline">updated {{.Article.UpdatedOn}}</p>
+      </section>
 
-          <time> updated {{.Article.UpdatedOn}} </time>
-        </header>
+      <section>{{.Article.Body}}</section>
 
-        {{.Article.Body}}
-      </article>
-
-      <footer>
-        <a href="/">&larr; All articles</a>
-      </footer>
-    </div>
+      <section>
+        <p><a href="/">&larr; All articles</a></p>
+      </section>
+    </article>
 
     <script>
       function each(selector, fn) {

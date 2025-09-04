@@ -1,0 +1,226 @@
+/* Site-specific overrides for Tufte CSS */
+
+/* Font loading optimization */
+@font-face {
+  font-family: "et-book";
+  src: url("et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "et-book";
+  src: url("et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Enhanced fallback font stack */
+body {
+  font-family:
+    et-book, "Times New Roman", "DejaVu Serif", "Bitstream Charter", Georgia,
+    serif;
+}
+
+/* Color palette - restrained neutrals */
+body {
+  background: #fffff8;
+  color: #111111;
+}
+
+/* Links - subtle, readable */
+a {
+  color: #111111;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.3);
+}
+a:hover {
+  border-bottom-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Code - preserve monospace aesthetics */
+pre,
+code {
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
+}
+pre {
+  background: transparent;
+  border-left: 3px solid #e2e2e2;
+  padding-left: 0.8rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Inline code - subtle background */
+:not(pre) > code {
+  background-color: #f8f8f8;
+  padding: 0.1em 0.3em;
+  border: 1px solid #e2e2e2;
+  border-radius: 2px;
+}
+
+/* Full-width utility */
+.fullwidth {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Index grid layout - following Tufte content width patterns */
+.index-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  width: 80%;
+}
+.index-card {
+  border: 1px solid #e7e7e7;
+  background: #fffffb;
+  padding: 1rem;
+  border-radius: 3px;
+}
+.index-card h3 {
+  margin-block-start: 0;
+  margin-block-end: 1rem;
+}
+.index-card ul {
+  width: 100%;
+  -webkit-padding-start: 1.5rem;
+  padding-left: 1.5rem;
+  margin: 0;
+}
+.index-card li {
+  margin-top: 0.25rem;
+}
+
+/* Responsive index grid - aligned with Tufte breakpoints */
+@media (max-width: 1000px) {
+  .index-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 85%;
+  }
+}
+@media (max-width: 760px) {
+  .index-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+  }
+}
+
+/* Typography adjustments */
+.byline {
+  color: #444444;
+  font-style: italic;
+}
+
+/* Media spacing */
+img,
+figure {
+  margin: 1.2rem 0;
+}
+
+/* Blockquotes - subtle coloring */
+blockquote {
+  color: #333333;
+}
+
+/* Sidenotes and marginal notes */
+.sidenote,
+.marginnote {
+  color: #333333;
+}
+
+/* Site header */
+.site-header {
+  margin: 2rem 0 0.5rem 0;
+}
+
+/* Profile image from original design */
+.profile-link {
+  border: none;
+}
+.profile-image {
+  border-radius: 50%;
+  display: block;
+  margin-right: 8px;
+  width: 64px;
+  height: 64px;
+}
+
+/* Social links */
+.social {
+  display: flex;
+  list-style: none;
+  margin-block-end: 0.5em;
+  padding-inline-start: 0;
+  align-items: center;
+}
+.social li {
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+}
+.social a {
+  border: none;
+  display: flex;
+  align-items: center;
+  line-height: 100%;
+  padding-bottom: 0;
+}
+.social svg {
+  fill: #111111;
+  height: 24px;
+  transition: all 0.2s ease;
+  width: 24px;
+}
+.social svg:hover {
+  fill: #666666;
+}
+
+/* Preserve Chroma syntax highlighting */
+.chroma .err,
+.chroma .gh,
+.chroma .kn,
+.chroma .kp,
+.chroma .m,
+.chroma .mi,
+.chroma .no,
+.chroma .vi,
+.chroma .ss {
+  color: #d14;
+}
+.chroma .kc,
+.chroma .kd,
+.chroma .n,
+.chroma .nt,
+.chroma .nx {
+  color: #111111;
+}
+.chroma .k,
+.chroma .nb,
+.chroma .nf {
+  color: #333;
+}
+.chroma .no,
+.chroma .s,
+.chroma .s2 {
+  color: #666;
+}
+.chroma .c,
+.chroma .c1,
+.chroma .ch,
+.chroma .cp,
+.chroma .o,
+.chroma .p {
+  color: #999;
+}
