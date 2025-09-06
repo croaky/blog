@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"crypto/md5"
 	"fmt"
 	"html/template"
 	"io"
@@ -24,7 +25,7 @@ import (
 	"github.com/gomarkdown/markdown/parser"
 )
 
-var blogURL, wd string
+var blogURL, wd, cssPath string
 
 func main() {
 	if len(os.Args) < 2 {
@@ -37,6 +38,7 @@ func main() {
 	switch os.Args[1] {
 	case "serve":
 		blogURL = "http://localhost:2000"
+		cssPath = "/css/site.css" // Use non-fingerprinted path for development
 		fmt.Println("Serving at http://localhost:2000")
 		serve(":2000")
 	case "build":
@@ -65,6 +67,11 @@ type Article struct {
 	Title     string
 	UpdatedOn string
 	Body      template.HTML
+}
+
+type TemplateData struct {
+	Article Article
+	CSSPath string
 }
 
 func serve(addr string) {
@@ -131,7 +138,9 @@ func build(outputDir string) {
 	// Copy theme static files
 	copyDir(filepath.Join(wd, "theme", "index.html"), filepath.Join(outputDir, "index.html"))
 	copyDir(filepath.Join(wd, "theme", "images"), filepath.Join(outputDir, "images"))
-	copyDir(filepath.Join(wd, "theme", "css"), filepath.Join(outputDir, "css"))
+
+	// Copy and fingerprint CSS files
+	cssPath = fingerprintCSS(outputDir)
 
 	// Build article pages
 	page := template.Must(template.ParseFiles(filepath.Join(wd, "theme", "article.html")))
@@ -146,7 +155,7 @@ func build(outputDir string) {
 			fatal(os.MkdirAll(articleDir, os.ModePerm), "Failed to create article directory")
 			f, err := os.Create(filepath.Join(articleDir, "index.html"))
 			fatal(err, "Failed to create article index.html")
-			fatal(page.Execute(f, struct{ Article Article }{a}), "Failed to execute article template")
+			fatal(page.Execute(f, TemplateData{Article: a, CSSPath: cssPath}), "Failed to execute article template")
 		}(a)
 	}
 	wg.Wait()
@@ -235,7 +244,7 @@ func buildArticle(articleID string) {
 	fatal(err, "Failed to create article index.html")
 
 	page := template.Must(template.ParseFiles(filepath.Join(wd, "theme", "article.html")))
-	fatal(page.Execute(f, struct{ Article Article }{article}), "Failed to execute article template")
+	fatal(page.Execute(f, TemplateData{Article: article, CSSPath: cssPath}), "Failed to execute article template")
 }
 
 func loadArticle(articleID string) (Article, error) {
@@ -314,6 +323,28 @@ func preProcess(filePath string) (string, template.HTML) {
 	)
 
 	return title, template.HTML(htmlBody)
+}
+
+// fingerprintCSS copies CSS files with MD5 fingerprints and returns the fingerprinted path
+func fingerprintCSS(outputDir string) string {
+	srcPath := filepath.Join(wd, "theme", "css", "site.css")
+
+	content, err := os.ReadFile(srcPath)
+	fatal(err, "Failed to read CSS file")
+
+	hash := fmt.Sprintf("%x", md5.Sum(content))
+
+	cssDir := filepath.Join(outputDir, "css")
+	fatal(os.MkdirAll(cssDir, os.ModePerm), "Failed to create CSS directory")
+
+	copyDir(filepath.Join(wd, "theme", "css"), cssDir)
+
+	fpName := fmt.Sprintf("site-%s.css", hash[:8])
+	fpPath := filepath.Join(cssDir, fpName)
+
+	fatal(os.WriteFile(fpPath, content, 0644), "Failed to write fingerprinted CSS")
+
+	return "/css/" + fpName
 }
 
 func syntaxHighlight(w io.Writer, source, lang string) {
