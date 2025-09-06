@@ -2,6 +2,30 @@
 
 Articles at <https://dancroak.com>
 
+## Quick reference
+
+```bash
+# setup
+brew install go                       # install Go
+
+# dev workflow
+git checkout -b feature-name          # create a new Git branch
+blog serve                            # preview at http://localhost:2000
+vim articles/example.md               # write article in Markdown
+
+# build & test
+go test ./...                         # run tests
+go vet ./...                          # static checks
+goimports -local "$(go list -m)" -w . # format imports
+go install ./...                      # install blog CLI
+blog build                            # build static site to ./public
+
+# deploy
+git add -A                            # stage changes
+git commit -m "articles/new: add"     # commit changes
+git push origin main                  # deploy via Cloudflare Pages
+```
+
 ## Setup
 
 [Install Go](https://golang.org/doc/install). Then, run:
