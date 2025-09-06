@@ -39,7 +39,18 @@
   font-display: swap;
 }
 
-/* Tufte CSS styles */
+/* Tufte CSS styles with responsive content width variables */
+:root {
+  --content-width-mobile: 32rem;
+  --content-width-tablet: 38rem;
+  --content-width-medium: 42rem;
+  --content-width-large: 45rem;
+  --list-width-mobile: 30rem;
+  --list-width-tablet: 36rem;
+  --list-width-medium: 40rem;
+  --list-width-large: 43rem;
+}
+
 html {
   font-size: 15px;
 }
@@ -95,8 +106,6 @@ h3 {
 hr {
   display: block;
   height: 1px;
-  width: 100%;
-  max-width: 32rem;
   border: 0;
   border-top: 1px solid #ccc;
   margin: 1em 0;
@@ -169,32 +178,34 @@ blockquote {
   color: #333333;
 }
 
-blockquote p {
-  width: 100%;
-  max-width: 32rem;
+blockquote p,
+blockquote footer {
   margin-right: 40px;
 }
 
 blockquote footer {
-  width: 100%;
-  max-width: 32rem;
   font-size: 1.1rem;
   text-align: right;
 }
 
+/* Apply content width to main content elements */
+hr,
 section > p:not(:has(img)),
 section > footer,
-section > table {
+section > table,
+blockquote p,
+blockquote footer,
+figure {
   width: 100%;
-  max-width: 32rem;
+  max-width: var(--content-width-mobile);
 }
 
-/* Match paragraph max-width but account for padding */
+/* Apply list width to list elements */
 section > dl,
 section > ol,
 section > ul {
   width: 100%;
-  max-width: 30rem;
+  max-width: var(--list-width-mobile);
   -webkit-padding-start: 2rem;
   padding-left: 2rem;
 }
@@ -210,8 +221,6 @@ figure {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  width: 100%;
-  max-width: 32rem;
   -webkit-margin-start: 0;
   -webkit-margin-end: 0;
   margin: 0 0 3em 0;
@@ -483,22 +492,11 @@ label.margin-toggle:not(.sidenote-number) {
 }
 
 /* Intermediate breakpoints for better responsive typography */
-/* Tablets and small laptops (768px - 1024px) */
-@media (min-width: 768px) and (max-width: 1024px) {
-  hr,
-  section > p:not(:has(img)),
-  section > footer,
-  section > table,
-  blockquote p,
-  blockquote footer,
-  figure {
-    max-width: 38rem;
-  }
-
-  section > dl,
-  section > ol,
-  section > ul {
-    max-width: 36rem;
+/* Responsive content width adjustments using CSS variables */
+@media (min-width: 768px) {
+  :root {
+    --content-width-mobile: var(--content-width-tablet);
+    --list-width-mobile: var(--list-width-tablet);
   }
 
   /* Adjust sidenotes for tablets */
@@ -509,22 +507,10 @@ label.margin-toggle:not(.sidenote-number) {
   }
 }
 
-/* Large tablets and medium screens (1025px - 1199px) */
-@media (min-width: 1025px) and (max-width: 1199px) {
-  hr,
-  section > p:not(:has(img)),
-  section > footer,
-  section > table,
-  blockquote p,
-  blockquote footer,
-  figure {
-    max-width: 42rem;
-  }
-
-  section > dl,
-  section > ol,
-  section > ul {
-    max-width: 40rem;
+@media (min-width: 1025px) {
+  :root {
+    --content-width-mobile: var(--content-width-medium);
+    --list-width-mobile: var(--list-width-medium);
   }
 
   /* Adjust sidenotes for medium screens */
@@ -535,22 +521,10 @@ label.margin-toggle:not(.sidenote-number) {
   }
 }
 
-/* Large screens (1200px+) - optimal reading width */
 @media (min-width: 1200px) {
-  hr,
-  section > p:not(:has(img)),
-  section > footer,
-  section > table,
-  blockquote p,
-  blockquote footer,
-  figure {
-    max-width: 45rem;
-  }
-
-  section > dl,
-  section > ol,
-  section > ul {
-    max-width: 43rem;
+  :root {
+    --content-width-mobile: var(--content-width-large);
+    --list-width-mobile: var(--list-width-large);
   }
 
   /* Adjust sidenote positioning for optimal reading width */
