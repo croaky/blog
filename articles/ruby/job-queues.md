@@ -6,9 +6,8 @@ I use a simple Ruby and Postgres job queuing system:
 - Jobs are worked First In, First Out.
 - Jobs are any object with an interface `Job.new(db).call`.
   with optional args `Job.new(db).call(foo: 1, bar: "baz")`.
-- The only dependencies are Ruby, Postgres, and
-  [the pg gem](https://github.com/ged/ruby-pg).
-- Uses the [DB wrapper](/ruby/db) for connection management.
+- The only dependencies are Ruby, Postgres,
+  and a custom [DB](/ruby/db) wrapper around the `pg` driver.
 
 ## Modest needs
 
@@ -275,7 +274,9 @@ i = Jobs::Insert.new(DB.pool)
 i.call(
   queue: "github",
   name: "JobOne",
-  args: {company_id: 42}
+  args: {
+    company_id: 42
+  }
 )
 
 # Multiple jobs from SQL
@@ -292,5 +293,5 @@ i.call(
 
 ## Scheduling jobs
 
-For recurring jobs, I run a Clock process that inserts jobs on a schedule.
+A Clock process inserts jobs on a schedule.
 See [ruby / clock](/ruby/clock).

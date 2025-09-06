@@ -97,6 +97,7 @@ class DB
   private def start_reaper_thread
     Thread.new do
       Thread.current.name = "db-reaper"
+
       loop do
         @pool.reap(300) { |conn| conn&.close }
         sleep 60
