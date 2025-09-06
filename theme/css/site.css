@@ -70,14 +70,6 @@ body {
   counter-reset: sidenote-counter;
 }
 
-/* Adds dark mode */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #151515;
-    color: #ddd;
-  }
-}
-
 h1 {
   font-weight: 400;
   margin-top: 4rem;
@@ -674,4 +666,73 @@ figure {
 .chroma .o,
 .chroma .p {
   color: #999;
+}
+
+/* Dark mode styles - must be at end to override light mode styles */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #151515;
+    color: #ddd;
+  }
+
+  /* Social icons visibility in dark mode */
+  .social svg {
+    fill: #dddddd;
+  }
+  .social svg:hover {
+    fill: #999999;
+  }
+
+  /* Links in dark mode */
+  a:link,
+  a:visited {
+    color: #dddddd;
+    border-bottom-color: rgba(221, 221, 221, 0.3);
+  }
+  a:hover {
+    border-bottom-color: rgba(221, 221, 221, 0.6);
+  }
+
+  /* Code blocks in dark mode */
+  pre {
+    border-left-color: #444444;
+  }
+  :not(pre) > code {
+    background-color: #2a2a2a;
+    border-color: #444444;
+  }
+
+  /* Blockquotes and sidenotes in dark mode */
+  blockquote {
+    color: #aaaaaa;
+  }
+  .sidenote,
+  .marginnote {
+    color: #aaaaaa;
+  }
+
+  /* Index cards in dark mode */
+  .index-card {
+    border-color: #444444;
+    background: #1a1a1a;
+  }
+
+  /* Byline in dark mode */
+  .byline {
+    color: #999999;
+  }
+
+  /* Syntax highlighting adjustments for dark mode */
+  .chroma .kc,
+  .chroma .kd,
+  .chroma .n,
+  .chroma .nt,
+  .chroma .nx {
+    color: #dddddd;
+  }
+  .chroma .k,
+  .chroma .nb,
+  .chroma .nf {
+    color: #aaaaaa;
+  }
 }
