@@ -58,8 +58,9 @@ html {
 body {
   margin-left: auto;
   margin-right: auto;
-  padding-left: 12.5%;
   padding-right: 12.5%;
+  padding-bottom: 3rem;
+  padding-left: 12.5%;
   font-family:
     et-book, "Times New Roman", "DejaVu Serif", "Bitstream Charter", Georgia,
     serif;
@@ -415,8 +416,9 @@ label.margin-toggle:not(.sidenote-number) {
 @media (max-width: 760px) {
   body {
     width: 84%;
-    padding-left: 8%;
     padding-right: 8%;
+    padding-bottom: 3rem;
+    padding-left: 8%;
   }
 
   hr,
