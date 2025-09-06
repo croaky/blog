@@ -54,6 +54,8 @@ Preview at <http://localhost:2000> with:
 blog serve
 ```
 
+Articles are built on-demand when accessed during development.
+
 Add images to the `images` directory.
 Refer to them in articles:
 
@@ -76,13 +78,16 @@ Syntax highlighting is generated at build time (no client-side JavaScript highli
     Title:         "Example Article",
     LastUpdatedOn: "April 15, 2018",
     Body:          "<p>Hello, world.</p>",
-  }
+  },
+  CSSPath: "/css/site-a1b2c3d4.css"
 }
 ```
 
 The `theme/index.html` template is pure HTML.
 It is up to the author to decide how to lay out their index
 and link to their articles.
+
+CSS files are fingerprinted during production builds for cache-busting.
 
 ## Cloudflare Pages
 
@@ -93,9 +98,8 @@ Create a static site on [Cloudflare Pages](https://developers.cloudflare.com/pag
 - Build command: `git fetch --unshallow && go run main.go build`
 - Build output directory: `public`
 
-Use [the Cloudflare v2 build
-environment](https://developers.cloudflare.com/pages/platform/language-support-and-tools/)
-for the latest version of Go.
+
+Use the [latest Cloudflare build environment](https://developers.cloudflare.com/pages/configuration/build-image/).
 
 To deploy the site, commit and push to the `main` branch of the GitHub repo.
 
