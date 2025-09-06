@@ -1,6 +1,8 @@
 # ruby / clock
 
 I run recurring jobs in a Clock process instead of cron.
+The Clock inserts jobs into the [job queue system](/ruby/job-queues),
+which handles the actual work.
 
 ## Why not cron
 
@@ -10,7 +12,7 @@ Your application code is separated from its schedule.
 
 ## Clock process
 
-Run a single Clock process that inserts jobs into your queue:
+Run a single Clock process:
 
 ```ruby
 # schedule/clock.rb
@@ -121,9 +123,6 @@ proc { |t| t.min == 0 && t.hour == 12 && !Calendar.holiday?(t) }
 ```
 
 ## Integration
-
-The Clock process inserts jobs into the same `jobs` table
-used by the [job queue system](/ruby/job-queues).
 
 This provides:
 
