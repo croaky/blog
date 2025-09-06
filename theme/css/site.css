@@ -45,10 +45,10 @@ html {
 }
 
 body {
-  width: 87.5%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 12.5%;
+  padding-right: 12.5%;
   font-family:
     et-book, "Times New Roman", "DejaVu Serif", "Bitstream Charter", Georgia,
     serif;
@@ -119,10 +119,6 @@ p.subtitle {
   color: red;
 }
 
-article {
-  padding: 5rem 0rem;
-}
-
 section {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -183,7 +179,7 @@ blockquote footer {
   text-align: right;
 }
 
-section > p,
+section > p:not(:has(img)),
 section > footer,
 section > table {
   width: 55%;
@@ -345,7 +341,6 @@ pre {
 
 pre > code {
   font-size: 0.9rem;
-  width: 52.5%;
   margin-left: 2.5%;
   overflow-x: auto;
   display: block;
@@ -533,7 +528,6 @@ label.margin-toggle:not(.sidenote-number) {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
-  width: 80%;
 }
 .index-card {
   border: 1px solid #e7e7e7;

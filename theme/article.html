@@ -62,16 +62,18 @@
       </div>
     </header>
 
-    <section>
-      <h1>{{.Article.Title}}</h1>
-      <p class="byline">updated {{.Article.UpdatedOn}}</p>
-    </section>
+    <article>
+      <section>
+        <h1>{{.Article.Title}}</h1>
+        <p class="byline">updated {{.Article.UpdatedOn}}</p>
+      </section>
 
-    <section>{{.Article.Body}}</section>
+      <section>{{.Article.Body}}</section>
 
-    <section>
-      <p><a href="/">&larr; All articles</a></p>
-    </section>
+      <section>
+        <p><a href="/">&larr; All articles</a></p>
+      </section>
+    </article>
 
     <script>
       function each(selector, fn) {
