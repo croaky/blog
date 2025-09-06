@@ -329,31 +329,22 @@ func preProcess(filePath string) (string, template.HTML) {
 func fingerprintCSS(outputDir string) string {
 	srcPath := filepath.Join(wd, "theme", "css", "site.css")
 
-	// Read the file to calculate hash
 	content, err := os.ReadFile(srcPath)
 	fatal(err, "Failed to read CSS file")
 
-	// Calculate MD5 hash
 	hash := fmt.Sprintf("%x", md5.Sum(content))
 
-	// Create output directory for CSS
 	cssDir := filepath.Join(outputDir, "css")
 	fatal(os.MkdirAll(cssDir, os.ModePerm), "Failed to create CSS directory")
 
-	// Copy other CSS assets (fonts, etc.)
 	copyDir(filepath.Join(wd, "theme", "css"), cssDir)
 
-	// Create fingerprinted filename
-	fingerprintedName := fmt.Sprintf("site-%s.css", hash[:8]) // Use first 8 chars of hash
-	fingerprintedPath := filepath.Join(cssDir, fingerprintedName)
+	fpName := fmt.Sprintf("site-%s.css", hash[:8])
+	fpPath := filepath.Join(cssDir, fpName)
 
-	// Write fingerprinted CSS file
-	fatal(os.WriteFile(fingerprintedPath, content, 0644), "Failed to write fingerprinted CSS")
+	fatal(os.WriteFile(fpPath, content, 0644), "Failed to write fingerprinted CSS")
 
-	// Remove original site.css to avoid confusion
-	os.Remove(filepath.Join(cssDir, "site.css"))
-
-	return "/css/" + fingerprintedName
+	return "/css/" + fpName
 }
 
 func syntaxHighlight(w io.Writer, source, lang string) {
