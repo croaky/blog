@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dan Croak</title>
     <link rel="icon" href="/images/favicon.ico" />
-    <!-- Preload critical fonts -->
     <link
       rel="preload"
       href="/css/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff"
@@ -20,8 +19,7 @@
       type="font/woff"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/css/tufte.css" />
-    <link rel="stylesheet" href="/css/tufte-overrides.css" />
+    <link rel="stylesheet" href="/css/site.css" />
   </head>
   <body>
     <header class="site-header">
@@ -63,91 +61,93 @@
       </div>
     </header>
 
-    <article>
-      <div class="index-grid">
-        <section class="index-card">
-          <h3>cmd/</h3>
-          <ul>
-            <li>
-              <a href="/cmd/adblock">adblock</a>
-            </li>
-            <li>
-              <a href="/cmd/blog">blog</a>
-            </li>
-            <li>
-              <a href="/cmd/db-download-prod">db-download-prod</a>
-            </li>
-            <li>
-              <a href="/cmd/db-restore-dev">db-restore-dev</a>
-            </li>
-            <li>
-              <a href="/cmd/kill-pid-on-port">kill-pid-on-port</a>
-            </li>
-            <li>
-              <a href="/cmd/laptop">laptop</a>
-            </li>
-            <li>
-              <a href="/cmd/mdembed">mdembed</a>
-            </li>
-            <li>
-              <a href="/cmd/procman">procman</a>
-            </li>
-            <li>
-              <a href="/cmd/replace">replace</a>
-            </li>
-          </ul>
-        </section>
-        <section class="index-card">
-          <h3>git/</h3>
-          <ul>
-            <li>
-              <a href="/git/monorepo">monorepo</a>
-            </li>
-            <li>
-              <a href="/git/workflow">workflow</a>
-            </li>
-          </ul>
-        </section>
-        <section class="index-card">
-          <h3>ruby/</h3>
-          <ul>
-            <li><a href="/ruby/file-guard">file guard</a></li>
-            <li><a href="/ruby/http-client">http client</a></li>
-            <li>
-              <a href="/ruby/job-queues">job queues</a>
-            </li>
-          </ul>
-        </section>
-        <section class="index-card">
-          <h3>vim/</h3>
-          <ul>
-            <li>
-              <a href="/vim/ai">ai</a>
-            </li>
-            <li>
-              <a href="/vim/format-sql-on-save">format sql on save</a>
-            </li>
-            <li>
-              <a href="/vim/run-sql">run sql</a>
-            </li>
-            <li>
-              <a href="/vim/run-tests">run tests</a>
-            </li>
-            <li>
-              <a href="/vim/search-project">search project</a>
-            </li>
-          </ul>
-        </section>
-        <section class="index-card">
-          <h3>web/</h3>
-          <ul>
-            <li><a href="/web/paas">paas</a></li>
-            <li>
-              <a href="/web/static-assets">static assets</a>
-            </li>
-          </ul>
-        </section>
+    <div class="index-grid">
+      <div class="index-card">
+        <h3>cmd/</h3>
+        <ul>
+          <li>
+            <a href="/cmd/adblock">adblock</a>
+          </li>
+          <li>
+            <a href="/cmd/blog">blog</a>
+          </li>
+          <li>
+            <a href="/cmd/db-download-prod">db-download-prod</a>
+          </li>
+          <li>
+            <a href="/cmd/db-restore-dev">db-restore-dev</a>
+          </li>
+          <li>
+            <a href="/cmd/kill-pid-on-port">kill-pid-on-port</a>
+          </li>
+          <li>
+            <a href="/cmd/laptop">laptop</a>
+          </li>
+          <li>
+            <a href="/cmd/mdembed">mdembed</a>
+          </li>
+          <li>
+            <a href="/cmd/procman">procman</a>
+          </li>
+          <li>
+            <a href="/cmd/replace">replace</a>
+          </li>
+        </ul>
       </div>
-    </article>
+
+      <div class="index-card">
+        <h3>git/</h3>
+        <ul>
+          <li>
+            <a href="/git/monorepo">monorepo</a>
+          </li>
+          <li>
+            <a href="/git/workflow">workflow</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="index-card">
+        <h3>ruby/</h3>
+        <ul>
+          <li><a href="/ruby/file-guard">file guard</a></li>
+          <li><a href="/ruby/http-client">http client</a></li>
+          <li>
+            <a href="/ruby/job-queues">job queues</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="index-card">
+        <h3>vim/</h3>
+        <ul>
+          <li>
+            <a href="/vim/ai">ai</a>
+          </li>
+          <li>
+            <a href="/vim/format-sql-on-save">format sql on save</a>
+          </li>
+          <li>
+            <a href="/vim/run-sql">run sql</a>
+          </li>
+          <li>
+            <a href="/vim/run-tests">run tests</a>
+          </li>
+          <li>
+            <a href="/vim/search-project">search project</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="index-card">
+        <h3>web/</h3>
+        <ul>
+          <li><a href="/web/paas">paas</a></li>
+          <li>
+            <a href="/web/static-assets">static assets</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </body>
 </html>

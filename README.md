@@ -82,13 +82,11 @@ Syntax highlighting is generated at build time (no client-side JavaScript highli
 }
 ```
 
-Extend [Tufte CSS](https://edwardtufte.github.io/tufte-css/) for
-typography and layout in `theme/css/tufte-overrides.css`.
-
-Run Prettier on it to format the code:
+The CSS is a variant of [Tufte CSS](https://edwardtufte.github.io/tufte-css/) for
+typography and layout. Edit `theme/css/site.css` and format it:
 
 ```bash
-prettier -w theme/css/tufte-overrides.css
+prettier -w theme/css/site.css
 ```
 
 Instead of footnotes, use sidenotes that appear in the margin on desktop
