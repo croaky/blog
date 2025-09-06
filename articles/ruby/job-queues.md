@@ -1,7 +1,6 @@
 # ruby / job queues
 
-The following describes a simple Ruby and Postgres job queuing system
-with these attributes
+I use a simple Ruby and Postgres job queuing system:
 
 - Each queue runs 1 job at a time.
 - Jobs are worked First In, First Out.
@@ -9,12 +8,11 @@ with these attributes
   with optional args `Job.new(db).call(foo: 1, bar: "baz")`.
 - The only dependencies are Ruby, Postgres, and
   [the pg gem](https://github.com/ged/ruby-pg).
-
-I have been running a system like this in production for a few years.
+- Uses the [DB wrapper](/ruby/db) for connection management.
 
 ## Modest needs
 
-In my application, I have ~20 queues.
+In my app, I have ~20 queues.
 ~80% of these invoke third-party APIs that have rate limits
 such as GitHub, Discord, Slack, and Postmark.
 I don't need these jobs to be high-throughput or highly parallel;
@@ -31,6 +29,7 @@ CREATE TABLE jobs (
   name text NOT NULL,
   args jsonb DEFAULT '{}' NOT NULL,
   status text DEFAULT 'pending'::text NOT NULL,
+  callsite text,
   created_at timestamp DEFAULT now() NOT NULL,
   started_at timestamp,
   finished_at timestamp
@@ -40,45 +39,42 @@ CREATE TABLE jobs (
 Run a Ruby process like:
 
 ```bash
-bundle exec ruby queues.rb
+bundle exec ruby queues/poll.rb
 ```
 
-Edit a `queues.rb` file like:
+Edit a `queues/poll.rb` file like:
 
 ```ruby
-require "pg"
-require_relative "lib/discord/worker"
-require_relative "lib/github/worker"
-require_relative "lib/postmark/worker"
-require_relative "lib/slack/worker"
+require_relative "../lib/db"
+require_relative "discord_worker"
+require_relative "github_worker"
+require_relative "postmark_worker"
+require_relative "slack_worker"
 
 $stdout.sync = true
 
-workers = [
-  Discord::Worker,
-  Github::Worker,
-  Postmark::Worker,
-  Slack::Worker
-].freeze
+module Queues
+  WORKERS = [
+    Queues::DiscordWorker,
+    Queues::GithubWorker,
+    Queues::PostmarkWorker,
+    Queues::SlackWorker
+  ].freeze
+end
 
 # Ensure all workers implement the interface.
-workers.each(&:validate!)
+Queues::WORKERS.each(&:validate!)
 
 # Ensure queues are only worked on by one worker.
-dup_queues = workers.map(&:queue).tally.select { |_, v| v > 1 }.keys
+dup_queues = Queues::WORKERS.map(&:queue).tally.select { |_, v| v > 1 }.keys
 if dup_queues.any?
   raise "duplicate queues: #{dup_queues.join(", ")}"
 end
 
-children = workers.map do |worker|
-  # Fork a thread for each worker.
+children = Queues::WORKERS.map do |worker|
   fork do
-    # Initialize worker with its own db connection.
-    db = PG.connect(ENV.fetch("DATABASE_URL"))
-    worker.new(db).poll
+    worker.new(DB.new).poll
   rescue SignalException
-    # Prevent child processes from being interrupted.
-    # Leave signal handling to the parent process.
   end
 end
 
@@ -91,26 +87,30 @@ rescue SignalException => sig
 end
 ```
 
-Edit a `lib/github/worker.rb` file like:
+Create a base worker class:
 
 ```ruby
-require "json"
-require "pg"
-require_relative "job_one"
-require_relative "job_two"
+# queues/poll_worker.rb
+module Queues
+  class PollWorker
+    class << self
+      attr_accessor :queue, :jobs
+    end
 
-module Github
-  class Worker
-    attr_reader :db, :queue, :jobs, :poll_interval, :max_jobs_per_second
+    def self.validate!
+      if queue.to_s.strip.empty?
+        raise NotImplementedError, "#{name} does not specify a queue"
+      end
+
+      if @jobs.nil? || @jobs.empty?
+        raise NotImplementedError, "#{name} does not define any jobs"
+      end
+    end
+
+    attr_reader :db
 
     def initialize(db)
       @db = db
-      @queue = queue
-      @jobs = [JobOne, JobTwo]
-      @poll_interval = 10
-
-      # https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/rate-limits-for-github-apps
-      @max_jobs_per_second = 10
     end
 
     def poll
@@ -120,42 +120,29 @@ module Github
         sleep poll_interval
 
         pending_jobs.each do |job|
-          db.exec_params(<<~SQL, [job["id"]])
-            UPDATE
-              jobs
-            SET
-              started_at = now(),
-              status = 'started'
-            WHERE
-              id = $1
+          result = db.exec(<<~SQL, [job["id"]]).first
+            UPDATE jobs
+            SET started_at = now(), status = 'started'
+            WHERE id = $1
+            RETURNING EXTRACT(EPOCH FROM now() - created_at) AS latency
           SQL
 
-          worker = jobs.find { |job| job.name == job["name"] }
-          status =
-            if !worker
-              "err: Unknown job `#{name}` for queue `#{queue}`"
-            elsif worker.instance_method(:call).arity == 0
-              worker.new(db).call
-            else
-              worker.new(db).call(**job["args"].transform_keys(&:to_sym))
-            end
+          latency = result["latency"].round(2).to_f
+          status = work(job_name: job["name"], job_args: job["args"])
         rescue => err
           status = "err: #{err}"
+          Sentry.capture_exception(err)
         ensure
           if job && job["id"]
-            elapsed = db.exec_params(<<~SQL, [status, job["id"]]).first["elapsed"]
-              UPDATE
-                jobs
-              SET
-                finished_at = now(),
-                status = 'ok'
-              WHERE
-                id = 1
-              RETURNING
-                round(extract(EPOCH FROM (finished_at - started_at)), 2) AS elapsed
+            result = db.exec(<<~SQL, [status, job["id"]]).first
+              UPDATE jobs
+              SET finished_at = now(), status = $1
+              WHERE id = $2
+              RETURNING EXTRACT(EPOCH FROM now() - started_at) AS elapsed
             SQL
 
-            puts %(queue=#{queue} job=#{job["name"]} id=#{job["id"]} status="#{status}" duration=#{elapsed}s)
+            elapsed = result["elapsed"].round(2).to_f
+            puts %(queue=#{queue} job=#{job["name"]} id=#{job["id"]} status="#{status}" latency=#{latency}s duration=#{elapsed}s)
 
             min_job_time = 1.0 / max_jobs_per_second
             sleep [min_job_time - elapsed, 0].max
@@ -165,47 +152,145 @@ module Github
     end
 
     private def pending_jobs
-      db.exec_params(<<~SQL, [queue])
-        SELECT
-          id,
-          name,
-          args
-        FROM
-          jobs
-        WHERE
-          queue = $1
+      db.exec(<<~SQL, [queue])
+        SELECT id, name, args
+        FROM jobs
+        WHERE queue = $1
           AND started_at IS NULL
           AND status = 'pending'
-        ORDER BY
-          created_at ASC
+        ORDER BY created_at ASC
+      SQL
+    end
+
+    private def poll_interval
+      10
+    end
+
+    private def max_jobs_per_second
+      Float::INFINITY
+    end
+
+    private def queue
+      self.class.queue
+    end
+
+    private def work(job_name:, job_args:)
+      worker = self.class.jobs.find { |job| job.name == job_name }
+
+      if !worker
+        msg = "unknown job `#{job_name}` for queue `#{queue}`"
+        Sentry.capture_message(msg, extra: {job_args: job_args})
+        return "err: #{msg}"
+      end
+
+      if worker.instance_method(:call).arity == 0
+        worker.new(db).call
+      else
+        worker.new(db).call(**job_args.transform_keys(&:to_sym))
+      end
+    end
+  end
+end
+```
+
+Implement a specific worker:
+
+```ruby
+# queues/github_worker.rb
+require_relative "poll_worker"
+require_relative "../lib/github/job_one"
+require_relative "../lib/github/job_two"
+
+module Queues
+  class GithubWorker < PollWorker
+    @queue = "github"
+    @jobs = [Github::JobOne, Github::JobTwo]
+
+    private def max_jobs_per_second
+      10 # GitHub API rate limit
+    end
+  end
+end
+```
+
+## Enqueuing jobs
+
+Create a helper for inserting jobs:
+
+```ruby
+# lib/jobs/insert.rb
+module Jobs
+  class Insert
+    attr_reader :db
+
+    def initialize(db)
+      @db = db
+    end
+
+    def call(queue:, name:, args: {}, args_params: [])
+      loc = caller_locations(1, 1).first
+      callsite = "#{loc.path}:#{loc.lineno}"
+      param_offset = args_params.size
+
+      case args
+      when Hash
+        params = args_params + [queue, name, callsite, args]
+        sql = "SELECT $#{params.size} AS args"
+      when Array
+        params = args_params + [queue, name, callsite, args.to_json]
+        sql = "SELECT json_array_elements($#{params.size}) AS args"
+      when String
+        params = args_params + [queue, name, callsite]
+        sql = args
+      else
+        raise ArgumentError, "args must be an array, hash or sql string."
+      end
+
+      db.exec(<<~SQL, params)
+        WITH data AS (#{sql})
+        INSERT INTO jobs (queue, name, callsite, args)
+        SELECT
+          $#{param_offset + 1},
+          $#{param_offset + 2},
+          $#{param_offset + 3},
+          data.args::jsonb
+        FROM data
+        ON CONFLICT DO NOTHING
+        RETURNING id
       SQL
     end
   end
 end
 ```
 
-Enqueue a job by `INSERT`ing into the jobs table:
+Use it to enqueue jobs:
 
 ```ruby
-require "json"
-require "pg"
+require_relative "lib/db"
+require_relative "lib/jobs/insert"
 
-db = PG.connect(ENV.fetch("DATABASE_URL"))
+i = Jobs::Insert.new(DB.pool)
 
-db.exec_params(<<~SQL, [{company_id: 1}.to_json])
-  INSERT INTO jobs (queue, name, args)
-  VALUES ('github', 'JobOne', $1)
-SQL
+# Single job
+i.call(
+  queue: "github",
+  name: "JobOne",
+  args: {company_id: 42}
+)
 
-job = conn.exec(<<~SQL).first
-  SELECT
-    args
-  FROM
-    jobs
-  ORDER BY
-    created_at DESC
-  LIMIT 1
-SQL
-
-puts JSON.parse(job["args"]).dig("company_id") # 1
+# Multiple jobs from SQL
+i.call(
+  queue: "github",
+  name: "JobOne",
+  args: <<~SQL
+    SELECT jsonb_build_object('company_id', id) AS args
+    FROM companies
+    WHERE status = 'active'
+  SQL
+)
 ```
+
+## Scheduling jobs
+
+For recurring jobs, I run a Clock process that inserts jobs on a schedule.
+See [ruby / clock](/ruby/clock).
