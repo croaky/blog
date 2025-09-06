@@ -581,7 +581,7 @@ label.margin-toggle:not(.sidenote-number) {
   margin-top: 5rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
+  gap: 2rem;
 }
 .index-card {
   border: 1px solid #e7e7e7;
@@ -613,7 +613,7 @@ label.margin-toggle:not(.sidenote-number) {
 @media (max-width: 760px) {
   .index-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 2rem;
     width: 100%;
   }
 }

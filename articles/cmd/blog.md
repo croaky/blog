@@ -1,7 +1,7 @@
 # cmd / blog
 
 I edit this blog using a simple Go static site generator co-located
-with the articles at
+with the articles. It is open source at
 [croaky/blog](https://github.com/croaky/blog).
 
 ## CLI
@@ -26,12 +26,12 @@ It expects a file layout like this:
 .
 ├── articles
 │   └── example.md
-├── images
-│   └── example.png
 └-─ theme
-    ├── public
-    │   └── favicon.ico
     ├── article.html
+    ├── css
+    │   └── site.css
+    ├── images
+    │   └── favicon.ico
     └── index.html
 ```
 
@@ -48,6 +48,9 @@ It must be an `<h1>` tag:
 # Example Article
 ```
 
+Markdown headings automatically get IDs for deep linking.
+Clicking any `<h2>` navigates to its anchor.
+
 Preview at <http://localhost:2000> with:
 
 ```
@@ -55,6 +58,12 @@ blog serve
 ```
 
 Articles are built on-demand when accessed during development.
+Requests are logged with timing:
+
+```
+   32.1ms 200 GET /cmd/blog
+    0.0ms 404 GET /.well-known/appspecific/com.chrome.devtools.json
+```
 
 Add images to the `images` directory.
 Refer to them in articles:
@@ -76,10 +85,10 @@ Syntax highlighting is generated at build time (no client-side JavaScript highli
   Article: {
     ID:            "example-article",
     Title:         "Example Article",
-    LastUpdatedOn: "April 15, 2018",
+    LastUpdatedOn: "April 15, 2018",  // from git log
     Body:          "<p>Hello, world.</p>",
   },
-  CSSPath: "/css/site-a1b2c3d4.css"
+  CSSPath: "/css/site-a1b2c3d4.css"  // fingerprinted in production
 }
 ```
 
@@ -98,6 +107,11 @@ Create a static site on [Cloudflare Pages](https://developers.cloudflare.com/pag
 - Build command: `git fetch --unshallow && go run main.go build`
 - Build output directory: `public`
 
+The build process:
+
+- Cleans the output directory
+- Builds articles concurrently
+- Extracts last updated dates from git history
 
 Use the [latest Cloudflare build environment](https://developers.cloudflare.com/pages/configuration/build-image/).
 
