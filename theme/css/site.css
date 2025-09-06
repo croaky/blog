@@ -39,7 +39,18 @@
   font-display: swap;
 }
 
-/* Tufte CSS styles */
+/* Tufte CSS styles with responsive content width variables */
+:root {
+  --content-width-mobile: 32rem;
+  --content-width-tablet: 38rem;
+  --content-width-medium: 42rem;
+  --content-width-large: 45rem;
+  --list-width-mobile: 30rem;
+  --list-width-tablet: 36rem;
+  --list-width-medium: 40rem;
+  --list-width-large: 43rem;
+}
+
 html {
   font-size: 15px;
 }
@@ -95,7 +106,6 @@ h3 {
 hr {
   display: block;
   height: 1px;
-  width: 55%;
   border: 0;
   border-top: 1px solid #ccc;
   margin: 1em 0;
@@ -168,29 +178,36 @@ blockquote {
   color: #333333;
 }
 
-blockquote p {
-  width: 55%;
+blockquote p,
+blockquote footer {
   margin-right: 40px;
 }
 
 blockquote footer {
-  width: 55%;
   font-size: 1.1rem;
   text-align: right;
 }
 
+/* Apply content width to main content elements */
+hr,
 section > p:not(:has(img)),
 section > footer,
-section > table {
-  width: 55%;
+section > table,
+blockquote p,
+blockquote footer,
+figure {
+  width: 100%;
+  max-width: var(--content-width-mobile);
 }
 
-/* 50 + 5 == 55, to be the same width as paragraph */
+/* Apply list width to list elements */
 section > dl,
 section > ol,
 section > ul {
-  width: 50%;
-  -webkit-padding-start: 5%;
+  width: 100%;
+  max-width: var(--list-width-mobile);
+  -webkit-padding-start: 2rem;
+  padding-left: 2rem;
 }
 
 dt:not(:first-child),
@@ -204,7 +221,6 @@ figure {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  max-width: 55%;
   -webkit-margin-start: 0;
   -webkit-margin-end: 0;
   margin: 0 0 3em 0;
@@ -245,8 +261,8 @@ img {
 .marginnote {
   float: right;
   clear: right;
-  margin-right: -60%;
-  width: 50%;
+  margin-right: -50%;
+  width: 40%;
   margin-top: 0.3rem;
   margin-bottom: 0;
   font-size: 1.1rem;
@@ -472,6 +488,50 @@ label.margin-toggle:not(.sidenote-number) {
 
   img {
     width: 100%;
+  }
+}
+
+/* Intermediate breakpoints for better responsive typography */
+/* Responsive content width adjustments using CSS variables */
+@media (min-width: 768px) {
+  :root {
+    --content-width-mobile: var(--content-width-tablet);
+    --list-width-mobile: var(--list-width-tablet);
+  }
+
+  /* Adjust sidenotes for tablets */
+  .sidenote,
+  .marginnote {
+    margin-right: -45%;
+    width: 38%;
+  }
+}
+
+@media (min-width: 1025px) {
+  :root {
+    --content-width-mobile: var(--content-width-medium);
+    --list-width-mobile: var(--list-width-medium);
+  }
+
+  /* Adjust sidenotes for medium screens */
+  .sidenote,
+  .marginnote {
+    margin-right: -52%;
+    width: 42%;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --content-width-mobile: var(--content-width-large);
+    --list-width-mobile: var(--list-width-large);
+  }
+
+  /* Adjust sidenote positioning for optimal reading width */
+  .sidenote,
+  .marginnote {
+    margin-right: -55%;
+    width: 45%;
   }
 }
 
