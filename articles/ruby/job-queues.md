@@ -1,7 +1,6 @@
 # ruby / job queues
 
-The following describes a simple Ruby and Postgres job queuing system
-with these attributes
+I use a simple Ruby and Postgres job queuing system:
 
 - Each queue runs 1 job at a time.
 - Jobs are worked First In, First Out.
@@ -11,11 +10,9 @@ with these attributes
   [the pg gem](https://github.com/ged/ruby-pg).
 - Uses the [DB wrapper](/ruby/db) for connection management.
 
-I have been running a system like this in production for a few years.
-
 ## Modest needs
 
-In my application, I have ~20 queues.
+In my app, I have ~20 queues.
 ~80% of these invoke third-party APIs that have rate limits
 such as GitHub, Discord, Slack, and Postmark.
 I don't need these jobs to be high-throughput or highly parallel;
@@ -295,5 +292,5 @@ i.call(
 
 ## Scheduling jobs
 
-For recurring jobs, run a Clock process that inserts jobs on a schedule.
-See [ruby / clock](/ruby/clock) for details.
+For recurring jobs, I run a Clock process that inserts jobs on a schedule.
+See [ruby / clock](/ruby/clock).
