@@ -95,7 +95,8 @@ h3 {
 hr {
   display: block;
   height: 1px;
-  width: 55%;
+  width: 100%;
+  max-width: 32rem;
   border: 0;
   border-top: 1px solid #ccc;
   margin: 1em 0;
@@ -169,12 +170,14 @@ blockquote {
 }
 
 blockquote p {
-  width: 55%;
+  width: 100%;
+  max-width: 32rem;
   margin-right: 40px;
 }
 
 blockquote footer {
-  width: 55%;
+  width: 100%;
+  max-width: 32rem;
   font-size: 1.1rem;
   text-align: right;
 }
@@ -182,15 +185,18 @@ blockquote footer {
 section > p:not(:has(img)),
 section > footer,
 section > table {
-  width: 55%;
+  width: 100%;
+  max-width: 32rem;
 }
 
-/* 50 + 5 == 55, to be the same width as paragraph */
+/* Match paragraph max-width but account for padding */
 section > dl,
 section > ol,
 section > ul {
-  width: 50%;
-  -webkit-padding-start: 5%;
+  width: 100%;
+  max-width: 30rem;
+  -webkit-padding-start: 2rem;
+  padding-left: 2rem;
 }
 
 dt:not(:first-child),
@@ -204,7 +210,8 @@ figure {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  max-width: 55%;
+  width: 100%;
+  max-width: 32rem;
   -webkit-margin-start: 0;
   -webkit-margin-end: 0;
   margin: 0 0 3em 0;
@@ -245,8 +252,8 @@ img {
 .marginnote {
   float: right;
   clear: right;
-  margin-right: -60%;
-  width: 50%;
+  margin-right: -50%;
+  width: 40%;
   margin-top: 0.3rem;
   margin-bottom: 0;
   font-size: 1.1rem;
@@ -472,6 +479,85 @@ label.margin-toggle:not(.sidenote-number) {
 
   img {
     width: 100%;
+  }
+}
+
+/* Intermediate breakpoints for better responsive typography */
+/* Tablets and small laptops (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  hr,
+  section > p:not(:has(img)),
+  section > footer,
+  section > table,
+  blockquote p,
+  blockquote footer,
+  figure {
+    max-width: 38rem;
+  }
+
+  section > dl,
+  section > ol,
+  section > ul {
+    max-width: 36rem;
+  }
+
+  /* Adjust sidenotes for tablets */
+  .sidenote,
+  .marginnote {
+    margin-right: -45%;
+    width: 38%;
+  }
+}
+
+/* Large tablets and medium screens (1025px - 1199px) */
+@media (min-width: 1025px) and (max-width: 1199px) {
+  hr,
+  section > p:not(:has(img)),
+  section > footer,
+  section > table,
+  blockquote p,
+  blockquote footer,
+  figure {
+    max-width: 42rem;
+  }
+
+  section > dl,
+  section > ol,
+  section > ul {
+    max-width: 40rem;
+  }
+
+  /* Adjust sidenotes for medium screens */
+  .sidenote,
+  .marginnote {
+    margin-right: -52%;
+    width: 42%;
+  }
+}
+
+/* Large screens (1200px+) - optimal reading width */
+@media (min-width: 1200px) {
+  hr,
+  section > p:not(:has(img)),
+  section > footer,
+  section > table,
+  blockquote p,
+  blockquote footer,
+  figure {
+    max-width: 45rem;
+  }
+
+  section > dl,
+  section > ol,
+  section > ul {
+    max-width: 43rem;
+  }
+
+  /* Adjust sidenote positioning for optimal reading width */
+  .sidenote,
+  .marginnote {
+    margin-right: -55%;
+    width: 45%;
   }
 }
 
