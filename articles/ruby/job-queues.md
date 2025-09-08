@@ -4,7 +4,7 @@ I use a simple Ruby and Postgres job queuing system:
 
 - Each queue runs 1 job at a time.
 - Jobs are worked First In, First Out.
-- Jobs are any object with an interface `Job.new(db).call`.
+- Jobs are any object with an interface `Job.new(db).call`
   with optional args `Job.new(db).call(foo: 1, bar: "baz")`.
 - The only dependencies are Ruby, Postgres,
   and a custom [DB](/ruby/db) wrapper around the `pg` driver.
@@ -120,10 +120,15 @@ module Queues
 
         pending_jobs.each do |job|
           result = db.exec(<<~SQL, [job["id"]]).first
-            UPDATE jobs
-            SET started_at = now(), status = 'started'
-            WHERE id = $1
-            RETURNING EXTRACT(EPOCH FROM now() - created_at) AS latency
+            UPDATE
+              jobs
+            SET
+              started_at = now(),
+              status = 'started'
+            WHERE
+              id = $1
+            RETURNING
+              EXTRACT(EPOCH FROM now() - created_at) AS latency
           SQL
 
           latency = result["latency"].round(2).to_f
@@ -134,10 +139,15 @@ module Queues
         ensure
           if job && job["id"]
             result = db.exec(<<~SQL, [status, job["id"]]).first
-              UPDATE jobs
-              SET finished_at = now(), status = $1
-              WHERE id = $2
-              RETURNING EXTRACT(EPOCH FROM now() - started_at) AS elapsed
+              UPDATE
+                jobs
+              SET
+                finished_at = now(),
+                status = $1
+              WHERE
+                id = $2
+              RETURNING
+                EXTRACT(EPOCH FROM now() - started_at) AS elapsed
             SQL
 
             elapsed = result["elapsed"].round(2).to_f
@@ -152,12 +162,18 @@ module Queues
 
     private def pending_jobs
       db.exec(<<~SQL, [queue])
-        SELECT id, name, args
-        FROM jobs
-        WHERE queue = $1
+        SELECT
+          id,
+          name,
+          args
+        FROM
+          jobs
+        WHERE
+          queue = $1
           AND started_at IS NULL
           AND status = 'pending'
-        ORDER BY created_at ASC
+        ORDER BY
+          created_at ASC
       SQL
     end
 
@@ -246,16 +262,25 @@ module Jobs
       end
 
       db.exec(<<~SQL, params)
-        WITH data AS (#{sql})
-        INSERT INTO jobs (queue, name, callsite, args)
+        WITH data AS (
+          #{sql}
+        )
+        INSERT INTO jobs (
+            queue,
+            name,
+            callsite,
+            args
+        )
         SELECT
           $#{param_offset + 1},
           $#{param_offset + 2},
           $#{param_offset + 3},
           data.args::jsonb
-        FROM data
+        FROM
+          data
         ON CONFLICT DO NOTHING
-        RETURNING id
+        RETURNING
+          id
       SQL
     end
   end
@@ -284,9 +309,12 @@ i.call(
   queue: "github",
   name: "JobOne",
   args: <<~SQL
-    SELECT jsonb_build_object('company_id', id) AS args
-    FROM companies
-    WHERE status = 'active'
+    SELECT
+      jsonb_build_object('company_id', id) AS args
+    FROM
+      companies
+    WHERE
+      status = 'active'
   SQL
 )
 ```
