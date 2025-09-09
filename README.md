@@ -124,15 +124,6 @@ CSS files are fingerprinted during production builds for cache-busting.
 
 The CSS uses [Tufte CSS](https://edwardtufte.github.io/tufte-css/) for typography.
 
-Add HTML directly to Markdown articles for sidenotes:
-
-```html
-Text with a sidenote.
-<label for="sn-example" class="margin-toggle sidenote-number"></label>
-<input type="checkbox" id="sn-example" class="margin-toggle" />
-<span class="sidenote">This is a sidenote.</span>
-```
-
 ## Deploy
 
 Create a static site on [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-anything/):
