@@ -39,16 +39,16 @@
   font-display: swap;
 }
 
-/* Tufte CSS styles with responsive content width variables */
+/* Responsive content width variables - optimized for centered layout */
 :root {
-  --content-width-mobile: 32rem;
-  --content-width-tablet: 38rem;
-  --content-width-medium: 42rem;
-  --content-width-large: 45rem;
-  --list-width-mobile: 30rem;
-  --list-width-tablet: 36rem;
-  --list-width-medium: 40rem;
-  --list-width-large: 43rem;
+  --content-width-mobile: 36rem;
+  --content-width-tablet: 45rem;
+  --content-width-medium: 52rem;
+  --content-width-large: 58rem;
+  --list-width-mobile: 34rem;
+  --list-width-tablet: 43rem;
+  --list-width-medium: 50rem;
+  --list-width-large: 56rem;
 }
 
 html {
@@ -58,16 +58,15 @@ html {
 body {
   margin-left: auto;
   margin-right: auto;
-  padding-right: 12.5%;
+  padding-right: 8%;
   padding-bottom: 3rem;
-  padding-left: 12.5%;
+  padding-left: 8%;
   font-family:
     et-book, "Times New Roman", "DejaVu Serif", "Bitstream Charter", Georgia,
     serif;
   background-color: #fffff8;
   color: #111111;
-  max-width: 1400px;
-  counter-reset: sidenote-counter;
+  max-width: 1200px;
 }
 
 h1 {
@@ -245,55 +244,9 @@ a:hover {
   border-bottom-color: rgba(0, 0, 0, 0.6);
 }
 
-/* Sidenotes, margin notes, figures, captions */
+/* Images */
 img {
   max-width: 100%;
-}
-
-.sidenote,
-.marginnote {
-  float: right;
-  clear: right;
-  margin-right: -50%;
-  width: 40%;
-  margin-top: 0.3rem;
-  margin-bottom: 0;
-  font-size: 1.1rem;
-  line-height: 1.3;
-  vertical-align: baseline;
-  position: relative;
-  color: #333333;
-}
-
-.sidenote-number {
-  counter-increment: sidenote-counter;
-}
-
-.sidenote-number:after,
-.sidenote:before {
-  font-family: et-book-roman-old-style;
-  position: relative;
-  vertical-align: baseline;
-}
-
-.sidenote-number:after {
-  content: counter(sidenote-counter);
-  font-size: 1rem;
-  top: -0.5rem;
-  left: 0.1rem;
-}
-
-.sidenote:before {
-  content: counter(sidenote-counter) " ";
-  font-size: 1rem;
-  top: -0.5rem;
-}
-
-blockquote .sidenote,
-blockquote .marginnote {
-  margin-right: -82%;
-  min-width: 59%;
-  text-align: left;
 }
 
 div.fullwidth,
@@ -335,10 +288,6 @@ h3 > code {
   font-size: 0.8em;
 }
 
-.marginnote > code,
-.sidenote > code {
-  font-size: 1rem;
-}
 
 pre {
   background: transparent;
@@ -377,18 +326,6 @@ span.newthought {
   font-size: 1.2em;
 }
 
-input.margin-toggle {
-  display: none;
-}
-
-label.sidenote-number {
-  display: inline-block;
-  max-height: 2rem; /* should be less than or equal to paragraph line-height */
-}
-
-label.margin-toggle:not(.sidenote-number) {
-  display: none;
-}
 
 .iframe-wrapper {
   position: relative;
@@ -407,10 +344,9 @@ label.margin-toggle:not(.sidenote-number) {
 
 @media (max-width: 760px) {
   body {
-    width: 84%;
-    padding-right: 8%;
+    padding-right: 6%;
     padding-bottom: 3rem;
-    padding-left: 8%;
+    padding-left: 6%;
   }
 
   hr,
@@ -450,30 +386,6 @@ label.margin-toggle:not(.sidenote-number) {
     width: 100%;
   }
 
-  label.margin-toggle:not(.sidenote-number) {
-    display: inline;
-  }
-
-  .sidenote,
-  .marginnote {
-    display: none;
-  }
-
-  .margin-toggle:checked + .sidenote,
-  .margin-toggle:checked + .marginnote {
-    display: block;
-    float: left;
-    left: 1rem;
-    clear: both;
-    width: 95%;
-    margin: 1rem 2.5%;
-    vertical-align: baseline;
-    position: relative;
-  }
-
-  label {
-    cursor: pointer;
-  }
 
   div.table-wrapper,
   table {
@@ -493,12 +405,6 @@ label.margin-toggle:not(.sidenote-number) {
     --list-width-mobile: var(--list-width-tablet);
   }
 
-  /* Adjust sidenotes for tablets */
-  .sidenote,
-  .marginnote {
-    margin-right: -45%;
-    width: 38%;
-  }
 }
 
 @media (min-width: 1025px) {
@@ -507,12 +413,6 @@ label.margin-toggle:not(.sidenote-number) {
     --list-width-mobile: var(--list-width-medium);
   }
 
-  /* Adjust sidenotes for medium screens */
-  .sidenote,
-  .marginnote {
-    margin-right: -52%;
-    width: 42%;
-  }
 }
 
 @media (min-width: 1200px) {
@@ -521,12 +421,6 @@ label.margin-toggle:not(.sidenote-number) {
     --list-width-mobile: var(--list-width-large);
   }
 
-  /* Adjust sidenote positioning for optimal reading width */
-  .sidenote,
-  .marginnote {
-    margin-right: -55%;
-    width: 45%;
-  }
 }
 
 /* Site-specific styles */
@@ -576,42 +470,43 @@ label.margin-toggle:not(.sidenote-number) {
   fill: #666666;
 }
 
-/* Index grid layout */
-.index-grid {
+/* Grid layout */
+.grid {
   margin-top: 5rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2rem;
+  max-width: 1200px;
 }
-.index-card {
+.card {
   border: 1px solid #e7e7e7;
   background: #fffffb;
   padding: 1rem;
   border-radius: 3px;
 }
-.index-card h3 {
+.card h3 {
   margin-block-start: 0;
   margin-block-end: 1rem;
 }
-.index-card ul {
+.card ul {
   width: 100%;
   -webkit-padding-start: 1.5rem;
   padding-left: 1.5rem;
   margin: 0;
 }
-.index-card li {
+.card li {
   margin-top: 0.25rem;
 }
 
-/* Responsive index grid */
+/* Responsive grid */
 @media (max-width: 1000px) {
-  .index-grid {
+  .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 85%;
   }
 }
 @media (max-width: 760px) {
-  .index-grid {
+  .grid {
     grid-template-columns: 1fr;
     gap: 2rem;
     width: 100%;
@@ -702,17 +597,13 @@ figure {
     border-color: #444444;
   }
 
-  /* Blockquotes and sidenotes in dark mode */
+  /* Blockquotes in dark mode */
   blockquote {
     color: #aaaaaa;
   }
-  .sidenote,
-  .marginnote {
-    color: #aaaaaa;
-  }
 
-  /* Index cards in dark mode */
-  .index-card {
+  /* Cards in dark mode */
+  .card {
     border-color: #444444;
     background: #1a1a1a;
   }
