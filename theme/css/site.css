@@ -104,23 +104,6 @@ hr {
   padding: 0;
 }
 
-p.subtitle {
-  font-style: italic;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  font-size: 1.8rem;
-  display: block;
-  line-height: 1;
-}
-
-.numeral {
-  font-family: et-book-roman-old-style;
-}
-
-.danger {
-  color: red;
-}
-
 section {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -140,30 +123,6 @@ p {
   padding-right: 0;
   vertical-align: baseline;
 }
-
-/* Chapter Epigraphs */
-div.epigraph {
-  margin: 5em 0;
-}
-
-div.epigraph > blockquote {
-  margin-top: 3em;
-  margin-bottom: 3em;
-}
-
-div.epigraph > blockquote,
-div.epigraph > blockquote > p {
-  font-style: italic;
-}
-
-div.epigraph > blockquote > footer {
-  font-style: normal;
-}
-
-div.epigraph > blockquote > footer > cite {
-  font-style: italic;
-}
-/* end chapter epigraphs styles */
 
 blockquote {
   font-size: 1.4rem;
@@ -186,8 +145,7 @@ section > p:not(:has(img)),
 section > footer,
 section > table,
 blockquote p,
-blockquote footer,
-figure {
+blockquote footer {
   width: 100%;
   max-width: var(--content-width-mobile);
 }
@@ -205,33 +163,6 @@ section > ul {
 dt:not(:first-child),
 li:not(:first-child) {
   margin-top: 0.25rem;
-}
-
-figure {
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-  -webkit-margin-start: 0;
-  -webkit-margin-end: 0;
-  margin: 0 0 3em 0;
-}
-
-figcaption {
-  float: right;
-  clear: right;
-  margin-top: 0;
-  margin-bottom: 0;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  vertical-align: baseline;
-  position: relative;
-  max-width: 40%;
-}
-
-figure.fullwidth figcaption {
-  margin-right: 24%;
 }
 
 a:link,
@@ -364,16 +295,6 @@ span.newthought {
   section > ol,
   section > ul {
     width: 90%;
-  }
-
-  figure {
-    max-width: 90%;
-  }
-
-  figcaption,
-  figure.fullwidth figcaption {
-    margin-right: 0%;
-    max-width: none;
   }
 
   blockquote {
@@ -520,8 +441,7 @@ span.newthought {
 }
 
 /* Media spacing */
-img,
-figure {
+img {
   margin: 1.2rem 0;
 }
 
