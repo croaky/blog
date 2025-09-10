@@ -26,10 +26,16 @@ It expects a file layout like this:
 .
 ├── articles
 │   └── example.md
-└-─ theme
+└── ui
     ├── article.html
     ├── css
     │   └── site.css
+    ├── font
+    │   ├── et-book-bold-line-figures.woff
+    │   ├── et-book-display-italic-old-style-figures.woff
+    │   ├── et-book-roman-line-figures.woff
+    │   ├── et-book-roman-old-style-figures.woff
+    │   └── et-book-semi-bold-old-style-figures.woff
     ├── images
     │   └── favicon.ico
     └── index.html
@@ -72,13 +78,13 @@ Refer to them in articles:
 ![alt text](/images/example.png)
 ```
 
-## Modify theme
+## Modify UI
 
-All `theme/public` files are copied to `public`.
+All `ui/public` files are copied to `public`.
 
-The `theme/article.html` file is parsed as a [Go template](https://gowebexamples.com/templates/).
+The `ui/article.html` file is parsed as a [Go template](https://gowebexamples.com/templates/).
 Syntax highlighting is generated at build time (no client-side JavaScript highlighting).
-`theme/article.html` accepts a data structure like this:
+`ui/article.html` accepts a data structure like this:
 
 ```
 {
@@ -92,7 +98,7 @@ Syntax highlighting is generated at build time (no client-side JavaScript highli
 }
 ```
 
-The `theme/index.html` template is pure HTML.
+The `ui/index.html` template is pure HTML.
 It is up to the author to decide how to lay out their index
 and link to their articles.
 

@@ -104,7 +104,7 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Serve index page
 	if path == "/" {
-		http.ServeFile(w, r, filepath.Join(wd, "theme", "index.html"))
+		http.ServeFile(w, r, filepath.Join(wd, "ui", "index.html"))
 		return
 	}
 
@@ -117,19 +117,19 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 	// Serve static assets
 	switch {
 	case strings.HasPrefix(path, "/images/"):
-		fs := http.StripPrefix("/images/", http.FileServer(http.Dir(filepath.Join(wd, "theme", "images"))))
+		fs := http.StripPrefix("/images/", http.FileServer(http.Dir(filepath.Join(wd, "ui", "images"))))
 		fs.ServeHTTP(w, r)
 	case strings.HasPrefix(path, "/css/"):
 		if strings.HasSuffix(path, ".css") {
 			w.Header().Set("Content-Type", "text/css")
 		}
-		fs := http.StripPrefix("/css/", http.FileServer(http.Dir(filepath.Join(wd, "theme", "css"))))
+		fs := http.StripPrefix("/css/", http.FileServer(http.Dir(filepath.Join(wd, "ui", "css"))))
 		fs.ServeHTTP(w, r)
 	case strings.HasPrefix(path, "/font/"):
 		if strings.HasSuffix(path, ".woff") {
 			w.Header().Set("Content-Type", "font/woff")
 		}
-		fs := http.StripPrefix("/font/", http.FileServer(http.Dir(filepath.Join(wd, "theme", "font"))))
+		fs := http.StripPrefix("/font/", http.FileServer(http.Dir(filepath.Join(wd, "ui", "font"))))
 		fs.ServeHTTP(w, r)
 	default:
 		// Build and serve articles
@@ -164,16 +164,16 @@ func build(outputDir string) {
 		fatal(os.RemoveAll(filepath.Join(outputDir, d.Name())), "Failed to remove file in output directory")
 	}
 
-	// Copy theme static files
-	copyDir(filepath.Join(wd, "theme", "index.html"), filepath.Join(outputDir, "index.html"))
-	copyDir(filepath.Join(wd, "theme", "images"), filepath.Join(outputDir, "images"))
-	copyDir(filepath.Join(wd, "theme", "font"), filepath.Join(outputDir, "font"))
+	// Copy ui static files
+	copyDir(filepath.Join(wd, "ui", "index.html"), filepath.Join(outputDir, "index.html"))
+	copyDir(filepath.Join(wd, "ui", "images"), filepath.Join(outputDir, "images"))
+	copyDir(filepath.Join(wd, "ui", "font"), filepath.Join(outputDir, "font"))
 
 	// Copy and fingerprint CSS files
 	cssPath = fingerprintCSS(outputDir)
 
 	// Build article pages
-	page := template.Must(template.ParseFiles(filepath.Join(wd, "theme", "article.html")))
+	page := template.Must(template.ParseFiles(filepath.Join(wd, "ui", "article.html")))
 	articles := load()
 
 	var wg sync.WaitGroup
@@ -276,7 +276,7 @@ func buildArticle(articleID string) {
 	f, err := os.Create(filepath.Join(articleDir, "index.html"))
 	fatal(err, "Failed to create article index.html")
 
-	page := template.Must(template.ParseFiles(filepath.Join(wd, "theme", "article.html")))
+	page := template.Must(template.ParseFiles(filepath.Join(wd, "ui", "article.html")))
 	fatal(page.Execute(f, TemplateData{Article: article, CSSPath: cssPath}), "Failed to execute article template")
 }
 
@@ -360,7 +360,7 @@ func preProcess(filePath string) (string, template.HTML) {
 
 // fingerprintCSS copies CSS files with MD5 fingerprints and returns the fingerprinted path
 func fingerprintCSS(outputDir string) string {
-	srcPath := filepath.Join(wd, "theme", "css", "site.css")
+	srcPath := filepath.Join(wd, "ui", "css", "site.css")
 
 	content, err := os.ReadFile(srcPath)
 	fatal(err, "Failed to read CSS file")
@@ -370,7 +370,7 @@ func fingerprintCSS(outputDir string) string {
 	cssDir := filepath.Join(outputDir, "css")
 	fatal(os.MkdirAll(cssDir, os.ModePerm), "Failed to create CSS directory")
 
-	copyDir(filepath.Join(wd, "theme", "css"), cssDir)
+	copyDir(filepath.Join(wd, "ui", "css"), cssDir)
 
 	fpName := fmt.Sprintf("site-%s.css", hash[:8])
 	fpPath := filepath.Join(cssDir, fpName)
