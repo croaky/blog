@@ -74,60 +74,82 @@ type TemplateData struct {
 	CSSPath string
 }
 
-func serve(addr string) {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		startTime := time.Now()
+type responseWriter struct {
+	http.ResponseWriter
+	statusCode int
+}
 
-		// Normalize the path
-		path := r.URL.Path
-		if path == "/" {
-			http.ServeFile(w, r, filepath.Join(wd, "theme", "index.html"))
-			fmt.Printf("%7.1fms 200 %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
-			return
+func (rw *responseWriter) WriteHeader(code int) {
+	rw.statusCode = code
+	rw.ResponseWriter.WriteHeader(code)
+}
+
+// loghttp logs HTTP requests with timing and status
+func loghttp(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		rw := &responseWriter{w, http.StatusOK}
+		next.ServeHTTP(rw, r)
+
+		fmt.Printf("%8.1fms %d %s %s\n",
+			float64(time.Since(start).Nanoseconds())/1e6,
+			rw.statusCode,
+			r.Method,
+			r.URL.Path)
+	})
+}
+
+func mainHandler(w http.ResponseWriter, r *http.Request) {
+	path := r.URL.Path
+
+	// Serve index page
+	if path == "/" {
+		http.ServeFile(w, r, filepath.Join(wd, "theme", "index.html"))
+		return
+	}
+
+	// Handle .well-known requests
+	if strings.HasPrefix(path, "/.well-known/") {
+		http.NotFound(w, r)
+		return
+	}
+
+	// Serve static assets
+	switch {
+	case strings.HasPrefix(path, "/images/"):
+		fs := http.StripPrefix("/images/", http.FileServer(http.Dir(filepath.Join(wd, "theme", "images"))))
+		fs.ServeHTTP(w, r)
+	case strings.HasPrefix(path, "/css/"):
+		if strings.HasSuffix(path, ".css") {
+			w.Header().Set("Content-Type", "text/css")
 		}
-
-		// Handle .well-known directory requests - immediately return 404
-		if strings.HasPrefix(path, "/.well-known/") {
-			http.NotFound(w, r)
-			fmt.Printf("%7.1fms 404 %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
-			return
+		fs := http.StripPrefix("/css/", http.FileServer(http.Dir(filepath.Join(wd, "theme", "css"))))
+		fs.ServeHTTP(w, r)
+	case strings.HasPrefix(path, "/font/"):
+		if strings.HasSuffix(path, ".woff") {
+			w.Header().Set("Content-Type", "font/woff")
 		}
-
-		// Serve static files
-		if strings.HasPrefix(path, "/images/") {
-			fs := http.StripPrefix("/images/", http.FileServer(http.Dir(filepath.Join(wd, "theme", "images"))))
-			fs.ServeHTTP(w, r)
-			fmt.Printf("%7.1fms 200 %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
-			return
-		}
-
-		// Serve CSS files with correct MIME type
-		if strings.HasPrefix(path, "/css/") {
-			if strings.HasSuffix(path, ".css") {
-				w.Header().Set("Content-Type", "text/css")
-			}
-			fs := http.StripPrefix("/css/", http.FileServer(http.Dir(filepath.Join(wd, "theme", "css"))))
-			fs.ServeHTTP(w, r)
-			fmt.Printf("%7.1fms 200 %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
-			return
-		}
-
-		// Build and serve the article for non-root paths
+		fs := http.StripPrefix("/font/", http.FileServer(http.Dir(filepath.Join(wd, "theme", "font"))))
+		fs.ServeHTTP(w, r)
+	default:
+		// Build and serve articles
 		articleID := strings.TrimPrefix(path, "/")
 		buildArticle(articleID)
 
 		articleFilePath := filepath.Join(wd, "public", articleID, "index.html")
 		if _, err := os.Stat(articleFilePath); os.IsNotExist(err) {
 			http.NotFound(w, r)
-			fmt.Printf("%7.1fms 404 %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
 			return
 		}
 
 		http.ServeFile(w, r, articleFilePath)
-		fmt.Printf("%7.1fms 200 %s %s\n", float64(time.Since(startTime))/float64(time.Millisecond), r.Method, path)
-	})
+	}
+}
 
-	fatal(http.ListenAndServe(addr, nil), "Failed to serve")
+func serve(addr string) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", mainHandler)
+	fatal(http.ListenAndServe(addr, loghttp(mux)), "Failed to serve")
 }
 
 func build(outputDir string) {
@@ -145,6 +167,7 @@ func build(outputDir string) {
 	// Copy theme static files
 	copyDir(filepath.Join(wd, "theme", "index.html"), filepath.Join(outputDir, "index.html"))
 	copyDir(filepath.Join(wd, "theme", "images"), filepath.Join(outputDir, "images"))
+	copyDir(filepath.Join(wd, "theme", "font"), filepath.Join(outputDir, "font"))
 
 	// Copy and fingerprint CSS files
 	cssPath = fingerprintCSS(outputDir)
