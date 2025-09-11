@@ -1,12 +1,13 @@
-# cmd / db-restore-dev
+# postgres / db-restore-dev
 
-I frequently download and restore my production database to my laptop
+I frequently download and restore
+my production Postgres database to my laptop
 using scripts which are placed in my project's Git repo.
 
-They depend on Unix, Postgres, and [Crunchy
-Bridge](https://docs.crunchybridge.com/concepts/cli/) CLIs.
+They depend on Unix, Postgres,
+and [Crunchy Bridge](https://docs.crunchybridge.com/concepts/cli/) CLIs.
 
-The [db-download-prod](/cmd/db-download-prod) script
+The [`db-download-prod`](/postgres/db-download-prod) script
 downloads the backup to `tmp/latest.backup`.
 
 The `db-restore-dev` script restores from the `tmp/latest.backup` file
@@ -49,10 +50,6 @@ pg_restore -d "$db" --verbose --no-acl --no-owner -j "$jobs" "$backup_dir"
 
 # Post-process
 psql "$db" <<SQL
-  UPDATE ar_internal_metadata
-  SET value = 'development'
-  WHERE key = 'environment';
-
   -- Avoid re-running incomplete jobs
   DELETE FROM jobs
   WHERE status IN ('pending', 'started');

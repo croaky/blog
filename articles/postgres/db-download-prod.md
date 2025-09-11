@@ -1,10 +1,12 @@
-# cmd / db-download-prod
+# postgres / db-download-prod
 
-I frequently download and restore my production database to my laptop
-using scripts which are placed in my project's Git repo.
+I frequently download and restore
+my production Postgres database
+to my laptop using scripts
+which are placed in my project's Git repo.
 
-They depend on Unix, Postgres, and [Crunchy
-Bridge](https://docs.crunchybridge.com/concepts/cli/) CLIs.
+They depend on Unix, Postgres,
+and [Crunchy Bridge](https://docs.crunchybridge.com/concepts/cli/) CLIs.
 
 The `db-download-prod` script
 downloads the backup to `tmp/latest.backup`:
@@ -37,5 +39,5 @@ echo "Downloading with $jobs parallel job(s)"
 pg_dump -Fd "$(cb uri app-prod --role application)" -j "$jobs" -f "$backup_dir"
 ```
 
-A separate [db-restore-dev](/cmd/db-restore-dev) script restores from the
+A separate [`db-restore-dev`](/postgres/db-restore-dev) script restores from the
 `tmp/latest.backup` file and does custom post-processing as needed.
