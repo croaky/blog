@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "et-book";
-  src: url("font/et-book-roman-line-figures.woff") format("woff");
+  src: url("/font/et-book-roman-line-figures.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -10,7 +10,7 @@
 
 @font-face {
   font-family: "et-book";
-  src: url("font/et-book-display-italic-old-style-figures.woff") format("woff");
+  src: url("/font/et-book-display-italic-old-style-figures.woff") format("woff");
   font-weight: normal;
   font-style: italic;
   font-display: swap;
@@ -18,7 +18,7 @@
 
 @font-face {
   font-family: "et-book";
-  src: url("font/et-book-bold-line-figures.woff") format("woff");
+  src: url("/font/et-book-bold-line-figures.woff") format("woff");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -26,7 +26,7 @@
 
 @font-face {
   font-family: "et-book-roman-old-style";
-  src: url("font/et-book-roman-old-style-figures.woff") format("woff");
+  src: url("/font/et-book-roman-old-style-figures.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
