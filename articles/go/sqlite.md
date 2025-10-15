@@ -1,7 +1,13 @@
 # go / sqlite
 
-I use [modernc.org/sqlite](https://pkg.go.dev/modernc.org/sqlite)
-for SQLite in Go web servers.
+I use SQLite in single-process Go web servers
+when I have modest traffic requirements
+and operational simplicity matters more than other factors.
+
+## Setup
+
+I use [modernc.org/sqlite](https://pkg.go.dev/modernc.org/sqlite) as
+my database driver.
 It is a pure Go implementation with no CGo dependencies,
 reducing cross-compilation issues.
 
@@ -10,9 +16,10 @@ go mod init server
 go get modernc.org/sqlite
 ```
 
-## Setup
-
-I configure SQLite for single-process access to avoid `database is locked (5) (SQLITE_BUSY)` errors, following David Crawshaw's [one process programming notes](https://crawshaw.io/blog/one-process-programming-notes):
+I configure SQLite for single-process access to avoid
+`database is locked (5) (SQLITE_BUSY)` errors,
+following David Crawshaw's
+[one process programming notes](https://crawshaw.io/blog/one-process-programming-notes).
 
 ```go
 import (
@@ -82,7 +89,8 @@ func main() {
 
 ## Testing
 
-I use in-memory databases for tests to isolate them and automatically clean up data:
+I use in-memory databases (`":memory:"`) in the test suite
+to isolate each test case by automatically cleaning up data.
 
 ```go
 import (
@@ -130,5 +138,4 @@ func TestHealthCheck(t *testing.T) {
         t.Errorf("Expected body 'OK', got '%s'", rr.Body.String())
     }
 }
-
 ```
