@@ -27,6 +27,7 @@ import (
     "fmt"
     "log"
     "net/http"
+
     _ "modernc.org/sqlite"
 )
 
@@ -98,6 +99,7 @@ import (
     "net/http"
     "net/http/httptest"
     "testing"
+
     _ "modernc.org/sqlite"
 )
 
