@@ -1,14 +1,14 @@
 # go / sqlite
 
-I use SQLite in single-process Go web servers
-when I have modest traffic requirements
+I use SQLite in Go web servers
+when I have modest requirements
 and operational simplicity matters more than other factors.
 
 ## Setup
 
 I use [modernc.org/sqlite](https://pkg.go.dev/modernc.org/sqlite) as
-my database driver.
-It is a pure Go implementation with no CGo dependencies,
+a database driver.
+It has no CGo dependencies,
 reducing cross-compilation issues.
 
 ```bash
@@ -16,7 +16,7 @@ go mod init server
 go get modernc.org/sqlite
 ```
 
-I configure SQLite for single-process access to avoid
+I configure SQLite to avoid
 `database is locked (5) (SQLITE_BUSY)` errors,
 following David Crawshaw's
 [one process programming notes](https://crawshaw.io/blog/one-process-programming-notes).
