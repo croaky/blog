@@ -90,8 +90,8 @@ func main() {
 
 ## Testing
 
-I use in-memory databases (`":memory:"`) in the test suite
-to isolate each test case by automatically cleaning up data.
+I use in-memory databases to isolate each
+test case.
 
 ```go
 import (
