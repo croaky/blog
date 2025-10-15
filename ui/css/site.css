@@ -428,67 +428,103 @@ img {
   color: #999;
 }
 
-/* Dark mode styles - must be at end to override light mode styles */
+/* Dark mode styles - Catppuccin Frappe theme */
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #151515;
-    color: #ddd;
+    background-color: #303446;
+    color: #c6d0f5;
   }
 
   /* Social icons visibility in dark mode */
   .social svg {
-    fill: #dddddd;
+    fill: #c6d0f5;
   }
   .social svg:hover {
-    fill: #999999;
+    fill: #8caaee;
   }
 
   /* Links in dark mode */
   a:link,
   a:visited {
-    color: #dddddd;
-    border-bottom-color: rgba(221, 221, 221, 0.3);
+    color: #8caaee;
+    border-bottom-color: rgba(140, 170, 238, 0.4);
   }
   a:hover {
-    border-bottom-color: rgba(221, 221, 221, 0.6);
+    color: #babbf1;
+    border-bottom-color: rgba(140, 170, 238, 0.8);
   }
 
   /* Code blocks in dark mode */
   pre {
-    border-left-color: #444444;
+    border-left-color: #626880;
   }
   :not(pre) > code {
-    background-color: #2a2a2a;
-    border-color: #444444;
+    background-color: #414559;
+    border-color: #626880;
+    color: #c6d0f5;
   }
 
   /* Blockquotes in dark mode */
   blockquote {
-    color: #aaaaaa;
+    color: #a5adce;
   }
 
   /* Cards in dark mode */
   .card {
-    border-color: #444444;
-    background: #1a1a1a;
+    border-color: #626880;
+    background: #414559;
   }
 
   /* Byline in dark mode */
   .byline {
-    color: #999999;
+    color: #b5bfe2;
   }
 
-  /* Syntax highlighting adjustments for dark mode */
+  /* Horizontal rules in dark mode */
+  hr {
+    border-top-color: #626880;
+  }
+
+  /* Syntax highlighting adjustments for dark mode - Catppuccin Frappe */
   .chroma .kc,
   .chroma .kd,
   .chroma .n,
   .chroma .nt,
   .chroma .nx {
-    color: #dddddd;
+    color: #c6d0f5;
   }
   .chroma .k,
   .chroma .nb,
   .chroma .nf {
-    color: #aaaaaa;
+    color: #8caaee;
+  }
+  .chroma .err,
+  .chroma .gh {
+    color: #e78284;
+  }
+  .chroma .kn,
+  .chroma .kp {
+    color: #f4b8e4;
+  }
+  .chroma .m,
+  .chroma .mi {
+    color: #fab387;
+  }
+  .chroma .no,
+  .chroma .s,
+  .chroma .s2,
+  .chroma .ss {
+    color: #a6d189;
+  }
+  .chroma .vi {
+    color: #e5c890;
+  }
+  .chroma .c,
+  .chroma .c1,
+  .chroma .ch,
+  .chroma .cp,
+  .chroma .o,
+  .chroma .p {
+    color: #737994;
   }
 }
