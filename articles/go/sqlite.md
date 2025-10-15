@@ -104,7 +104,7 @@ import (
 func setupTestDB(t *testing.T) (*sql.DB, *Server) {
     t.Helper()
 
-    db, err := sql.Open("sqlite", ":memory:")
+    db, err := sql.Open("sqlite", ":memory:?_foreign_keys=ON")
     if err != nil {
         t.Fatalf("Failed to create test database: %v", err)
     }
