@@ -103,7 +103,7 @@ import (
     _ "modernc.org/sqlite"
 )
 
-func setupTestDB(t *testing.T) (*sql.DB, *Server) {
+func initTestDB(t *testing.T) (*sql.DB, *Server) {
     t.Helper()
 
     db, err := sql.Open("sqlite", ":memory:?_foreign_keys=ON")
@@ -121,7 +121,7 @@ func setupTestDB(t *testing.T) (*sql.DB, *Server) {
 }
 
 func TestHealthCheck(t *testing.T) {
-    db, server := setupTestDB(t)
+    db, server := initTestDB(t)
     defer db.Close()
 
     req, err := http.NewRequest("GET", "/health", nil)
