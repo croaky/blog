@@ -1,6 +1,6 @@
 module github.com/croaky/blog
 
-go 1.23.6
+go 1.25.2
 
 require (
 	github.com/alecthomas/chroma/v2 v2.16.0

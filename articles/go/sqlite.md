@@ -1,24 +1,22 @@
 # go / sqlite
 
 I use SQLite in Go web servers
-when I have modest requirements
-and operational simplicity matters more than other factors.
+when I have modest needs
+and want operational simplicity.
 
 ## Setup
 
 I use [modernc.org/sqlite](https://pkg.go.dev/modernc.org/sqlite) as
-a database driver.
-It has no CGo dependencies,
-reducing cross-compilation issues.
+a database driver, which does not require [Cgo](https://go.dev/blog/cgo).
 
 ```bash
 go mod init server
 go get modernc.org/sqlite
 ```
 
-I configure SQLite to avoid
+To avoid
 `database is locked (5) (SQLITE_BUSY)` errors,
-following David Crawshaw's
+I configure SQLite following David Crawshaw's
 [one process programming notes](https://crawshaw.io/blog/one-process-programming-notes).
 
 ```go
@@ -52,11 +50,12 @@ type Server struct {
 }
 
 func (s *Server) health(w http.ResponseWriter, r *http.Request) {
-    var result int
-    if err := s.db.QueryRow("SELECT 1").Scan(&result); err != nil {
+    var got int
+    if err := s.db.QueryRow("SELECT 1").Scan(&got); err != nil {
         http.Error(w, "Database error", 500)
         return
     }
+
     w.Write([]byte("OK"))
 }
 
@@ -90,8 +89,7 @@ func main() {
 
 ## Testing
 
-I use in-memory databases to isolate each
-test case.
+I use in-memory databases to isolate each test case.
 
 ```go
 import (
