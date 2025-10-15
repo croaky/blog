@@ -2,46 +2,32 @@
 
 I use [modernc.org/sqlite](https://pkg.go.dev/modernc.org/sqlite)
 for SQLite in Go web servers.
-It's a pure Go implementation with no CGo dependencies,
-eliminating cross-compilation issues.
+It is a pure Go implementation with no CGo dependencies,
+reducing cross-compilation issues.
+
+```bash
+go mod init server
+go get modernc.org/sqlite
+```
 
 ## Setup
 
-I configure SQLite with Write-Ahead Logging (WAL) mode
-and a single connection to prevent lock contention:
+I configure SQLite for single-process access to avoid `database is locked (5) (SQLITE_BUSY)` errors, following David Crawshaw's [one process programming notes](https://crawshaw.io/blog/one-process-programming-notes):
 
 ```go
 import (
     "database/sql"
+    "fmt"
+    "log"
+    "net/http"
     _ "modernc.org/sqlite"
 )
 
-db, err := sql.Open("sqlite", "app.db?_busy_timeout=5000&_journal_mode=WAL&_synchronous=NORMAL&_foreign_keys=ON")
-if err != nil {
-    log.Fatal(err)
-}
-defer db.Close()
-
-db.SetMaxOpenConns(1)
-db.SetMaxIdleConns(1)
-db.SetConnMaxLifetime(0)
-```
-
-Connection string parameters:
-
-- `_busy_timeout=5000`: Wait 5 seconds for locks before timing out
-- `_journal_mode=WAL`: Enable Write-Ahead Logging for better concurrency
-- `_synchronous=NORMAL`: Balance durability and performance
-- `_foreign_keys=ON`: Enable foreign key constraints
-
-I set performance pragmas on initialization:
-
-```go
 func initDB(db *sql.DB) error {
     pragmas := []string{
-        "PRAGMA temp_store = memory",   // Store temp tables in memory
-        "PRAGMA mmap_size = 268435456", // 256MB memory-mapped I/O
-        "PRAGMA cache_size = 10000",    // Cache size in pages
+        "PRAGMA temp_store = memory",    // Store temp tables in memory
+        "PRAGMA mmap_size  = 268435456", // 256MB memory-mapped I/O
+        "PRAGMA cache_size = 10000",     // Cache size in pages
     }
 
     for _, pragma := range pragmas {
@@ -49,54 +35,100 @@ func initDB(db *sql.DB) error {
             return fmt.Errorf("failed to set pragma %s: %w", pragma, err)
         }
     }
+
     return nil
 }
-```
 
-## Basic operations
-
-I use parameterized queries with `?` placeholders:
-
-```go
-// Insert
-result, err := db.Exec("INSERT INTO notes (content) VALUES (?)", content)
-if err != nil {
-    return err
+type Server struct {
+    db *sql.DB
 }
-id, err := result.LastInsertId()
 
-// Query
-rows, err := db.Query("SELECT id, content FROM notes WHERE id = ?", id)
-if err != nil {
-    return err
+func (s *Server) health(w http.ResponseWriter, r *http.Request) {
+    var result int
+    if err := s.db.QueryRow("SELECT 1").Scan(&result); err != nil {
+        http.Error(w, "Database error", 500)
+        return
+    }
+    w.Write([]byte("OK"))
 }
-defer rows.Close()
 
-// Update
-_, err = db.Exec("UPDATE notes SET content = ? WHERE id = ?", newContent, id)
+func main() {
+    conn := "app.db?" +
+        "_busy_timeout=5000&" +  // Avoid immediate lock failures in concurrent access
+        "_journal_mode=WAL&" +   // Better concurrency than default rollback journal
+        "_synchronous=NORMAL&" + // Faster writes while maintaining crash safety
+        "_foreign_keys=ON"       // Enforce referential integrity
+    db, err := sql.Open("sqlite", conn)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer db.Close()
 
-// Delete
-_, err = db.Exec("DELETE FROM notes WHERE id = ?", id)
+    // For a single-process web server,
+    // limit connections to prevent lock contention
+    db.SetMaxOpenConns(1)
+    db.SetMaxIdleConns(1)
+    db.SetConnMaxLifetime(0) // Keep connections alive
+
+    if err := initDB(db); err != nil {
+        log.Fatal("Failed to initialize database:", err)
+    }
+
+    server := &Server{db: db}
+    http.HandleFunc("/health", server.health)
+    log.Fatal(http.ListenAndServe(":8080", nil))
+}
 ```
 
 ## Testing
 
-I use in-memory databases for tests:
+I use in-memory databases for tests to isolate them and automatically clean up data:
 
 ```go
-func setupTestDB(t *testing.T) *sql.DB {
+import (
+    "database/sql"
+    "net/http"
+    "net/http/httptest"
+    "testing"
+    _ "modernc.org/sqlite"
+)
+
+func setupTestDB(t *testing.T) (*sql.DB, *Server) {
+    t.Helper()
+
     db, err := sql.Open("sqlite", ":memory:")
     if err != nil {
         t.Fatalf("Failed to create test database: %v", err)
     }
 
     if err := initDB(db); err != nil {
+        db.Close()
         t.Fatalf("Failed to initialize test database: %v", err)
     }
 
-    return db
+    server := &Server{db: db}
+    return db, server
 }
-```
 
-In-memory databases are isolated per connection and
-automatically cleaned up when closed.
+func TestHealthCheck(t *testing.T) {
+    db, server := setupTestDB(t)
+    defer db.Close()
+
+    req, err := http.NewRequest("GET", "/health", nil)
+    if err != nil {
+        t.Fatalf("Failed to create request: %v", err)
+    }
+
+    rr := httptest.NewRecorder()
+    http.HandlerFunc(server.health).ServeHTTP(rr, req)
+
+    if rr.Code != 200 {
+        t.Errorf("Expected status 200, got %d", rr.Code)
+    }
+
+    if rr.Body.String() != "OK" {
+        t.Errorf("Expected body 'OK', got '%s'", rr.Body.String())
+    }
+}
+
+```
