@@ -1,8 +1,8 @@
 # go / sqlite
 
-I use SQLite in Go web servers
-when I have modest needs
-and want operational simplicity.
+I use SQLite with Go
+when I want to ship a single binary web server
+with an embedded database.
 
 ## Setup
 
