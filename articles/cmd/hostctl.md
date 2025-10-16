@@ -33,13 +33,13 @@ it only works on my laptop (not phones or tablets on the network)
 but it does not require an additional always-on device such as a Raspberry Pi
 and it works reliably when using the laptop away from home.
 
-To enable ad/tracker blocking:
+Ad/tracker blocking is enabled by default:
 
 ```sh
 hostctl
 ```
 
-To disable blocking (keeping local app entries intact):
+To disable blocking while keeping local app entries intact:
 
 ```sh
 hostctl --unblock
