@@ -14,7 +14,7 @@ Browsers treat `http://localhost` and `http://*.localhost` as
 providing Secure Context features without TLS.
 
 Running multiple apps on different subdomains and ports
-(e.g., `blog.localhost:3000`, `htmz.localhost:3001`)
+(e.g., `blog.localhost:2000`, `htmz.localhost:2002`)
 lets me test
 [cross-origin security](https://www.alexedwards.net/blog/preventing-csrf-in-go)
 without TLS:
@@ -60,11 +60,11 @@ custom_hosts_entries() {
 255.255.255.255 broadcasthost
 
 # local apps
-127.0.0.1 blog.localhost
-127.0.0.1 bsfeeds.localhost
-127.0.0.1 eds.localhost
-127.0.0.1 htmz.localhost
-127.0.0.1 neogit.localhost
+127.0.0.1 blog.localhost     # :2000
+127.0.0.1 bsfeeds.localhost  # :2001
+127.0.0.1 eds.localhost      # :3000
+127.0.0.1 htmz.localhost     # :2002
+127.0.0.1 neogit.localhost   # :2003
 EOF
 }
 
@@ -89,3 +89,6 @@ fi
 # Flush DNS cache
 sudo killall -HUP mDNSResponder
 ```
+
+I use the `2000` port range for servers written in Go
+and the `3000` port range for servers written in Ruby.

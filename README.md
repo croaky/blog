@@ -28,7 +28,12 @@ git push origin main                  # deploy via Cloudflare Pages
 
 ## Setup
 
-[Install Go](https://golang.org/doc/install). Then, run:
+Add `127.0.0.1 blog.localhost` to the `/etc/hosts` file
+manually or via tool like [hostctl](https://dancroak.com/cmd/hostctl).
+
+[Install Go](https://golang.org/doc/install).
+
+Run:
 
 ```
 go install ./...

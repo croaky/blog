@@ -37,9 +37,9 @@ func main() {
 
 	switch os.Args[1] {
 	case "serve":
-		blogURL = "http://localhost:2000"
+		blogURL = "http://blog.localhost:2000"
 		cssPath = "/css/site.css" // Use non-fingerprinted path for development
-		fmt.Println("Serving at http://localhost:2000")
+		fmt.Println("Serving at http://blog.localhost:2000")
 		serve(":2000")
 	case "build":
 		blogURL = "https://dancroak.com"
