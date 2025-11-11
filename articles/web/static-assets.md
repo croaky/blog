@@ -134,7 +134,7 @@ In `config/environments/production.rb`:
 ```ruby
 config.public_file_server.enabled = true
   config.public_file_server.headers = {
-    "Cache-Control" => "public, s-maxage=2592000, maxage=86400, immutable"
+    "Cache-Control" => "public, s-maxage=2592000, max-age=86400, immutable"
   }
 ```
 
