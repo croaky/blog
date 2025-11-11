@@ -133,13 +133,19 @@ In `config/environments/production.rb`:
 
 ```ruby
 config.public_file_server.enabled = true
-  config.public_file_server.headers = {
-    "Cache-Control" => "public, s-maxage=2592000, max-age=86400, immutable"
-  }
+config.public_file_server.headers = {
+  "Cache-Control" => "public, max-age=31536000, immutable"
+}
 ```
 
+Since filenames include content hashes,
+each URL is immutable.
+When content changes, the filename changes.
+Browsers and CDNs can cache aggressively (1 year)
+without risk of serving stale content.
+
 The [immutable directive](https://code.facebook.com/posts/557147474482256/this-browser-tweak-saved-60-of-requests-to-facebook/)
-eliminates revalidation requests.
+eliminates revalidation requests even on page reload.
 
 In `Rakefile`:
 
@@ -152,8 +158,9 @@ namespace :assets do
   task :precompile do
     ["public/css/app.css", "public/js/app.js"].each do |old_path|
       hash = Digest::MD5.file(File.expand_path(old_path, __dir__))
-      old_base, old_ext = old_path.split(".")
-      new_path = "#{old_base}-#{hash}.#{old_ext}"
+      ext = File.extname(old_path)
+      base = old_path.chomp(ext)
+      new_path = "#{base}-#{hash}#{ext}"
       system "mv #{old_path} #{new_path}"
     end
   end
