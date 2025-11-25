@@ -86,13 +86,13 @@ Re-run with the same order using the seed:
 ruby test/lib/db_test.rb --seed 1234
 ```
 
-Run a single test method:
+Run a single test method from the command line:
 
 ```bash
 ruby test/lib/db_test.rb --name test_fuzzy_like_pattern
 ```
 
-I trigger a single test method from Vim with
+Or, run a single test method from Vim with
 [a vim-test runner](https://github.com/croaky/laptop/commit/eb16cc13f6aaaf91436c5d3c97de50758b68e2de).
 
 Run all tests:
