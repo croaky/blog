@@ -253,18 +253,17 @@ end
 
 ## Implementation
 
-The complete `test/test_helper.rb`:
+The `test/test_helper.rb` file:
 
 ```ruby
 ENV["APP_ENV"] = "test"
 
 require "webmock"
+require_relative "../lib/db"
+require_relative "factories"
 
 WebMock.enable!
 WebMock.disable_net_connect!(allow_localhost: true)
-
-require_relative "../lib/db"
-require_relative "factories"
 
 DB.configure do |c|
   c.pool_size = 1
@@ -445,7 +444,7 @@ end
 at_exit { Test.run_suite }
 ```
 
-The `factories.rb` file defines factory methods:
+The `test/factories.rb` file defines factory methods:
 
 ```ruby
 module Factories
