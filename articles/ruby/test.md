@@ -68,12 +68,6 @@ Run a test file directly:
 ruby test/lib/db_test.rb
 ```
 
-Run a single test method:
-
-```bash
-ruby test/lib/db_test.rb --name test_fuzzy_like_pattern
-```
-
 The framework randomizes test order and prints a seed:
 
 ```txt
@@ -91,6 +85,15 @@ Re-run with the same order using the seed:
 ```bash
 ruby test/lib/db_test.rb --seed 1234
 ```
+
+Run a single test method:
+
+```bash
+ruby test/lib/db_test.rb --name test_fuzzy_like_pattern
+```
+
+I trigger a single test method from Vim with
+[a vim-test runner](https://github.com/croaky/laptop/commit/eb16cc13f6aaaf91436c5d3c97de50758b68e2de).
 
 Run all tests:
 
@@ -493,7 +496,8 @@ module Factories
 end
 ```
 
-The `test/suite.rb` file requires all tests:
+The `test/suite.rb` file requires all tests
+and the `at_exit` hook in `test_helper.rb` runs the suite:
 
 ```ruby
 require_relative "test_helper"
