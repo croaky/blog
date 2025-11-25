@@ -9,7 +9,7 @@ I wanted:
 - Flexible: plain Ruby, easy to extend
 - Debuggable: small codebase, easy to understand
 
-It has ~200 lines of code that
+It has ~250 lines of code that
 are included at the end of this article.
 
 ## Usage
