@@ -1,20 +1,19 @@
 # ruby / test
 
-I wrote a custom test framework for Ruby.
-I wanted:
+I use a custom test framework for Ruby. My goals are:
 
 - Fast: startup and runtime
 - Simple: one assertion method
-- Features: db transactions, stubs, factories
 - Flexible: plain Ruby, easy to extend
 - Debuggable: small codebase, easy to understand
+- Features: stubs, db transactions, db factories, etc.
 
 It has ~250 lines of code that
 are included at the end of this article.
 
-## Usage
+## Test groups and test cases
 
-Tests inherit from a `Test` base class:
+Test groups inherit from a `Test` base class:
 
 ```ruby
 class DBTest < Test
@@ -50,6 +49,14 @@ class DBTest < Test
 end
 ```
 
+Test cases are public instance methods
+whose names start with `test_`.
+
+One ore more test groups can be defined
+in the same file.
+
+## Assertions
+
 The `ok` method is the only assertion.
 It takes a boolean expression.
 
@@ -61,13 +68,13 @@ ok rows.size == 3, "want 3 rows, got #{rows.size}"
 ```
 
 If the expression passed to `ok` is true,
-the test passes.
+the assertion passes and the test continues.
 
-If the expression is false, the test fails,
-the test runner prints a backtrace,
+If the expression is false, the assertion fails
+and the test runner prints a backtrace
 and exits immediately with a non-zero status code.
 
-## Running tests
+## Runner
 
 Run a test file directly:
 
@@ -97,16 +104,25 @@ Re-run with the same order using the seed:
 ruby test/lib/db_test.rb --seed 1234
 ```
 
-Run a single test method from the command line:
+Run a single test case from the command line:
 
 ```bash
 ruby test/lib/db_test.rb --name test_fuzzy_like_pattern
 ```
 
-Or, run a single test method from Vim with
+Or, run a single test case from Vim with
 [a vim-test runner](https://github.com/croaky/laptop/commit/eb16cc13f6aaaf91436c5d3c97de50758b68e2de).
 
-Run all tests:
+To run multiple test files, create a file
+that requires them all, e.g. `test/suite.rb`:
+
+```ruby
+require_relative "test_helper"
+
+Dir["#{__dir__}/**/*_test.rb"].each { |f| require f }
+```
+
+Then run it:
 
 ```bash
 ruby test/suite.rb
@@ -114,7 +130,7 @@ ruby test/suite.rb
 
 ## Database transactions
 
-Each test runs in a transaction that rolls back
+Each test case runs in a transaction that rolls back
 to isolate each test:
 
 ```ruby
@@ -149,7 +165,7 @@ class TransactionBehaviorTest < Test
 end
 ```
 
-## Factories
+## Database factories
 
 I use factory methods for test data.
 They work with [DB](/ruby/db):
@@ -178,12 +194,13 @@ class CompaniesTest < Test
 end
 ```
 
-Factories provide defaults and return `Data` objects with attribute accessors.
+Factories provide defaults and return `Data` objects
+with attribute accessors.
 
 ## Stubs
 
-The framework has built-in stubs for isolating collaborators.
-All stubs are "spies" whose method calls can be verified.
+The framework has built-in stubs to isolate collaborators.
+All stubs are "spies" whose method calls can be asserted.
 Use them via dependency injection:
 
 ```ruby
@@ -249,8 +266,7 @@ ok client.transform("hello") == "HELLO"
 ok client.calculate(2, 3) == 5
 ```
 
-For class methods, use `stub_class`.
-Stubs are automatically restored after each test:
+For class methods, use `stub_class`:
 
 ```ruby
 class TimeTest < Test
@@ -261,6 +277,8 @@ class TimeTest < Test
   end
 end
 ```
+
+All stubs are automatically restored after each test.
 
 ## Implementation
 
