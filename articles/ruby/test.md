@@ -4,7 +4,7 @@ I wrote a custom test framework for Ruby.
 I wanted:
 
 - Fast: startup and runtime
-- Simple: one assertion method, no DSL
+- Simple: one assertion method
 - Features: db transactions, stubs, factories
 - Flexible: plain Ruby, easy to extend
 - Debuggable: small codebase, easy to understand
@@ -51,14 +51,21 @@ end
 ```
 
 The `ok` method is the only assertion.
-Pass a boolean expression.
-If it's false, the test fails.
+It takes a boolean expression.
+
 Add an optional message for context:
 
 ```ruby
 ok user.valid?, "user is not valid"
-ok rows.size == 3, "expected 3 rows, got #{rows.size}"
+ok rows.size == 3, "want 3 rows, got #{rows.size}"
 ```
+
+If the expression passed to `ok` is true,
+the test passes.
+
+If the expression is false, the test fails,
+the test runner prints a backtrace,
+and exits immediately with a non-zero status code.
 
 ## Running tests
 
@@ -79,6 +86,10 @@ DBTest
 
 ok
 ```
+
+The `test_` outputs are green for passing tests
+and red for failing tests.
+If `ENV["CI"]` is set, no color codes are used.
 
 Re-run with the same order using the seed:
 
@@ -276,9 +287,15 @@ class Test
   include Factories
   include WebMock::API
 
-  GREEN = "\e[32m"
-  RED = "\e[31m"
-  RESET = "\e[0m"
+  if ENV["CI"]
+    GREEN = ""
+    RED = ""
+    RESET = ""
+  else
+    GREEN = "\e[32m"
+    RED = "\e[31m"
+    RESET = "\e[0m"
+  end
 
   @@groups = []
   @@seed = nil
@@ -444,7 +461,7 @@ end
 at_exit { Test.run_suite }
 ```
 
-The `test/factories.rb` file defines factory methods:
+The `test/factories.rb` file:
 
 ```ruby
 module Factories
