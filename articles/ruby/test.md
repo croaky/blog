@@ -16,35 +16,13 @@ are included at the end of this article.
 Test groups inherit from a `Test` base class:
 
 ```ruby
-class DBTest < Test
-  def test_exec_special_chars
-    [
-      "Company 100%",
-      "O'Reilly Media",
-      "Price: $100; Drop: 50%",
-      "Robert'); DROP TABLE students;--",
-      "Test\\Backslash",
-      "Test'Quote\"DoubleQuote"
-    ].each do |val|
-      insert_company(name: val)
-
-      rows = db.exec(<<~SQL, [val])
-        SELECT
-          name
-        FROM
-          companies
-        WHERE
-          name = $1
-      SQL
-
-      ok rows[0]["name"] == val
-    end
+class MathTest < Test
+  def test_greater_than
+    ok 10 > 5
   end
 
-  def test_fuzzy_like_pattern
-    got = db.fuzzy_like("test")
-
-    ok got == "%test%"
+  def test_less_than
+    ok 3 < 7
   end
 end
 ```
@@ -63,8 +41,58 @@ It takes a boolean expression.
 Add an optional message for context:
 
 ```ruby
-ok user.valid?, "user is not valid"
-ok rows.size == 3, "want 3 rows, got #{rows.size}"
+class NilTest < Test
+  def test_nil
+    val = nil
+    ok val == nil, "#{val} not nil"
+  end
+
+  def test_not_nil
+    val = "value"
+    ok val != nil, "val is nil"
+  end
+end
+
+class RegexTest < Test
+  def test_match
+    got = "user@example.com"
+    want = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+    ok got =~ want, "#{got} not email format"
+  end
+
+  def test_no_match
+    got = "text"
+    ok got !~ /[<>]/, "#{got} contains HTML brackets"
+  end
+end
+
+class ExceptionTest < Test
+  def test_raised
+    raised = false
+
+    begin
+      raise ArgumentError, "invalid argument"
+    rescue ArgumentError
+      raised = true
+    end
+
+    ok raised, "did not raise ArgumentError"
+  end
+
+  def test_not_raised
+    raised = false
+    err = nil
+
+    begin
+      10 / 2
+    rescue => e
+      err = e
+      raised = true
+    end
+
+    ok !raised, "raised #{err}"
+  end
+end
 ```
 
 If the expression passed to `ok` is true,
@@ -128,6 +156,31 @@ Then run it:
 ruby test/suite.rb
 ```
 
+## Before suite
+
+Before any tests run, the framework can execute
+one-time setup code directly in `test_helper.rb`.
+This runs once when the file is loaded:
+
+```ruby
+# before suite
+DB.pool.exec(<<~SQL)
+  INSERT INTO users (id, name, admin, email)
+  VALUES (1, 'Admin', true, 'admin@example.com')
+  ON CONFLICT DO NOTHING;
+
+  ALTER SEQUENCE users_id_seq RESTART WITH 2;
+
+  REFRESH MATERIALIZED VIEW cache_companies;
+SQL
+```
+
+This is useful for:
+
+- Creating shared fixtures
+- Populating materialized views
+- Other one-time expensive setup
+
 ## Database transactions
 
 Each test case runs in a transaction that rolls back
@@ -155,6 +208,7 @@ To test transaction behavior itself, set `@tx = false`:
 ```ruby
 class TransactionBehaviorTest < Test
   def initialize
+    super
     @tx = false
   end
 
@@ -167,8 +221,7 @@ end
 
 ## Database factories
 
-I use factory methods for test data.
-They work with [DB](/ruby/db):
+Factory methods for test data work with [DB](/ruby/db):
 
 ```ruby
 class CompaniesTest < Test
@@ -197,10 +250,9 @@ end
 Factories provide defaults and return `Data` objects
 with attribute accessors.
 
-## Stubs
+## Object stubs
 
-The framework has built-in stubs to isolate collaborators.
-All stubs are "spies" whose method calls can be asserted.
+Object stubs help isolate collaborators.
 Use them via dependency injection:
 
 ```ruby
@@ -255,7 +307,7 @@ class CompaniesImportTest < Test
 end
 ```
 
-Stubs support lambdas:
+Stubs support lambdas for transformations:
 
 ```ruby
 client = stub(
@@ -265,6 +317,8 @@ client = stub(
 ok client.transform("hello") == "HELLO"
 ok client.calculate(2, 3) == 5
 ```
+
+## Class method stubs
 
 For class methods, use `stub_class`:
 
@@ -278,7 +332,360 @@ class TimeTest < Test
 end
 ```
 
-All stubs are automatically restored after each test.
+Class method stubs are automatically restored after each test.
+
+Class method stubs also support lambdas:
+
+```ruby
+# identity functions
+stub_class(Convert::ExtractDomain, call: ->(host) { host })
+
+# raise errors
+stub_class(Aws::S3::Client, new: ->(*) {
+  raise StandardError.new("auth failed")
+})
+
+# capture variables
+err_msg = nil
+stub_class(Sentry, capture_exception: ->(e) { err_msg = e.message })
+some_code_that_raises
+ok err_msg == "expected error"
+```
+
+## Asserting stub calls
+
+All stubs are "spies" whose method calls can be asserted:
+
+```ruby
+client = stub(fetch: [{"name" => "Acme Inc"}, nil])
+
+Companies::Import.new(db, client: client).call(domain: "acme.com")
+
+ok client.called?(:fetch)
+ok !client.called?(:delete)
+
+# assert call count and arguments
+ok client.calls[:fetch].size == 2
+ok client.calls[:fetch][0][:args] == ["acme.com"]
+ok client.calls[:fetch][0][:kwargs] == {domain: "acme.com"}
+```
+
+## Yielding stubs
+
+For methods that yield, instead of `stub`,
+use `Object.new` with `def`:
+
+```ruby
+client = Object.new
+def client.get_data(_)
+  yield "chunk1"
+  yield "chunk2"
+end
+
+got = []
+client.get_data("http://example.com") { |chunk| got << chunk }
+ok got == ["chunk1", "chunk2"]
+```
+
+For `Object.new` stubs,
+capture values with instance variables:
+
+```ruby
+client = Object.new
+def client.process(_)
+  @thread_ref = Thread.current
+  yield "data"
+end
+def client.thread_ref
+  @thread_ref
+end
+
+some_code_under_test(client)
+
+ok !client.thread_ref.alive?
+```
+
+## Style guide
+
+Prefer inlining code and avoiding unnecessary local variables.
+When they clarify tests or improve failure messages,
+use `got` and `want` variable names:
+
+```ruby
+def test_length
+  got = "hello".length
+  want = 5
+  ok got == want, "#{got} != #{want}"
+end
+```
+
+When executing the thing under test only once,
+separate setup, execution, and assertion phases with blank lines:
+
+```ruby
+def test_add
+  a = 2
+  b = 3
+
+  got = a + b
+
+  ok got == 5
+end
+```
+
+When executing multiple times,
+group exercise and assert phases together:
+
+```ruby
+def test_multiply
+  got = 2 * 3
+  ok got == 6
+
+  got = 4 * 5
+  ok got == 20
+
+  got = 0 * 10
+  ok got == 0
+end
+```
+
+Name fresh fixtures with abbreviations (`co`, `per`, `u`).
+When querying a changed fixture from the database,
+prefix the variable with `db_`:
+
+```ruby
+co = insert_company(name: "foo")
+
+Something.new(db).call("bar")
+
+db_co = db.exec("SELECT * FROM companies WHERE id = $1", [co.id]).first
+ok db_co["name"] == "bar"
+```
+
+For SQL in assertions, use one-line `SELECT *` for simple predicates;
+use heredocs for joins or multi-line queries:
+
+```ruby
+# simple predicate
+note = db.exec("SELECT * FROM notes WHERE company_id = $1", [co.id]).first
+
+# join or multi-line
+job = db.exec(<<~SQL, [per.id]).first
+  SELECT
+    jobs.*
+  FROM
+    notes
+    JOIN jobs ON jobs.args ->> 'note_id' = notes.id::text
+  WHERE
+    notes.person_id = $1
+    AND jobs.queue = 'slack'
+SQL
+```
+
+Check empty tables with `ok rows == []`, not `size == 0`.
+For unordered comparisons, map and sort:
+
+```ruby
+rows = db.exec("SELECT * FROM tracking WHERE company_id = $1", [co.id])
+ok rows == []
+
+rows = db.exec("SELECT * FROM list_items WHERE company_id = $1", [co.id])
+ok rows.map { |r| r["list_id"] }.sort == [748, 541].sort
+```
+
+For error messages, prefer `include?` over full-array equality:
+
+```ruby
+ok got[:errs].include?("Company is required")
+```
+
+## Testing philosophy
+
+Prefer state-based assertions over stubs when possible.
+Assert results or side effects in the database:
+
+```ruby
+def test_create_company
+  Companies::Create.new(db).call(name: "Acme Inc")
+
+  row = db.exec("SELECT * FROM companies").first
+  ok row["name"] == "Acme Inc"
+end
+```
+
+Use `stub` for dependency injection when state-based
+testing isn't practical:
+
+```ruby
+def test_api_integration
+  client = stub(fetch: [{"name" => "Acme Inc"}, nil])
+
+  Companies::Import.new(db, client: client).call(domain: "acme.com")
+
+  ok client.called?(:fetch)
+  row = db.exec("SELECT * FROM companies").first
+  ok row["name"] == "Acme Inc"
+end
+```
+
+Use pure Ruby for more complex scenarios:
+
+```ruby
+def test_background_processing
+  processed = []
+  processor = Object.new
+  def processor.call(data)
+    @processed ||= []
+    @processed << data
+  end
+  def processor.processed
+    @processed || []
+  end
+
+  Queue.new(processor).process(["a", "b", "c"])
+
+  ok processor.processed == ["a", "b", "c"]
+end
+```
+
+## Rails controller testing
+
+For Rails controller tests, extend `Test` with
+`Rack::Test` methods and helpers:
+
+```ruby
+require_relative "test_helper"
+require File.expand_path("../config/environment", __dir__)
+require "rackup"
+
+class ControllerTest < Test
+  include Rack::Test::Methods
+
+  def app
+    Rails.application
+  end
+
+  def sign_in
+    set_cookie("remember_token=test")
+  end
+
+  def sign_in_as(user)
+    set_cookie("remember_token=#{user.remember_token}")
+  end
+
+  def cookies
+    @cookies ||= Cookies.new(rack_mock_session.cookie_jar)
+  end
+
+  class Cookies
+    def initialize(jar)
+      @jar = jar
+    end
+
+    def [](name)
+      cookie = @jar.get_cookie(name.to_s)
+      cookie&.value
+    end
+  end
+
+  def flash
+    Flash.new(last_request)
+  end
+
+  class Flash
+    def initialize(request)
+      @request = request
+    end
+
+    def [](key)
+      rack_session = @request.env["rack.session"]
+      if rack_session.nil?
+        return nil
+      end
+
+      flash_hash = rack_session.dig("flash", "flashes")
+      if flash_hash.nil?
+        return nil
+      end
+
+      flash_hash[key.to_s]
+    end
+  end
+
+  # override Rack::Test methods to return last_response
+  def get(path, params = {}, headers = {})
+    super
+    last_response
+  end
+
+  def post(path, params = {}, headers = {})
+    super
+    last_response
+  end
+
+  private def teardown
+    clear_cookies
+    header "AH-Referer", nil
+    super
+  end
+end
+```
+
+Use `ControllerTest` for Rails controller tests:
+
+```ruby
+class CompaniesControllerTest < ControllerTest
+  def test_index
+    sign_in
+    co = insert_company(name: "Acme Inc")
+
+    resp = get("/companies")
+
+    ok resp.status == 200
+    ok resp.body.include?("Acme Inc")
+  end
+
+  def test_create
+    sign_in
+
+    resp = post("/companies", {company: {name: "New Co"}})
+
+    ok resp.status == 302
+    ok flash[:notice] == "Company created"
+    ok cookies["remember_token"] == "test"
+  end
+end
+```
+
+Separate controller tests from other tests
+with different suite files:
+
+```ruby
+# test/ruby_suite.rb
+require_relative "test_helper"
+
+Dir.glob(File.join(__dir__, "**", "*_test.rb"))
+  .reject { |f| f.include?("/controllers/") }
+  .sort
+  .each { |f| require f }
+
+# test/rails_suite.rb
+require_relative "rails_helper"
+
+Dir.glob(File.join(__dir__, "controllers", "**", "*_test.rb"))
+  .sort
+  .each { |f| require f }
+```
+
+Run them separately:
+
+```bash
+ruby test/ruby_suite.rb  # fast, no Rails
+ruby test/rails_suite.rb # slower, loads Rails
+```
+
+An `at_exit` hook in `test/test_helper.rb`
+automatically runs each suite.
 
 ## Implementation
 
@@ -471,6 +878,7 @@ class Test
         db.exec("DELETE FROM #{t}")
       end
 
+      # app-specific cleanup of all users except admin fixture
       db.exec("DELETE FROM users WHERE id != 1")
     end
   end
@@ -528,13 +936,4 @@ module Factories
     Data.define(*row.keys.map(&:to_sym)).new(*row.values)
   end
 end
-```
-
-The `test/suite.rb` file requires all tests
-and the `at_exit` hook in `test_helper.rb` runs the suite:
-
-```ruby
-require_relative "test_helper"
-
-Dir["#{__dir__}/**/*_test.rb"].each { |f| require f }
 ```
