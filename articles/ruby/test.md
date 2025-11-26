@@ -250,10 +250,25 @@ end
 Factories provide defaults and return `Data` objects
 with attribute accessors.
 
+## State-based
+
+Prefer state-based assertions whenever possible.
+Assert results or side effects in the database:
+
+```ruby
+def test_create_company
+  Companies::Create.new(db).call(name: "Acme Inc")
+
+  row = db.exec("SELECT * FROM companies").first
+  ok row["name"] == "Acme Inc"
+end
+```
+
 ## Object stubs
 
-Object stubs help isolate collaborators.
-Use them via dependency injection:
+When state-based testing isn't practical,
+object stubs can help isolate collaborators.
+Use `stub` via dependency injection:
 
 ```ruby
 module Companies
@@ -354,7 +369,8 @@ ok err_msg == "expected error"
 
 ## Asserting stub calls
 
-All stubs are "spies" whose method calls can be asserted:
+All stubs are "spies" whose method calls can be asserted
+with `called?`:
 
 ```ruby
 client = stub(fetch: [{"name" => "Acme Inc"}, nil])
@@ -363,12 +379,19 @@ Companies::Import.new(db, client: client).call(domain: "acme.com")
 
 ok client.called?(:fetch)
 ok !client.called?(:delete)
+```
 
-# assert call count and arguments
+Or, assert call count and arguments with `calls`:
+
+```ruby
 ok client.calls[:fetch].size == 2
 ok client.calls[:fetch][0][:args] == ["acme.com"]
 ok client.calls[:fetch][0][:kwargs] == {domain: "acme.com"}
 ```
+
+`calls` returns a hash mapping method names
+to arrays of call records.
+Each call record is a hash with `:args` and `:kwargs` keys.
 
 ## Yielding stubs
 
@@ -408,6 +431,7 @@ ok !client.thread_ref.alive?
 ## Style guide
 
 Prefer inlining code and avoiding unnecessary local variables.
+
 When they clarify tests or improve failure messages,
 use `got` and `want` variable names:
 
@@ -419,8 +443,7 @@ def test_length
 end
 ```
 
-When executing the thing under test only once,
-separate setup, execution, and assertion phases with blank lines:
+Typically, separate setup, exercise, and assertion phases with blank lines:
 
 ```ruby
 def test_add
@@ -433,8 +456,8 @@ def test_add
 end
 ```
 
-When executing multiple times,
-group exercise and assert phases together:
+When exercising the system under test multiple times,
+group exercise and assertion together:
 
 ```ruby
 def test_multiply
@@ -449,9 +472,9 @@ def test_multiply
 end
 ```
 
-Name fresh fixtures with abbreviations (`co`, `per`, `u`).
+To reduce verbosity, name fresh fixtures with abbreviations (`co`, `per`, `u`).
 When querying a changed fixture from the database,
-prefix the variable with `db_`:
+prefix the variable with `db_` to distinguish it from the original:
 
 ```ruby
 co = insert_company(name: "foo")
@@ -462,14 +485,15 @@ db_co = db.exec("SELECT * FROM companies WHERE id = $1", [co.id]).first
 ok db_co["name"] == "bar"
 ```
 
-For SQL in assertions, use one-line `SELECT *` for simple predicates;
-use heredocs for joins or multi-line queries:
+For SQL in assertions, use one-line `SELECT *` for simple predicates:
 
 ```ruby
-# simple predicate
 note = db.exec("SELECT * FROM notes WHERE company_id = $1", [co.id]).first
+```
 
-# join or multi-line
+For more complex queries, use heredocs:
+
+```ruby
 job = db.exec(<<~SQL, [per.id]).first
   SELECT
     jobs.*
@@ -482,13 +506,16 @@ job = db.exec(<<~SQL, [per.id]).first
 SQL
 ```
 
-Check empty tables with `ok rows == []`, not `size == 0`.
-For unordered comparisons, map and sort:
+Assert empty tables with `ok rows == []`, not `size == 0`.
 
 ```ruby
 rows = db.exec("SELECT * FROM tracking WHERE company_id = $1", [co.id])
 ok rows == []
+```
 
+For unordered comparisons, map and sort:
+
+```ruby
 rows = db.exec("SELECT * FROM list_items WHERE company_id = $1", [co.id])
 ok rows.map { |r| r["list_id"] }.sort == [748, 541].sort
 ```
@@ -497,55 +524,6 @@ For error messages, prefer `include?` over full-array equality:
 
 ```ruby
 ok got[:errs].include?("Company is required")
-```
-
-## Testing philosophy
-
-Prefer state-based assertions over stubs when possible.
-Assert results or side effects in the database:
-
-```ruby
-def test_create_company
-  Companies::Create.new(db).call(name: "Acme Inc")
-
-  row = db.exec("SELECT * FROM companies").first
-  ok row["name"] == "Acme Inc"
-end
-```
-
-Use `stub` for dependency injection when state-based
-testing isn't practical:
-
-```ruby
-def test_api_integration
-  client = stub(fetch: [{"name" => "Acme Inc"}, nil])
-
-  Companies::Import.new(db, client: client).call(domain: "acme.com")
-
-  ok client.called?(:fetch)
-  row = db.exec("SELECT * FROM companies").first
-  ok row["name"] == "Acme Inc"
-end
-```
-
-Use pure Ruby for more complex scenarios:
-
-```ruby
-def test_background_processing
-  processed = []
-  processor = Object.new
-  def processor.call(data)
-    @processed ||= []
-    @processed << data
-  end
-  def processor.processed
-    @processed || []
-  end
-
-  Queue.new(processor).process(["a", "b", "c"])
-
-  ok processor.processed == ["a", "b", "c"]
-end
 ```
 
 ## Rails controller testing
@@ -625,7 +603,7 @@ class ControllerTest < Test
 
   private def teardown
     clear_cookies
-    header "AH-Referer", nil
+    header "Ajax-Referer", nil
     super
   end
 end
@@ -937,3 +915,6 @@ module Factories
   end
 end
 ```
+
+There are other Ruby testing frameworks available,
+but this one is optimized for my happiness.
