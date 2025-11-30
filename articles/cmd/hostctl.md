@@ -90,5 +90,24 @@ fi
 sudo killall -HUP mDNSResponder
 ```
 
-I use the `2000` port range for servers written in Go
-and the `3000` port range for servers written in Ruby.
+## Server configuration
+
+Go servers bind to a port; the hosts file handles subdomain resolution:
+
+```go
+fmt.Println("Serving at http://blog.localhost:2000")
+http.ListenAndServe(":2000", handler)
+```
+
+Ruby/Puma can bind explicitly to the hostname:
+
+```ruby
+if env == "development"
+  c.bind "tcp://eds.localhost:3000"
+else
+  c.bind "tcp://0.0.0.0:#{ENV.fetch("PORT")}"
+end
+```
+
+I use the `2000` port range for Go servers
+and the `3000` port range for Ruby servers.
