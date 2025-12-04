@@ -30,7 +30,7 @@ end
 Test cases are public instance methods
 whose names start with `test_`.
 
-One ore more test groups can be defined
+One or more test groups can be defined
 in the same file.
 
 ## Assertions
