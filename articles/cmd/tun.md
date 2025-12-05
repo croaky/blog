@@ -11,16 +11,16 @@ infrastructure.
 
 ## Set up the server
 
-Deploy the server (`tund`) to a host like [Render](https://render.com/):
+Deploy the server to a host like [Render](https://render.com/):
 
-- Public Git Repository: `https://github.com/croaky/tun`
+- Public git repository: `https://github.com/croaky/tun`
 - Build command: `go build -o tund ./cmd/tund`
 - Start command: `./tund`
-- Environment variable: `TUN_TOKEN` (shared secret)
-- Health Check Path: `/health`
+- Env var: `TUN_TOKEN` (shared secret)
+- Health check path: `/health`
 
 Render provides HTTPS automatically.
-Render and Railway both offer "scale to zero" plans,
+Render and others (e.g. Railway) offer "scale to zero" plans,
 which keeps costs low for occasional tunnels.
 
 Server logs look like:
