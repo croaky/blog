@@ -106,7 +106,7 @@ Example [Render build command](https://render.com/docs/deploys#build-command):
 npm install && npm run build
 ```
 
-To bust caches for [/web/cdn](CDNs),
+To bust caches for [CDNs](/web/cdn),
 fingerprint the output files.
 See [go/fingerprint](/go/fingerprint)
 or [ruby/fingerprint](/ruby/fingerprint).
