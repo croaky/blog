@@ -2,15 +2,14 @@
 
 [tun](https://github.com/croaky/tun) tunnels local services
 to the public internet.
-It is a self-hosted [ngrok](https://ngrok.com/) alternative.
 
-## Install
+## Why
 
-Install the client:
+I wanted an ngrok‑like tunnel I could self‑host for a Slack Events API
+integration. Fewer moving parts, no vendor accounts, data stays in our
+infrastructure.
 
-```sh
-go install github.com/croaky/tun/cmd/tun@latest
-```
+## Set up the server
 
 Deploy the server (`tund`) to a host like [Render](https://render.com/):
 
@@ -21,8 +20,24 @@ Deploy the server (`tund`) to a host like [Render](https://render.com/):
 - Health Check Path: `/health`
 
 Render provides HTTPS automatically.
+Render and Railway both offer "scale to zero" plans,
+which keeps costs low for occasional tunnels.
 
-## Configure
+Server logs look like:
+
+```
+[croaky] tunnel connected
+200 POST /slack/events 147.33ms
+[croaky] tunnel disconnected
+```
+
+## Set up the client
+
+Install:
+
+```sh
+go install github.com/croaky/tun/cmd/tun@latest
+```
 
 Create a `.env` file in the directory you run `tun`:
 
@@ -39,36 +54,22 @@ Requests not matching a rule return `403 Forbidden`.
 `TUN_TOKEN` authenticates the client to the server
 via `Authorization: Bearer <token>`.
 
-## Run
+Run:
 
 ```sh
 tun
 ```
 
-Client output:
+Client logs look like:
 
 ```
 [croaky] connected to wss://your-service.onrender.com/tunnel, forwarding to http://localhost:3000
 POST /slack/events
 ```
 
-Server output:
-
-```
-[croaky] tunnel connected
-200 POST /slack/events 147.33ms
-[croaky] tunnel disconnected
-```
+The username comes from `git config github.user` (falls back to `$USER`),
+helping identify who has the tunnel when teammates share a server.
 
 The client auto-reconnects with exponential backoff (500ms to 30s).
-Requests timeout after 30 seconds.
 The server accepts one active tunnel at a time;
 a new connection closes the previous one.
-
-## Example: Slack Events API
-
-Configure the Slack app's "Event Subscriptions URL" to
-`https://your-service.onrender.com/slack/events`.
-
-Run the local Slack bot on port 3000.
-Run `tun` to forward Slack events through the tunnel.
