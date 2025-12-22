@@ -1,7 +1,10 @@
 # cmd / hostctl
 
-I manage `/etc/hosts` for local development and DNS-level ad blocking
-with a CLI tool:
+`hostctl` manages `/etc/hosts` for local development and DNS-level ad blocking.
+
+It is [open source](https://github.com/croaky/laptop/blob/main/bin/hostctl).
+
+Run it with:
 
 ```sh
 hostctl

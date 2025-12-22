@@ -1,7 +1,8 @@
 # cmd / procman
 
-[procman](https://github.com/croaky/procman) is a process manager
-for local development on macOS.
+`procman` is a process manager for local development on macOS.
+
+It is [open source](https://github.com/croaky/procman).
 
 Install:
 

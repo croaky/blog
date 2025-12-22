@@ -1,7 +1,8 @@
 # cmd / tun
 
-[tun](https://github.com/croaky/tun) tunnels local services
-to the public internet.
+`tun` tunnels local services to the public internet.
+
+It is [open source](https://github.com/croaky/tun).
 
 ## Why
 
