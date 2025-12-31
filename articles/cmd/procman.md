@@ -10,13 +10,13 @@ Install:
 go install github.com/croaky/procman@latest
 ```
 
-Define your processes in `Procfile.dev`. For example:
+Define your process definitions in `Procfile.dev`. For example:
 
 ```txt
-clock: bundle exec ruby schedule/clock.rb
-esbuild: npm run buildwatch
-queues: bundle exec ruby queues/poll.rb
-web: bundle exec puma -p 3000 -C ./config/puma.rb
+clock: bundle exec ruby cmd/clock.rb
+esbuild: bun run buildwatch
+queues: bundle exec ruby cmd/queues.rb
+web: bundle exec ruby cmd/web.rb
 ```
 
 Run processes by naming them in a comma-delimited list:
@@ -51,7 +51,13 @@ web     | [67296] - Worker 1 (PID: 67331) booted in 0.9s, phase: 0
 web     | [67296] - Worker 0 (PID: 67330) booted in 0.9s, phase: 0
 ```
 
-Processes until `procman` receives a SIGINT (`Ctrl+C`), `SIGTERM`, or `SIGHUP`.
+`procman` will run its processes until it receives a SIGINT (`Ctrl+C`),
+`SIGTERM`, or `SIGHUP`.
 
 If one of the processes finishes, it will send a `SIGINT` to all remaining
-running processes wait 5s, and then send a `SIGKILL` all remaining processes.
+running processes, wait 5s, and then send a `SIGKILL` to all remaining processes.
+
+`procman` runs exactly one process per definition.
+
+It runs the processes in `Procfile.dev` "as-is";
+It does not load environment variables from `.env` before running.
