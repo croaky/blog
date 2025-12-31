@@ -45,11 +45,11 @@ Create a `.env` file in the directory you run `tun`:
 ```
 TUN_SERVER=wss://your-service.onrender.com/tunnel
 TUN_LOCAL=http://localhost:3000
-TUN_ALLOW=POST /slack/events GET /health
+TUN_ALLOW="POST /slack/events GET /health"
 TUN_TOKEN=your-shared-secret
 ```
 
-`TUN_ALLOW` accepts space-separated `METHOD /path` pairs (exact match).
+`TUN_ALLOW` accepts space-separated `METHOD /path` pairs (exact match, no wildcards).
 Requests not matching a rule return `403 Forbidden`.
 
 `TUN_TOKEN` authenticates the client to the server
@@ -72,5 +72,6 @@ The username comes from `git config github.user` (falls back to `$USER`),
 helping identify who has the tunnel when teammates share a server.
 
 The client auto-reconnects with exponential backoff (500ms to 30s).
+Requests timeout after 30 seconds.
 The server accepts one active tunnel at a time;
 a new connection closes the previous one.
