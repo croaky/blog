@@ -197,7 +197,6 @@ h3 > code {
   font-size: 0.8em;
 }
 
-
 pre {
   background: transparent;
   border-left: 3px solid #e2e2e2;
@@ -271,7 +270,6 @@ pre > code {
     --content-width-mobile: var(--content-width-tablet);
     --list-width-mobile: var(--list-width-tablet);
   }
-
 }
 
 @media (min-width: 1025px) {
@@ -279,7 +277,6 @@ pre > code {
     --content-width-mobile: var(--content-width-medium);
     --list-width-mobile: var(--list-width-medium);
   }
-
 }
 
 @media (min-width: 1200px) {
@@ -287,7 +284,6 @@ pre > code {
     --content-width-mobile: var(--content-width-large);
     --list-width-mobile: var(--list-width-large);
   }
-
 }
 
 /* Site header */
@@ -336,47 +332,22 @@ pre > code {
   fill: #666666;
 }
 
-/* Grid layout */
-.grid {
-  margin-top: 5rem;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
+/* Index directories */
+.dir {
+  padding: 1.4rem 0;
 }
-.card {
-  border: 1px solid #e7e7e7;
-  background: #fffffb;
-  padding: 1rem;
-  border-radius: 3px;
-}
-.card h3 {
+.dir h3 {
   margin-block-start: 0;
   margin-block-end: 1rem;
 }
-.card ul {
+.dir ul {
   width: 100%;
   -webkit-padding-start: 1.5rem;
   padding-left: 1.5rem;
   margin: 0;
 }
-.card li {
+.dir li {
   margin-top: 0.25rem;
-}
-
-/* Responsive grid */
-@media (max-width: 1000px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 85%;
-  }
-}
-@media (max-width: 760px) {
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    width: 100%;
-  }
 }
 
 /* Typography adjustments */
